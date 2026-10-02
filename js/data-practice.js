@@ -9,7 +9,7 @@ DATA.estimation = [
       ["Replacement life", "45,000 miles per set / 12,000 miles per year", "~3.75 years"],
       ["Replacement tires per year", "1.1B / 3.75", "~300M"],
       ["Original-equipment tires", "~15M new vehicles x 4", "~60M"],
-      ["Add commercial trucks and other (~10%)", "(300M + 60M) x ~1.1", "~390M"]
+      ["Add commercial trucks and other (~10%)", "(300M + 60M) x ~1.1", "~395M"]
     ],
     answer: "About 350 to 400 million per year.",
     sanity: "That is about 1.1 tires per person per year. One car's four tires every ~4 years gives ~1 per person-year of driving age, so it is consistent."
@@ -63,7 +63,7 @@ DATA.estimation = [
       ["Number of stations", "27M / 200", "~135K"]
     ],
     answer: "About 130,000 to 150,000 stations.",
-    sanity: "About one station per 2,300 people, which feels right for a car-based country."
+    sanity: "About one station per 2,500 people, which feels right for a car-based country."
   },
   {
     id: "cards", q: "How many credit and debit card transactions happen in the US each day?", approach: "Top-down: cardholders x transactions per day.",
@@ -74,7 +74,7 @@ DATA.estimation = [
       ["Cross-check: yearly", "400M x 365", "~145B per year"]
     ],
     answer: "About 400 million per day, or roughly 150 billion per year.",
-    sanity: "Around 1.5 card payments per person per day including online and recurring payments."
+    sanity: "Around 1.5 card payments per adult per day including online and recurring payments."
   },
   {
     id: "piano", q: "How many piano tuners are there in Chicago?", approach: "Classic demand vs. supply.",
@@ -128,69 +128,4 @@ DATA.estimation = [
     answer: "About 240 to 250 million tennis balls per year.",
     sanity: "About 15 balls per player per year; recreational players drive about 60% of volume."
   }
-];
-
-DATA.glossary = [
-  // Metrics
-  { term: "Revenue", cat: "Metrics", def: "Total income from sales before costs.", formula: "Price x Quantity" },
-  { term: "Gross profit", cat: "Profitability", def: "Revenue minus cost of goods sold.", formula: "Revenue - COGS" },
-  { term: "Gross margin", cat: "Profitability", def: "Gross profit as a percent of revenue.", formula: "Gross profit / Revenue" },
-  { term: "Contribution margin", cat: "Profitability", def: "Revenue minus variable costs, as an amount or a percent. What each sale contributes to covering fixed costs and profit.", formula: "(Price - Variable cost) / Price" },
-  { term: "EBITDA", cat: "Profitability", def: "Earnings before interest, taxes, depreciation and amortization. A measure of operating profit before capital structure and non-cash charges.", formula: "Revenue - Operating expenses (excl. D&A)" },
-  { term: "EBIT (operating profit)", cat: "Profitability", def: "Earnings before interest and taxes. EBITDA minus depreciation and amortization.", formula: "EBITDA - D&A" },
-  { term: "Net income", cat: "Profitability", def: "Profit after all costs including depreciation, interest and taxes.", formula: "EBIT - Interest - Taxes" },
-  { term: "Net margin", cat: "Profitability", def: "Net income as a percent of revenue.", formula: "Net income / Revenue" },
-  { term: "ROI", cat: "Profitability", def: "Return on an investment as a percent of its cost.", formula: "(Gain - Cost) / Cost" },
-  { term: "Payback period", cat: "Profitability", def: "Time for cumulative profit to recover the investment.", formula: "Investment / Annual profit" },
-  { term: "Breakeven volume", cat: "Profitability", def: "Units needed so total contribution equals fixed costs.", formula: "Fixed costs / (Price - Variable cost per unit)" },
-  { term: "NPV", cat: "Profitability", def: "Present value of future cash flows minus the upfront investment, discounted at the cost of capital.", formula: "Sum of CFt / (1+r)^t - Investment" },
-  // Costs
-  { term: "COGS", cat: "Costs", def: "Direct costs of producing what was sold (materials, direct labor)." },
-  { term: "Fixed cost", cat: "Costs", def: "Cost that does not change with volume in the short run (rent, salaries, depreciation)." },
-  { term: "Variable cost", cat: "Costs", def: "Cost that moves with volume (materials, commissions, shipping)." },
-  { term: "Operating leverage", cat: "Costs", def: "How strongly profit responds to revenue changes. High fixed costs mean small revenue changes cause large profit changes." },
-  { term: "Economies of scale", cat: "Costs", def: "Unit cost falls as volume rises because fixed costs spread across more units." },
-  { term: "CapEx", cat: "Costs", def: "Spending on long-lived assets (equipment, buildings, rides). Appears as depreciation over time." },
-  { term: "Flow-through", cat: "Costs", def: "Share of incremental revenue that becomes incremental profit.", formula: "Incremental profit / Incremental revenue" },
-  // Growth and customer
-  { term: "CAC", cat: "Customer", def: "Customer acquisition cost: marketing and sales spend per new customer.", formula: "Sales & marketing spend / New customers" },
-  { term: "LTV (CLV)", cat: "Customer", def: "Profit expected from a customer over their lifetime. Use margin, not revenue.", formula: "Margin per period x Expected lifetime (or margin / churn)" },
-  { term: "LTV : CAC", cat: "Customer", def: "Return on acquisition spend. Above ~3x is a common benchmark; look at the trend and by channel." },
-  { term: "Churn rate", cat: "Customer", def: "Share of customers lost in a period.", formula: "Customers lost / Starting customers" },
-  { term: "Retention rate", cat: "Customer", def: "Share of customers kept in a period. Always define the base and the window.", formula: "1 - Churn rate" },
-  { term: "Cohort", cat: "Customer", def: "A group of customers who started in the same period, tracked over time." },
-  { term: "ARPU", cat: "Customer", def: "Average revenue per user.", formula: "Revenue / Active users" },
-  { term: "Penetration", cat: "Customer", def: "Share of the potential customer base using a product.", formula: "Users / Potential users" },
-  { term: "NPS", cat: "Customer", def: "Net Promoter Score: percent promoters minus percent detractors, from -100 to +100." },
-  { term: "Market share", cat: "Customer", def: "Company's share of total market sales.", formula: "Company revenue / Market revenue" },
-  { term: "Elasticity", cat: "Customer", def: "Percent change in quantity demanded per percent change in price. Above 1 in size means demand is elastic." },
-  // Frameworks
-  { term: "MECE", cat: "Frameworks", def: "Mutually exclusive, collectively exhaustive: categories do not overlap and together cover everything." },
-  { term: "Hypothesis-driven", cat: "Frameworks", def: "Start with an answer you believe, then seek data to confirm or reject it." },
-  { term: "Ansoff matrix", cat: "Frameworks", def: "Growth framework: existing/new products x existing/new markets." },
-  { term: "Porter's Five Forces", cat: "Frameworks", def: "Industry analysis: rivalry, buyer power, supplier power, new entrants, substitutes." },
-  { term: "Value chain", cat: "Frameworks", def: "The activities a company performs to create value, used to locate cost and advantage." },
-  { term: "Sensitivity analysis", cat: "Frameworks", def: "Testing how outputs change as key assumptions change." },
-  { term: "Pareto (80/20)", cat: "Frameworks", def: "A few drivers usually cause most of the effect; focus on the biggest pools first." },
-  // Banking
-  { term: "APR", cat: "Banking", def: "Annual percentage rate: yearly interest rate on borrowing, excluding compounding." },
-  { term: "Interchange", cat: "Banking", def: "Fee paid by merchants' banks to the card issuer on each card purchase, a percent of spend." },
-  { term: "Net interest margin (NIM)", cat: "Banking", def: "Interest earned on assets minus interest paid, as a percent of earning assets." },
-  { term: "Charge-off", cat: "Banking", def: "Debt the lender has written off as unlikely to be collected." },
-  { term: "Delinquency", cat: "Banking", def: "Payments past due (30, 60, 90+ days). A leading indicator of charge-offs." },
-  { term: "PD, LGD, EAD", cat: "Banking", def: "Probability of default, loss given default, exposure at default. Expected loss = PD x LGD x EAD." },
-  { term: "Revolver / transactor", cat: "Banking", def: "A revolver carries a balance and pays interest; a transactor pays in full each month and earns the issuer mostly interchange." },
-  { term: "Funding cost", cat: "Banking", def: "What a lender pays to obtain the money it lends (deposits, debt)." },
-  // Tech
-  { term: "DAU / MAU", cat: "Tech", def: "Daily and monthly active users. DAU/MAU is a measure of stickiness.", formula: "DAU / MAU" },
-  { term: "Funnel", cat: "Tech", def: "Sequence of steps to a goal (visit, sign up, activate, purchase); conversion is measured between steps." },
-  { term: "A/B test", cat: "Tech", def: "Randomized experiment comparing a change (B) to control (A) to measure causal impact." },
-  { term: "Statistical significance", cat: "Tech", def: "Evidence that an observed difference is unlikely to be chance, often p < 0.05." },
-  { term: "Guardrail metric", cat: "Tech", def: "A metric you must not harm while optimizing another (for example, latency or satisfaction)." },
-  { term: "Network effect", cat: "Tech", def: "A product becomes more valuable as more people use it." },
-  // Interview
-  { term: "Top-down vs. bottom-up", cat: "Interview", def: "Top-down starts from a large population and narrows; bottom-up builds from units (stores, customers) and sums." },
-  { term: "Sanity check", cat: "Interview", def: "Comparing your result with a known figure or a second method to test plausibility." },
-  { term: "Synergies", cat: "Interview", def: "Extra value from combining two businesses: revenue synergies (cross-sell) and cost synergies (overlap, procurement). Usually haircut." },
-  { term: "Mix effect", cat: "Interview", def: "Change in profit caused by a shift between higher- and lower-margin products or segments, even if total revenue is flat." }
 ];

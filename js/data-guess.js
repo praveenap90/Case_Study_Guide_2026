@@ -34,7 +34,7 @@ DATA.guess = {
     ["S: Scope (what, where, when, unit)", "gs", "New replacement plus original-equipment car tires sold in the US per year, in units."],
     ["C: Approach and why", "gc", "Stock and flow: tires wear out, so tires in use / lifespan = replacements per year."],
     ["O: Inputs (round numbers)", "go", "280M vehicles, 4 tires each, 3.75 year life; 15M new vehicles per year, 4 tires; commercial adds about 10%."],
-    ["P: Math with units", "gp", "280M x 4 = 1.1B in use; / 3.75 = about 300M replacements; plus 15M x 4 = 60M original equipment = 360M; +10% commercial = about 390M."],
+    ["P: Math with units", "gp", "280M x 4 = 1.1B in use; / 3.75 = about 300M replacements; plus 15M x 4 = 60M original equipment = 360M; +10% commercial = about 395M."],
     ["E: Sanity check and range", "ge", "About 1.2 tires per person per year is reasonable. Range 350 to 400M, point estimate about 375M."]
   ],
   scriptTable: {
@@ -53,8 +53,8 @@ DATA.guess = {
     ["S", "Scope", "I will count all new tires sold for cars and light trucks in the US in one year, replacement plus original equipment. I will skip retreads and trucks over 10 tons."],
     ["C", "Choose", "Stock and flow. Tires wear out, so tires in use divided by their lifespan gives replacements per year. Then I add tires fitted to new vehicles."],
     ["O", "Organize", "About 280M vehicles, 4 tires each, a tire lasts about 3.75 years. About 15M new vehicles per year. Commercial adds roughly 10%."],
-    ["P", "Process", "280M x 4 = 1.1B tires in use. 1.1B / 3.75 = about 300M replacements. 15M x 4 = 60M original equipment. Total about 360M. Add 10% for commercial: about 390M."],
-    ["E", "Examine", "390M is about 1.2 tires per person per year. A driver replacing a set every 4 years plus new cars fits that. I would say roughly 350 to 400M."]
+    ["P", "Process", "280M x 4 = 1.1B tires in use. 1.1B / 3.75 = about 300M replacements. 15M x 4 = 60M original equipment. Total about 360M. Add 10% for commercial: about 395M."],
+    ["E", "Examine", "395M is about 1.2 tires per person per year. A driver replacing a set every 4 years plus new cars fits that. I would say roughly 350 to 400M."]
   ],
   mistakes: {
     title: "Common mistakes and fixes",
@@ -1479,5 +1479,713 @@ DATA.guess = {
       ]
     ]
   }
+},
+  tires: {
+  "title": "Estimate the number of car tires sold in the US each year",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>New car and light-truck tires sold in the US per year<br/>Replacement plus original equipment\"] --> B[\"Approach: stock and flow<br/>Tires wear out, so stock / lifespan = yearly sales\"]\n  B --> C[\"Vehicles on the road<br/>335M people x 0.85 = about 280M\"]\n  C --> D[\"Tires in use<br/>280M x 4 = about 1.1B\"]\n  D --> E[\"Lifespan<br/>45,000 miles per set / 12,000 miles per year<br/>= about 3.75 years\"]\n  E --> F[\"Replacement tires per year<br/>1.1B / 3.75 = about 300M\"]\n  B --> G[\"New vehicles<br/>15M per year x 4 tires\"]\n  G --> H[\"Original-equipment tires<br/>= about 60M\"]\n  F --> I[\"Replacement + original equipment<br/>300M + 60M = 360M\"]\n  H --> I\n  I --> J[\"Add about 10% for commercial and other<br/>360M x 1.1 = about 395M\"]\n  J --> K[\"Sanity check<br/>about 1.2 tires per person per year<br/>a set of 4 every 4 years fits\"]\n  K --> L[\"Answer<br/>about 350M to 400M tires per year\"]\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D,E step\n  class F,G,H,I,J calc\n  class K,L out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 395M tires\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 250M vehicles<br/>(250M x 4) / 3.75 = 267M<br/>(267M + 60M) x 1.1 = about 360M\"]\n  P --> Q2[\"Tires last 5 years<br/>1.1B / 5 = 224M<br/>(224M + 60M) x 1.1 = about 312M\"]\n  P --> Q3[\"Skip commercial adder<br/>300M + 60M<br/>= about 360M\"]\n  Q1 --> R[\"Updated range<br/>about 310M to 400M\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>tire lifespan\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Vehicles on the road",
+        "335M people x 0.85 per person",
+        "about 280M"
+      ],
+      [
+        "Tires in use",
+        "280M x 4",
+        "about 1.1B"
+      ],
+      [
+        "Lifespan",
+        "45,000 miles / 12,000 miles per year",
+        "about 3.75 years"
+      ],
+      [
+        "Replacement tires per year",
+        "1.1B / 3.75",
+        "about 300M"
+      ],
+      [
+        "Original-equipment tires",
+        "15M new vehicles x 4",
+        "about 60M"
+      ],
+      [
+        "Subtotal",
+        "300M + 60M",
+        "360M"
+      ],
+      [
+        "Commercial and other (+10%)",
+        "360M x 1.1",
+        "about 395M"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 395M)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Only 250M vehicles",
+        "(250M x 4 / 3.75 + 60M) x 1.1",
+        "about 360M"
+      ],
+      [
+        "Tires last 5 years",
+        "(1.1B / 5 + 60M) x 1.1",
+        "about 312M"
+      ],
+      [
+        "Skip commercial adder",
+        "300M + 60M",
+        "about 360M"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate new tires sold for cars and light trucks in the US in a year, replacement plus tires fitted to new vehicles. I'll leave out retreads and heavy trucks. Does that work?"
+    ],
+    [
+      "Approach",
+      "Stock and flow. Tires wear out, so tires in use divided by their lifespan gives yearly replacements, and then I add tires on new vehicles."
+    ],
+    [
+      "Inputs",
+      "About 335M people and roughly 0.85 vehicles each, so about 280M vehicles with 4 tires each. A set lasts about 45,000 miles, and people drive about 12,000 miles a year, so about 3.75 years. About 15M new vehicles are sold a year."
+    ],
+    [
+      "Math",
+      "280M x 4 is about 1.1B tires in use. Divided by 3.75 that is about 300M replacements. New vehicles add 15M x 4, which is 60M. That is 360M, and adding about 10% for commercial and other vehicles gives about 395M."
+    ],
+    [
+      "Sanity check",
+      "That is about 1.2 tires per person per year. One set of four every four years per vehicle, plus new cars, fits that."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 350 to 400M. If you think there are only 250M vehicles I'd scale down to about 360M, and if tires last 5 years it falls to about 310M. The answer is most sensitive to tire lifespan."
+    ]
+  ]
+},
+  smartphones: {
+  "title": "Estimate the number of smartphones sold in the US each year",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>New smartphones sold in the US per year<br/>Units, all channels, new devices only\"] --> B[\"Approach: stock and flow<br/>Phones in use / replacement cycle = yearly sales\"]\n  B --> C[\"US population<br/>about 335M\"]\n  C --> D[\"Smartphone users<br/>85% x 335M = about 285M\"]\n  D --> E[\"Replacement cycle<br/>about 3 years\"]\n  E --> F[\"Replacement sales<br/>285M / 3 = about 95M per year\"]\n  B --> G[\"New users and second devices<br/>about 10M per year\"]\n  F --> H[\"Total<br/>95M + 10M = about 105M per year\"]\n  G --> H\n  H --> X[\"Cross-check from households<br/>130M households x 2.5 phones / 3 years<br/>= about 108M\"]\n  X --> I[\"Sanity check<br/>about 1 phone sold per 3 people per year<br/>fits a 3-year cycle\"]\n  I --> J[\"Answer<br/>about 100M to 120M per year\"]\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D,E step\n  class F,G,H,X calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 105M phones\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Phones last 4 years, not 3<br/>285M / 4 = 71M<br/>71M + 10M = about 81M\"]\n  P --> Q2[\"Phones last 2.5 years<br/>285M / 2.5 = 114M<br/>114M + 10M = about 124M\"]\n  P --> Q3[\"Only 75% own a smartphone<br/>251M / 3 = 84M<br/>84M + 10M = about 94M\"]\n  Q1 --> R[\"Updated range<br/>about 80M to 125M\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>the replacement cycle\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "lead": "Stock and flow: phones in use divided by the replacement cycle, plus first-time buyers and second devices.",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "US population",
+        "",
+        "about 335M"
+      ],
+      [
+        "Smartphone users",
+        "85% x 335M",
+        "about 285M"
+      ],
+      [
+        "Replacement cycle",
+        "about 3 years",
+        "3 years"
+      ],
+      [
+        "Replacement sales",
+        "285M / 3",
+        "about 95M per year"
+      ],
+      [
+        "New users and second devices",
+        "about 10M per year",
+        "about 10M"
+      ],
+      [
+        "Total",
+        "95M + 10M",
+        "about 105M"
+      ],
+      [
+        "Cross-check: households",
+        "130M x 2.5 phones / 3 years",
+        "about 108M"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 105M)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Phones last 4 years",
+        "285M / 4 + 10M",
+        "about 81M"
+      ],
+      [
+        "Phones last 2.5 years",
+        "285M / 2.5 + 10M",
+        "about 124M"
+      ],
+      [
+        "Only 75% own a smartphone",
+        "(335M x 75%) / 3 + 10M = 251M / 3 + 10M",
+        "about 94M"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate new smartphones sold in the US in a year, counting units across all channels, new devices only. Does that work?"
+    ],
+    [
+      "Approach",
+      "Stock and flow. People replace phones every few years, so phones in use divided by the replacement cycle gives yearly sales, and then I add first-time buyers and second devices."
+    ],
+    [
+      "Inputs",
+      "US population is about 335M. About 85% have a smartphone, so about 285M users. They replace a phone about every 3 years. About 10M extra phones a year go to new users and second devices."
+    ],
+    [
+      "Math",
+      "285M divided by 3 is about 95M replacements. Adding 10M gives about 105M phones a year."
+    ],
+    [
+      "Sanity check",
+      "As a cross-check, 130M households with about 2.5 phones each, replaced every 3 years, is about 108M. That is about one phone sold per 3 people per year, which fits a 3-year cycle."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 100 to 120M. If phones last 4 years it falls to about 80M, and at 2.5 years it rises to about 125M. The answer is most sensitive to the replacement cycle."
+    ]
+  ]
+},
+  pizza: {
+  "title": "Estimate the number of pizza orders placed in New York City each day",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Pizza orders placed in NYC per day<br/>Delivery and takeout, count orders not pies\"] --> B[\"Approach: top-down by households<br/>Households x share ordering x frequency\"]\n  B --> C[\"NYC population<br/>about 8.3M\"]\n  C --> D[\"Households<br/>8.3M / 2.6 people = about 3.2M\"]\n  D --> E[\"Households that order pizza<br/>70% x 3.2M = about 2.2M\"]\n  E --> F[\"Orders per household per month<br/>about 2<br/>= about 4.5M orders per month\"]\n  F --> G[\"Per day<br/>4.5M / 30 = about 150K\"]\n  G --> H[\"Add office, student and tourist orders<br/>+30%: 150K x 1.3 = about 200K\"]\n  H --> X[\"Cross-check from supply<br/>about 2,500 pizzerias x 80 orders per day<br/>= about 200K\"]\n  X --> I[\"Sanity check<br/>about 1 order per 40 residents per day\"]\n  I --> J[\"Answer<br/>about 150K to 250K orders per day\"]\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D step\n  class E,F,G,H,X calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 200K orders per day\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 50% of households order<br/>3.2M x 50% x 2 / 30 = 107K<br/>107K x 1.3 = about 140K\"]\n  P --> Q2[\"3 orders per household per month<br/>2.2M x 3 / 30 = 224K<br/>224K x 1.3 = about 290K\"]\n  P --> Q3[\"Skip the office, student and tourist add-on<br/>= about 150K\"]\n  Q1 --> R[\"Updated range<br/>about 140K to 290K\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>orders per household per month\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "lead": "Top-down by households: households x share ordering x orders per month, then add non-household demand.",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "NYC population",
+        "",
+        "about 8.3M"
+      ],
+      [
+        "Households",
+        "8.3M / 2.6 people",
+        "about 3.2M"
+      ],
+      [
+        "Households that order pizza",
+        "70% x 3.2M",
+        "about 2.2M"
+      ],
+      [
+        "Orders per month",
+        "2.2M x 2",
+        "about 4.5M"
+      ],
+      [
+        "Orders per day",
+        "4.5M / 30",
+        "about 150K"
+      ],
+      [
+        "Office, student, tourist (+30%)",
+        "150K x 1.3",
+        "about 200K"
+      ],
+      [
+        "Cross-check: supply",
+        "2,500 pizzerias x 80 orders per day",
+        "about 200K"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 200K)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Only 50% of households order",
+        "3.2M x 50% x 2 / 30 x 1.3",
+        "about 140K"
+      ],
+      [
+        "3 orders per household per month",
+        "2.2M x 3 / 30 x 1.3",
+        "about 290K"
+      ],
+      [
+        "Skip the add-on",
+        "2.2M x 2 / 30",
+        "about 150K"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate pizza orders placed in New York City per day, delivery and takeout, counting orders rather than pizzas. Does that work?"
+    ],
+    [
+      "Approach",
+      "Top-down by households. Most people order as part of a household, so I'll go from population to households, then how many order and how often, and then add demand from offices, students and tourists."
+    ],
+    [
+      "Inputs",
+      "NYC has about 8.3M people and about 2.6 per household, so about 3.2M households. About 70% order pizza at least some of the time, so about 2.2M. Those households order about twice a month."
+    ],
+    [
+      "Math",
+      "2.2M x 2 is about 4.5M orders a month. Divided by 30 that is about 150K a day. I'll add about 30% for offices, students and tourists, which gives about 200K orders a day."
+    ],
+    [
+      "Sanity check",
+      "That is about one order per 40 residents per day. From the supply side, about 2,500 pizzerias at about 80 orders a day each is also about 200K."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 150K to 250K. If you think only half of households order, it falls to about 140K, and at three orders a month it rises to about 290K. The answer is most sensitive to how often each household orders."
+    ]
+  ]
+},
+  gas: {
+  "title": "Estimate the number of gas stations in the US",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Number of retail gas stations in the US<br/>Count stations, not pumps\"] --> B[\"Approach: demand vs supply per station<br/>Total daily fill-ups / fill-ups one station can serve\"]\n  B --> C[\"Vehicles on the road<br/>about 280M\"]\n  C --> D[\"Fill-ups per vehicle<br/>1 every 10 days = about 36 per year\"]\n  D --> E[\"Total fill-ups per year<br/>280M x 36 = about 10B\"]\n  E --> F[\"Per day<br/>10B / 365 = about 27M fill-ups\"]\n  B --> G[\"Fill-ups per station per day<br/>8 pumps x 25 fill-ups per pump<br/>= about 200\"]\n  F --> H[\"Number of stations<br/>27M / 200 = about 135K\"]\n  G --> H\n  H --> I[\"Sanity check<br/>about 1 station per 2,500 people<br/>fits a car-based country\"]\n  I --> J[\"Answer<br/>about 130K to 150K stations\"]\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D step\n  class E,F,G,H calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 135K stations\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Fill up every 14 days, not 10<br/>280M x 26 / 365 = 20M per day<br/>20M / 200 = about 100K\"]\n  P --> Q2[\"Busier stations: 30 fill-ups per pump<br/>8 x 30 = 240 per station<br/>27M / 240 = about 112K\"]\n  P --> Q3[\"Only 250M vehicles use gas<br/>250M / 280M x 27M = 24M per day<br/>24M / 200 = about 120K\"]\n  Q1 --> R[\"Updated range<br/>about 100K to 135K\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>fill-ups per station per day\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "lead": "Demand versus supply: total daily fill-ups divided by the fill-ups one station can serve.",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Vehicles",
+        "",
+        "about 280M"
+      ],
+      [
+        "Fill-ups per vehicle per year",
+        "1 every 10 days",
+        "about 36"
+      ],
+      [
+        "Total fill-ups per year",
+        "280M x 36",
+        "about 10B"
+      ],
+      [
+        "Fill-ups per day",
+        "10B / 365",
+        "about 27M"
+      ],
+      [
+        "Fill-ups per station per day",
+        "8 pumps x 25 per pump",
+        "about 200"
+      ],
+      [
+        "Number of stations",
+        "27M / 200",
+        "about 135K"
+      ],
+      [
+        "Sanity: people per station",
+        "335M / 135K",
+        "about 2,500"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 135K)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Fill up every 14 days",
+        "280M x 26 / 365 = 20M; 20M / 200",
+        "about 100K"
+      ],
+      [
+        "30 fill-ups per pump",
+        "27M / (8 x 30)",
+        "about 112K"
+      ],
+      [
+        "Only 250M gas vehicles",
+        "(250M / 280M x 27M) / 200",
+        "about 120K"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate the number of retail gas stations in the US, counting stations rather than pumps. Does that work?"
+    ],
+    [
+      "Approach",
+      "I'll compare demand and supply. First, how many fill-ups happen per day across the country. Second, how many fill-ups one station can serve. Dividing gives the number of stations."
+    ],
+    [
+      "Inputs",
+      "About 280M vehicles. A typical vehicle fills up about once every 10 days, so about 36 times a year. A station has about 8 pumps and each pump serves about 25 fill-ups a day, so about 200 per station."
+    ],
+    [
+      "Math",
+      "280M x 36 is about 10B fill-ups a year. Divided by 365 that is about 27M a day. 27M divided by 200 per station is about 135K stations."
+    ],
+    [
+      "Sanity check",
+      "That is about one station per 2,500 people, which feels right for a car-based country."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 130K to 150K. If people fill up every 14 days it falls to about 100K, and with busier stations at 30 fill-ups per pump it is about 112K. The answer is most sensitive to how many fill-ups each station serves per day."
+    ]
+  ]
+},
+  cards: {
+  "title": "Estimate the number of credit and debit card transactions in the US each day",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Credit and debit card transactions in the US per day<br/>Count payments, in-store, online and recurring\"] --> B[\"Approach: top-down by cardholders<br/>Cardholders x transactions per cardholder per day\"]\n  B --> C[\"US adults<br/>about 260M\"]\n  C --> D[\"Adults with a debit or credit card<br/>85% x 260M = about 220M\"]\n  D --> E[\"Transactions per cardholder per day<br/>about 1.8<br/>coffee, groceries, online, subscriptions\"]\n  E --> F[\"Daily transactions<br/>220M x 1.8 = about 400M\"]\n  F --> G[\"Cross-check: yearly<br/>400M x 365 = about 145B per year\"]\n  G --> I[\"Sanity check<br/>about 1.5 card payments per adult per day<br/>including online and recurring payments\"]\n  I --> J[\"Answer<br/>about 400M per day, roughly 150B per year\"]\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D step\n  class E,F,G calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 400M transactions per day\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 1.5 transactions per cardholder per day<br/>220M x 1.5<br/>= about 330M\"]\n  P --> Q2[\"2.2 transactions per cardholder per day<br/>220M x 2.2<br/>= about 485M\"]\n  P --> Q3[\"Only 75% of adults have a card<br/>260M x 75% = 195M<br/>195M x 1.8 = about 350M\"]\n  Q1 --> R[\"Updated range<br/>about 330M to 485M\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>transactions per cardholder per day\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "lead": "Top-down: cardholders times transactions per cardholder per day.",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "US adults",
+        "",
+        "about 260M"
+      ],
+      [
+        "Adults with a debit or credit card",
+        "85% x 260M",
+        "about 220M"
+      ],
+      [
+        "Transactions per cardholder per day",
+        "coffee, groceries, online, subscriptions",
+        "about 1.8"
+      ],
+      [
+        "Transactions per day",
+        "220M x 1.8",
+        "about 400M"
+      ],
+      [
+        "Transactions per year",
+        "400M x 365",
+        "about 145B"
+      ],
+      [
+        "Sanity: per adult per day",
+        "400M / 260M",
+        "about 1.5"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 400M)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "1.5 transactions per cardholder per day",
+        "220M x 1.5",
+        "about 330M"
+      ],
+      [
+        "2.2 transactions per cardholder per day",
+        "220M x 2.2",
+        "about 485M"
+      ],
+      [
+        "Only 75% of adults have a card",
+        "260M x 75% x 1.8 = 195M x 1.8",
+        "about 350M"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate credit and debit card transactions in the US per day, counting individual payments in store, online and recurring. Does that work?"
+    ],
+    [
+      "Approach",
+      "Top-down from cardholders. I'll start with adults, take the share with a card, and multiply by how many card payments each makes in a day."
+    ],
+    [
+      "Inputs",
+      "About 260M US adults. About 85% have a debit or credit card, so about 220M cardholders. Each makes about 1.8 card payments a day across coffee, groceries, online purchases and subscriptions."
+    ],
+    [
+      "Math",
+      "220M x 1.8 is about 400M transactions a day. Multiplying by 365 gives about 145B a year."
+    ],
+    [
+      "Sanity check",
+      "That is about 1.5 card payments per adult per day, including online and recurring payments, which feels right."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 330M to 485M, with 400M as my point estimate. If cardholders average 1.5 a day it is about 330M, and at 2.2 it is about 485M. The answer is most sensitive to transactions per cardholder per day."
+    ]
+  ]
+},
+  piano: {
+  "title": "Estimate the number of piano tuners in Chicago",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Full-time-equivalent piano tuners in the city of Chicago<br/>Households' pianos, ignore institutions for now\"] --> B[\"Approach: demand vs supply<br/>Tunings needed per year / tunings one tuner can do\"]\n  B --> C[\"Chicago population<br/>about 2.7M\"]\n  C --> D[\"Households<br/>2.7M / 2.7 people = about 1M\"]\n  D --> E[\"Households with a piano<br/>1 in 20 = about 50K pianos\"]\n  E --> F[\"Demand: tunings per year<br/>50K pianos x 1 tuning = 50K\"]\n  B --> G[\"Supply per tuner<br/>4 tunings per day x 220 days<br/>= about 880 per year\"]\n  F --> H[\"Tuners needed<br/>50K / 880 = about 57\"]\n  G --> H\n  H --> I[\"Sanity check<br/>many tuners are part-time, so headcount is higher<br/>but full-time equivalents stay near 50 to 60\"]\n  I --> J[\"Answer<br/>about 50 to 60 piano tuners\"]\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D step\n  class E,F,G,H calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 57 tuners\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 1 in 30 households has a piano<br/>1M / 30 = 33K tunings<br/>33K / 880 = about 38\"]\n  P --> Q2[\"3 tunings per day, not 4<br/>3 x 220 = 660 per year<br/>50K / 660 = about 76\"]\n  P --> Q3[\"Pianos tuned every 2 years<br/>50K x 0.5 = 25K tunings<br/>25K / 880 = about 28\"]\n  Q1 --> R[\"Updated range<br/>about 30 to 75 tuners\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>how many pianos there are and how often they are tuned\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "lead": "Demand versus supply: tunings needed per year divided by the tunings one tuner can do.",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Chicago households",
+        "2.7M / 2.7 people",
+        "about 1M"
+      ],
+      [
+        "Households with a piano",
+        "1 in 20",
+        "about 50K"
+      ],
+      [
+        "Tunings per piano per year",
+        "1",
+        "about 50K tunings"
+      ],
+      [
+        "Tunings per tuner per day",
+        "about 4, including travel",
+        "4"
+      ],
+      [
+        "Working days per year",
+        "about 220",
+        "220"
+      ],
+      [
+        "Tunings per tuner per year",
+        "4 x 220",
+        "about 880"
+      ],
+      [
+        "Tuners needed",
+        "50K / 880",
+        "about 57"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 57)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "1 in 30 households has a piano",
+        "(1M / 30) / 880",
+        "about 38"
+      ],
+      [
+        "3 tunings per day",
+        "50K / (3 x 220)",
+        "about 76"
+      ],
+      [
+        "Tuned every 2 years",
+        "(50K x 0.5) / 880",
+        "about 28"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate full-time-equivalent piano tuners in the city of Chicago, based on household pianos. I'll leave out schools, churches and venues at first. Does that work?"
+    ],
+    [
+      "Approach",
+      "Demand versus supply. First, how many tunings Chicago needs in a year. Second, how many tunings one tuner can do in a year. Dividing gives the number of tuners."
+    ],
+    [
+      "Inputs",
+      "Chicago has about 2.7M people and about 2.7 per household, so about 1M households. About 1 in 20 has a piano, so about 50K pianos, tuned about once a year. A tuner does about 4 tunings a day including travel and works about 220 days."
+    ],
+    [
+      "Math",
+      "Demand is 50K tunings a year. Supply per tuner is 4 x 220, about 880 a year. 50K divided by 880 is about 57 tuners."
+    ],
+    [
+      "Sanity check",
+      "Many tuners work part-time, so the actual headcount is probably higher, but in full-time equivalents about 50 to 60 feels right for a city this size."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 50 to 60. If only 1 in 30 households has a piano it is about 38, and at 3 tunings a day it is about 76. The answer is most sensitive to how many pianos there are and how often they are tuned."
+    ]
+  ]
+},
+  rides: {
+  "title": "Estimate the number of ride-hail trips in the Chicago area each day",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Ride-hail trips per day in the Chicago area<br/>Metro area, trips not riders\"] --> B[\"Approach: top-down from population<br/>Cross-check from the driver side\"]\n  B --> C[\"Chicago metro population<br/>about 9.5M\"]\n  C --> D[\"Adults<br/>78% x 9.5M = about 7.4M\"]\n  D --> E[\"Adults who ride on a given day<br/>3% x 7.4M = about 220K riders\"]\n  E --> F[\"Trips per rider per day<br/>about 1.3<br/>220K x 1.3 = about 290K trips\"]\n  B --> G[\"Cross-check: drivers<br/>15K active drivers x 15 trips per day<br/>= about 225K trips\"]\n  F --> H[\"Compare the two methods<br/>290K vs 225K, within 30% of each other\"]\n  G --> H\n  H --> I[\"Sanity check<br/>about 1 trip per 40 residents per day\"]\n  I --> J[\"Answer<br/>about 200K to 300K trips per day\"]\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D step\n  class E,F,G,H calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 250K trips per day\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 2.5% of adults ride per day<br/>7.4M x 2.5% = 185K riders<br/>185K x 1.3 = about 240K\"]\n  P --> Q2[\"3.5% of adults ride per day<br/>7.4M x 3.5% = 259K riders<br/>259K x 1.3 = about 335K\"]\n  P --> Q3[\"Only 12K active drivers<br/>12K x 15 trips<br/>= about 180K\"]\n  Q1 --> R[\"Updated range<br/>about 180K to 335K\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>the share of adults who ride on a given day\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "lead": "Top-down from population, cross-checked from the driver side.",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Metro population",
+        "",
+        "about 9.5M"
+      ],
+      [
+        "Adults",
+        "78% x 9.5M",
+        "about 7.4M"
+      ],
+      [
+        "Riders on a given day",
+        "3% x 7.4M",
+        "about 220K"
+      ],
+      [
+        "Trips per rider per day",
+        "about 1.3",
+        "1.3"
+      ],
+      [
+        "Trips per day (rider method)",
+        "220K x 1.3",
+        "about 290K"
+      ],
+      [
+        "Cross-check: drivers",
+        "15K active drivers x 15 trips per day",
+        "about 225K"
+      ],
+      [
+        "Point estimate",
+        "midpoint of the two methods",
+        "about 250K"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 250K)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "2.5% of adults ride per day",
+        "7.4M x 2.5% x 1.3",
+        "about 240K"
+      ],
+      [
+        "3.5% of adults ride per day",
+        "7.4M x 3.5% x 1.3",
+        "about 335K"
+      ],
+      [
+        "Only 12K active drivers",
+        "12K x 15",
+        "about 180K"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate ride-hail trips per day across the Chicago metro area, counting trips rather than riders. Does that work?"
+    ],
+    [
+      "Approach",
+      "Top-down from population, then a cross-check from the driver side."
+    ],
+    [
+      "Inputs",
+      "The metro area has about 9.5M people. About 78% are adults, so about 7.4M. On a given day about 3% of adults take a ride-hail trip, so about 220K riders, and each takes about 1.3 trips."
+    ],
+    [
+      "Math",
+      "220K x 1.3 is about 290K trips a day. As a cross-check, about 15K active drivers at about 15 trips a day is about 225K."
+    ],
+    [
+      "Sanity check",
+      "The two methods land within 30% of each other, and the result is about one trip per 40 residents per day, which feels reasonable."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 200K to 300K, with about 250K as a midpoint. If only 2.5% of adults ride on a given day it is about 240K, and at 3.5% it is about 335K. The answer is most sensitive to the share of adults who ride on a given day."
+    ]
+  ]
 }
 };

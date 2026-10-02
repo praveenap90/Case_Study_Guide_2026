@@ -61,7 +61,14 @@
     var p = r.path;
     var top = p[0] || "home";
     $$("#nav a").forEach(function (a) { a.classList.toggle("on", a.getAttribute("data-r") === top); });
-    var views = { home: home, template: template, flow: flow, frameworks: frameworks, cases: cases, estimation: estimation, math: math, glossary: glossary, progress: progress };
+    var legacy = { template: "template", frameworks: "frameworks", cases: "cases", flow: "template" };
+    if (legacy[top]) {
+      var qs = (location.hash || "").indexOf("?") >= 0 ? "?" + location.hash.split("?")[1] : "";
+      location.replace("#/casestudies/" + [legacy[top]].concat(p.slice(1)).join("/") + qs);
+      return;
+    }
+    if (top === "math" || top === "glossary") { location.replace("#/"); return; }
+    var views = { home: home, casestudies: casestudies, estimation: estimation, progress: progress };
     (views[top] || home)(p, r.q);
     window.scrollTo(0, 0);
     app.focus({ preventScroll: true });
@@ -74,16 +81,16 @@
     var n = Object.keys(done).length;
     app.innerHTML =
       "<h1>Case interview prep</h1>" +
-      '<p class="lead">Learn the frameworks, then practice cases by employer type, guesstimates, and math. Everything runs in your browser and your progress stays on this device.</p>' +
+      '<p class="lead">Learn the frameworks, then practice cases by employer type, and guesstimates. Everything runs in your browser and your progress stays on this device.</p>' +
       '<div class="grid">' + D.tracks.map(function (t) {
         var c = D.cases.filter(function (x) { return x.track.indexOf(t.id) >= 0; }).length;
-        return '<a class="card" href="#/cases?track=' + t.id + '"><h3>' + h(t.name) + '</h3><p class="small muted">' + h(t.examples) + "</p><p>" + h(t.tests) + '</p><p class="small muted">' + c + " cases</p></a>";
+        return '<a class="card" href="#/casestudies/cases?track=' + t.id + '"><h3>' + h(t.name) + '</h3><p class="small muted">' + h(t.examples) + "</p><p>" + h(t.tests) + '</p><p class="small muted">' + c + " cases</p></a>";
       }).join("") + "</div>" +
       "<h2>How to use this</h2>" +
-      '<ol class="steps"><li><b>Template:</b> start here. Remember CLEAR (Clarify, Lay out, Evaluate, Assess, Recommend), then use the worksheet and answer script.</li><li><b>Frameworks:</b> learn the tree (for example Profit = Revenue - Costs; Revenue = Volume x Price x Mix; Costs = Fixed + Variable), then try drawing it from memory.</li>' +
-      "<li><b>Cases:</b> read the prompt, ask clarifying questions, write your own structure, then compare with the model structure and analysis.</li>" +
+      '<ol class="steps"><li><b>Case Studies &rarr; Templates:</b> start here. Remember CLEAR (Clarify, Lay out, Evaluate, Assess, Recommend), then use the worksheet and answer script.</li><li><b>Case Studies &rarr; Frameworks:</b> learn the tree (for example Profit = Revenue - Costs; Revenue = Volume x Price x Mix; Costs = Fixed + Variable), then try drawing it from memory.</li>' +
+      "<li><b>Case Studies &rarr; Cases:</b> read the prompt, ask clarifying questions, write your own structure, then compare with the model structure and analysis.</li>" +
       "<li><b>Guesstimates:</b> use the SCOPE template, then size a market in under 3 minutes with the examples.</li>" +
-      "<li><b>Math and glossary:</b> short daily drills and flashcards keep the speed up.</li></ol>" +
+      "</ol>" +
       '<div class="callout"><b>Your progress:</b> ' + n + " of " + D.cases.length + ' cases completed. <a href="#/progress">See details</a></div>';
   }
 
@@ -217,12 +224,15 @@
     } else { fallback(); }
   }
 
-  /* ---------- FLOW ---------- */
-  function flow() {
-    app.innerHTML = "<h1>Case flow</h1>" +
-      '<p class="lead">Two views of the same process: the generic path, and a worked profit-decline example.</p>' +
-      D.flows.map(function (f) { chartSrc["flow-" + f.id] = f.code; return chartBlock("flow-" + f.id, f.title, f.note); }).join("");
-    renderCharts();
+  /* ---------- CASE STUDIES (Templates, Frameworks, Cases) ---------- */
+  function casestudies(p, q) {
+    var subs = [["template", "Templates"], ["frameworks", "Frameworks"], ["cases", "Cases"]];
+    var sub = subs.some(function (x) { return x[0] === p[1]; }) ? p[1] : "template";
+    var sp = [sub].concat(p.slice(2));
+    ({ template: template, frameworks: frameworks, cases: cases })[sub](sp, q);
+    app.insertAdjacentHTML("afterbegin", '<div class="filters" role="tablist" aria-label="Case study sections">' + subs.map(function (t) {
+      return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/casestudies/' + t[0] + '\'">' + t[1] + "</button>";
+    }).join("") + "</div>");
   }
 
   /* ---------- TEMPLATE ---------- */
@@ -239,7 +249,7 @@
       chartBlock("clear", "1. Remember CLEAR", "Five steps in a fixed order. Say them out loud before every case.") +
       table(T.clearTable) +
       chartBlock("pick", "2. Pick the structure", "Match the type of question to the structure, then open the Frameworks page for the full tree.") +
-      chartBlock("metrics", "3. Pick the number", "Match the decision to the metric. The examples match the Math drills.") +
+      chartBlock("metrics", "3. Pick the number", "Match the decision to the metric.") +
       table(T.metricsTable) +
       D.flows.map(function (f, i) { return chartBlock("tpl-flow-" + f.id, (4 + i) + ". " + f.title, f.note); }).join("") +
       "<h2>6. Worksheet</h2><p class=\"muted small\">Fill this in for any practice case. Your notes save in this browser. The sample column shows the Digital Feature case.</p>" +
@@ -291,18 +301,18 @@
     app.innerHTML = "<h1>Frameworks</h1>" +
       '<p class="lead">A structure turns an open question into a few buckets you can analyze. Pick the one that matches the question.</p>' +
       '<div class="grid">' + D.frameworks.map(function (f) {
-        return '<a class="card" href="#/frameworks/' + f.id + '"><h3>' + h(f.name) + "</h3><p class=\"small muted\">" + h(f.when) + "</p><div>" +
+        return '<a class="card" href="#/casestudies/casestudies/frameworks/' + f.id + '"><h3>' + h(f.name) + "</h3><p class=\"small muted\">" + h(f.when) + "</p><div>" +
           f.tags.map(function (t) { return '<span class="chip">' + h(trackName(t)) + "</span>"; }).join("") + "</div></a>";
       }).join("") + "</div>";
   }
   function frameworkDetail(id) {
     var f = find(D.frameworks, id);
-    if (!f) { app.innerHTML = "<p>Not found. <a href='#/frameworks'>Back</a></p>"; return; }
+    if (!f) { app.innerHTML = "<p>Not found. <a href='#/casestudies/casestudies/frameworks'>Back</a></p>"; return; }
     var related = D.cases.filter(function (c) { return c.framework === f.id; });
     if (f.exampleChart) chartSrc["fw-" + f.id] = f.exampleChart;
     (f.exampleCharts || []).forEach(function (c) { chartSrc["fw-" + f.id + "-" + c.id] = c.code; });
     app.innerHTML =
-      '<p><a href="#/frameworks">&larr; All frameworks</a></p><h1>' + h(f.name) + "</h1>" +
+      '<p><a href="#/casestudies/casestudies/frameworks">&larr; All frameworks</a></p><h1>' + h(f.name) + "</h1>" +
       '<div class="callout"><b>When to use:</b> ' + h(f.when) + "</div>" +
       (f.tree ?
         "<h2>The structure</h2>" +
@@ -333,7 +343,7 @@
   /* ---------- CASES ---------- */
   function caseCard(c) {
     var done = store.get("casesDone", {})[c.id];
-    return '<a class="card" href="#/cases/' + c.id + '"><h3>' + h(c.title) + (done ? ' <span class="done" title="Completed">&#10003;</span>' : "") + "</h3><div>" +
+    return '<a class="card" href="#/casestudies/cases/' + c.id + '"><h3>' + h(c.title) + (done ? ' <span class="done" title="Completed">&#10003;</span>' : "") + "</h3><div>" +
       c.track.map(function (t) { return '<span class="chip">' + h(trackName(t)) + "</span>"; }).join("") +
       '<span class="chip warn">' + h(c.difficulty) + "</span></div>" +
       '<p class="small muted">~' + c.minutes + " min &middot; " + h((find(D.frameworks, c.framework) || {}).name || "") + "</p></a>";
@@ -351,18 +361,18 @@
       (tinfo ? '<div class="callout"><b>' + h(tinfo.name) + ":</b> " + h(tinfo.style) + "<ul>" + tinfo.tips.map(function (t) { return "<li>" + h(t) + "</li>"; }).join("") + "</ul></div>" : "") +
       '<div class="grid">' + list.map(caseCard).join("") + "</div>";
     $$(".filters button").forEach(function (b) {
-      b.addEventListener("click", function () { var t = b.getAttribute("data-t"); location.hash = t === "all" ? "#/cases" : "#/cases?track=" + t; });
+      b.addEventListener("click", function () { var t = b.getAttribute("data-t"); location.hash = t === "all" ? "#/casestudies/cases" : "#/casestudies/cases?track=" + t; });
     });
   }
 
   function caseDetail(id) {
     var c = find(D.cases, id);
-    if (!c) { app.innerHTML = "<p>Not found. <a href='#/cases'>Back</a></p>"; return; }
+    if (!c) { app.innerHTML = "<p>Not found. <a href='#/casestudies/cases'>Back</a></p>"; return; }
     var fw = find(D.frameworks, c.framework);
     var done = store.get("casesDone", {});
     var rating = store.get("rating:" + id, 0);
     app.innerHTML =
-      '<p><a href="#/cases">&larr; All cases</a></p><h1>' + h(c.title) + "</h1><div>" +
+      '<p><a href="#/casestudies/cases">&larr; All cases</a></p><h1>' + h(c.title) + "</h1><div>" +
       c.track.map(function (t) { return '<span class="chip">' + h(trackName(t)) + "</span>"; }).join("") +
       '<span class="chip warn">' + h(c.difficulty) + "</span></div>" +
       "<h2>1. The prompt</h2><div class=\"callout\">" + h(c.prompt) + "</div>" +
@@ -370,7 +380,7 @@
       "<h2>2. Ask clarifying questions</h2><p class=\"muted small\">Click a question to hear the interviewer's answer. In a real interview, ask only what you need.</p>" +
       c.clarify.map(function (x) { return '<div class="qa"><button>' + h(x.q) + '</button><div class="ans">' + h(x.a) + "</div></div>"; }).join("") +
       "<h2>3. Data room</h2><details><summary>Show the data the interviewer shares</summary><div class=\"body\">" + c.tables.map(table).join("") + "</div></details>" +
-      "<h2>4. Your structure</h2><p class=\"muted small\">Write your framework before looking at the model. Framework hint: <a href=\"#/frameworks/" + c.framework + '">' + h(fw ? fw.name : "") + "</a></p>" +
+      "<h2>4. Your structure</h2><p class=\"muted small\">Write your framework before looking at the model. Framework hint: <a href=\"#/casestudies/casestudies/frameworks/" + c.framework + '">' + h(fw ? fw.name : "") + "</a></p>" +
       '<textarea id="note" aria-label="Your structure and notes" placeholder="Bucket 1... Bucket 2... Hypothesis..."></textarea>' +
       '<div class="row" style="margin-top:8px"><button id="reveal">Reveal model answer</button></div>' +
       '<div id="model" style="display:none">' +
@@ -440,6 +450,14 @@
       chartBlock("g-tnp", "Handling pushback", "Adjust one assumption at a time.") + table(T.pushMath) +
       "<h2>" + h(T.alt.title) + '</h2><div class="callout warn">' + h(T.alt.note) + "</div>" + table(T.alt.table) +
       "<h3>Sample answer (spoken)</h3>" + T.alt.sample.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("");
+  }
+  function guessSimple(key) {
+    var T = D.guess[key];
+    chartSrc["g-" + key] = T.chart; chartSrc["g-" + key + "-p"] = T.pushChart;
+    return chartBlock("g-" + key, "Worked example: " + T.title, T.lead || "Stock and flow: tires in use divided by lifespan, plus tires on new vehicles.") +
+      table(T.table) +
+      "<h3>Sample answer (spoken)</h3>" + T.sample.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("") +
+      chartBlock("g-" + key + "-p", "Handling pushback", "Adjust one assumption at a time.") + table(T.pushMath);
   }
   function guessManhole() {
     var G = D.guess;
@@ -553,7 +571,7 @@
           '<div class="sol" style="display:none"><p><b>Approach:</b> ' + h(e.approach) + "</p>" +
           '<div class="tablewrap"><table><thead><tr><th>Step</th><th>Calculation</th><th>Value</th></tr></thead><tbody>' +
           e.steps.map(function (s) { return "<tr><td>" + h(s[0]) + "</td><td>" + h(s[1]) + "</td><td>" + h(s[2]) + "</td></tr>"; }).join("") +
-          '</tbody></table></div><div class="callout"><b>Answer:</b> ' + h(e.answer) + "</div><p><b>Sanity check:</b> " + h(e.sanity) + "</p>" + (e.id === "coffee" ? guessUS() : e.id === "manholes" ? guessManhole() : e.id === "tennis" ? guessTennis() : "") + "</div></div></details>";
+          '</tbody></table></div><div class="callout"><b>Answer:</b> ' + h(e.answer) + "</div><p><b>Sanity check:</b> " + h(e.sanity) + "</p>" + (e.id === "coffee" ? guessUS() : e.id === "manholes" ? guessManhole() : e.id === "tennis" ? guessTennis() : (e.id === "tires" || e.id === "smartphones" || e.id === "pizza" || e.id === "gas" || e.id === "cards" || e.id === "piano" || e.id === "rides") ? guessSimple(e.id) : "") + "</div></div></details>";
       }).join("");
     $$("details[data-id]").forEach(function (d) {
       var id = d.getAttribute("data-id");
@@ -571,163 +589,19 @@
     renderCharts();
   }
 
-  /* ---------- MATH ---------- */
-  var gens = {
-    pct: { name: "Percent change", make: function () {
-      var a = pick([80, 120, 160, 200, 240, 400]), pc = pick([10, 20, 25, 30, 50, -10, -20, -25]);
-      var b = a * (1 + pc / 100);
-      return { text: "Revenue went from $" + a + "M to $" + fmt(b) + "M. What is the percent change?", ans: pc, unit: "%", sol: "(" + fmt(b) + " - " + a + ") / " + a + " = " + pc + "%" };
-    } },
-    margin: { name: "Margin to profit", make: function () {
-      var r = pick([50, 80, 120, 150, 200, 250]), m = pick([10, 15, 20, 25, 30, 40]);
-      return { text: "Revenue is $" + r + "M and net margin is " + m + "%. What is profit, in $M?", ans: r * m / 100, unit: "$M", sol: r + " x " + m + "% = " + fmt(r * m / 100) };
-    } },
-    be: { name: "Breakeven volume", make: function () {
-      var c = pick([[300000, 50, 20], [200000, 40, 20], [600000, 30, 18], [1200000, 80, 40], [500000, 25, 15], [900000, 60, 30]]);
-      return { text: "Fixed costs are $" + c[0].toLocaleString("en-US") + ". Price is $" + c[1] + " and variable cost is $" + c[2] + " per unit. How many units to break even?", ans: c[0] / (c[1] - c[2]), unit: "units", sol: c[0] + " / (" + c[1] + " - " + c[2] + ") = " + c[0] / (c[1] - c[2]) };
-    } },
-    pay: { name: "Payback (months)", make: function () {
-      var c = pick([[12, 6], [9, 12], [5, 10], [15, 10], [30, 24], [8, 4]]);
-      var m = c[0] / c[1] * 12;
-      return { text: "An investment of $" + c[0] + "M earns $" + c[1] + "M profit per year. What is the payback period in months?", ans: m, unit: "months", sol: c[0] + " / " + c[1] + " x 12 = " + fmt(m) + " months" };
-    } },
-    comp: { name: "Two-year growth", make: function () {
-      var b = pick([100, 200, 500]), r = pick([10, 20]);
-      var v = b * Math.pow(1 + r / 100, 2);
-      return { text: "Revenue of $" + b + "M grows " + r + "% per year for 2 years. What is the final revenue, in $M?", ans: v, unit: "$M", sol: b + " x " + (1 + r / 100) + " x " + (1 + r / 100) + " = " + fmt(v) };
-    } },
-    mult: { name: "Quick multiplication", make: function () {
-      var a = pick([2.4, 3.5, 4.8, 6.2, 7.5]), b = pick([25, 40, 60, 90]);
-      return { text: a + "M customers each spending $" + b + " per year. Total spend in $M?", ans: a * b, unit: "$M", sol: a + " x " + b + " = " + fmt(a * b) };
-    } },
-    share: { name: "Market share", make: function () {
-      var m = pick([2, 4, 5, 8]), s = pick([5, 12, 15, 25]);
-      return { text: "The market is $" + m + "B and you have a " + s + "% share. Your revenue in $M?", ans: m * s * 10, unit: "$M", sol: m + "B x " + s + "% = " + m * s * 10 + "M" };
-    } },
-    roi: { name: "ROI", make: function () {
-      var c = pick([[2, 5], [4, 6], [5, 12], [10, 13]]);
-      var r = (c[1] - c[0]) / c[0] * 100;
-      return { text: "You invest $" + c[0] + "M and get back $" + c[1] + "M in total. What is the ROI in percent?", ans: r, unit: "%", sol: "(" + c[1] + " - " + c[0] + ") / " + c[0] + " = " + fmt(r) + "%" };
-    } }
-  };
-  function math() {
-    var stats = store.get("math", { right: 0, total: 0, best: 0 });
-    var streak = 0, cur = null, t0 = 0, mode = "all";
-    app.innerHTML = "<h1>Math drills</h1>" +
-      '<p class="lead">No calculator. Say your steps out loud. Answers within 2% count as correct.</p>' +
-      '<div class="row"><label for="mode">Type</label><select id="mode" style="width:auto"><option value="all">All types</option>' +
-      Object.keys(gens).map(function (k) { return '<option value="' + k + '">' + h(gens[k].name) + "</option>"; }).join("") + "</select></div>" +
-      '<div class="card" style="margin-top:12px"><p id="qtext" style="font-size:19px;margin-top:0"></p>' +
-      '<form id="f" class="row"><input type="number" step="any" id="ans" class="short" aria-label="Your answer" autocomplete="off"><span id="unit" class="muted"></span><button type="submit" id="check">Check</button><button type="button" id="next" class="ghost">Next</button></form>' +
-      '<p id="fb" class="feedback" aria-live="polite"></p><p id="sol" class="small muted"></p></div>' +
-      '<div class="row" style="margin-top:12px"><div><div class="stat" id="sStreak">0</div><div class="small muted">streak</div></div>' +
-      '<div style="margin-left:24px"><div class="stat" id="sAcc">-</div><div class="small muted">accuracy (all time)</div></div></div>';
-    function showStats() {
-      $("#sStreak").textContent = streak;
-      $("#sAcc").textContent = stats.total ? Math.round(stats.right / stats.total * 100) + "% (" + stats.right + "/" + stats.total + ")" : "-";
-    }
-    function newQ() {
-      var keys = Object.keys(gens);
-      var g = gens[mode === "all" ? pick(keys) : mode];
-      cur = g.make(); cur.answered = false;
-      $("#qtext").textContent = cur.text;
-      $("#unit").textContent = cur.unit;
-      $("#ans").value = ""; $("#fb").textContent = ""; $("#fb").className = "feedback"; $("#sol").textContent = "";
-      $("#check").disabled = false;
-      t0 = Date.now(); $("#ans").focus();
-    }
-    $("#mode").addEventListener("change", function () { mode = this.value; newQ(); });
-    $("#next").addEventListener("click", newQ);
-    $("#f").addEventListener("submit", function (e) {
-      e.preventDefault();
-      if (!cur || cur.answered) { newQ(); return; }
-      var v = parseFloat($("#ans").value);
-      if (isNaN(v)) { $("#fb").textContent = "Enter a number."; return; }
-      cur.answered = true;
-      var ok = Math.abs(v - cur.ans) <= Math.max(Math.abs(cur.ans) * 0.02, 0.01);
-      var secs = Math.round((Date.now() - t0) / 1000);
-      stats.total++; if (ok) { stats.right++; streak++; if (streak > stats.best) stats.best = streak; } else { streak = 0; }
-      store.set("math", stats);
-      var fb = $("#fb");
-      fb.className = "feedback " + (ok ? "good" : "bad");
-      fb.textContent = (ok ? "Correct" : "Not quite. Answer: " + fmt(cur.ans) + " " + cur.unit) + " (" + secs + "s)";
-      $("#sol").textContent = "Working: " + cur.sol;
-      $("#check").disabled = true;
-      showStats();
-    });
-    newQ(); showStats();
-  }
-
-  /* ---------- GLOSSARY ---------- */
-  function glossary() {
-    var cats = ["All"].concat(D.glossary.map(function (g) { return g.cat; }).filter(function (v, i, a) { return a.indexOf(v) === i; }));
-    var cat = "All", term = "", flash = false;
-    function render() {
-      var known = store.get("known", {});
-      app.innerHTML = "<h1>Glossary</h1>" +
-        '<div class="row"><input type="search" id="s" aria-label="Search terms" placeholder="Search terms" value="' + h(term) + '" style="max-width:320px">' +
-        '<button id="mode" class="ghost">' + (flash ? "Back to list" : "Flashcard mode") + "</button></div>" +
-        '<div class="filters">' + cats.map(function (c) { return '<button data-c="' + h(c) + '" class="' + (c === cat ? "on" : "") + '" aria-pressed="' + (c === cat) + '">' + h(c) + "</button>"; }).join("") + "</div>" +
-        '<div id="body"></div>';
-      $("#s").addEventListener("input", function () { term = this.value; body(); });
-      $("#mode").addEventListener("click", function () { flash = !flash; render(); });
-      $$(".filters button").forEach(function (b) { b.addEventListener("click", function () { cat = b.getAttribute("data-c"); render(); }); });
-      body();
-    }
-    function list() {
-      return D.glossary.filter(function (g) {
-        return (cat === "All" || g.cat === cat) && (!term || (g.term + " " + g.def).toLowerCase().indexOf(term.toLowerCase()) >= 0);
-      });
-    }
-    function body() {
-      var items = list();
-      var el = $("#body");
-      if (!flash) {
-        el.innerHTML = items.length ? '<div class="grid">' + items.map(function (g) {
-          return '<div class="card"><h3>' + h(g.term) + '</h3><span class="chip">' + h(g.cat) + "</span><p>" + h(g.def) + "</p>" + (g.formula ? '<p class="small muted"><b>Formula:</b> ' + h(g.formula) + "</p>" : "") + "</div>";
-        }).join("") + "</div>" : "<p>No matches.</p>";
-        return;
-      }
-      if (!items.length) { el.innerHTML = "<p>No cards.</p>"; return; }
-      var deck = shuffle(items), i = 0, shown = false;
-      function card() {
-        var g = deck[i];
-        var k = store.get("known", {});
-        el.innerHTML = '<p class="muted small">Card ' + (i + 1) + " of " + deck.length + " &middot; known: " + Object.keys(k).length + "/" + D.glossary.length + "</p>" +
-          '<div class="card flash" id="fc" role="button" tabindex="0" aria-label="Flip card">' +
-          (shown ? "<div>" + h(g.def) + (g.formula ? '<span class="formula">' + h(g.formula) + "</span>" : "") + "</div>" : "<div><b>" + h(g.term) + "</b><br><span class=\"small muted\">Tap to reveal</span></div>") + "</div>" +
-          '<div class="row" style="margin-top:10px"><button id="again" class="ghost">Again</button><button id="got">Got it</button></div>';
-        function flip() { shown = !shown; card(); }
-        $("#fc").addEventListener("click", flip);
-        $("#fc").addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); flip(); } });
-        function adv(isKnown) {
-          var kn = store.get("known", {});
-          if (isKnown) kn[g.term] = 1; else delete kn[g.term];
-          store.set("known", kn);
-          i = (i + 1) % deck.length; shown = false; card();
-        }
-        $("#got").addEventListener("click", function () { adv(true); });
-        $("#again").addEventListener("click", function () { adv(false); });
-      }
-      card();
-    }
-    render();
-  }
-
   /* ---------- PROGRESS ---------- */
   function progress() {
-    var done = store.get("casesDone", {}), tried = store.get("estTried", {}), m = store.get("math", { right: 0, total: 0, best: 0 }), known = store.get("known", {});
+    var done = store.get("casesDone", {}), tried = store.get("estTried", {});
     function bar(a, b) { return '<div class="bar" role="progressbar" aria-valuenow="' + a + '" aria-valuemin="0" aria-valuemax="' + b + '"><i style="width:' + Math.round(a / b * 100) + '%"></i></div>'; }
-    var nc = Object.keys(done).length, ne = Object.keys(tried).length, nk = Object.keys(known).length;
+    var nc = Object.keys(done).length, ne = Object.keys(tried).length;
     app.innerHTML = "<h1>Progress</h1>" +
       '<div class="grid">' +
       '<div class="card"><div class="stat">' + nc + "/" + D.cases.length + '</div><div class="muted small">cases completed</div>' + bar(nc, D.cases.length) + "</div>" +
       '<div class="card"><div class="stat">' + ne + "/" + D.estimation.length + '</div><div class="muted small">guesstimate examples attempted</div>' + bar(ne, D.estimation.length) + "</div>" +
-      '<div class="card"><div class="stat">' + nk + "/" + D.glossary.length + '</div><div class="muted small">glossary terms known</div>' + bar(nk, D.glossary.length) + "</div>" +
-      '<div class="card"><div class="stat">' + (m.total ? Math.round(m.right / m.total * 100) + "%" : "-") + '</div><div class="muted small">math accuracy (' + m.right + "/" + m.total + ", best streak " + m.best + ")</div></div></div>" +
+      '</div>' +
       "<h2>Cases</h2>" + D.cases.map(function (c) {
         var r = store.get("rating:" + c.id, 0);
-        return '<p><a href="#/cases/' + c.id + '">' + h(c.title) + "</a> " + (done[c.id] ? '<span class="done">&#10003; done</span>' : '<span class="muted">not yet</span>') + (r ? ' <span class="muted small">self-rating ' + r + "/5</span>" : "") + "</p>";
+        return '<p><a href="#/casestudies/cases/' + c.id + '">' + h(c.title) + "</a> " + (done[c.id] ? '<span class="done">&#10003; done</span>' : '<span class="muted">not yet</span>') + (r ? ' <span class="muted small">self-rating ' + r + "/5</span>" : "") + "</p>";
       }).join("") +
       '<h2>Reset</h2><p class="muted small">Clears notes and progress stored in this browser.</p><button id="reset" class="ghost">Reset all progress</button>';
     $("#reset").addEventListener("click", function () { if (confirm("Reset all progress and notes?")) { store.clearAll(); progress(); } });
