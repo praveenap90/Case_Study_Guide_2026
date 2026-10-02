@@ -3,12 +3,12 @@
 Interactive static site for case interview practice. No build step, no dependencies.
 
 ## What's inside
-- **Template:** the CLEAR method (Clarify, Lay out, Evaluate, Assess, Recommend) with a memory chart, a structure picker chart, a metrics chart (break-even, ROI, payback, LTV:CAC, margin, CAGR), a worksheet that saves in the browser, a fill-in answer script, a filled example, a phrase bank and a final checklist. Source in `js/data-template.js`.
-- **Chart zoom:** every Mermaid chart has zoom out / zoom in / reset buttons (50% to 300%); zoomed charts scroll inside their box.
+- **Template:** the CLEAR method (Clarify, Lay out, Evaluate, Assess, Recommend) with a memory chart, a structure picker chart, a metrics chart (break-even, ROI, payback, LTV:CAC, margin, CAGR), the two case-flow charts (generic flow and a worked profit-decline example), a worksheet that saves in the browser, a fill-in answer script, a filled example, a phrase bank and a final checklist. Source in `js/data-template.js`.
+- **Chart controls:** every Mermaid chart has a control bar: Expand (full screen, Esc to close) and Copy source at top right; pan up/down/left/right, reset, zoom in/out (50% to 300%) at bottom right.
 - **Flow:** two color-coded Mermaid flowcharts (generic case flow and a worked profit-decline example), rendered from `js/data-flow.js`. Needs internet for the Mermaid CDN script; the source shows if it cannot load.
 - **Frameworks (11):** profitability, market sizing, market entry, growth, pricing, M&A, operations/cost, retention, metric diagnosis, unit economics, product deep-dive (with a product-type cheat sheet and a worked CLEAR example with three charts: CLEAR flow, Evaluate naive vs. holdout, and Impact math). Each has the tree, steps, pitfalls and a "hide the tree" self-quiz.
 - **Cases (9)** tagged by employer type (Banking & Fintech, Consulting, Big Tech): prompt, clarifying Q&A, data room, write-your-structure box, model answer, follow-ups, self-rating.
-- **Estimation (8):** worked top-down / bottom-up / stock-and-flow solutions (for example, US car tires per year).
+- **Estimation (Guesstimates):** two sub-sections. *Templates*: SCOPE method chart, approach picker chart, handy numbers, saved worksheet, answer script, filled tires example, common mistakes the 30-second cheat sheet and the universal guesstimate template with its flowchart, the segmentation cheat sheet a 10-question practice table pack a scaling example and the US-population generic template with a sample answer, and a manholes example (source `js/data-guess.js`). *Examples (8)*: worked top-down / bottom-up / stock-and-flow solutions.
 - **Math drills:** generated percent change, margin, breakeven, payback, ROI, compounding.
 - **Glossary:** 55 terms with search and flashcards.
 - **Progress:** stored in the browser (localStorage) and can be reset.
