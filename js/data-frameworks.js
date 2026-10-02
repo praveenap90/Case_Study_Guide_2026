@@ -320,7 +320,65 @@ DATA.frameworks = [
       "Crediting a feature with the gap between adopters and non-adopters. Adopters are usually different people to begin with (selection bias).",
       "Optimizing one metric (adoption, spend) while ignoring risk, complaints and cost to serve."
     ],
-    example: "Digital feature case: adopters spend 19% more than non-adopters, but a randomized holdout shows a much smaller true effect. See the Digital Feature case.",
+    example: "The Digital Feature case run through CLEAR: a card issuer's spending-insights feature is at 25% adoption and the team wants $2M to reach 40%. Adopters spend $1,600 more than non-adopters, but a randomized holdout shows the real effect is much smaller. Full case in the Cases section.",
+    exampleChart: `flowchart TD
+C["C: Clarify<br/>Decide on a $2M promotion to lift adoption from 25% to 40%<br/>Payback under 18 months"]
+C --> C2["Facts: 4M app customers, random 5% holdout"]
+
+C2 --> L["L: Lay out<br/>1 Is the evidence causal?<br/>2 Value per customer<br/>3 Scale-up math<br/>4 Risks"]
+
+L --> E1["E: Evaluate<br/>Naive gap: adopters spend $10,200 vs $8,600 = +$1,600"]
+E1 --> E2["Holdout: +$45 per offered customer<br/>= +$180 per adopter (÷ 25% adoption)"]
+E2 --> E3["Naive view overstated the effect about 9x"]
+
+E3 --> A1["A: Assess<br/>Spend $3.6M + Retention $1.6M + Calls $1.44M = $6.6M a year"]
+A1 --> A2["Less run cost $1.5M = $5.1M net a year"]
+A2 --> A3["+15 adoption points x $0.27M = $4.0M<br/>50% haircut = $2.0M a year"]
+A3 --> A4["Payback = $2M / $2M per year = 12 months"]
+
+A4 --> R["R: Recommend<br/>Yes, in stages"]
+R --> R1["Test on half of non-adopters for 8 weeks"]
+R --> R2["Scale if benefit per new adopter is at least half of today's"]
+R --> R3["Guardrails: complaints, delinquency, opt-outs"]
+
+classDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;
+classDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;
+classDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;
+classDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;
+classDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;
+class C,C2 c1;
+class L c2;
+class E1,E2,E3 c3;
+class A1,A2,A3,A4 c4;
+class R,R1,R2,R3 c5;`,
+    exampleTables: [
+      {
+        title: "CLEAR applied to the product deep-dive steps",
+        headers: ["CLEAR step", "Product deep-dive step it uses", "In this case"],
+        rows: [
+          ["Clarify", "Restate the product, ask the objective", "A free feature costing $1.5M a year. The decision is a $2M promotion, with payback under 18 months."],
+          ["Lay out", "Customer, economics, measurement, risk", "Causal evidence, value per customer, scale-up math, risks"],
+          ["Evaluate", "Measure with a test, not adopters vs. non-adopters", "The holdout shows +$180 per adopter, not the naive +$1,600"],
+          ["Assess", "Convert the effect to dollars", "$6.6M a year benefit, $5.1M net, about $2.0M a year from scaling after a haircut"],
+          ["Recommend", "Staged action with guardrails", "Yes, test on half of non-adopters first"]
+        ]
+      },
+      {
+        title: "The impact math",
+        headers: ["Source", "Logic", "Value"],
+        rows: [
+          ["Extra spend", "$45 x 4M = $180M spend x 2%", "$3.6M"],
+          ["Retention", "0.1 pt x 4M = 4,000 accounts x $400", "$1.6M"],
+          ["Fewer calls", "4M x 1.2 calls x 3% = 144K calls x $10", "$1.44M"],
+          ["Total benefit", "", "$6.6M a year"],
+          ["Less running cost", "", "-$1.5M"],
+          ["Net", "", "$5.1M a year"],
+          ["Scale-up (+15 points)", "$6.64M / 25 = $0.27M per point x 15", "$4.0M"],
+          ["After 50% haircut", "New adopters are less engaged", "$2.0M a year"],
+          ["Payback", "$2M / $2M per year", "12 months"]
+        ]
+      }
+    ],
     table: {
       title: "What changes by product type",
       headers: ["Product", "Main profit levers", "Main risks"],

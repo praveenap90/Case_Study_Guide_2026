@@ -60,7 +60,7 @@
     var p = r.path;
     var top = p[0] || "home";
     $$("#nav a").forEach(function (a) { a.classList.toggle("on", a.getAttribute("data-r") === top); });
-    var views = { home: home, flow: flow, frameworks: frameworks, cases: cases, estimation: estimation, math: math, glossary: glossary, progress: progress };
+    var views = { home: home, template: template, flow: flow, frameworks: frameworks, cases: cases, estimation: estimation, math: math, glossary: glossary, progress: progress };
     (views[top] || home)(p, r.q);
     window.scrollTo(0, 0);
     app.focus({ preventScroll: true });
@@ -79,38 +79,106 @@
         return '<a class="card" href="#/cases?track=' + t.id + '"><h3>' + h(t.name) + '</h3><p class="small muted">' + h(t.examples) + "</p><p>" + h(t.tests) + '</p><p class="small muted">' + c + " cases</p></a>";
       }).join("") + "</div>" +
       "<h2>How to use this</h2>" +
-      '<ol class="steps"><li><b>Frameworks:</b> learn the tree (for example Profit = Revenue - Costs; Revenue = Volume x Price x Mix; Costs = Fixed + Variable), then try drawing it from memory.</li>' +
+      '<ol class="steps"><li><b>Template:</b> start here. Remember CLEAR (Clarify, Lay out, Evaluate, Assess, Recommend), then use the worksheet and answer script.</li><li><b>Frameworks:</b> learn the tree (for example Profit = Revenue - Costs; Revenue = Volume x Price x Mix; Costs = Fixed + Variable), then try drawing it from memory.</li>' +
       "<li><b>Cases:</b> read the prompt, ask clarifying questions, write your own structure, then compare with the model structure and analysis.</li>" +
       "<li><b>Estimation:</b> size a market in under 3 minutes and compare approaches.</li>" +
       "<li><b>Math and glossary:</b> short daily drills and flashcards keep the speed up.</li></ol>" +
       '<div class="callout"><b>Your progress:</b> ' + n + " of " + D.cases.length + ' cases completed. <a href="#/progress">See details</a></div>';
   }
 
-  /* ---------- FLOW (Mermaid) ---------- */
-  function flow() {
-    app.innerHTML = "<h1>Case flow</h1>" +
-      '<p class="lead">Two views of the same process: the generic path, and a worked profit-decline example.</p>' +
-      D.flows.map(function (f) {
-        return "<h2>" + h(f.title) + '</h2><p class="muted small">' + h(f.note) + "</p>" +
-          '<div class="diagram" id="d-' + f.id + '"></div>' +
-          '<details><summary>Show Mermaid source</summary><div class="body"><pre class="src"></pre></div></details>';
-      }).join("");
+  /* ---------- CHARTS (Mermaid) ---------- */
+  var chartSrc = {};
+  function chartBlock(id, title, note) {
+    return "<h2>" + h(title) + '</h2><p class="muted small">' + h(note) + "</p>" +
+      '<div class="diagram" data-id="' + id + '"></div>' +
+      '<details><summary>Show Mermaid source</summary><div class="body"><pre class="src" data-id="' + id + '"></pre></div></details>';
+  }
+  function renderCharts() {
     var boxes = $$(".diagram");
-    D.flows.forEach(function (f, i) {
-      $$("pre.src")[i].textContent = f.code;
-      boxes[i].innerHTML = '<pre class="mermaid"></pre>';
-      $(".mermaid", boxes[i]).textContent = f.code;
+    boxes.forEach(function (b) {
+      var pre = document.createElement("pre");
+      pre.className = "mermaid";
+      pre.textContent = chartSrc[b.getAttribute("data-id")];
+      b.appendChild(pre);
     });
-    if (window.mermaid) {
-      try {
-        window.mermaid.initialize({ startOnLoad: false, securityLevel: "loose", theme: "default", flowchart: { useMaxWidth: true } });
-        window.mermaid.run({ nodes: $$(".mermaid") });
-      } catch (e) { fallback(); }
-    } else { fallback(); }
+    $$("pre.src").forEach(function (p) { p.textContent = chartSrc[p.getAttribute("data-id")]; });
     function fallback() {
       boxes.forEach(function (b) { b.innerHTML = '<p class="small muted">The chart library could not load (offline?). Open the Mermaid source below.</p>'; });
       $$("details").forEach(function (d) { d.open = true; });
     }
+    if (window.mermaid) {
+      try {
+        window.mermaid.initialize({ startOnLoad: false, securityLevel: "loose", theme: "default", flowchart: { useMaxWidth: true } });
+        var r = window.mermaid.run({ nodes: $$(".mermaid") });
+        if (r && r.catch) r.catch(fallback);
+      } catch (e) { fallback(); }
+    } else { fallback(); }
+  }
+
+  /* ---------- FLOW ---------- */
+  function flow() {
+    app.innerHTML = "<h1>Case flow</h1>" +
+      '<p class="lead">Two views of the same process: the generic path, and a worked profit-decline example.</p>' +
+      D.flows.map(function (f) { chartSrc["flow-" + f.id] = f.code; return chartBlock("flow-" + f.id, f.title, f.note); }).join("");
+    renderCharts();
+  }
+
+  /* ---------- TEMPLATE ---------- */
+  function template() {
+    var T = D.template;
+    chartSrc.clear = T.clearChart; chartSrc.pick = T.pickChart; chartSrc.metrics = T.metricsChart;
+    var ws = store.get("ws", {});
+    var chk = store.get("chk", {});
+    app.innerHTML =
+      "<h1>Case template</h1>" +
+      '<p class="lead">' + h(T.lead) + "</p>" +
+      '<div class="row"><button id="print" class="ghost">Print this page</button></div>' +
+      chartBlock("clear", "1. Remember CLEAR", "Five steps in a fixed order. Say them out loud before every case.") +
+      table(T.clearTable) +
+      chartBlock("pick", "2. Pick the structure", "Match the type of question to the structure, then open the Frameworks page for the full tree.") +
+      chartBlock("metrics", "3. Pick the number", "Match the decision to the metric. The examples match the Math drills.") +
+      table(T.metricsTable) +
+      "<h2>4. Worksheet</h2><p class=\"muted small\">Fill this in for any practice case. Your notes save in this browser. The sample column shows the Digital Feature case.</p>" +
+      '<div class="row"><button id="toggleSample" class="ghost">Hide sample</button><button id="clearWs" class="ghost">Clear my notes</button></div>' +
+      '<div class="tablewrap"><table id="ws"><thead><tr><th>CLEAR step</th><th>Your notes</th><th class="sample">Sample</th></tr></thead><tbody>' +
+      T.worksheet.map(function (r) {
+        return "<tr><td><b>" + h(r[0]) + '</b></td><td><textarea class="ws" data-k="' + r[1] + '" aria-label="' + h(r[0]) + '"></textarea></td><td class="sample muted">' + h(r[2]) + "</td></tr>";
+      }).join("") + "</tbody></table></div>" +
+      "<h2>5. Answer script</h2><p class=\"muted small\">A reusable way to say each step. Replace the brackets with your own words.</p>" +
+      table(T.scriptTable) +
+      "<h2>6. Filled example</h2><p class=\"muted small\">" + h(T.exampleTitle) + "</p>" +
+      T.example.map(function (e) { return '<div class="callout"><b>' + h(e[0]) + ":</b> " + h(e[1]) + "</div>"; }).join("") +
+      "<h2>7. Phrases and rules</h2>" + table(T.phrases) + table(T.rules) +
+      "<h2>8. Final check</h2><p class=\"muted small\">Run through this in the last 30 seconds before you answer.</p>" +
+      T.checks.map(function (c, i) {
+        return '<p><label><input type="checkbox" class="chk" data-i="' + i + '"> ' + h(c) + "</label></p>";
+      }).join("") +
+      '<p><button id="clearChk" class="ghost">Uncheck all</button></p>';
+    renderCharts();
+
+    $("#print").addEventListener("click", function () { window.print(); });
+    $$("textarea.ws").forEach(function (t) {
+      var k = t.getAttribute("data-k");
+      t.value = ws[k] || "";
+      t.addEventListener("input", function () { ws[k] = t.value; store.set("ws", ws); });
+    });
+    $("#clearWs").addEventListener("click", function () {
+      if (!confirm("Clear all worksheet notes?")) return;
+      ws = {}; store.set("ws", ws);
+      $$("textarea.ws").forEach(function (t) { t.value = ""; });
+    });
+    var shown = true;
+    $("#toggleSample").addEventListener("click", function () {
+      shown = !shown;
+      $$(".sample").forEach(function (c) { c.style.display = shown ? "" : "none"; });
+      this.textContent = shown ? "Hide sample" : "Show sample";
+    });
+    $$("input.chk").forEach(function (c) {
+      var i = c.getAttribute("data-i");
+      c.checked = !!chk[i];
+      c.addEventListener("change", function () { chk[i] = c.checked; store.set("chk", chk); });
+    });
+    $("#clearChk").addEventListener("click", function () { chk = {}; store.set("chk", chk); $$("input.chk").forEach(function (c) { c.checked = false; }); });
   }
 
   /* ---------- FRAMEWORKS ---------- */
@@ -127,6 +195,7 @@
     var f = find(D.frameworks, id);
     if (!f) { app.innerHTML = "<p>Not found. <a href='#/frameworks'>Back</a></p>"; return; }
     var related = D.cases.filter(function (c) { return c.framework === f.id; });
+    if (f.exampleChart) chartSrc["fw-" + f.id] = f.exampleChart;
     app.innerHTML =
       '<p><a href="#/frameworks">&larr; All frameworks</a></p><h1>' + h(f.name) + "</h1>" +
       '<div class="callout"><b>When to use:</b> ' + h(f.when) + "</div>" +
@@ -136,9 +205,12 @@
       '<div id="treeQuiz" style="display:none"><p class="muted">Write or sketch the tree on paper. Then reveal it to compare.</p></div>' +
       "<h2>How to run it</h2><ol class=\"steps\">" + f.steps.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ol>" +
       "<h2>Common pitfalls</h2><ul>" + f.pitfalls.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ul>" +
-      '<div class="callout"><b>Example:</b> ' + h(f.example) + "</div>" +
+      (f.exampleChart
+        ? chartBlock("fw-" + f.id, "Worked example: CLEAR applied", f.example) + f.exampleTables.map(table).join("")
+        : '<div class="callout"><b>Example:</b> ' + h(f.example) + "</div>") +
       (f.table ? "<h2>Cheat sheet</h2>" + table(f.table) : "") +
       (related.length ? "<h2>Practice with this framework</h2><div class=\"grid\">" + related.map(caseCard).join("") + "</div>" : "");
+    if (f.exampleChart) renderCharts();
     var shown = true;
     $("#hideTree").addEventListener("click", function () {
       shown = !shown;
