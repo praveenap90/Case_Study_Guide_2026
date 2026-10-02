@@ -336,6 +336,68 @@ class L c2;
 class E1,E2,E3 c3;
 class A1,A2,A3,A4 c4;
 class R,R1,R2,R3 c5;`,
+    exampleCharts: [
+      {
+        id: "evaluate",
+        title: "Evaluate: naive view vs. holdout",
+        note: "Why the raw gap between adopters and non-adopters is misleading.",
+        code: `flowchart TD
+Q["Does the feature cause more spend?"]
+Q --> N["Naive view: compare adopters with non-adopters"]
+Q --> H["Holdout view: compare offered vs not offered"]
+
+N --> N1["Adopters: $10,200"]
+N --> N2["Non-adopters: $8,600"]
+N1 --> N3["Gap = +$1,600"]
+N2 --> N3
+N3 --> N4["Problem: adopters were already more engaged (selection bias)"]
+
+H --> H1["Offered: $9,045"]
+H --> H2["Not offered: $9,000"]
+H1 --> H3["Gap = +$45 per offered customer"]
+H2 --> H3
+H3 --> H4["Only 25% adopted: $45 ÷ 25% = +$180 per adopter"]
+
+N3 --> X["$1,600 ÷ $180 = naive view overstated the effect about 9x"]
+H4 --> X
+X --> Z["Use the holdout number"]
+
+classDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;
+classDef naive fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;
+classDef hold fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;
+classDef result fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;
+class Q q;
+class N,N1,N2,N3,N4 naive;
+class H,H1,H2,H3,H4 hold;
+class X,Z result;`
+      },
+      {
+        id: "impact",
+        title: "Impact math: from three sources to the decision",
+        note: "Each benefit source, the net, the scale-up, the haircut and the payback check.",
+        code: `flowchart TD
+S1["Extra spend<br/>$45 x 4M = $180M x 2% = $3.6M"] --> T["Total benefit<br/>$6.64M a year"]
+S2["Retention<br/>0.1 pt x 4M = 4,000 accounts x $400 = $1.6M"] --> T
+S3["Fewer calls<br/>4M x 1.2 x 3% = 144K calls x $10 = $1.44M"] --> T
+
+T --> N["Net of $1.5M run cost<br/>= $5.1M a year"]
+N --> P["Per adoption point<br/>$6.64M ÷ 25 = $0.27M"]
+P --> G["Scale-up<br/>+15 points x $0.27M = $4.0M"]
+G --> H["50% haircut<br/>= $2.0M a year"]
+H --> PB["Payback<br/>$2M ÷ $2M per year = 12 months"]
+PB --> D{"Under the 18-month bar?"}
+D --> Y["Yes: go, in stages"]
+
+classDef src fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;
+classDef calc fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;
+classDef dec fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;
+classDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;
+class S1,S2,S3 src;
+class T,N,P,G,H,PB calc;
+class D dec;
+class Y out;`
+      }
+    ],
     exampleTables: [
       {
         title: "CLEAR applied to the product deep-dive steps",

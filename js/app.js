@@ -230,6 +230,7 @@
     if (!f) { app.innerHTML = "<p>Not found. <a href='#/frameworks'>Back</a></p>"; return; }
     var related = D.cases.filter(function (c) { return c.framework === f.id; });
     if (f.exampleChart) chartSrc["fw-" + f.id] = f.exampleChart;
+    (f.exampleCharts || []).forEach(function (c) { chartSrc["fw-" + f.id + "-" + c.id] = c.code; });
     app.innerHTML =
       '<p><a href="#/frameworks">&larr; All frameworks</a></p><h1>' + h(f.name) + "</h1>" +
       '<div class="callout"><b>When to use:</b> ' + h(f.when) + "</div>" +
@@ -241,7 +242,9 @@
       (f.steps ? "<h2>How to run it</h2><ol class=\"steps\">" + f.steps.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ol>" : "") +
       (f.pitfalls ? "<h2>Common pitfalls</h2><ul>" + f.pitfalls.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ul>" : "") +
       (f.exampleChart
-        ? chartBlock("fw-" + f.id, "Worked example: CLEAR applied", f.example) + f.exampleTables.map(table).join("") +
+        ? chartBlock("fw-" + f.id, "Worked example: CLEAR applied", f.example) + table(f.exampleTables[0]) +
+          (f.exampleCharts || []).map(function (c) { return chartBlock("fw-" + f.id + "-" + c.id, c.title, c.note); }).join("") +
+          f.exampleTables.slice(1).map(table).join("") +
           (f.speak ? "<h2>What you would say out loud</h2>" + f.speak.map(function (e) { return '<div class="callout"><b>' + h(e[0]) + ":</b> " + h(e[1]) + "</div>"; }).join("") : "")
         : '<div class="callout"><b>Example:</b> ' + h(f.example) + "</div>") +
       (f.table ? "<h2>Cheat sheet</h2>" + table(f.table) : "") +
