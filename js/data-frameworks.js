@@ -298,29 +298,14 @@ DATA.frameworks = [
     name: "Product Deep-Dive",
     tags: ["banking", "tech"],
     when: "The interviewer shows you a product, feature or app screen and asks what to do with it. Common at banks and fintechs: a card, a savings account, a loan, or a mobile app feature.",
-    tree: N("Product case",
-      N("Understand", N("What is it, for whom, what job does it do?"), N("How does the company make money from it?")),
-      N("Objective", N("Grow, raise profit, fix a metric, or launch?"), N("Success metric and time frame")),
-      N("Economics per account", N("Revenue lines"), N("Cost lines"), N("Value of a retained or engaged customer")),
-      N("Customer lifecycle", N("Acquire"), N("Activate / adopt"), N("Engage"), N("Retain"), N("Monetize")),
-      N("Measurement", N("Metrics and data needed"), N("Experiment: randomized holdout, not adopter vs. non-adopter"), N("Guardrail metrics")),
-      N("Risk and compliance", N("Credit, fraud, privacy"), N("Regulation and fair treatment of customers"))
-    ),
-    steps: [
-      "Restate the product in one sentence: who it serves and how it earns money.",
-      "Ask for the objective and the success metric before analyzing anything.",
-      "Build the per-account economics with only the facts you are given. State assumptions out loud.",
-      "Walk the lifecycle (acquire, adopt, engage, retain, monetize) and find the leak or the biggest lever.",
-      "Say how you would measure impact: a randomized holdout, the metric, a guardrail.",
-      "Convert the effect into dollars (accounts x change per account) and compare with cost.",
-      "Recommend a staged action, with risks and what would change your mind."
-    ],
-    pitfalls: [
-      "Reciting facts about the real product from memory. Use what the interviewer shows you.",
-      "Crediting a feature with the gap between adopters and non-adopters. Adopters are usually different people to begin with (selection bias).",
-      "Optimizing one metric (adoption, spend) while ignoring risk, complaints and cost to serve."
-    ],
     example: "The Digital Feature case run through CLEAR: a card issuer's spending-insights feature is at 25% adoption and the team wants $2M to reach 40%. Adopters spend $1,600 more than non-adopters, but a randomized holdout shows the real effect is much smaller. Full case in the Cases section.",
+    speak: [
+      ["C: Clarify", "Let me make sure I understand. The bank has a spending-insights feature at 25% adoption, and the team wants $2M to push it to 40%, with payback under 18 months. Two quick questions: how was it launched, and what does one customer earn?"],
+      ["L: Lay out", "I would look at four things. First, is the evidence causal. Second, the value per customer. Third, the math for scaling it. Fourth, the risks. I will start with causality, because the team's evidence compares adopters with non-adopters."],
+      ["E: Evaluate", "Adopters spend $1,600 more, but people who choose a budgeting feature were already more careful with money. The random holdout shows the real effect is $45 per offered customer. Only 25% adopted, so that is about $180 per adopter. The raw gap overstated the effect about 9 times."],
+      ["A: Assess", "Across 4M customers the feature adds about $6.6M a year from spend, retention and fewer calls, or $5.1M after running costs. Each adoption point is worth about $0.27M, so 15 more points is about $4M. New adopters are probably less engaged, so I would haircut that by half to $2M a year. That pays back the $2M in about 12 months."],
+      ["R: Recommend", "Yes, but in stages. Test the promotion on half of the non-adopters for 8 weeks and scale only if each new adopter delivers at least half of today's benefit. The main risk is that new adopters respond less, so I would keep the original holdout running and watch complaints and delinquency."]
+    ],
     exampleChart: `flowchart TD
 C["C: Clarify<br/>Decide on a $2M promotion to lift adoption from 25% to 40%<br/>Payback under 18 months"]
 C --> C2["Facts: 4M app customers, random 5% holdout"]

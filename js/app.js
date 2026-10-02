@@ -90,10 +90,43 @@
   var chartSrc = {};
   function chartBlock(id, title, note) {
     return "<h2>" + h(title) + '</h2><p class="muted small">' + h(note) + "</p>" +
+      '<div class="zoombar" role="group" aria-label="Zoom chart">' +
+        '<button type="button" class="ghost" data-z="out" aria-label="Zoom out">&minus;</button>' +
+        '<span class="zlabel" aria-live="polite">100%</span>' +
+        '<button type="button" class="ghost" data-z="in" aria-label="Zoom in">+</button>' +
+        '<button type="button" class="ghost" data-z="reset">Reset</button></div>' +
       '<div class="diagram" data-id="' + id + '"></div>' +
       '<details><summary>Show Mermaid source</summary><div class="body"><pre class="src" data-id="' + id + '"></pre></div></details>';
   }
+  function zoomInit() {
+    $$(".zoombar").forEach(function (bar) {
+      var box = bar.nextElementSibling;
+      var label = $(".zlabel", bar);
+      var scale = 1, base = 0;
+      function apply() {
+        var svg = $("svg", box);
+        if (!svg) return;
+        if (scale === 1) { svg.style.width = ""; svg.style.maxWidth = ""; base = 0; box.scrollLeft = 0; }
+        else { svg.style.maxWidth = "none"; svg.style.width = Math.round(base * scale) + "px"; }
+        label.textContent = Math.round(scale * 100) + "%";
+      }
+      $$("button", bar).forEach(function (b) {
+        b.addEventListener("click", function () {
+          var svg = $("svg", box);
+          if (!svg) return;
+          var z = b.getAttribute("data-z");
+          if (scale === 1 && z !== "reset") base = svg.getBoundingClientRect().width || 600;
+          if (z === "in") scale = Math.min(3, scale + 0.25);
+          else if (z === "out") scale = Math.max(0.5, scale - 0.25);
+          else scale = 1;
+          apply();
+        });
+      });
+    });
+  }
+
   function renderCharts() {
+    zoomInit();
     var boxes = $$(".diagram");
     boxes.forEach(function (b) {
       var pre = document.createElement("pre");
@@ -104,6 +137,7 @@
     $$("pre.src").forEach(function (p) { p.textContent = chartSrc[p.getAttribute("data-id")]; });
     function fallback() {
       boxes.forEach(function (b) { b.innerHTML = '<p class="small muted">The chart library could not load (offline?). Open the Mermaid source below.</p>'; });
+      $$(".zoombar").forEach(function (z) { z.style.display = "none"; });
       $$("details").forEach(function (d) { d.open = true; });
     }
     if (window.mermaid) {
@@ -199,20 +233,23 @@
     app.innerHTML =
       '<p><a href="#/frameworks">&larr; All frameworks</a></p><h1>' + h(f.name) + "</h1>" +
       '<div class="callout"><b>When to use:</b> ' + h(f.when) + "</div>" +
-      "<h2>The structure</h2>" +
-      '<div class="row"><button class="ghost" id="hideTree">Quiz me: hide the tree</button></div>' +
-      '<div id="treeBox"><ul class="tree">' + tree(f.tree) + "</ul></div>" +
-      '<div id="treeQuiz" style="display:none"><p class="muted">Write or sketch the tree on paper. Then reveal it to compare.</p></div>' +
-      "<h2>How to run it</h2><ol class=\"steps\">" + f.steps.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ol>" +
-      "<h2>Common pitfalls</h2><ul>" + f.pitfalls.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ul>" +
+      (f.tree ?
+        "<h2>The structure</h2>" +
+        '<div class="row"><button class="ghost" id="hideTree">Quiz me: hide the tree</button></div>' +
+        '<div id="treeBox"><ul class="tree">' + tree(f.tree) + "</ul></div>" +
+        '<div id="treeQuiz" style="display:none"><p class="muted">Write or sketch the tree on paper. Then reveal it to compare.</p></div>' : "") +
+      (f.steps ? "<h2>How to run it</h2><ol class=\"steps\">" + f.steps.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ol>" : "") +
+      (f.pitfalls ? "<h2>Common pitfalls</h2><ul>" + f.pitfalls.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ul>" : "") +
       (f.exampleChart
-        ? chartBlock("fw-" + f.id, "Worked example: CLEAR applied", f.example) + f.exampleTables.map(table).join("")
+        ? chartBlock("fw-" + f.id, "Worked example: CLEAR applied", f.example) + f.exampleTables.map(table).join("") +
+          (f.speak ? "<h2>What you would say out loud</h2>" + f.speak.map(function (e) { return '<div class="callout"><b>' + h(e[0]) + ":</b> " + h(e[1]) + "</div>"; }).join("") : "")
         : '<div class="callout"><b>Example:</b> ' + h(f.example) + "</div>") +
       (f.table ? "<h2>Cheat sheet</h2>" + table(f.table) : "") +
       (related.length ? "<h2>Practice with this framework</h2><div class=\"grid\">" + related.map(caseCard).join("") + "</div>" : "");
     if (f.exampleChart) renderCharts();
     var shown = true;
-    $("#hideTree").addEventListener("click", function () {
+    var hideBtn = $("#hideTree");
+    if (hideBtn) hideBtn.addEventListener("click", function () {
       shown = !shown;
       $("#treeBox").style.display = shown ? "" : "none";
       $("#treeQuiz").style.display = shown ? "none" : "";
