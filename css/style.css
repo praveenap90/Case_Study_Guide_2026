@@ -76,10 +76,13 @@ th{background:var(--soft)}
 .feedback.bad{color:var(--bad);font-weight:700}
 ol.steps{padding-left:22px}
 ol.steps li{margin:4px 0}
-.diagram{background:#fff;color:#000;border:1px solid var(--line);border-radius:var(--radius);padding:12px;overflow-x:auto;text-align:center}
-.diagram svg{max-width:100%;height:auto}
+.diagram{background:#fff;color:#000;border:1px solid var(--line);border-radius:var(--radius);padding:12px;overflow:auto}
+.diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.zoombar{display:flex;gap:6px;align-items:center;margin:8px 0 4px}
+.zoombar button{padding:4px 12px;min-width:40px}
+.zlabel{min-width:52px;text-align:center;font-variant-numeric:tabular-nums}
 pre.src{white-space:pre-wrap;font-size:12px;overflow-x:auto;margin:0}
 textarea.ws{min-height:70px}
 .sample{min-width:180px}
 @media (max-width:600px){h1{font-size:24px}.top{padding:8px 12px}}
-@media print{.top,.foot,button{display:none}}
+@media print{.top,.foot,button,.zoombar{display:none}}
