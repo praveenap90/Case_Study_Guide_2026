@@ -4,8 +4,8 @@ Interactive static site for case interview practice. No build step, no dependenc
 
 ## What's inside
 - **Flow:** two color-coded Mermaid flowcharts (generic case flow and a worked profit-decline example), rendered from `js/data-flow.js`. Needs internet for the Mermaid CDN script; the source shows if it cannot load.
-- **Frameworks (10):** profitability, market sizing, market entry, growth, pricing, M&A, operations/cost, retention, metric diagnosis, unit economics. Each has the tree, steps, pitfalls and a "hide the tree" self-quiz.
-- **Cases (8)** tagged by employer type (Banking & Fintech, Consulting, Big Tech): prompt, clarifying Q&A, data room, write-your-structure box, model answer, follow-ups, self-rating.
+- **Frameworks (11):** profitability, market sizing, market entry, growth, pricing, M&A, operations/cost, retention, metric diagnosis, unit economics, product deep-dive (with a product-type cheat sheet). Each has the tree, steps, pitfalls and a "hide the tree" self-quiz.
+- **Cases (9)** tagged by employer type (Banking & Fintech, Consulting, Big Tech): prompt, clarifying Q&A, data room, write-your-structure box, model answer, follow-ups, self-rating.
 - **Estimation (8):** worked top-down / bottom-up / stock-and-flow solutions (for example, US car tires per year).
 - **Math drills:** generated percent change, margin, breakeven, payback, ROI, compounding.
 - **Glossary:** 55 terms with search and flashcards.
