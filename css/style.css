@@ -79,5 +79,7 @@ ol.steps li{margin:4px 0}
 .diagram{background:#fff;color:#000;border:1px solid var(--line);border-radius:var(--radius);padding:12px;overflow-x:auto;text-align:center}
 .diagram svg{max-width:100%;height:auto}
 pre.src{white-space:pre-wrap;font-size:12px;overflow-x:auto;margin:0}
+textarea.ws{min-height:70px}
+.sample{min-width:180px}
 @media (max-width:600px){h1{font-size:24px}.top{padding:8px 12px}}
 @media print{.top,.foot,button{display:none}}
