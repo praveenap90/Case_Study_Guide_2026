@@ -23,6 +23,26 @@
     }
   };
 
+  /* ---------- theme toggle ---------- */
+  (function () {
+    var root = document.documentElement;
+    var btn = document.getElementById("theme");
+    if (!btn) return;
+    function current() {
+      var t = root.getAttribute("data-theme");
+      if (t === "light" || t === "dark") return t;
+      return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    function label() { btn.textContent = current() === "dark" ? "Light mode" : "Dark mode"; }
+    btn.addEventListener("click", function () {
+      var next = current() === "dark" ? "light" : "dark";
+      root.setAttribute("data-theme", next);
+      store.set("theme", next);
+      label();
+    });
+    label();
+  })();
+
   /* ---------- helpers ---------- */
   function h(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
   function $(sel, root) { return (root || document).querySelector(sel); }
@@ -365,6 +385,16 @@
     });
   }
 
+  function answerBlock(c) {
+    var A = c.answer;
+    chartSrc["case-" + c.id] = A.exampleChart;
+    (A.exampleCharts || []).forEach(function (x) { chartSrc["case-" + c.id + "-" + x.id] = x.code; });
+    return chartBlock("case-" + c.id, "Worked answer: CLEAR applied", "The prompt run through Clarify, Lay out, Evaluate, Assess, Recommend.") + table(A.exampleTables[0]) +
+      (A.exampleCharts || []).map(function (x) { return chartBlock("case-" + c.id + "-" + x.id, x.title, x.note); }).join("") +
+      A.exampleTables.slice(1).map(table).join("") +
+      "<h2>What you would say out loud</h2>" + A.speak.map(function (e) { return '<div class="callout"><b>' + h(e[0]) + ":</b> " + h(e[1]) + "</div>"; }).join("") +
+      (A.table ? "<h2>Cheat sheet</h2>" + table(A.table) : "");
+  }
   function caseDetail(id) {
     var c = find(D.cases, id);
     if (!c) { app.innerHTML = "<p>Not found. <a href='#/casestudies/cases'>Back</a></p>"; return; }
@@ -383,10 +413,11 @@
       "<h2>4. Your structure</h2><p class=\"muted small\">Write your framework before looking at the model. Framework hint: <a href=\"#/casestudies/frameworks/" + c.framework + '">' + h(fw ? fw.name : "") + "</a></p>" +
       '<textarea id="note" aria-label="Your structure and notes" placeholder="Bucket 1... Bucket 2... Hypothesis..."></textarea>' +
       '<div class="row" style="margin-top:8px"><button id="reveal">Reveal model answer</button></div>' +
-      '<div id="model" style="display:none">' +
+      '<div id="model" class="sol" style="display:none">' +
+      (c.answer ? answerBlock(c) :
       "<h2>Model structure</h2><ul>" + c.structure.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ul>" +
       "<h2>Analysis</h2>" + c.analysis.map(function (a, i) { return "<details" + (i === 0 ? " open" : "") + "><summary>" + h(a.h) + '</summary><div class="body">' + a.p + "</div></details>"; }).join("") +
-      '<h2>Recommendation</h2><div class="callout">' + h(c.recommendation) + "</div>" +
+      '<h2>Recommendation</h2><div class="callout">' + h(c.recommendation) + "</div>") +
       "<h2>Follow-up questions</h2><p class=\"muted small\">Answer out loud first, then click.</p>" +
       c.followups.map(function (x) { return '<div class="qa"><button>' + h(x.q) + '</button><div class="ans">' + h(x.a) + "</div></div>"; }).join("") +
       '<h2>Common pitfalls</h2><div class="callout warn"><ul>' + c.pitfalls.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ul></div>" +
@@ -412,6 +443,7 @@
     $("#reveal").addEventListener("click", function () {
       var m = $("#model"); var vis = m.style.display !== "none";
       m.style.display = vis ? "none" : "";
+      if (!vis) renderCharts(m);
       this.textContent = vis ? "Reveal model answer" : "Hide model answer";
     });
     var box = $("#doneBox"), sel = $("#rate");
