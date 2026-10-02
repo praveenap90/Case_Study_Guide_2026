@@ -78,11 +78,24 @@ ol.steps{padding-left:22px}
 ol.steps li{margin:4px 0}
 .diagram{background:#fff;color:#000;border:1px solid var(--line);border-radius:var(--radius);padding:12px;overflow:auto}
 .diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}
-.zoombar{display:flex;gap:6px;align-items:center;margin:8px 0 4px}
-.zoombar button{padding:4px 12px;min-width:40px}
-.zlabel{min-width:52px;text-align:center;font-variant-numeric:tabular-nums}
+.chartbox{position:relative;margin:8px 0}
+.chartbox .diagram{min-height:120px}
+.chartbox.zoomed .diagram{max-height:75vh}
+.chartbox .ctl{position:absolute;z-index:2;display:grid;gap:6px}
+.ctl-top{top:8px;right:8px;grid-auto-flow:column}
+.ctl-pad{bottom:8px;right:8px;grid-template-columns:repeat(3,34px);grid-auto-rows:34px}
+.ctl-pad span{display:block}
+.cb{display:flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border:0;border-radius:10px;background:rgba(30,30,34,.78);color:#fff;font-size:20px;line-height:1}
+.cb:hover{background:rgba(0,0,0,.92)}
+.cb.flashed{background:#0f6b52}
+.ctl-top .cb{width:38px;height:38px}
+.chartbox.expanded{position:fixed;inset:0;z-index:50;margin:0;background:#fff;padding:0}
+.chartbox.expanded .diagram{height:100vh;max-height:none;border-radius:0;border:0}
+.chartbox.expanded .ctl-pad{bottom:20px;right:20px}
+.chartbox.expanded .ctl-top{top:16px;right:20px}
+body.noscroll{overflow:hidden}
 pre.src{white-space:pre-wrap;font-size:12px;overflow-x:auto;margin:0}
 textarea.ws{min-height:70px}
 .sample{min-width:180px}
 @media (max-width:600px){h1{font-size:24px}.top{padding:8px 12px}}
-@media print{.top,.foot,button,.zoombar{display:none}}
+@media print{.top,.foot,button,.ctl{display:none}}
