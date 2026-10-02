@@ -4,6 +4,7 @@ Interactive static site for case interview practice. No build step, no dependenc
 
 ## What's inside
 - **Template:** the CLEAR method (Clarify, Lay out, Evaluate, Assess, Recommend) with a memory chart, a structure picker chart, a metrics chart (break-even, ROI, payback, LTV:CAC, margin, CAGR), a worksheet that saves in the browser, a fill-in answer script, a filled example, a phrase bank and a final checklist. Source in `js/data-template.js`.
+- **Chart zoom:** every Mermaid chart has zoom out / zoom in / reset buttons (50% to 300%); zoomed charts scroll inside their box.
 - **Flow:** two color-coded Mermaid flowcharts (generic case flow and a worked profit-decline example), rendered from `js/data-flow.js`. Needs internet for the Mermaid CDN script; the source shows if it cannot load.
 - **Frameworks (11):** profitability, market sizing, market entry, growth, pricing, M&A, operations/cost, retention, metric diagnosis, unit economics, product deep-dive (with a product-type cheat sheet and a worked CLEAR example chart). Each has the tree, steps, pitfalls and a "hide the tree" self-quiz.
 - **Cases (9)** tagged by employer type (Banking & Fintech, Consulting, Big Tech): prompt, clarifying Q&A, data room, write-your-structure box, model answer, follow-ups, self-rating.
