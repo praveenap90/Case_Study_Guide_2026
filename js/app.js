@@ -99,19 +99,43 @@
   function home() {
     var done = store.get("casesDone", {});
     var n = Object.keys(done).length;
+    var nf = D.frameworks.length, nc = D.cases.length, ne = D.estimation.length;
+    var clear = [
+      ["C", "Clarify", "Restate the question, ask 2 or 3 questions, confirm the goal and timeline."],
+      ["L", "Lay out", "Name a structure with 3 or 4 buckets before diving in."],
+      ["E", "Evaluate", "Size and test each bucket with numbers."],
+      ["A", "Assess", "Say what the numbers mean, the risks and what would change your mind."],
+      ["R", "Recommend", "Give a clear answer first, then the reasons and next steps."]
+    ];
     app.innerHTML =
-      "<h1>Case interview prep</h1>" +
-      '<p class="lead">Learn the frameworks, then practice cases by employer type, and guesstimates. Everything runs in your browser and your progress stays on this device.</p>' +
+      '<section class="hero"><p class="eyebrow">Interview prep</p><h1>Case Prep</h1>' +
+      '<p class="lead">Practice for case-study interviews for data analyst and data engineer roles at banks, fintechs and tech companies. Learn one method, see it applied to real-style cases, then practice out loud.</p>' +
+      '<div class="cta"><a class="btn" href="#/casestudies/template">Start with the method</a><a class="btn alt" href="#/casestudies/cases">Jump to practice cases</a></div></section>' +
+      "<h2>What you will find here</h2>" +
+      '<div class="grid">' +
+        '<a class="card" href="#/casestudies/template"><h3>Templates</h3><p class="small muted">The method</p><p>The CLEAR answer structure, a worksheet that saves in your browser, an answer script, a phrase bank and a final checklist.</p></a>' +
+        '<a class="card" href="#/casestudies/frameworks"><h3>Frameworks (' + nf + ')</h3><p class="small muted">The toolkit</p><p>Profitability, market sizing, market entry, growth, pricing, M&amp;A, cost reduction, retention, metric diagnosis, unit economics and product deep-dive. Each has a worked example with charts.</p></a>' +
+        '<a class="card" href="#/casestudies/cases"><h3>Cases (' + nc + ')</h3><p class="small muted">The practice</p><p>Full prompts with a timer, clarifying questions, a data room and a model answer to compare with yours.</p></a>' +
+        '<a class="card" href="#/estimation"><h3>Guesstimates (' + ne + ')</h3><p class="small muted">The numbers</p><p>The SCOPE template, handy numbers and worked estimation drills such as car tires, smartphones and manholes.</p></a>' +
+      "</div>" +
+      "<h2>The method in 30 seconds: CLEAR</h2>" +
+      '<ol class="clear">' + clear.map(function (c) { return '<li><b>' + c[0] + '</b><span><strong>' + c[1] + ".</strong> " + c[2] + "</span></li>"; }).join("") + "</ol>" +
+      "<h2>A suggested study path</h2>" +
+      '<ol class="steps"><li><b>Learn the method.</b> Read Case Studies &rarr; Templates and memorize CLEAR.</li>' +
+      '<li><b>Learn the toolkit.</b> Open two or three frameworks. For each, read the worked example, then try the numbers yourself before looking at the table.</li>' +
+      '<li><b>Practice a case.</b> Pick one under Cases, start the timer, ask clarifying questions, write your own structure, then reveal the model answer and compare.</li>' +
+      '<li><b>Say it out loud.</b> Use the "What you would say out loud" sections and answer the follow-up questions before you click them.</li>' +
+      '<li><b>Build number sense.</b> Do one Guesstimate a day with the SCOPE template.</li></ol>' +
+      "<h2>How each case is laid out</h2>" +
+      '<ul class="tips"><li>Every framework and case uses the same pattern: a CLEAR flow chart, an Evaluate chart, an Impact chart, tables with the math, a spoken answer and a cheat sheet.</li>' +
+      "<li>Charts have controls to expand, copy the Mermaid source, pan and zoom. Use the Light mode / Dark mode button at the top right if you prefer a different theme.</li>" +
+      "<li>Numbers in cases are illustrative. The goal is the way you think, not the exact figures.</li></ul>" +
+      "<h2>Practice by employer type</h2>" +
       '<div class="grid">' + D.tracks.map(function (t) {
         var c = D.cases.filter(function (x) { return x.track.indexOf(t.id) >= 0; }).length;
         return '<a class="card" href="#/casestudies/cases?track=' + t.id + '"><h3>' + h(t.name) + '</h3><p class="small muted">' + h(t.examples) + "</p><p>" + h(t.tests) + '</p><p class="small muted">' + c + " cases</p></a>";
       }).join("") + "</div>" +
-      "<h2>How to use this</h2>" +
-      '<ol class="steps"><li><b>Case Studies &rarr; Templates:</b> start here. Remember CLEAR (Clarify, Lay out, Evaluate, Assess, Recommend), then use the worksheet and answer script.</li><li><b>Case Studies &rarr; Frameworks:</b> learn the tree (for example Profit = Revenue - Costs; Revenue = Volume x Price x Mix; Costs = Fixed + Variable), then try drawing it from memory.</li>' +
-      "<li><b>Case Studies &rarr; Cases:</b> read the prompt, ask clarifying questions, write your own structure, then compare with the model structure and analysis.</li>" +
-      "<li><b>Guesstimates:</b> use the SCOPE template, then size a market in under 3 minutes with the examples.</li>" +
-      "</ol>" +
-      '<div class="callout"><b>Your progress:</b> ' + n + " of " + D.cases.length + ' cases completed. <a href="#/progress">See details</a></div>';
+      '<div class="callout"><b>Your progress:</b> ' + n + " of " + nc + ' cases completed. <a href="#/progress">See details</a></div>';
   }
 
   /* ---------- CHARTS (Mermaid) ---------- */
