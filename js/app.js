@@ -137,6 +137,7 @@
       "<h2>How to run it</h2><ol class=\"steps\">" + f.steps.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ol>" +
       "<h2>Common pitfalls</h2><ul>" + f.pitfalls.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ul>" +
       '<div class="callout"><b>Example:</b> ' + h(f.example) + "</div>" +
+      (f.table ? "<h2>Cheat sheet</h2>" + table(f.table) : "") +
       (related.length ? "<h2>Practice with this framework</h2><div class=\"grid\">" + related.map(caseCard).join("") + "</div>" : "");
     var shown = true;
     $("#hideTree").addEventListener("click", function () {

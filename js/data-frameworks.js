@@ -292,5 +292,44 @@ DATA.frameworks = [
       "Treating charge-offs as the only risk line."
     ],
     example: "Card profit per account fell $100 to $80. Charge-offs improved; funding cost, rewards and fees explain the decline."
+  },
+  {
+    id: "product",
+    name: "Product Deep-Dive",
+    tags: ["banking", "tech"],
+    when: "The interviewer shows you a product, feature or app screen and asks what to do with it. Common at banks and fintechs: a card, a savings account, a loan, or a mobile app feature.",
+    tree: N("Product case",
+      N("Understand", N("What is it, for whom, what job does it do?"), N("How does the company make money from it?")),
+      N("Objective", N("Grow, raise profit, fix a metric, or launch?"), N("Success metric and time frame")),
+      N("Economics per account", N("Revenue lines"), N("Cost lines"), N("Value of a retained or engaged customer")),
+      N("Customer lifecycle", N("Acquire"), N("Activate / adopt"), N("Engage"), N("Retain"), N("Monetize")),
+      N("Measurement", N("Metrics and data needed"), N("Experiment: randomized holdout, not adopter vs. non-adopter"), N("Guardrail metrics")),
+      N("Risk and compliance", N("Credit, fraud, privacy"), N("Regulation and fair treatment of customers"))
+    ),
+    steps: [
+      "Restate the product in one sentence: who it serves and how it earns money.",
+      "Ask for the objective and the success metric before analyzing anything.",
+      "Build the per-account economics with only the facts you are given. State assumptions out loud.",
+      "Walk the lifecycle (acquire, adopt, engage, retain, monetize) and find the leak or the biggest lever.",
+      "Say how you would measure impact: a randomized holdout, the metric, a guardrail.",
+      "Convert the effect into dollars (accounts x change per account) and compare with cost.",
+      "Recommend a staged action, with risks and what would change your mind."
+    ],
+    pitfalls: [
+      "Reciting facts about the real product from memory. Use what the interviewer shows you.",
+      "Crediting a feature with the gap between adopters and non-adopters. Adopters are usually different people to begin with (selection bias).",
+      "Optimizing one metric (adoption, spend) while ignoring risk, complaints and cost to serve."
+    ],
+    example: "Digital feature case: adopters spend 19% more than non-adopters, but a randomized holdout shows a much smaller true effect. See the Digital Feature case.",
+    table: {
+      title: "What changes by product type",
+      headers: ["Product", "Main profit levers", "Main risks"],
+      rows: [
+        ["Rewards credit card", "Spend (interchange), revolve rate, annual fee", "Rewards cost, attrition, credit losses"],
+        ["Savings or deposit account", "Spread between loan yield and deposit rate, balance growth", "Rate sensitivity, deposit flight"],
+        ["Auto or personal loan", "Volume, yield, channel", "Default, collateral value, fraud"],
+        ["Digital feature or app", "Engagement, retention, lower cost to serve, cross-sell", "Low adoption, selection bias in measurement, privacy"]
+      ]
+    }
   }
 ];

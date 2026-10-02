@@ -539,5 +539,88 @@ DATA.cases = [
       "Across-the-board headcount cuts.",
       "Not tying levers to specific cost pools."
     ]
+  },
+
+  /* ---------------------------------------------------------------- 9 */
+  {
+    id: "digital-feature",
+    title: "Digital Feature: Scale It or Not?",
+    track: ["banking", "tech"],
+    framework: "product",
+    difficulty: "Medium",
+    minutes: 30,
+    prompt: "A card issuer launched a spending-insights feature in its mobile app six months ago. The product team shows that customers who use it spend more and leave less, and asks for $2M to promote it from 25% to 40% of active app customers. As the analyst, what do you tell them?",
+    clarify: [
+      { q: "What does the feature do and who is eligible?", a: "It categorizes spending and sends monthly insights and alerts. All 4M active app card customers can use it." },
+      { q: "How was it launched?", a: "It was offered to 95% of customers. A random 5% were held out and could not see it, so there is a clean test." },
+      { q: "What is the objective?", a: "Decide whether to spend $2M to raise adoption from 25% to 40%, and set the payback bar at 18 months." },
+      { q: "What does one account earn?", a: "Net interchange is about 2% of spend. Average annual card spend is $9,000. A retained account is worth about $400 in lifetime profit. A service call costs about $10." },
+      { q: "What are the running costs?", a: "$1.5M per year to run the feature today. The $2M promotion is one-time." }
+    ],
+    tables: [
+      {
+        title: "What the product team showed (adopters vs. non-adopters)",
+        headers: ["Group", "Customers", "Annual spend", "Annual attrition"],
+        rows: [["Adopters", "1.0M (25%)", "$10,200", "9%"], ["Non-adopters", "3.0M (75%)", "$8,600", "13%"], ["All", "4.0M", "$9,000", "12%"]]
+      },
+      {
+        title: "Randomized holdout result (offered vs. not offered, per customer)",
+        headers: ["Metric", "Not offered", "Offered", "Difference"],
+        rows: [["Annual spend", "$9,000", "$9,045", "+$45 (+0.5%)"], ["Annual attrition", "12.0%", "11.9%", "-0.1 pt"], ["Service calls per account", "1.20", "1.164", "-3%"], ["Delinquency rate", "no difference", "no difference", "0"], ["Complaint rate", "no difference", "no difference", "0"]]
+      },
+      {
+        title: "Unit values",
+        headers: ["Item", "Value"],
+        rows: [["Active app customers", "4.0M"], ["Net interchange on spend", "2%"], ["Lifetime profit of a retained account", "$400"], ["Cost per service call", "$10"], ["Current adoption", "25%"], ["Run cost per year", "$1.5M"], ["Promotion to reach 40% adoption", "$2M one-time"]]
+      }
+    ],
+    structure: [
+      "<b>Understand the product and the ask:</b> a free feature that costs $1.5M a year; the decision is a $2M promotion.",
+      "<b>Is the evidence causal?</b> Adopters vs. non-adopters compares different kinds of people. Use the randomized holdout instead.",
+      "<b>Value per customer:</b> spend (interchange), retention, and cost to serve (calls).",
+      "<b>Scale-up math:</b> effect per adopter x extra adopters, with a haircut for less-engaged marginal users.",
+      "<b>Risks and guardrails:</b> complaints, delinquency, privacy, regulatory fairness."
+    ],
+    analysis: [
+      {
+        h: "1. The trap in the team's evidence",
+        p: "Adopters spend $1,600 more than non-adopters ($10,200 vs. $8,600) and churn 4 points less. But people who choose a budgeting feature are already more engaged and more careful, so this gap mostly reflects who they are, not what the feature did. The randomized holdout shows the real effect."
+      },
+      {
+        h: "2. Read the holdout correctly",
+        p: "The holdout compares everyone offered the feature to everyone not offered. Only 25% adopted, so effects per adopter are about four times larger: spend +$45 / 0.25 = +$180 per adopter, attrition -0.1 / 0.25 = -0.4 points, calls -3% / 0.25 = -12%. Compare the +$180 true effect with the naive +$1,600: the naive number overstated it roughly 9 times."
+      },
+      {
+        h: "3. Value of the feature today (per year, all 4M customers)",
+        p: "<table><tr><th>Source</th><th>Logic</th><th>Value</th></tr>" +
+          "<tr><td>Extra spend</td><td>$45 x 4M = $180M spend x 2%</td><td>$3.6M</td></tr>" +
+          "<tr><td>Retention</td><td>0.1 pt x 4M = 4,000 accounts x $400</td><td>$1.6M</td></tr>" +
+          "<tr><td>Fewer calls</td><td>4M x 1.2 calls x 3% = 144K calls x $10</td><td>$1.44M</td></tr>" +
+          "<tr><th colspan='2'>Total benefit</th><th>~$6.6M</th></tr>" +
+          "<tr><td>Less running cost</td><td></td><td>-$1.5M</td></tr>" +
+          "<tr><th colspan='2'>Net per year</th><th>~$5.1M</th></tr></table>" +
+          "The feature already pays for itself. The question is only whether to push adoption higher."
+      },
+      {
+        h: "4. The scale-up decision",
+        p: "Each adoption point is worth about $6.64M / 25 = $0.27M a year. Going from 25% to 40% adds 15 points, about $4.0M a year if new adopters behave like current ones. They probably will not: early adopters are the most engaged, so haircut by 50%, to about $2.0M a year. At a $2M one-time cost that is a payback of roughly 12 months, inside the 18-month bar. Even at a 75% haircut ($1.0M a year) payback is 24 months, so the downside case misses the bar."
+      },
+      {
+        h: "5. Risks and guardrails",
+        p: "Watch complaint rate, delinquency and opt-outs; any rise in these is a stop signal. Check the effect has not faded since launch (novelty), and that alerts are not pushing customers toward more borrowing. Review privacy and fair-treatment rules for how insights are targeted."
+      }
+    ],
+    recommendation: "Yes to the $2M, but in stages. The feature already creates about $5M a year net, and the holdout shows the effect is real, not an artifact of who adopts. Run the promotion first to a randomized half of non-adopters for 8 weeks, measure the effect on those marginal adopters, then scale to the rest if the benefit per new adopter is at least half of today's. Keep the original holdout running as a permanent control, and stop if complaints or delinquency rise.",
+    followups: [
+      { q: "Why not just compare adopters with non-adopters?", a: "Because adopters chose the feature, so they differ from non-adopters in engagement and financial habits. A randomized holdout makes the two groups identical on average, so the difference is caused by the feature." },
+      { q: "What if the effect is much smaller for new adopters?", a: "Then the gain from scaling falls. The staged test measures this before committing the full $2M, and I would target the segments where early effects were largest." },
+      { q: "What other metrics would you track?", a: "Weekly active use of the feature, spend by category, 90-day and 12-month retention, calls, complaints, delinquency and opt-out rates." },
+      { q: "How long should the test run?", a: "Long enough to cover at least one full billing cycle and the behaviors you care about; 8 weeks for engagement, with retention tracked longer using a leading indicator such as inactivity." }
+    ],
+    pitfalls: [
+      "Taking adopter vs. non-adopter differences as the feature's effect.",
+      "Forgetting that the holdout effect is per offered customer, not per adopter.",
+      "Assuming new adopters will behave like early adopters."
+    ]
   }
 ];
