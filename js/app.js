@@ -301,18 +301,18 @@
     app.innerHTML = "<h1>Frameworks</h1>" +
       '<p class="lead">A structure turns an open question into a few buckets you can analyze. Pick the one that matches the question.</p>' +
       '<div class="grid">' + D.frameworks.map(function (f) {
-        return '<a class="card" href="#/casestudies/casestudies/frameworks/' + f.id + '"><h3>' + h(f.name) + "</h3><p class=\"small muted\">" + h(f.when) + "</p><div>" +
+        return '<a class="card" href="#/casestudies/frameworks/' + f.id + '"><h3>' + h(f.name) + "</h3><p class=\"small muted\">" + h(f.when) + "</p><div>" +
           f.tags.map(function (t) { return '<span class="chip">' + h(trackName(t)) + "</span>"; }).join("") + "</div></a>";
       }).join("") + "</div>";
   }
   function frameworkDetail(id) {
     var f = find(D.frameworks, id);
-    if (!f) { app.innerHTML = "<p>Not found. <a href='#/casestudies/casestudies/frameworks'>Back</a></p>"; return; }
+    if (!f) { app.innerHTML = "<p>Not found. <a href='#/casestudies/frameworks'>Back</a></p>"; return; }
     var related = D.cases.filter(function (c) { return c.framework === f.id; });
     if (f.exampleChart) chartSrc["fw-" + f.id] = f.exampleChart;
     (f.exampleCharts || []).forEach(function (c) { chartSrc["fw-" + f.id + "-" + c.id] = c.code; });
     app.innerHTML =
-      '<p><a href="#/casestudies/casestudies/frameworks">&larr; All frameworks</a></p><h1>' + h(f.name) + "</h1>" +
+      '<p><a href="#/casestudies/frameworks">&larr; All frameworks</a></p><h1>' + h(f.name) + "</h1>" +
       '<div class="callout"><b>When to use:</b> ' + h(f.when) + "</div>" +
       (f.tree ?
         "<h2>The structure</h2>" +
@@ -380,7 +380,7 @@
       "<h2>2. Ask clarifying questions</h2><p class=\"muted small\">Click a question to hear the interviewer's answer. In a real interview, ask only what you need.</p>" +
       c.clarify.map(function (x) { return '<div class="qa"><button>' + h(x.q) + '</button><div class="ans">' + h(x.a) + "</div></div>"; }).join("") +
       "<h2>3. Data room</h2><details><summary>Show the data the interviewer shares</summary><div class=\"body\">" + c.tables.map(table).join("") + "</div></details>" +
-      "<h2>4. Your structure</h2><p class=\"muted small\">Write your framework before looking at the model. Framework hint: <a href=\"#/casestudies/casestudies/frameworks/" + c.framework + '">' + h(fw ? fw.name : "") + "</a></p>" +
+      "<h2>4. Your structure</h2><p class=\"muted small\">Write your framework before looking at the model. Framework hint: <a href=\"#/casestudies/frameworks/" + c.framework + '">' + h(fw ? fw.name : "") + "</a></p>" +
       '<textarea id="note" aria-label="Your structure and notes" placeholder="Bucket 1... Bucket 2... Hypothesis..."></textarea>' +
       '<div class="row" style="margin-top:8px"><button id="reveal">Reveal model answer</button></div>' +
       '<div id="model" style="display:none">' +
