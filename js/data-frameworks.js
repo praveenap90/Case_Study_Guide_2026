@@ -102,7 +102,7 @@ DATA.frameworks = [
       "Forgetting a segment (commercial vehicles, new units, tourists).",
       "No sanity check. Always compare to a per-capita or per-household figure."
     ],
-    example: "US car tires per year: about 280M vehicles x 4 tires / ~3.75 year life is ~300M replacements, plus ~60M original-equipment tires from ~15M new vehicles, so roughly 350 to 400M. See the Estimation tab."
+    example: "US car tires per year: about 280M vehicles x 4 tires / ~3.75 year life is ~300M replacements, plus ~60M original-equipment tires from ~15M new vehicles, so roughly 350 to 400M. See the Guesstimates tab."
   },
   {
     id: "entry",

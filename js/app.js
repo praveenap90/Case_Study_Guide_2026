@@ -56,6 +56,7 @@
   var cleanup = null;
   function route() {
     if (cleanup) { cleanup(); cleanup = null; }
+    closeExpanded();
     var r = parse();
     var p = r.path;
     var top = p[0] || "home";
@@ -73,7 +74,7 @@
     var n = Object.keys(done).length;
     app.innerHTML =
       "<h1>Case interview prep</h1>" +
-      '<p class="lead">Learn the frameworks, then practice cases by employer type, estimation, and math. Everything runs in your browser and your progress stays on this device.</p>' +
+      '<p class="lead">Learn the frameworks, then practice cases by employer type, guesstimates, and math. Everything runs in your browser and your progress stays on this device.</p>' +
       '<div class="grid">' + D.tracks.map(function (t) {
         var c = D.cases.filter(function (x) { return x.track.indexOf(t.id) >= 0; }).length;
         return '<a class="card" href="#/cases?track=' + t.id + '"><h3>' + h(t.name) + '</h3><p class="small muted">' + h(t.examples) + "</p><p>" + h(t.tests) + '</p><p class="small muted">' + c + " cases</p></a>";
@@ -81,43 +82,100 @@
       "<h2>How to use this</h2>" +
       '<ol class="steps"><li><b>Template:</b> start here. Remember CLEAR (Clarify, Lay out, Evaluate, Assess, Recommend), then use the worksheet and answer script.</li><li><b>Frameworks:</b> learn the tree (for example Profit = Revenue - Costs; Revenue = Volume x Price x Mix; Costs = Fixed + Variable), then try drawing it from memory.</li>' +
       "<li><b>Cases:</b> read the prompt, ask clarifying questions, write your own structure, then compare with the model structure and analysis.</li>" +
-      "<li><b>Estimation:</b> size a market in under 3 minutes and compare approaches.</li>" +
+      "<li><b>Guesstimates:</b> use the SCOPE template, then size a market in under 3 minutes with the examples.</li>" +
       "<li><b>Math and glossary:</b> short daily drills and flashcards keep the speed up.</li></ol>" +
       '<div class="callout"><b>Your progress:</b> ' + n + " of " + D.cases.length + ' cases completed. <a href="#/progress">See details</a></div>';
   }
 
   /* ---------- CHARTS (Mermaid) ---------- */
   var chartSrc = {};
+  var IC = {
+    expand: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+    shrink: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>',
+    copy: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>',
+    up: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg>',
+    down: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>',
+    left: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>',
+    right: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
+    reset: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>'
+  };
+  function cbtn(act, label, icon, cls) {
+    return '<button type="button" class="cb ' + (cls || "") + '" data-a="' + act + '" aria-label="' + label + '" title="' + label + '">' + icon + "</button>";
+  }
   function chartBlock(id, title, note) {
     return "<h2>" + h(title) + '</h2><p class="muted small">' + h(note) + "</p>" +
-      '<div class="zoombar" role="group" aria-label="Zoom chart">' +
-        '<button type="button" class="ghost" data-z="out" aria-label="Zoom out">&minus;</button>' +
-        '<span class="zlabel" aria-live="polite">100%</span>' +
-        '<button type="button" class="ghost" data-z="in" aria-label="Zoom in">+</button>' +
-        '<button type="button" class="ghost" data-z="reset">Reset</button></div>' +
-      '<div class="diagram" data-id="' + id + '"></div>' +
+      '<div class="chartbox" data-id="' + id + '">' +
+        '<div class="diagram" data-id="' + id + '"></div>' +
+        '<div class="ctl ctl-top" role="group" aria-label="Chart actions">' +
+          cbtn("expand", "Expand chart", IC.expand) + cbtn("copy", "Copy Mermaid source", IC.copy) + "</div>" +
+        '<div class="ctl ctl-pad" role="group" aria-label="Pan and zoom chart">' +
+          '<span></span>' + cbtn("up", "Pan up", IC.up) + cbtn("in", "Zoom in", "+", "txt") +
+          cbtn("left", "Pan left", IC.left) + cbtn("reset", "Reset view", IC.reset) + cbtn("right", "Pan right", IC.right) +
+          '<span></span>' + cbtn("down", "Pan down", IC.down) + cbtn("out", "Zoom out", "&minus;", "txt") + "</div>" +
+      "</div>" +
       '<details><summary>Show Mermaid source</summary><div class="body"><pre class="src" data-id="' + id + '"></pre></div></details>';
   }
+  function closeExpanded() {
+    $$(".chartbox.expanded").forEach(function (b) {
+      b.classList.remove("expanded");
+      var e = $('[data-a="expand"]', b);
+      if (e) { e.innerHTML = IC.expand; e.setAttribute("aria-label", "Expand chart"); e.title = "Expand chart"; }
+    });
+    document.body.classList.remove("noscroll");
+  }
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeExpanded(); });
+  function copyText(t, done) {
+    function legacy() {
+      var ta = document.createElement("textarea");
+      ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta); done(ok);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { done(true); }, legacy);
+    else legacy();
+  }
   function zoomInit() {
-    $$(".zoombar").forEach(function (bar) {
-      var box = bar.nextElementSibling;
-      var label = $(".zlabel", bar);
+    $$(".chartbox").forEach(function (cb) {
+      var box = $(".diagram", cb);
       var scale = 1, base = 0;
       function apply() {
         var svg = $("svg", box);
         if (!svg) return;
-        if (scale === 1) { svg.style.width = ""; svg.style.maxWidth = ""; base = 0; box.scrollLeft = 0; }
+        if (scale === 1) { svg.style.width = ""; svg.style.maxWidth = ""; base = 0; box.scrollLeft = 0; box.scrollTop = 0; }
         else { svg.style.maxWidth = "none"; svg.style.width = Math.round(base * scale) + "px"; }
-        label.textContent = Math.round(scale * 100) + "%";
+        cb.classList.toggle("zoomed", scale !== 1);
       }
-      $$("button", bar).forEach(function (b) {
+      $$("button.cb", cb).forEach(function (b) {
         b.addEventListener("click", function () {
+          var a = b.getAttribute("data-a");
+          if (a === "expand") {
+            var on = !cb.classList.contains("expanded");
+            closeExpanded();
+            if (on) {
+              cb.classList.add("expanded"); document.body.classList.add("noscroll");
+              b.innerHTML = IC.shrink; b.setAttribute("aria-label", "Close expanded chart"); b.title = "Close (Esc)";
+            }
+            return;
+          }
+          if (a === "copy") {
+            copyText(chartSrc[cb.getAttribute("data-id")] || "", function (ok) {
+              b.classList.add("flashed"); b.title = ok ? "Copied" : "Copy failed";
+              setTimeout(function () { b.classList.remove("flashed"); b.title = "Copy Mermaid source"; }, 1200);
+            });
+            return;
+          }
+          var step = 80;
+          if (a === "up") { box.scrollTop -= step; return; }
+          if (a === "down") { box.scrollTop += step; return; }
+          if (a === "left") { box.scrollLeft -= step; return; }
+          if (a === "right") { box.scrollLeft += step; return; }
           var svg = $("svg", box);
           if (!svg) return;
-          var z = b.getAttribute("data-z");
-          if (scale === 1 && z !== "reset") base = svg.getBoundingClientRect().width || 600;
-          if (z === "in") scale = Math.min(3, scale + 0.25);
-          else if (z === "out") scale = Math.max(0.5, scale - 0.25);
+          if (scale === 1 && a !== "reset") base = svg.getBoundingClientRect().width || 600;
+          if (a === "in") scale = Math.min(3, scale + 0.25);
+          else if (a === "out") scale = Math.max(0.5, scale - 0.25);
           else scale = 1;
           apply();
         });
@@ -137,7 +195,7 @@
     $$("pre.src").forEach(function (p) { p.textContent = chartSrc[p.getAttribute("data-id")]; });
     function fallback() {
       boxes.forEach(function (b) { b.innerHTML = '<p class="small muted">The chart library could not load (offline?). Open the Mermaid source below.</p>'; });
-      $$(".zoombar").forEach(function (z) { z.style.display = "none"; });
+      $$(".ctl").forEach(function (z) { z.style.display = "none"; });
       $$("details").forEach(function (d) { d.open = true; });
     }
     if (window.mermaid) {
@@ -161,6 +219,7 @@
   function template() {
     var T = D.template;
     chartSrc.clear = T.clearChart; chartSrc.pick = T.pickChart; chartSrc.metrics = T.metricsChart;
+    D.flows.forEach(function (f) { chartSrc["tpl-flow-" + f.id] = f.code; });
     var ws = store.get("ws", {});
     var chk = store.get("chk", {});
     app.innerHTML =
@@ -172,18 +231,19 @@
       chartBlock("pick", "2. Pick the structure", "Match the type of question to the structure, then open the Frameworks page for the full tree.") +
       chartBlock("metrics", "3. Pick the number", "Match the decision to the metric. The examples match the Math drills.") +
       table(T.metricsTable) +
-      "<h2>4. Worksheet</h2><p class=\"muted small\">Fill this in for any practice case. Your notes save in this browser. The sample column shows the Digital Feature case.</p>" +
+      D.flows.map(function (f, i) { return chartBlock("tpl-flow-" + f.id, (4 + i) + ". " + f.title, f.note); }).join("") +
+      "<h2>6. Worksheet</h2><p class=\"muted small\">Fill this in for any practice case. Your notes save in this browser. The sample column shows the Digital Feature case.</p>" +
       '<div class="row"><button id="toggleSample" class="ghost">Hide sample</button><button id="clearWs" class="ghost">Clear my notes</button></div>' +
       '<div class="tablewrap"><table id="ws"><thead><tr><th>CLEAR step</th><th>Your notes</th><th class="sample">Sample</th></tr></thead><tbody>' +
       T.worksheet.map(function (r) {
         return "<tr><td><b>" + h(r[0]) + '</b></td><td><textarea class="ws" data-k="' + r[1] + '" aria-label="' + h(r[0]) + '"></textarea></td><td class="sample muted">' + h(r[2]) + "</td></tr>";
       }).join("") + "</tbody></table></div>" +
-      "<h2>5. Answer script</h2><p class=\"muted small\">A reusable way to say each step. Replace the brackets with your own words.</p>" +
+      "<h2>7. Answer script</h2><p class=\"muted small\">A reusable way to say each step. Replace the brackets with your own words.</p>" +
       table(T.scriptTable) +
-      "<h2>6. Filled example</h2><p class=\"muted small\">" + h(T.exampleTitle) + "</p>" +
+      "<h2>8. Filled example</h2><p class=\"muted small\">" + h(T.exampleTitle) + "</p>" +
       T.example.map(function (e) { return '<div class="callout"><b>' + h(e[0]) + ":</b> " + h(e[1]) + "</div>"; }).join("") +
-      "<h2>7. Phrases and rules</h2>" + table(T.phrases) + table(T.rules) +
-      "<h2>8. Final check</h2><p class=\"muted small\">Run through this in the last 30 seconds before you answer.</p>" +
+      "<h2>9. Phrases and rules</h2>" + table(T.phrases) + table(T.rules) +
+      "<h2>10. Final check</h2><p class=\"muted small\">Run through this in the last 30 seconds before you answer.</p>" +
       T.checks.map(function (c, i) {
         return '<p><label><input type="checkbox" class="chk" data-i="' + i + '"> ' + h(c) + "</label></p>";
       }).join("") +
@@ -341,11 +401,98 @@
   }
 
   /* ---------- ESTIMATION ---------- */
-  function estimation() {
+  function guessTemplate(tabs) {
+    var G = D.guess;
+    chartSrc["g-scope"] = G.scopeChart; chartSrc["g-pick"] = G.pickChart; chartSrc["g-uni"] = G.universal.chart; chartSrc["g-us"] = G.us.chart; chartSrc["g-mh"] = G.manhole.chart;
+    function uStep(x) {
+      return "<h3>" + h(x[0]) + "</h3><ul>" + x[1].map(function (i) { return "<li>" + h(i) + "</li>"; }).join("") + "</ul>" +
+        (x[2] ? '<div class="callout"><b>Say:</b> &ldquo;' + h(x[2]) + "&rdquo;</div>" : "");
+    }
+    var U = G.universal, S = G.seg;
+    function li(a) { return a.map(function (i) { return "<li>" + h(i) + "</li>"; }).join(""); }
+    var C = G.scaling;
+    var scHtml = "<h2>12. " + h(C.title) + '</h2><p class="muted small">' + h(C.lead) + "</p>" +
+      "<h3>Base case (already built)</h3><ol class=\"steps\">" + li(C.base) + "</ol>" +
+      "<h3>Q: &ldquo;" + h(C.q1) + "&rdquo;</h3>" + '<div class="callout"><b>Answer:</b> ' + h(C.a1) + "</div><ul>" + li(C.s1) + "</ul>" +
+      "<h3>Second twist: &ldquo;" + h(C.q2) + "&rdquo;</h3>" + '<div class="callout"><b>Answer:</b> ' + h(C.a2) + "</div><p>" + h(C.s2) + "</p>" +
+      table(C.ten) + "<h3>Why this works</h3><ol class=\"steps\">" + li(C.why) + "</ol>" +
+      '<div class="callout"><b>Say:</b> &ldquo;' + h(C.say) + "&rdquo;</div>" +
+      table(C.template) + table(C.convert) + table(C.pop) + table(C.seg);
+    var X = G.us;
+    var usHtml = chartBlock("g-us", "13. " + X.title, X.lead) + table(X.segTable) +
+      '<div class="callout warn"><b>Note:</b> ' + h(X.segNote) + "</div>" +
+      X.secs.map(function (c) {
+        return "<h3>" + h(c.h) + "</h3>" + (c.table ? table(c.table) : "") + (c.ul ? "<ul>" + li(c.ul) + "</ul>" : "") +
+          (c.say ? '<div class="callout"><b>Say:</b> &ldquo;' + h(c.say) + "&rdquo;</div>" : "") + (c.tip ? '<p class="small muted">Tip: ' + h(c.tip) + "</p>" : "");
+      }).join("") +
+      "<h3>" + h(X.sampleTitle) + "</h3>" +
+      X.sample.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("");
+    var M = G.manhole;
+    var mhHtml = chartBlock("g-mh", "14. " + M.title, "Worked example with segmentation, a sanity check and three pushbacks.") +
+      M.secs.map(function (c) { return "<h3>" + h(c.h) + "</h3>" + (c.table ? table(c.table) : "") + (c.ul ? "<ul>" + li(c.ul) + "</ul>" : ""); }).join("") +
+      '<div class="callout"><b>Interview summary:</b> &ldquo;' + h(M.summary) + "&rdquo;</div>" +
+      "<h3>Key tips</h3><ul>" + li(M.tips) + "</ul><h3>" + h(M.pushTitle) + "</h3>" +
+      M.push.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> &ldquo;" + h(x[1]) + "&rdquo;</div>"; }).join("") + table(M.pushMath);
+    var segHtml = "<h2>10. " + h(S.title) + '</h2><p class="muted small">' + h(S.lead) + "</p>" +
+      table(S.examples) + table(S.rates) + '<p class="small muted">' + h(S.ratesNote) + "</p>" +
+      "<h3>" + h(S.calcTitle) + "</h3>" + table(S.calc) + '<p class="small muted">Tip: ' + h(S.calcTip) + "</p>" +
+      table(S.adjust) + "<h3>5. Phrases for the interviewer</h3><ul>" + li(S.phrases.map(function (x) { return "\u201c" + x + "\u201d"; })) + "</ul>" +
+      "<h3>6. Key tips for beginners</h3><ol class=\"steps\">" + li(S.tips) + "</ol>" +
+      "<h2>11. " + h(S.packTitle) + '</h2><p class="muted small">' + h(S.packLead) + "</p>" + S.pack.map(table).join("") +
+      "<h3>Tips for using the pack</h3><ol class=\"steps\">" + li(S.packTips) + "</ol>";
+    var uni = chartBlock("g-uni", "9. " + U.title, U.lead) +
+      U.steps.map(uStep).join("") + "<h3>" + h(U.segment.title) + "</h3>" + table(U.segment) + '<p class="small muted">Tip: ' + h(U.segmentTip) + "</p>" +
+      U.steps2.map(uStep).join("") +
+      "<h3>" + h(U.pushback.title) + "</h3>" + table(U.pushback) + '<div class="callout"><b>Say:</b> &ldquo;' + h(U.pushPhrase) + "&rdquo;</div>" +
+      "<h3>" + h(U.miniTitle) + "</h3><ul>" + U.mini.map(function (i) { return "<li>" + h(i) + "</li>"; }).join("") + "</ul>" +
+      "<h3>Pro tips</h3><ol class=\"steps\">" + U.tips.map(function (i) { return "<li>" + h(i) + "</li>"; }).join("") + "</ol>" +
+      '<div class="callout"><b>One line to remember:</b> ' + h(U.oneLine) + "</div>" +
+      '<p class="small muted">Works for: ' + U.usedFor.map(h).join(", ") + ".</p>";
+    var ws = store.get("gws", {});
+    app.innerHTML = "<h1>Estimation (Guesstimates)</h1>" + tabs + '<p class="lead">' + h(G.lead) + "</p>" +
+      chartBlock("g-scope", "1. The SCOPE method", "Five steps you can say out loud. Use the buttons on the chart to expand, pan, zoom or copy it.") +
+      table(G.scopeTable) +
+      chartBlock("g-pick", "2. Pick the approach", "Follow the questions to the approach that fits.") +
+      "<h2>3. Handy numbers</h2>" + table(G.numbersTable) +
+      "<h2>4. Worksheet</h2><p class=\"muted small\">Saved in this browser. The grey sample is the tires example.</p>" +
+      '<div class="tablewrap"><table><thead><tr><th>Step</th><th>Your answer</th><th>Sample</th></tr></thead><tbody>' +
+      G.worksheet.map(function (w) {
+        return "<tr><td>" + h(w[0]) + '</td><td><textarea class="ws" data-k="' + w[1] + '" aria-label="' + h(w[0]) + '"></textarea></td><td class="sample small muted">' + h(w[2]) + "</td></tr>";
+      }).join("") + "</tbody></table></div>" +
+      "<h2>5. Answer script</h2>" + table(G.scriptTable) +
+      "<h2>6. " + h(G.exampleTitle) + "</h2>" +
+      G.example.map(function (x) { return '<div class="callout"><b>' + h(x[0] + " - " + x[1]) + ":</b> " + h(x[2]) + "</div>"; }).join("") +
+      "<h2>7. Mistakes to avoid</h2>" + table(G.mistakes) +
+      "<h2>8. " + h(G.cheat.title) + "</h2>" +
+      '<div class="callout"><b>Core rule:</b> ' + h(G.cheat.rule) + "</div>" +
+      table(G.cheat.pct) + table(G.cheat.scale) +
+      "<h3>Fast examples</h3><ul>" + G.cheat.examples.map(function (x) { return "<li>" + h(x) + "</li>"; }).join("") + "</ul>" +
+      "<h3>Segmentation template</h3><p>" + h(G.cheat.segment) + "</p>" +
+      "<h3>Quick structure</h3><ol class=\"steps\">" + G.cheat.structure.map(function (x) { return "<li>" + h(x) + "</li>"; }).join("") + "</ol>" +
+      "<h3>Rounding rule</h3><ul>" + G.cheat.rounding.map(function (x) { return "<li>" + h(x) + "</li>"; }).join("") + "</ul>" +
+      "<h3>Power phrases</h3><ul>" + G.cheat.phrases.map(function (x) { return "<li>&ldquo;" + h(x) + "&rdquo;</li>"; }).join("") + "</ul>" +
+      '<div class="callout warn"><b>If stuck, say:</b> &ldquo;' + h(G.cheat.stuck) + "&rdquo;</div>" +
+      '<div class="callout"><b>Final memory line:</b> ' + h(G.cheat.final) + "</div>" +
+      uni + segHtml + scHtml + usHtml + mhHtml + '<p><a class="btn" href="#/estimation/examples">Practice with the examples</a></p>';
+    $$("textarea[data-k]").forEach(function (ta) {
+      var k = ta.getAttribute("data-k");
+      ta.value = ws[k] || "";
+      ta.addEventListener("input", function () { ws[k] = ta.value; store.set("gws", ws); });
+    });
+    renderCharts();
+  }
+
+  function estimation(p) {
+    var sub = p[1] === "examples" ? "examples" : "template";
+    var tabs = '<div class="filters" role="tablist" aria-label="Guesstimate sections">' +
+      [["template", "Templates"], ["examples", "Examples (" + D.estimation.length + ")"]].map(function (t) {
+        return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/estimation/' + t[0] + '\'">' + t[1] + "</button>";
+      }).join("") + "</div>";
+    if (sub === "template") return guessTemplate(tabs);
     var tried = store.get("estTried", {});
-    app.innerHTML = "<h1>Estimation</h1>" +
+    app.innerHTML = "<h1>Estimation (Guesstimates)</h1>" + tabs +
       '<p class="lead">Give yourself 3 minutes. Write your approach and a number, then compare. The approach matters more than the answer.</p>' +
-      '<div class="callout"><b>Routine:</b> clarify scope &rarr; choose top-down or bottom-up &rarr; 3 to 5 inputs with round numbers &rarr; calculate with units &rarr; sanity check.</div>' +
+      '<div class="callout"><b>Routine (SCOPE):</b> scope &rarr; choose approach &rarr; organize 3 to 5 inputs &rarr; process the math with units &rarr; examine with a sanity check. <a href="#/estimation/template">Open the template</a></div>' +
       D.estimation.map(function (e) {
         return "<details data-id=\"" + e.id + "\"><summary>" + h(e.q) + (tried[e.id] ? ' <span class="done">&#10003;</span>' : "") + '</summary><div class="body">' +
           '<p class="muted small">Approach hint is hidden. Try it first.</p>' +
@@ -521,7 +668,7 @@
     app.innerHTML = "<h1>Progress</h1>" +
       '<div class="grid">' +
       '<div class="card"><div class="stat">' + nc + "/" + D.cases.length + '</div><div class="muted small">cases completed</div>' + bar(nc, D.cases.length) + "</div>" +
-      '<div class="card"><div class="stat">' + ne + "/" + D.estimation.length + '</div><div class="muted small">estimation drills attempted</div>' + bar(ne, D.estimation.length) + "</div>" +
+      '<div class="card"><div class="stat">' + ne + "/" + D.estimation.length + '</div><div class="muted small">guesstimate examples attempted</div>' + bar(ne, D.estimation.length) + "</div>" +
       '<div class="card"><div class="stat">' + nk + "/" + D.glossary.length + '</div><div class="muted small">glossary terms known</div>' + bar(nk, D.glossary.length) + "</div>" +
       '<div class="card"><div class="stat">' + (m.total ? Math.round(m.right / m.total * 100) + "%" : "-") + '</div><div class="muted small">math accuracy (' + m.right + "/" + m.total + ", best streak " + m.best + ")</div></div></div>" +
       "<h2>Cases</h2>" + D.cases.map(function (c) {
