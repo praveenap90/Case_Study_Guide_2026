@@ -2,7 +2,7 @@ window.DATA = window.DATA || {};
 DATA.guess = {
   lead: "A guesstimate is judged on the path, not the number. Remember SCOPE: Scope it, Choose an approach, Organize inputs, Process the math, Examine the result.",
   scopeChart: "flowchart LR\n  S[\"S - Scope<br/>what, where, when, which units?\"] --> C[\"C - Choose approach<br/>top-down, bottom-up or stock and flow\"]\n  C --> O[\"O - Organize inputs<br/>3 to 5 round numbers\"]\n  O --> P[\"P - Process the math<br/>write units on every line\"]\n  P --> E[\"E - Examine<br/>sanity check and give a range\"]\n  style S fill:#dbeafe,stroke:#2563eb,color:#000\n  style C fill:#fef3c7,stroke:#d97706,color:#000\n  style O fill:#dcfce7,stroke:#16a34a,color:#000\n  style P fill:#fae8ff,stroke:#a21caf,color:#000\n  style E fill:#fee2e2,stroke:#dc2626,color:#000",
-  pickChart: "flowchart TD\n  Q[\"Guesstimate question\"] --> Q1{\"Does a known population<br/>use it regularly?\"}\n  Q1 -- Yes --> TD[\"Top-down<br/>population x share x frequency x price\"]\n  Q1 -- No --> Q2{\"Is it durable, or a service<br/>tied to a stock of items?\"}\n  Q2 -- Yes --> SF[\"Stock and flow<br/>stock / lifespan, or stock x service rate / worker capacity\"]\n  Q2 -- No --> Q3{\"Is supply easier to count<br/>than demand?\"}\n  Q3 -- Yes --> BU[\"Bottom-up<br/>sites x capacity x utilization\"]\n  Q3 -- No --> TD\n  style TD fill:#dbeafe,stroke:#2563eb,color:#000\n  style SF fill:#fef3c7,stroke:#d97706,color:#000\n  style BU fill:#dcfce7,stroke:#16a34a,color:#000",
+  pickChart: "flowchart TD\n  Q[\"Guesstimate question\"] --> Q1{\"Q1: Does a known population<br/>use it regularly?\"}\n  Q1 -- Yes --> TD\n  Q1 -- No --> Q2{\"Q2: Is it durable, or a service<br/>tied to a stock of items?\"}\n  Q2 -- Yes --> SF\n  Q2 -- No --> Q3{\"Q3: Is supply easier<br/>to count than demand?\"}\n  Q3 -- Yes --> BU\n  Q3 -- No --> TD\n\n  TD[\"<b>TOP-DOWN</b><br/>Example: coffee cups per day\"] --> T1[\"Population<br/>330M\"]\n  T1 --> T2[\"x Share who use<br/>70%\"]\n  T2 --> T3[\"x Frequency<br/>1 per day\"]\n  T3 --> T4[\"x Price<br/>$5\"]\n  T4 --> T5[\"= Daily revenue<br/>about $1.2B\"]\n\n  SF[\"<b>STOCK AND FLOW</b><br/>Example: car tires per year\"] --> S1[\"Stock in use<br/>280M cars x 4 tires = 1.1B\"]\n  S1 --> S2[\"divide by lifespan<br/>3.75 years\"]\n  S2 --> S3[\"= Replacements per year<br/>about 300M\"]\n  S3 --> S4[\"+ New-item sales<br/>15M cars x 4 = 60M\"]\n  S4 --> S5[\"= Total per year<br/>about 360M\"]\n\n  BU[\"<b>BOTTOM-UP</b><br/>Example: output of a set of sites\"] --> B1[\"Number of sites\"]\n  B1 --> B2[\"x Capacity per site\"]\n  B2 --> B3[\"x Utilization<br/>share of capacity used\"]\n  B3 --> B4[\"= Total output\"]\n\n  classDef decision fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef top fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef stock fill:#fef3c7,stroke:#d97706,color:#000\n  classDef bottom fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef start fill:#e5e7eb,stroke:#374151,color:#000\n  class Q start\n  class Q1,Q2,Q3 decision\n  class TD,T1,T2,T3,T4,T5 top\n  class SF,S1,S2,S3,S4,S5 stock\n  class BU,B1,B2,B3,B4 bottom",
   scopeTable: {
     title: "SCOPE at a glance",
     headers: ["Letter", "Step", "Do this", "Say this"],
@@ -115,7 +115,7 @@ DATA.guess = {
     ]
   ],
   "segment": {
-    "title": "4. Segmentation (optional but strong)",
+    "title": "Segmentation (optional but strong)",
     "headers": [
       "Segment",
       "%",
@@ -181,7 +181,7 @@ DATA.guess = {
     ]
   ],
   "pushback": {
-    "title": "9. Handling interviewer pushback",
+    "title": "Handling interviewer pushback",
     "headers": [
       "If challenged on",
       "Do this"
@@ -231,7 +231,7 @@ DATA.guess = {
   "title": "Segmentation cheat sheet (numbers and percentages)",
   "lead": "Segment populations, assign behavior rates and recalculate quickly when the interviewer pushes back.",
   "examples": {
-    "title": "1. Population segmentation examples",
+    "title": "Population segmentation examples",
     "headers": [
       "Segment type",
       "Group",
@@ -308,7 +308,7 @@ DATA.guess = {
     ]
   },
   "rates": {
-    "title": "2. Behavior rates and frequencies (common anchors)",
+    "title": "Behavior rates and frequencies (common anchors)",
     "headers": [
       "Frequency type",
       "Value",
@@ -343,7 +343,7 @@ DATA.guess = {
     ]
   },
   "ratesNote": "Weekly and monthly rows are restated per year and per day so the units are explicit.",
-  "calcTitle": "3. Multi-segment calculation template: annual new credit cards in the US (adults = 250M)",
+  "calcTitle": "Multi-segment calculation template: annual new credit cards in the US (adults = 250M)",
   "calc": {
     "title": "Segment, behavior rate, estimate",
     "headers": [
@@ -381,7 +381,7 @@ DATA.guess = {
   },
   "calcTip": "If asked for \"only urban adults\", multiply each segment by the urban share (50%).",
   "adjust": {
-    "title": "4. Quick adjustment examples",
+    "title": "Quick adjustment examples",
     "headers": [
       "Interviewer prompt",
       "How to adjust"
@@ -428,7 +428,7 @@ DATA.guess = {
   "packLead": "Ten practice questions with rounded numbers for quick mental math. Segments are pre-defined; adjust the percentages if the interviewer pushes back.",
   "pack": [
     {
-      "title": "1. New credit cards issued annually (US)",
+      "title": "New credit cards issued annually (US)",
       "headers": [
         "Segment",
         "Population",
@@ -468,7 +468,7 @@ DATA.guess = {
       ]
     },
     {
-      "title": "2. Daily mobile banking app logins (US)",
+      "title": "Daily mobile banking app logins (US)",
       "headers": [
         "Segment",
         "Population",
@@ -501,7 +501,7 @@ DATA.guess = {
       ]
     },
     {
-      "title": "3. People opening new checking accounts annually",
+      "title": "People opening new checking accounts annually",
       "headers": [
         "Segment",
         "Population",
@@ -534,7 +534,7 @@ DATA.guess = {
       ]
     },
     {
-      "title": "4. ATM withdrawals out-of-network",
+      "title": "ATM withdrawals out-of-network",
       "headers": [
         "Segment",
         "Population",
@@ -567,7 +567,7 @@ DATA.guess = {
       ]
     },
     {
-      "title": "5. Daily coffee purchases in NYC",
+      "title": "Daily coffee purchases in NYC",
       "headers": [
         "Segment",
         "Population",
@@ -600,7 +600,7 @@ DATA.guess = {
       ]
     },
     {
-      "title": "6. People applying for personal loans annually",
+      "title": "People applying for personal loans annually",
       "headers": [
         "Segment",
         "Population",
@@ -633,7 +633,7 @@ DATA.guess = {
       ]
     },
     {
-      "title": "7. Buy now pay later (BNPL) transactions annually",
+      "title": "Buy now pay later (BNPL) transactions annually",
       "headers": [
         "Segment",
         "Population",
@@ -652,7 +652,7 @@ DATA.guess = {
       ]
     },
     {
-      "title": "8. Annual revenue from credit card late fees",
+      "title": "Annual revenue from credit card late fees",
       "headers": [
         "Segment",
         "Population",
@@ -671,7 +671,7 @@ DATA.guess = {
       ]
     },
     {
-      "title": "9. Small business credit applications annually",
+      "title": "Small business credit applications annually",
       "headers": [
         "Segment",
         "Population",
@@ -688,7 +688,7 @@ DATA.guess = {
       ]
     },
     {
-      "title": "10. Car loans issued annually",
+      "title": "Car loans issued annually",
       "headers": [
         "Segment",
         "Population",

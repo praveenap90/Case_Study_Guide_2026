@@ -401,25 +401,12 @@
   }
 
   /* ---------- ESTIMATION ---------- */
-  function guessTemplate(tabs) {
+  function li(a) { return a.map(function (i) { return "<li>" + h(i) + "</li>"; }).join(""); }
+  function guessWorked() {
     var G = D.guess;
-    chartSrc["g-scope"] = G.scopeChart; chartSrc["g-pick"] = G.pickChart; chartSrc["g-uni"] = G.universal.chart; chartSrc["g-us"] = G.us.chart; chartSrc["g-mh"] = G.manhole.chart;
-    function uStep(x) {
-      return "<h3>" + h(x[0]) + "</h3><ul>" + x[1].map(function (i) { return "<li>" + h(i) + "</li>"; }).join("") + "</ul>" +
-        (x[2] ? '<div class="callout"><b>Say:</b> &ldquo;' + h(x[2]) + "&rdquo;</div>" : "");
-    }
-    var U = G.universal, S = G.seg;
-    function li(a) { return a.map(function (i) { return "<li>" + h(i) + "</li>"; }).join(""); }
-    var C = G.scaling;
-    var scHtml = "<h2>12. " + h(C.title) + '</h2><p class="muted small">' + h(C.lead) + "</p>" +
-      "<h3>Base case (already built)</h3><ol class=\"steps\">" + li(C.base) + "</ol>" +
-      "<h3>Q: &ldquo;" + h(C.q1) + "&rdquo;</h3>" + '<div class="callout"><b>Answer:</b> ' + h(C.a1) + "</div><ul>" + li(C.s1) + "</ul>" +
-      "<h3>Second twist: &ldquo;" + h(C.q2) + "&rdquo;</h3>" + '<div class="callout"><b>Answer:</b> ' + h(C.a2) + "</div><p>" + h(C.s2) + "</p>" +
-      table(C.ten) + "<h3>Why this works</h3><ol class=\"steps\">" + li(C.why) + "</ol>" +
-      '<div class="callout"><b>Say:</b> &ldquo;' + h(C.say) + "&rdquo;</div>" +
-      table(C.template) + table(C.convert) + table(C.pop) + table(C.seg);
+    chartSrc["g-us"] = G.us.chart; chartSrc["g-mh"] = G.manhole.chart;
     var X = G.us;
-    var usHtml = chartBlock("g-us", "13. " + X.title, X.lead) + table(X.segTable) +
+    var usHtml = chartBlock("g-us", "Worked example: " + X.title, X.lead) + table(X.segTable) +
       '<div class="callout warn"><b>Note:</b> ' + h(X.segNote) + "</div>" +
       X.secs.map(function (c) {
         return "<h3>" + h(c.h) + "</h3>" + (c.table ? table(c.table) : "") + (c.ul ? "<ul>" + li(c.ul) + "</ul>" : "") +
@@ -428,52 +415,87 @@
       "<h3>" + h(X.sampleTitle) + "</h3>" +
       X.sample.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("");
     var M = G.manhole;
-    var mhHtml = chartBlock("g-mh", "14. " + M.title, "Worked example with segmentation, a sanity check and three pushbacks.") +
+    var mhHtml = chartBlock("g-mh", "Worked example: " + M.title, "Worked example with segmentation, a sanity check and three pushbacks.") +
       M.secs.map(function (c) { return "<h3>" + h(c.h) + "</h3>" + (c.table ? table(c.table) : "") + (c.ul ? "<ul>" + li(c.ul) + "</ul>" : ""); }).join("") +
       '<div class="callout"><b>Interview summary:</b> &ldquo;' + h(M.summary) + "&rdquo;</div>" +
       "<h3>Key tips</h3><ul>" + li(M.tips) + "</ul><h3>" + h(M.pushTitle) + "</h3>" +
       M.push.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> &ldquo;" + h(x[1]) + "&rdquo;</div>"; }).join("") + table(M.pushMath);
-    var segHtml = "<h2>10. " + h(S.title) + '</h2><p class="muted small">' + h(S.lead) + "</p>" +
-      table(S.examples) + table(S.rates) + '<p class="small muted">' + h(S.ratesNote) + "</p>" +
-      "<h3>" + h(S.calcTitle) + "</h3>" + table(S.calc) + '<p class="small muted">Tip: ' + h(S.calcTip) + "</p>" +
-      table(S.adjust) + "<h3>5. Phrases for the interviewer</h3><ul>" + li(S.phrases.map(function (x) { return "\u201c" + x + "\u201d"; })) + "</ul>" +
-      "<h3>6. Key tips for beginners</h3><ol class=\"steps\">" + li(S.tips) + "</ol>" +
-      "<h2>11. " + h(S.packTitle) + '</h2><p class="muted small">' + h(S.packLead) + "</p>" + S.pack.map(table).join("") +
-      "<h3>Tips for using the pack</h3><ol class=\"steps\">" + li(S.packTips) + "</ol>";
-    var uni = chartBlock("g-uni", "9. " + U.title, U.lead) +
-      U.steps.map(uStep).join("") + "<h3>" + h(U.segment.title) + "</h3>" + table(U.segment) + '<p class="small muted">Tip: ' + h(U.segmentTip) + "</p>" +
-      U.steps2.map(uStep).join("") +
-      "<h3>" + h(U.pushback.title) + "</h3>" + table(U.pushback) + '<div class="callout"><b>Say:</b> &ldquo;' + h(U.pushPhrase) + "&rdquo;</div>" +
-      "<h3>" + h(U.miniTitle) + "</h3><ul>" + U.mini.map(function (i) { return "<li>" + h(i) + "</li>"; }).join("") + "</ul>" +
-      "<h3>Pro tips</h3><ol class=\"steps\">" + U.tips.map(function (i) { return "<li>" + h(i) + "</li>"; }).join("") + "</ol>" +
-      '<div class="callout"><b>One line to remember:</b> ' + h(U.oneLine) + "</div>" +
-      '<p class="small muted">Works for: ' + U.usedFor.map(h).join(", ") + ".</p>";
-    var ws = store.get("gws", {});
-    app.innerHTML = "<h1>Estimation (Guesstimates)</h1>" + tabs + '<p class="lead">' + h(G.lead) + "</p>" +
-      chartBlock("g-scope", "1. The SCOPE method", "Five steps you can say out loud. Use the buttons on the chart to expand, pan, zoom or copy it.") +
-      table(G.scopeTable) +
-      chartBlock("g-pick", "2. Pick the approach", "Follow the questions to the approach that fits.") +
-      "<h2>3. Handy numbers</h2>" + table(G.numbersTable) +
-      "<h2>4. Worksheet</h2><p class=\"muted small\">Saved in this browser. The grey sample is the tires example.</p>" +
-      '<div class="tablewrap"><table><thead><tr><th>Step</th><th>Your answer</th><th>Sample</th></tr></thead><tbody>' +
-      G.worksheet.map(function (w) {
-        return "<tr><td>" + h(w[0]) + '</td><td><textarea class="ws" data-k="' + w[1] + '" aria-label="' + h(w[0]) + '"></textarea></td><td class="sample small muted">' + h(w[2]) + "</td></tr>";
-      }).join("") + "</tbody></table></div>" +
-      "<h2>5. Answer script</h2>" + table(G.scriptTable) +
-      "<h2>6. " + h(G.exampleTitle) + "</h2>" +
-      G.example.map(function (x) { return '<div class="callout"><b>' + h(x[0] + " - " + x[1]) + ":</b> " + h(x[2]) + "</div>"; }).join("") +
-      "<h2>7. Mistakes to avoid</h2>" + table(G.mistakes) +
-      "<h2>8. " + h(G.cheat.title) + "</h2>" +
-      '<div class="callout"><b>Core rule:</b> ' + h(G.cheat.rule) + "</div>" +
-      table(G.cheat.pct) + table(G.cheat.scale) +
-      "<h3>Fast examples</h3><ul>" + G.cheat.examples.map(function (x) { return "<li>" + h(x) + "</li>"; }).join("") + "</ul>" +
-      "<h3>Segmentation template</h3><p>" + h(G.cheat.segment) + "</p>" +
-      "<h3>Quick structure</h3><ol class=\"steps\">" + G.cheat.structure.map(function (x) { return "<li>" + h(x) + "</li>"; }).join("") + "</ol>" +
-      "<h3>Rounding rule</h3><ul>" + G.cheat.rounding.map(function (x) { return "<li>" + h(x) + "</li>"; }).join("") + "</ul>" +
-      "<h3>Power phrases</h3><ul>" + G.cheat.phrases.map(function (x) { return "<li>&ldquo;" + h(x) + "&rdquo;</li>"; }).join("") + "</ul>" +
-      '<div class="callout warn"><b>If stuck, say:</b> &ldquo;' + h(G.cheat.stuck) + "&rdquo;</div>" +
-      '<div class="callout"><b>Final memory line:</b> ' + h(G.cheat.final) + "</div>" +
-      uni + segHtml + scHtml + usHtml + mhHtml + '<p><a class="btn" href="#/estimation/examples">Practice with the examples</a></p>';
+    return "<h2>Worked guesstimates with charts</h2>" + usHtml + mhHtml;
+  }
+  function guessTemplate(tabs, sub) {
+    var G = D.guess, U = G.universal, S = G.seg, C = G.scaling;
+    var subs = [["intro", "Introduction"], ["scaling", "Scaling techniques"], ["template", "Template"], ["numbers", "Numbers breakdown"], ["cheat", "Cheat sheet"]];
+    if (!subs.some(function (x) { return x[0] === sub; })) sub = store.get("gtab", "intro");
+    if (!subs.some(function (x) { return x[0] === sub; })) sub = "intro";
+    store.set("gtab", sub);
+    var subBar = '<div class="filters" role="tablist" aria-label="Template sections">' + subs.map(function (t) {
+      return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/estimation/template/' + t[0] + '\'">' + t[1] + "</button>";
+    }).join("") + "</div>";
+    function uStep(x) {
+      return "<h3>" + h(x[0]) + "</h3><ul>" + li(x[1]) + "</ul>" + (x[2] ? '<div class="callout"><b>Say:</b> &ldquo;' + h(x[2]) + "&rdquo;</div>" : "");
+    }
+    var body = "";
+    if (sub === "intro") {
+      chartSrc["g-scope"] = G.scopeChart; chartSrc["g-pick"] = G.pickChart;
+      body = '<p class="lead">' + h(G.lead) + "</p>" +
+        chartBlock("g-scope", "The SCOPE method", "Five steps you can say out loud. Use the buttons on the chart to expand, pan, zoom or copy it.") +
+        table(G.scopeTable) +
+        chartBlock("g-pick", "Pick the approach", "Answer Q1 to Q3 to find the approach, then follow its column to see the formula broken into steps.") +
+        '<h2>Where next</h2><div class="row">' + subs.slice(1).map(function (t) {
+          return '<a class="btn ghost" href="#/estimation/template/' + t[0] + '">' + t[1] + "</a>";
+        }).join("") + "</div>";
+    } else if (sub === "scaling") {
+      body = "<h2>" + h(C.title) + '</h2><p class="muted small">' + h(C.lead) + "</p>" +
+        "<h3>Base case (already built)</h3><ol class=\"steps\">" + li(C.base) + "</ol>" +
+        "<h3>Q: &ldquo;" + h(C.q1) + "&rdquo;</h3>" + '<div class="callout"><b>Answer:</b> ' + h(C.a1) + "</div><ul>" + li(C.s1) + "</ul>" +
+        "<h3>Second twist: &ldquo;" + h(C.q2) + "&rdquo;</h3>" + '<div class="callout"><b>Answer:</b> ' + h(C.a2) + "</div><p>" + h(C.s2) + "</p>" +
+        table(C.ten) + "<h3>Why this works</h3><ol class=\"steps\">" + li(C.why) + "</ol>" +
+        '<div class="callout"><b>Say:</b> &ldquo;' + h(C.say) + "&rdquo;</div>" +
+        table(C.template) + table(C.convert) + table(C.pop) + table(C.seg) +
+        "<h2>Quick adjustment examples</h2>" + table(S.adjust);
+    } else if (sub === "template") {
+      chartSrc["g-uni"] = U.chart;
+      var ws = store.get("gws", {});
+      body = "<h2>Worksheet</h2><p class=\"muted small\">Saved in this browser. The grey sample is the tires example.</p>" +
+        '<div class="tablewrap"><table><thead><tr><th>Step</th><th>Your answer</th><th>Sample</th></tr></thead><tbody>' +
+        G.worksheet.map(function (w) {
+          return "<tr><td>" + h(w[0]) + '</td><td><textarea class="ws" data-k="' + w[1] + '" aria-label="' + h(w[0]) + '"></textarea></td><td class="sample small muted">' + h(w[2]) + "</td></tr>";
+        }).join("") + "</tbody></table></div>" +
+        "<h2>Answer script</h2>" + table(G.scriptTable) +
+        "<h2>Sample answer: " + h(G.exampleTitle.replace(/^Filled example: /, "")) + "</h2>" +
+        G.example.map(function (x) { return '<div class="callout"><b>' + h(x[0] + " - " + x[1]) + ":</b> " + h(x[2]) + "</div>"; }).join("") +
+        chartBlock("g-uni", U.title, U.lead) +
+        U.steps.map(uStep).join("") + "<h3>" + h(U.segment.title) + "</h3>" + table(U.segment) + '<p class="small muted">Tip: ' + h(U.segmentTip) + "</p>" +
+        U.steps2.map(uStep).join("") +
+        "<h3>" + h(U.pushback.title) + "</h3>" + table(U.pushback) + '<div class="callout"><b>Say:</b> &ldquo;' + h(U.pushPhrase) + "&rdquo;</div>" +
+        "<h3>Sample answer: " + h(U.miniTitle.replace(/^Mini walkthrough: /, "")) + "</h3><ul>" + li(U.mini) + "</ul>" +
+        '<div class="callout"><b>One line to remember:</b> ' + h(U.oneLine) + "</div>" +
+        '<p class="small muted">Works for: ' + U.usedFor.map(h).join(", ") + ".</p>" +
+        "<h2>Mistakes to avoid</h2>" + table(G.mistakes) +
+        "<h2>Phrases for the interviewer</h2><ul>" + li(S.phrases.map(function (x) { return "“" + x + "”"; })) + "</ul>" +
+        "<h2>Key tips for beginners</h2><ol class=\"steps\">" + li(S.tips) + "</ol>" +
+        "<h3>More pro tips</h3><ol class=\"steps\">" + li(U.tips) + "</ol>";
+    } else if (sub === "numbers") {
+      body = "<h2>Handy numbers</h2>" + table(G.numbersTable) +
+        "<h2>" + h(S.title) + '</h2><p class="muted small">' + h(S.lead) + "</p>" +
+        table(S.examples) + table(S.rates) + '<p class="small muted">' + h(S.ratesNote) + "</p>" +
+        "<h3>" + h(S.calcTitle) + "</h3>" + table(S.calc) + '<p class="small muted">Tip: ' + h(S.calcTip) + "</p>" +
+        "<h2>" + h(S.packTitle) + '</h2><p class="muted small">' + h(S.packLead) + "</p>" + S.pack.map(table).join("") +
+        "<h3>Tips for using the pack</h3><ol class=\"steps\">" + li(S.packTips) + "</ol>";
+    } else {
+      body = "<h2>" + h(G.cheat.title) + "</h2>" +
+        '<div class="callout"><b>Core rule:</b> ' + h(G.cheat.rule) + "</div>" +
+        table(G.cheat.pct) + table(G.cheat.scale) +
+        "<h3>Fast examples</h3><ul>" + li(G.cheat.examples) + "</ul>" +
+        "<h3>Segmentation template</h3><p>" + h(G.cheat.segment) + "</p>" +
+        "<h3>Quick structure</h3><ol class=\"steps\">" + li(G.cheat.structure) + "</ol>" +
+        "<h3>Rounding rule</h3><ul>" + li(G.cheat.rounding) + "</ul>" +
+        "<h3>Power phrases</h3><ul>" + li(G.cheat.phrases.map(function (x) { return "“" + x + "”"; })) + "</ul>" +
+        '<div class="callout warn"><b>If stuck, say:</b> &ldquo;' + h(G.cheat.stuck) + "&rdquo;</div>" +
+        '<div class="callout"><b>Final memory line:</b> ' + h(G.cheat.final) + "</div>";
+    }
+    app.innerHTML = "<h1>Estimation (Guesstimates)</h1>" + tabs + subBar + body +
+      '<p style="margin-top:20px"><a class="btn" href="#/estimation/examples">Practice with the examples</a></p>';
     $$("textarea[data-k]").forEach(function (ta) {
       var k = ta.getAttribute("data-k");
       ta.value = ws[k] || "";
@@ -488,7 +510,7 @@
       [["template", "Templates"], ["examples", "Examples (" + D.estimation.length + ")"]].map(function (t) {
         return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/estimation/' + t[0] + '\'">' + t[1] + "</button>";
       }).join("") + "</div>";
-    if (sub === "template") return guessTemplate(tabs);
+    if (sub === "template") return guessTemplate(tabs, p[2]);
     var tried = store.get("estTried", {});
     app.innerHTML = "<h1>Estimation (Guesstimates)</h1>" + tabs +
       '<p class="lead">Give yourself 3 minutes. Write your approach and a number, then compare. The approach matters more than the answer.</p>' +
@@ -502,7 +524,7 @@
           '<div class="tablewrap"><table><thead><tr><th>Step</th><th>Calculation</th><th>Value</th></tr></thead><tbody>' +
           e.steps.map(function (s) { return "<tr><td>" + h(s[0]) + "</td><td>" + h(s[1]) + "</td><td>" + h(s[2]) + "</td></tr>"; }).join("") +
           '</tbody></table></div><div class="callout"><b>Answer:</b> ' + h(e.answer) + "</div><p><b>Sanity check:</b> " + h(e.sanity) + "</p></div></div></details>";
-      }).join("");
+      }).join("") + guessWorked();
     $$("details[data-id]").forEach(function (d) {
       var id = d.getAttribute("data-id");
       var ta = $("textarea", d);
@@ -515,6 +537,7 @@
         if (!vis) { var t = store.get("estTried", {}); t[id] = 1; store.set("estTried", t); }
       });
     });
+    renderCharts();
   }
 
   /* ---------- MATH ---------- */
