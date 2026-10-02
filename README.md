@@ -4,6 +4,8 @@ Interactive static site for case interview practice. No build step, no dependenc
 
 - **Theme:** a Light mode / Dark mode button in the header; it follows your system setting by default and remembers your choice.
 
+- **Intro page:** clicking the Case Prep title opens a landing page with what is inside, the CLEAR method in 30 seconds, a suggested study path and links to every section.
+
 ## What's inside
 - **Case Studies** (one main tab with three sub-tabs, links like `#/casestudies/frameworks`):
   - **Templates:** the CLEAR method (Clarify, Lay out, Evaluate, Assess, Recommend) with a memory chart, a structure picker chart, a metrics chart (break-even, ROI, payback, LTV:CAC, margin, CAGR), the two case-flow charts (generic flow and a worked profit-decline example), a worksheet that saves in the browser, a fill-in answer script, a filled example, a phrase bank and a final checklist. Source in `js/data-template.js`.
