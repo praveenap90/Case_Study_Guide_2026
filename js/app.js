@@ -136,8 +136,10 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { done(true); }, legacy);
     else legacy();
   }
-  function zoomInit() {
-    $$(".chartbox").forEach(function (cb) {
+  function zoomInit(root) {
+    $$(".chartbox", root).forEach(function (cb) {
+      if (cb.getAttribute("data-zinit")) return;
+      cb.setAttribute("data-zinit", "1");
       var box = $(".diagram", cb);
       var scale = 1, base = 0;
       function apply() {
@@ -183,25 +185,33 @@
     });
   }
 
-  function renderCharts() {
-    zoomInit();
-    var boxes = $$(".diagram");
+  function renderCharts(root) {
+    root = root || document;
+    var boxes = $$(".diagram", root).filter(function (b) {
+      if (b.getAttribute("data-done")) return false;
+      var sol = b.closest(".sol");
+      return !(sol && sol.style.display === "none");
+    });
     boxes.forEach(function (b) {
+      b.setAttribute("data-done", "1");
+      var cb = b.closest(".chartbox");
+      if (cb) zoomInit(cb.parentNode);
       var pre = document.createElement("pre");
       pre.className = "mermaid";
       pre.textContent = chartSrc[b.getAttribute("data-id")];
       b.appendChild(pre);
     });
-    $$("pre.src").forEach(function (p) { p.textContent = chartSrc[p.getAttribute("data-id")]; });
+    $$("pre.src", root).forEach(function (p) { p.textContent = chartSrc[p.getAttribute("data-id")]; });
+    if (!boxes.length) return;
     function fallback() {
       boxes.forEach(function (b) { b.innerHTML = '<p class="small muted">The chart library could not load (offline?). Open the Mermaid source below.</p>'; });
-      $$(".ctl").forEach(function (z) { z.style.display = "none"; });
-      $$("details").forEach(function (d) { d.open = true; });
+      $$(".ctl", root).forEach(function (z) { z.style.display = "none"; });
+      $$("details", root).forEach(function (d) { d.open = true; });
     }
     if (window.mermaid) {
       try {
         window.mermaid.initialize({ startOnLoad: false, securityLevel: "loose", theme: "default", flowchart: { useMaxWidth: true } });
-        var r = window.mermaid.run({ nodes: $$(".mermaid") });
+        var r = window.mermaid.run({ nodes: boxes.map(function (b) { return $(".mermaid", b); }) });
         if (r && r.catch) r.catch(fallback);
       } catch (e) { fallback(); }
     } else { fallback(); }
@@ -402,11 +412,11 @@
 
   /* ---------- ESTIMATION ---------- */
   function li(a) { return a.map(function (i) { return "<li>" + h(i) + "</li>"; }).join(""); }
-  function guessWorked() {
+  function guessUS() {
     var G = D.guess;
-    chartSrc["g-us"] = G.us.chart; chartSrc["g-mh"] = G.manhole.chart;
+    chartSrc["g-us"] = G.us.chart;
     var X = G.us;
-    var usHtml = chartBlock("g-us", "Worked example: " + X.title, X.lead) + table(X.segTable) +
+    var usHtml = chartBlock("g-us", "Full template walkthrough: " + X.title, X.lead) + table(X.segTable) +
       '<div class="callout warn"><b>Note:</b> ' + h(X.segNote) + "</div>" +
       X.secs.map(function (c) {
         return "<h3>" + h(c.h) + "</h3>" + (c.table ? table(c.table) : "") + (c.ul ? "<ul>" + li(c.ul) + "</ul>" : "") +
@@ -414,13 +424,33 @@
       }).join("") +
       "<h3>" + h(X.sampleTitle) + "</h3>" +
       X.sample.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("");
+    return usHtml;
+  }
+  function guessTennis() {
+    var T = D.guess.tennis;
+    chartSrc["g-tn"] = T.chart; chartSrc["g-tnp"] = T.pushChart; chartSrc["g-tnpie"] = T.pieChart;
+    return chartBlock("g-tn", "Worked example: " + T.title, "Segment, calculate cans per segment, sum, then check.") +
+      "<h3>Approach (framework)</h3><ol class=\"steps\">" + li(T.framework) + "</ol>" +
+      '<div class="callout"><b>Key insight:</b> ' + h(T.insight) + "</div>" +
+      chartBlock("g-tnpie", "Where the volume comes from", "Share of cans by player type.") +
+      "<h3>Sample answer</h3><p>Let me segment this by player type.</p><h3>Assumptions</h3><ul>" + li(T.assumptions) + "</ul>" +
+      "<h3>Calculations by segment</h3>" + T.calcs.map(function (c) { return "<p><b>" + h(c[0]) + "</b></p><ul>" + li(c[1]) + "</ul>"; }).join("") +
+      "<h3>Sense check</h3><ul>" + li(T.sense) + "</ul>" +
+      '<div class="callout"><b>Answer:</b> ' + h(T.answer) + "</div>" +
+      chartBlock("g-tnp", "Handling pushback", "Adjust one assumption at a time.") + table(T.pushMath) +
+      "<h2>" + h(T.alt.title) + '</h2><div class="callout warn">' + h(T.alt.note) + "</div>" + table(T.alt.table) +
+      "<h3>Sample answer (spoken)</h3>" + T.alt.sample.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("");
+  }
+  function guessManhole() {
+    var G = D.guess;
+    chartSrc["g-mh"] = G.manhole.chart;
     var M = G.manhole;
     var mhHtml = chartBlock("g-mh", "Worked example: " + M.title, "Worked example with segmentation, a sanity check and three pushbacks.") +
       M.secs.map(function (c) { return "<h3>" + h(c.h) + "</h3>" + (c.table ? table(c.table) : "") + (c.ul ? "<ul>" + li(c.ul) + "</ul>" : ""); }).join("") +
       '<div class="callout"><b>Interview summary:</b> &ldquo;' + h(M.summary) + "&rdquo;</div>" +
       "<h3>Key tips</h3><ul>" + li(M.tips) + "</ul><h3>" + h(M.pushTitle) + "</h3>" +
       M.push.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> &ldquo;" + h(x[1]) + "&rdquo;</div>"; }).join("") + table(M.pushMath);
-    return "<h2>Worked guesstimates with charts</h2>" + usHtml + mhHtml;
+    return mhHtml;
   }
   function guessTemplate(tabs, sub) {
     var G = D.guess, U = G.universal, S = G.seg, C = G.scaling;
@@ -523,8 +553,8 @@
           '<div class="sol" style="display:none"><p><b>Approach:</b> ' + h(e.approach) + "</p>" +
           '<div class="tablewrap"><table><thead><tr><th>Step</th><th>Calculation</th><th>Value</th></tr></thead><tbody>' +
           e.steps.map(function (s) { return "<tr><td>" + h(s[0]) + "</td><td>" + h(s[1]) + "</td><td>" + h(s[2]) + "</td></tr>"; }).join("") +
-          '</tbody></table></div><div class="callout"><b>Answer:</b> ' + h(e.answer) + "</div><p><b>Sanity check:</b> " + h(e.sanity) + "</p></div></div></details>";
-      }).join("") + guessWorked();
+          '</tbody></table></div><div class="callout"><b>Answer:</b> ' + h(e.answer) + "</div><p><b>Sanity check:</b> " + h(e.sanity) + "</p>" + (e.id === "coffee" ? guessUS() : e.id === "manholes" ? guessManhole() : e.id === "tennis" ? guessTennis() : "") + "</div></div></details>";
+      }).join("");
     $$("details[data-id]").forEach(function (d) {
       var id = d.getAttribute("data-id");
       var ta = $("textarea", d);
@@ -534,6 +564,7 @@
         var s = $(".sol", d); var vis = s.style.display !== "none";
         s.style.display = vis ? "none" : "";
         this.textContent = vis ? "Reveal solution" : "Hide solution";
+        if (!vis) renderCharts(s);
         if (!vis) { var t = store.get("estTried", {}); t[id] = 1; store.set("estTried", t); }
       });
     });

@@ -100,6 +100,33 @@ DATA.estimation = [
     ],
     answer: "Roughly 200,000 to 300,000 trips per day.",
     sanity: "Two independent estimates (riders and drivers) land within 30% of each other."
+  },
+  {
+    id: "manholes", q: "Estimate the number of manholes in the US.", approach: "Top-down by density: segment the population into urban, suburban and rural, then apply people-per-manhole ratios.",
+    steps: [
+      ["US population", "", "~330M"],
+      ["Segments", "Urban 60% / suburban 30% / rural 10%", "~198M / ~99M / ~33M"],
+      ["Urban manholes", "198M / 75 people per manhole", "~2.6M"],
+      ["Suburban manholes", "99M / 150 people per manhole", "~0.7M"],
+      ["Rural allowance", "minimal coverage", "~0.1M"],
+      ["Total", "2.6M + 0.7M + 0.1M", "~3.4M"]
+    ],
+    answer: "About 3.4M on the base case; say roughly 3 to 5 million manholes.",
+    sanity: "One manhole per ~80 people nationwide gives 330M / 80 = ~4M, inside the range."
+  },
+  {
+    id: "tennis", q: "How many tennis balls are sold in the US each year?", approach: "Segment players (casual, recreational, serious), estimate cans bought per year by each, then sum and multiply by 3 balls per can.",
+    steps: [
+      ["US population", "", "~330M"],
+      ["Tennis players", "5% of population", "~16.5M"],
+      ["Casual", "70% = 11.5M x 1 can per year", "~11.5M cans"],
+      ["Recreational", "25% = 4.1M x 12 cans per year", "~49.2M cans"],
+      ["Serious", "5% = 825K x 26 cans per year", "~21.5M cans"],
+      ["Total cans", "11.5M + 49.2M + 21.5M", "~82.2M"],
+      ["Total balls", "82.2M cans x 3 balls", "~247M"]
+    ],
+    answer: "About 240 to 250 million tennis balls per year.",
+    sanity: "About 15 balls per player per year; recreational players drive about 60% of volume."
   }
 ];
 

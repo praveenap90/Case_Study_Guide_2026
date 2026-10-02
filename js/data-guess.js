@@ -1313,5 +1313,171 @@ DATA.guess = {
       ]
     ]
   }
+},
+  tennis: {
+    "alt": {
+      "title": "Alternative version: balls per player model (about 300M)",
+      "note": "This version starts from about 25M players and counts balls per player, so it lands higher (about 300M) than the segmented version above (about 247M). Both sit inside a 250M to 350M range, which is a good thing to say out loud: two methods, similar order of magnitude.",
+      "table": {
+        "title": "Summary table",
+        "headers": [
+          "Segment",
+          "Players",
+          "Balls per player per year",
+          "Balls"
+        ],
+        "rows": [
+          [
+            "Frequent (20%)",
+            "5M",
+            "30 (about 10 cans)",
+            "150M"
+          ],
+          [
+            "Regular (40%)",
+            "10M",
+            "9 (about 3 cans)",
+            "90M"
+          ],
+          [
+            "Occasional (40%)",
+            "10M",
+            "3 (1 can)",
+            "30M"
+          ],
+          [
+            "Player subtotal",
+            "25M",
+            "-",
+            "270M"
+          ],
+          [
+            "Clubs, schools, coaches (+10%)",
+            "-",
+            "-",
+            "27M"
+          ],
+          [
+            "Total",
+            "",
+            "",
+            "about 300M (range 250M to 350M)"
+          ]
+        ]
+      },
+      "sample": [
+        [
+          "Clarify",
+          "I'll estimate new tennis balls sold in the US in a year, counting balls rather than cans, across all stores and online. Is that right?"
+        ],
+        [
+          "Approach",
+          "I'll go bottom-up from players, because tennis balls go dead after a few sessions, so how much people play drives how many they buy."
+        ],
+        [
+          "Inputs",
+          "About 25M Americans play tennis. I'll split them into frequent players at 20%, regular at 40% and occasional at 40%. Frequent players buy about 10 cans a year, which is 30 balls. Regular players buy about 3 cans, 9 balls. Occasional players buy about 1 can, 3 balls."
+        ],
+        [
+          "Math",
+          "Frequent: 5M x 30 = 150M. Regular: 10M x 9 = 90M. Occasional: 10M x 3 = 30M. That is 270M balls. I'll add about 10% for clubs, schools and coaches, which is 27M, so about 300M balls a year."
+        ],
+        [
+          "Sanity check",
+          "That is about 12 balls, or 4 cans, per player per year, which feels reasonable. At roughly $0.85 a ball it is about $250M a year, a believable size for a niche sporting-goods category."
+        ],
+        [
+          "Range and pushback",
+          "I'd say roughly 250 to 350M balls. If you think there are only 20M players, I'll scale everything by 0.8 to about 240M. The answer is most sensitive to how many balls frequent players use."
+        ]
+      ]
+    },
+  "title": "Estimate the number of tennis balls sold in the US each year",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>New tennis balls sold in the US per year<br/>Count balls, not cans\"] --> B[\"Approach: segment by player type<br/>Casual vs recreational vs serious\"]\n  B --> C[\"US population<br/>330M\"]\n  C --> D[\"Tennis participation 5%<br/>= 16.5M players\"]\n  D --> S1[\"Casual 70%<br/>11.5M players<br/>play a few times a year\"]\n  D --> S2[\"Recreational 25%<br/>4.1M players<br/>play weekly\"]\n  D --> S3[\"Serious 5%<br/>825K players<br/>play 3 to 4 times a week\"]\n  S1 --> U1[\"Buy 1 can per year<br/>11.5M x 1 = 11.5M cans\"]\n  S2 --> U2[\"Buy 12 cans per year<br/>new balls monthly<br/>4.1M x 12 = 49.2M cans\"]\n  S3 --> U3[\"Buy 26 cans per year<br/>new balls every 2 weeks<br/>825K x 26 = 21.5M cans\"]\n  U1 --> T[\"Total cans<br/>11.5M + 49.2M + 21.5M<br/>= 82.2M cans\"]\n  U2 --> T\n  U3 --> T\n  T --> V[\"x 3 balls per can<br/>= about 247M balls\"]\n  V --> W[\"Sense check<br/>about 15 balls per player per year<br/>recreational players = about 60% of volume\"]\n  W --> X[\"Answer<br/>about 240M to 250M balls per year\"]\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef seg fill:#fef3c7,stroke:#d97706,color:#000\n  classDef use fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D step\n  class S1,S2,S3 seg\n  class U1,U2,U3,T,V use\n  class W,X out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 247M balls\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Participation is 7%, not 5%<br/>scale by 1.4<br/>= about 345M\"]\n  P --> Q2[\"Recreational buy 8 cans, not 12<br/>4.1M x 8 = 32.8M cans<br/>total 65.8M cans x 3 = about 200M\"]\n  P --> Q3[\"Casual players buy no new cans<br/>82.2M - 11.5M = 70.7M cans<br/>x 3 = about 212M\"]\n  Q1 --> R[\"Updated range<br/>about 200M to 345M\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the total is most sensitive to<br/>how many cans recreational players buy\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "pieChart": "pie showData\n  title Share of cans sold by player type (percent)\n  \"Casual (70% of players)\" : 14\n  \"Recreational (25% of players)\" : 60\n  \"Serious (5% of players)\" : 26",
+  "framework": [
+    "Identify customer segments: casual vs serious players",
+    "Estimate segment sizes: how many play tennis?",
+    "Usage patterns: how often do they buy?",
+    "Calculate per segment, then sum",
+    "Sense check: reasonableness check"
+  ],
+  "insight": "Recreational (weekly) players drive most of the volume, about 60% of cans. Casual players are 70% of players but only about 14% of cans, and serious players are 5% of players but about 26% of cans.",
+  "assumptions": [
+    "US population: 330 million",
+    "Tennis participation: 5% (16.5M people)",
+    "Casual (play a few times a year): 70% = 11.5M",
+    "Recreational (weekly): 25% = 4.1M",
+    "Serious (multiple times a week): 5% = 825K"
+  ],
+  "calcs": [
+    [
+      "1. Casual players",
+      [
+        "Buy 1 can (3 balls) per year",
+        "11.5M x 1 can = 11.5M cans"
+      ]
+    ],
+    [
+      "2. Recreational players",
+      [
+        "Play weekly, new balls monthly",
+        "Buy 12 cans per year",
+        "4.1M x 12 cans = 49.2M cans"
+      ]
+    ],
+    [
+      "3. Serious players",
+      [
+        "Play 3 to 4 times a week, new balls every 2 weeks",
+        "Buy 26 cans per year",
+        "825K x 26 cans = 21.5M cans"
+      ]
+    ],
+    [
+      "4. Total cans",
+      [
+        "11.5M + 49.2M + 21.5M = 82.2M cans"
+      ]
+    ],
+    [
+      "5. Total balls",
+      [
+        "82.2M cans x 3 balls = about 247 million tennis balls"
+      ]
+    ]
+  ],
+  "sense": [
+    "That is about 15 balls per tennis player per year.",
+    "Recreational players drive most volume (60% of total).",
+    "Seems reasonable given ball replacement frequency."
+  ],
+  "answer": "About 240 to 250 million tennis balls per year.",
+  "pushMath": {
+    "title": "Pushback math (base about 247M balls)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Participation 7% instead of 5%",
+        "247M x 1.4",
+        "about 345M"
+      ],
+      [
+        "Recreational buy 8 cans instead of 12",
+        "(11.5M + 32.8M + 21.5M) x 3 = 65.8M x 3",
+        "about 200M"
+      ],
+      [
+        "Casual players buy none",
+        "(82.2M - 11.5M) x 3",
+        "about 212M"
+      ]
+    ]
+  }
 }
 };
