@@ -85,6 +85,21 @@ class A,B,C,D,E question;
 class A1,B1,B2,C1,D1,E1,E2 formula;
 class A2,B3,B4,C2,C3,C4,D2,E3 example;`,
 
+  metricsAssumptions: {
+    title: "What the green example boxes assume",
+    headers: ["Example", "Assumptions"],
+    rows: [
+      ["Break-even: $300K / ($50 - $20) = 10,000 units", "Fixed costs are $300K for the period. Each unit sells for $50 and costs $20 to make, so it adds $30 toward fixed costs. After 10,000 units the business covers its costs, and every unit after that is profit."],
+      ["ROI: invest $5M, get back $12M = 140%", "$12M is the total returned, so the gain is $12M - $5M = $7M, and $7M / $5M = 140%. ROI says nothing about how long it took."],
+      ["Payback: $9M / $6M per year = 18 months", "A separate project from the ROI example: $9M invested, earning a steady $6M profit a year. 1.5 years x 12 = 18 months. It uses profit, not revenue."],
+      ["LTV: $40 x 5 = $200", "$40 is profit per customer per year, not revenue. A customer stays 5 years, roughly 20% churn a year. The figure is not discounted."],
+      ["LTV:CAC: $200 / $50 = 4x", "Acquiring a customer costs $50, so each $1 spent returns $4 over the customer's life. 3x or more is the usual healthy rule of thumb."],
+      ["CAC payback: $50 / $40 x 12 = 15 months", "A customer earns $40 a year, so $50 takes 1.25 years to recover, which is 15 months."],
+      ["Margin: $30M / $200M = 15%", "Profit and revenue are for the same period. In an interview, say which profit you mean, such as net or operating."],
+      ["Growth: $100M to $121M in 2 years = 10% a year", "CAGR = (121 / 100)^(1/2) - 1 = 1.10 - 1 = 10%. It assumes smooth compounding at the same rate each year, though real growth is rarely that even."]
+    ]
+  },
+
   metricsTable: {
     title: "Metric quick reference",
     headers: ["Metric", "Formula", "Answers the question", "Rule of thumb"],
