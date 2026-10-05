@@ -85,6 +85,18 @@ class A,B,C,D,E question;
 class A1,B1,B2,C1,D1,E1,E2 formula;
 class A2,B3,B4,C2,C3,C4,D2,E3 example;`,
 
+  profitTypes: {
+    title: "Net profit vs operating profit",
+    headers: ["", "Operating profit", "Net profit"],
+    rows: [
+      ["What it is", "Profit from running the core business", "What is left for the owners after everything"],
+      ["Formula", "Revenue - cost of sales - operating expenses (salaries, rent, marketing)", "Operating profit - interest - taxes (+/- one-off items)"],
+      ["Example on $200M revenue", "$30M, so operating margin = 15%", "$30M - $5M interest - $6M tax = $19M, so net margin = 9.5%"],
+      ["Excludes", "Interest, taxes and usually one-off items", "Nothing: it is the bottom line"],
+      ["Use it when", "Judging how well the business itself runs, or comparing firms with different debt and tax", "Judging what shareholders actually earn, or the final result after financing and tax"],
+      ["Interview tip", "Best for cost-reduction and profitability cases because management controls it", "Say which one you mean. If unsure, ask: 'Do you mean operating or net profit?'"]
+    ]
+  },
   metricsAssumptions: {
     title: "What the green example boxes assume",
     headers: ["Example", "Assumptions"],

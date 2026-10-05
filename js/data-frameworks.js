@@ -2171,134 +2171,232 @@ DATA.frameworks = [
     name: "Product Deep-Dive",
     tags: ["banking", "tech"],
     when: "The interviewer shows you a product, feature or app screen and asks what to do with it. Common at banks and fintechs: a card, a savings account, a loan, or a mobile app feature.",
-    example: "The Digital Feature case run through CLEAR: a card issuer's spending-insights feature is at 25% adoption and the team wants $2M to reach 40%. Adopters spend $1,600 more than non-adopters, but a randomized holdout shows the real effect is much smaller. Full case in the Cases section.",
+    example: "The Digital Feature case in plain words: a card issuer's spending-insights feature is used by 25% of customers, and the team wants $2M to reach 40%. Adopters spend more, but adopters chose the feature, so the real effect has to come from a test. Full case in the Cases section.",
     speak: [
-      ["C: Clarify", "Let me make sure I understand. The bank has a spending-insights feature at 25% adoption, and the team wants $2M to push it to 40%, with payback under 18 months. Two quick questions: how was it launched, and what does one customer earn?"],
-      ["L: Lay out", "I would look at four things. First, is the evidence causal. Second, the value per customer. Third, the math for scaling it. Fourth, the risks. I will start with causality, because the team's evidence compares adopters with non-adopters."],
-      ["E: Evaluate", "Adopters spend $1,600 more, but people who choose a budgeting feature were already more careful with money. The random holdout shows the real effect is $45 per offered customer. Only 25% adopted, so that is about $180 per adopter. The raw gap overstated the effect about 9 times."],
-      ["A: Assess", "Across 4M customers the feature adds about $6.6M a year from spend, retention and fewer calls, or $5.1M after running costs. Each adoption point is worth about $0.27M, so 15 more points is about $4M. New adopters are probably less engaged, so I would haircut that by half to $2M a year. That pays back the $2M in about 12 months."],
-      ["R: Recommend", "Yes, but in stages. Test the promotion on half of the non-adopters for 8 weeks and scale only if each new adopter delivers at least half of today's benefit. The main risk is that new adopters respond less, so I would keep the original holdout running and watch complaints and delinquency."]
-    ],
-    exampleChart: `flowchart TD
-C["C: Clarify<br/>Decide on a $2M promotion to lift adoption from 25% to 40%<br/>Payback under 18 months"]
-C --> C2["Facts: 4M app customers, random 5% holdout"]
-
-C2 --> L["L: Lay out<br/>1 Is the evidence causal?<br/>2 Value per customer<br/>3 Scale-up math<br/>4 Risks"]
-
-L --> E1["E: Evaluate<br/>Naive gap: adopters spend $10,200 vs $8,600 = +$1,600"]
-E1 --> E2["Holdout: +$45 per offered customer<br/>= +$180 per adopter (÷ 25% adoption)"]
-E2 --> E3["Naive view overstated the effect about 9x"]
-
-E3 --> A1["A: Assess<br/>Spend $3.6M + Retention $1.6M + Calls $1.44M = $6.6M a year"]
-A1 --> A2["Less run cost $1.5M = $5.1M net a year"]
-A2 --> A3["+15 adoption points x $0.27M = $4.0M<br/>50% haircut = $2.0M a year"]
-A3 --> A4["Payback = $2M / $2M per year = 12 months"]
-
-A4 --> R["R: Recommend<br/>Yes, in stages"]
-R --> R1["Test on half of non-adopters for 8 weeks"]
-R --> R2["Scale if benefit per new adopter is at least half of today's"]
-R --> R3["Guardrails: complaints, delinquency, opt-outs"]
-
-classDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;
-classDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;
-classDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;
-classDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;
-classDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;
-class C,C2 c1;
-class L c2;
-class E1,E2,E3 c3;
-class A1,A2,A3,A4 c4;
-class R,R1,R2,R3 c5;`,
-    exampleCharts: [
-      {
-        id: "evaluate",
-        title: "Evaluate: naive view vs. holdout",
-        note: "Why the raw gap between adopters and non-adopters is misleading.",
-        code: `flowchart TD
-Q["Does the feature cause more spend?"]
-Q --> N["Naive view: compare adopters with non-adopters"]
-Q --> H["Holdout view: compare offered vs not offered"]
-
-N --> N1["Adopters: $10,200"]
-N --> N2["Non-adopters: $8,600"]
-N1 --> N3["Gap = +$1,600"]
-N2 --> N3
-N3 --> N4["Problem: adopters were already more engaged (selection bias)"]
-
-H --> H1["Offered: $9,045"]
-H --> H2["Not offered: $9,000"]
-H1 --> H3["Gap = +$45 per offered customer"]
-H2 --> H3
-H3 --> H4["Only 25% adopted: $45 ÷ 25% = +$180 per adopter"]
-
-N3 --> X["$1,600 ÷ $180 = naive view overstated the effect about 9x"]
-H4 --> X
-X --> Z["Use the holdout number"]
-
-classDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;
-classDef naive fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;
-classDef hold fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;
-classDef result fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;
-class Q q;
-class N,N1,N2,N3,N4 naive;
-class H,H1,H2,H3,H4 hold;
-class X,Z result;`
-      },
-      {
-        id: "impact",
-        title: "Impact math: from three sources to the decision",
-        note: "Each benefit source, the net, the scale-up, the haircut and the payback check.",
-        code: `flowchart TD
-S1["Extra spend<br/>$45 x 4M = $180M x 2% = $3.6M"] --> T["Total benefit<br/>$6.64M a year"]
-S2["Retention<br/>0.1 pt x 4M = 4,000 accounts x $400 = $1.6M"] --> T
-S3["Fewer calls<br/>4M x 1.2 x 3% = 144K calls x $10 = $1.44M"] --> T
-
-T --> N["Net of $1.5M run cost<br/>= $5.1M a year"]
-N --> P["Per adoption point<br/>$6.64M ÷ 25 = $0.27M"]
-P --> G["Scale-up<br/>+15 points x $0.27M = $4.0M"]
-G --> H["50% haircut<br/>= $2.0M a year"]
-H --> PB["Payback<br/>$2M ÷ $2M per year = 12 months"]
-PB --> D{"Under the 18-month bar?"}
-D --> Y["Yes: go, in stages"]
-
-classDef src fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;
-classDef calc fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;
-classDef dec fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;
-classDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;
-class S1,S2,S3 src;
-class T,N,P,G,H,PB calc;
-class D dec;
-class Y out;`
-      }
-    ],
+      [
+            "C: Clarify",
+            "So we are deciding whether to spend $2M to raise adoption of this feature from 25% to 40%, and it needs to pay back within 18 months. Can I confirm we have a random group that was never shown the feature?"
+      ],
+      [
+            "L: Lay out",
+            "I will check three things. First, is the evidence real, meaning did the feature cause the extra spending. Second, what one customer is worth. Third, what scaling adds and what could go wrong."
+      ],
+      [
+            "E: Evaluate",
+            "The team compares users with non-users and sees $1,600 more spend. But people who pick a budgeting tool are already careful, so that is not just the feature. The fair test shows $45 more per customer offered. Only a quarter use it, so it is about $180 per user. The first number was roughly nine times too big."
+      ],
+      [
+            "A: Assess",
+            "Using the fair numbers, the feature earns about $6.6M a year, or $5.1M after running costs, so it already pays for itself. Going from 25% to 40% could add about $4M a year, but new users are probably less keen, so I would plan on about $2M. That repays the $2M in about 12 months."
+      ],
+      [
+            "R: Recommend",
+            "Yes, in stages. Try the promotion on half of the non-adopters for eight weeks. Scale up only if each new user delivers at least half of today's benefit, and stop if complaints, late payments or opt-outs rise."
+      ]
+],
+    exampleChart: "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Decision: spend $2M to raise app adoption from 25% to 40%<br/>Bar: pays back within 18 months\"]\nC --> C2[\"What we have: 4M app customers<br/>and a fair test, a random 5% were never shown the feature\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Is the evidence real?<br/>Did the feature cause the extra spending?\"]\nL --> L2[\"2 What is one customer worth?<br/>Spend, staying, fewer calls\"]\nL --> L3[\"3 What does scaling add?<br/>And what could go wrong?\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Test the team's numbers\"]\nE1 --> E2[\"The team says: users spend $1,600 more<br/>($10,200 vs $8,600)\"]\nE2 --> E3[\"But careful savers choose budgeting tools anyway,<br/>so that gap may not be the feature\"]\nE3 --> E4[\"Fair test: customers offered it spend only $45 more.<br/>Only 25% use it, so $45 / 25% = $180 per user\"]\nE4 --> E5[\"The team's number was about 9x too big\"]\n\nE5 --> A[\"A: Assess<br/>What do the real numbers mean?\"]\nA --> A1[\"Worth today: $6.6M a year<br/>$5.1M after $1.5M running cost\"]\nA --> A2[\"Scaling adds: 15 more points x $0.27M = $4.0M<br/>Halve it, new users are less keen = $2.0M a year\"]\nA --> A3[\"Payback: $2M / $2M a year = 12 months<br/>Inside the 18-month bar\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Yes, in stages\"]\nR --> R1[\"Test on half of non-adopters for 8 weeks\"]\nR --> R2[\"Scale only if each new user delivers at least half of today's benefit\"]\nR --> R3[\"Watch complaints, late payments and opt-outs\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4,E5 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+    exampleCharts: [],
     exampleTables: [
       {
-        title: "CLEAR applied to the product deep-dive steps",
-        headers: ["CLEAR step", "Product deep-dive step it uses", "In this case"],
-        rows: [
-          ["Clarify", "Restate the product, ask the objective", "A free feature costing $1.5M a year. The decision is a $2M promotion, with payback under 18 months."],
-          ["Lay out", "Customer, economics, measurement, risk", "Causal evidence, value per customer, scale-up math, risks"],
-          ["Evaluate", "Measure with a test, not adopters vs. non-adopters", "The holdout shows +$180 per adopter, not the naive +$1,600"],
-          ["Assess", "Convert the effect to dollars", "$6.6M a year benefit, $5.1M net, about $2.0M a year from scaling after a haircut"],
-          ["Recommend", "Staged action with guardrails", "Yes, test on half of non-adopters first"]
-        ]
+            "title": "Step by step: what to do and why",
+            "headers": [
+                  "Step",
+                  "What you do",
+                  "Why it matters",
+                  "In this case"
+            ],
+            "rows": [
+                  [
+                        "C Clarify",
+                        "Repeat the decision, ask what you can measure, agree how success is judged",
+                        "Stops you solving the wrong problem",
+                        "Decision: $2M for 25% to 40%. Bar: payback in 18 months. Data: 4M customers and a fair test (5% never shown the feature)"
+                  ],
+                  [
+                        "L Lay out",
+                        "Tell the interviewer your 3 questions before any numbers",
+                        "Shows you have a plan and lets them steer",
+                        "Is the evidence real? What is a customer worth? What does scaling add, and what are the risks?"
+                  ],
+                  [
+                        "E Evaluate",
+                        "Test the evidence first, then calculate",
+                        "A big number built on weak evidence is worthless",
+                        "The team's +$1,600 shrinks to +$180 once you use the fair test"
+                  ],
+                  [
+                        "A Assess",
+                        "Turn the cleaned-up numbers into value, then payback",
+                        "This is where you answer the real question",
+                        "$5.1M a year today; scaling adds about $2M a year; payback 12 months"
+                  ],
+                  [
+                        "R Recommend",
+                        "Give a clear yes or no first, then the conditions",
+                        "Interviewers want a decision, not a list",
+                        "Yes, in stages, with a test and clear stop signals"
+                  ]
+            ]
       },
       {
-        title: "The impact math",
-        headers: ["Source", "Logic", "Value"],
-        rows: [
-          ["Extra spend", "$45 x 4M = $180M spend x 2%", "$3.6M"],
-          ["Retention", "0.1 pt x 4M = 4,000 accounts x $400", "$1.6M"],
-          ["Fewer calls", "4M x 1.2 calls x 3% = 144K calls x $10", "$1.44M"],
-          ["Total benefit", "", "$6.6M a year"],
-          ["Less running cost", "", "-$1.5M"],
-          ["Net", "", "$5.1M a year"],
-          ["Scale-up (+15 points)", "$6.64M / 25 = $0.27M per point x 15", "$4.0M"],
-          ["After 50% haircut", "New adopters are less engaged", "$2.0M a year"],
-          ["Payback", "$2M / $2M per year", "12 months"]
-        ]
+            "title": "Plain-English glossary",
+            "headers": [
+                  "Term",
+                  "Plain meaning",
+                  "Example here"
+            ],
+            "rows": [
+                  [
+                        "Adoption",
+                        "Share of customers who actually use the feature",
+                        "25% now, 40% target"
+                  ],
+                  [
+                        "Holdout (fair test)",
+                        "A random group kept from seeing the feature, to compare against everyone else",
+                        "5% of customers never saw it"
+                  ],
+                  [
+                        "Causal",
+                        "The feature itself made the difference, not something else",
+                        "Does insights cause more spending?"
+                  ],
+                  [
+                        "Self-selection (the trap)",
+                        "People who choose something are different from people who do not",
+                        "Careful savers pick budgeting tools, so they already spend sensibly"
+                  ],
+                  [
+                        "Per adopter",
+                        "The effect on someone who actually uses it",
+                        "$45 across all offered customers = $180 per user"
+                  ],
+                  [
+                        "Haircut",
+                        "Cut a forecast to be safe",
+                        "New users are less keen, so halve the benefit"
+                  ],
+                  [
+                        "Payback",
+                        "Months until the benefit repays the cost",
+                        "$2M / $2M a year = 12 months"
+                  ],
+                  [
+                        "Guardrail",
+                        "A warning sign that tells you to stop",
+                        "Complaints, late payments, opt-outs"
+                  ]
+            ]
+      },
+      {
+            "title": "The math, one step at a time",
+            "headers": [
+                  "Step",
+                  "What we are working out",
+                  "Calculation",
+                  "Result"
+            ],
+            "rows": [
+                  [
+                        "1",
+                        "The team's claim",
+                        "$10,200 - $8,600",
+                        "+$1,600 a year"
+                  ],
+                  [
+                        "2",
+                        "The fair-test effect for everyone offered",
+                        "$9,045 - $9,000",
+                        "+$45 a year"
+                  ],
+                  [
+                        "3",
+                        "Per person who actually uses it",
+                        "$45 / 25% (only 1 in 4 uses it)",
+                        "+$180"
+                  ],
+                  [
+                        "4",
+                        "How wrong was the claim?",
+                        "$1,600 / $180",
+                        "about 9 times too high"
+                  ],
+                  [
+                        "5",
+                        "Extra spending, as profit",
+                        "$45 x 4M customers = $180M spend x 2% fee earned",
+                        "$3.6M a year"
+                  ],
+                  [
+                        "6",
+                        "Customers who stay",
+                        "0.1% x 4M = 4,000 accounts x $400 each",
+                        "$1.6M a year"
+                  ],
+                  [
+                        "7",
+                        "Fewer service calls",
+                        "4M x 1.2 calls x 3% fewer = 144K calls x $10",
+                        "$1.44M a year"
+                  ],
+                  [
+                        "8",
+                        "Value today, after running cost",
+                        "$3.6M + $1.6M + $1.44M = $6.6M, minus $1.5M",
+                        "$5.1M a year"
+                  ],
+                  [
+                        "9",
+                        "Value of one adoption point",
+                        "$6.6M / 25 points",
+                        "about $0.27M"
+                  ],
+                  [
+                        "10",
+                        "Value of going 25% to 40%",
+                        "15 points x $0.27M",
+                        "about $4.0M a year"
+                  ],
+                  [
+                        "11",
+                        "Be careful: new users are less keen",
+                        "$4.0M x 50%",
+                        "about $2.0M a year"
+                  ],
+                  [
+                        "12",
+                        "Payback",
+                        "$2M cost / $2M a year",
+                        "12 months (bar: 18 months)"
+                  ]
+            ]
+      },
+      {
+            "title": "Common beginner mistakes",
+            "headers": [
+                  "Mistake",
+                  "What to do instead"
+            ],
+            "rows": [
+                  [
+                        "Trusting \"users do better\"",
+                        "Always ask whether better customers simply chose the feature."
+                  ],
+                  [
+                        "Skipping the structure",
+                        "Say your 3 questions before calculating anything."
+                  ],
+                  [
+                        "Forgetting the haircut",
+                        "Early users are the keenest, so later users rarely match them."
+                  ],
+                  [
+                        "Ending without a decision",
+                        "Finish with a clear yes or no, the conditions, and the stop signals."
+                  ]
+            ]
       }
-    ],
+],
     table: {
       title: "What changes by product type",
       headers: ["Product", "Main profit levers", "Main risks"],

@@ -296,6 +296,7 @@
       chartBlock("metrics", "3. Pick the number", "Match the decision to the metric.") +
       table(T.metricsAssumptions) +
       table(T.metricsTable) +
+      table(T.profitTypes) +
       D.flows.map(function (f, i) { return chartBlock("tpl-flow-" + f.id, (4 + i) + ". " + f.title, f.note); }).join("") +
       "<h2>6. Worksheet</h2><p class=\"muted small\">Fill this in for any practice case. Your notes save in this browser. The sample column shows the Digital Feature case.</p>" +
       '<div class="row"><button id="toggleSample" class="ghost">Hide sample</button><button id="clearWs" class="ghost">Clear my notes</button></div>' +
