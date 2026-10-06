@@ -341,6 +341,8 @@
       chartBlock("metrics", "3. Pick the number", "Match the decision to the metric.") +
       table(T.metricsAssumptions) +
       table(T.metricsTable) +
+      '<h3>Metric design</h3><p>' + h(T.metricDesign.intro) + "</p>" + table(T.metricDesign.layers) +
+      T.metricDesign.examples.map(function (x) { return '<div class="callout"><b>Q: ' + h(x.q) + "</b><br>" + h(x.a) + "</div>"; }).join("") +
       table(T.profitTypes) +
       D.flows.map(function (f, i) { return chartBlock("tpl-flow-" + f.id, (4 + i) + ". " + f.title, f.note); }).join("") +
       "<h2>6. Worksheet</h2><p class=\"muted small\">Fill this in for any practice case. Your notes save in this browser. The sample column shows the Digital Feature case.</p>" +
@@ -674,7 +676,7 @@
           '<div class="sol" style="display:none"><p><b>Approach:</b> ' + h(e.approach) + "</p>" +
           '<div class="tablewrap"><table><thead><tr><th>Step</th><th>Calculation</th><th>Value</th></tr></thead><tbody>' +
           e.steps.map(function (s) { return "<tr><td>" + h(s[0]) + "</td><td>" + h(s[1]) + "</td><td>" + h(s[2]) + "</td></tr>"; }).join("") +
-          '</tbody></table></div><div class="callout"><b>Answer:</b> ' + h(e.answer) + "</div><p><b>Sanity check:</b> " + h(e.sanity) + "</p>" + (e.id === "coffee" ? guessUS() : e.id === "manholes" ? guessManhole() : e.id === "tennis" ? guessTennis() : (e.id === "tires" || e.id === "smartphones" || e.id === "pizza" || e.id === "gas" || e.id === "cards" || e.id === "piano" || e.id === "rides") ? guessSimple(e.id) : "") + "</div></div></details>";
+          '</tbody></table></div><div class="callout"><b>Answer:</b> ' + h(e.answer) + "</div><p><b>Sanity check:</b> " + h(e.sanity) + "</p>" + (e.id === "coffee" ? guessUS() : e.id === "manholes" ? guessManhole() : e.id === "tennis" ? guessTennis() : (D.guess[e.id] && D.guess[e.id].pushChart) ? guessSimple(e.id) : "") + "</div></div></details>";
       }).join("");
     $$("details[data-id]").forEach(function (d) {
       var id = d.getAttribute("data-id");

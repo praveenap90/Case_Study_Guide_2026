@@ -113,19 +113,161 @@ class A2,B3,B4,C2,C3,C4,D2,E3 example;`,
   },
 
   metricsTable: {
-    title: "Metric quick reference",
-    headers: ["Metric", "Formula", "Answers the question", "Rule of thumb"],
-    rows: [
-      ["Break-even", "Fixed costs / (Price - Variable cost)", "How much must we sell to avoid a loss?", "Compare to realistic volume"],
-      ["ROI", "(Gain - Cost) / Cost", "What did each dollar invested return?", "Compare to the cost of capital"],
-      ["Payback", "Investment / Annual profit", "How fast do we get the money back?", "Under 2 years is usually good"],
-      ["LTV", "Margin per year x Years kept", "What is a customer worth?", "Use margin, not revenue"],
-      ["LTV:CAC", "LTV / CAC", "Is acquiring customers profitable?", "3x or more, and watch the trend"],
-      ["CAC payback", "CAC / Monthly margin", "How long until a customer pays for itself?", "12 months or less is strong"],
-      ["Margin", "Profit / Revenue", "How much of each sales dollar do we keep?", "Compare to competitors"],
-      ["CAGR", "(End / Start)^(1/years) - 1", "What is the steady yearly growth rate?", "Use for multi-year trends"]
+  "title": "Metric quick reference",
+  "headers": [
+    "Metric",
+    "Formula",
+    "Answers the question",
+    "Rule of thumb or watch-out"
+  ],
+  "rows": [
+    [
+      "Break-even",
+      "Fixed costs / (Price - Variable cost)",
+      "How much must we sell to avoid a loss?",
+      "Compare to realistic volume"
+    ],
+    [
+      "ROI",
+      "(Gain - Cost) / Cost",
+      "What did each dollar invested return?",
+      "Compare to the cost of capital"
+    ],
+    [
+      "Payback",
+      "Investment / Annual profit",
+      "How fast do we get the money back?",
+      "Under 2 years is usually good"
+    ],
+    [
+      "LTV",
+      "Margin per year x Years kept",
+      "What is a customer worth?",
+      "Use margin, not revenue"
+    ],
+    [
+      "LTV:CAC",
+      "LTV / CAC",
+      "Is acquiring customers profitable?",
+      "3x or more, and watch the trend"
+    ],
+    [
+      "CAC payback",
+      "CAC / Monthly margin",
+      "How long until a customer pays for itself?",
+      "12 months or less is strong"
+    ],
+    [
+      "Margin",
+      "Profit / Revenue",
+      "How much of each sales dollar do we keep?",
+      "Compare to competitors"
+    ],
+    [
+      "CAGR",
+      "(End / Start)^(1/years) - 1",
+      "What is the steady yearly growth rate?",
+      "Use for multi-year trends"
+    ],
+    [
+      "DAU",
+      "Distinct users active in a day",
+      "How many people use the product on a typical day?",
+      "Define 'active' first. A login is not value."
+    ],
+    [
+      "Retention",
+      "Users active in period N / users in the starting cohort",
+      "Do customers keep coming back?",
+      "Compare cohorts of the same age only."
+    ],
+    [
+      "Conversion",
+      "Users who finish a step / users who reached it",
+      "How many people finish a step?",
+      "Check the denominator. Who counts as eligible?"
+    ],
+    [
+      "ARPU",
+      "Total revenue / active users",
+      "How much revenue does each active user bring?",
+      "Averages hide a few big customers."
+    ],
+    [
+      "Churn",
+      "Customers lost in period / customers at start",
+      "How many customers do we lose?",
+      "Define 'lost'. Closed account or just inactive?"
+    ],
+    [
+      "Activation",
+      "New users who do the key first action / new users",
+      "Do new users reach their first real action?",
+      "Pick an action that predicts long term use."
+    ],
+    [
+      "CAC",
+      "Sales and marketing cost / new customers won",
+      "What does it cost to win one customer?",
+      "Include all costs, and count only paying customers."
+    ],
+    [
+      "Default rate",
+      "Loans not repaid after N days / loans issued",
+      "How many borrowers do not repay?",
+      "Needs time to mature. Compare by loan age."
+    ],
+    [
+      "Approval rate",
+      "Applications approved / applications decided",
+      "How many applicants do we say yes to?",
+      "High is not always good. Pair with default rate."
+    ]
+  ]
+},
+
+  metricDesign: {
+  "intro": "A metric turns a vague goal into a number you can track. A good one is clear, hard to game, and tied to a decision.",
+  "layers": {
+    "title": "The three layers of a metric set",
+    "headers": [
+      "Layer",
+      "Plain meaning",
+      "Bank example"
+    ],
+    "rows": [
+      [
+        "North star",
+        "The one number that shows the product creates value",
+        "Monthly active savers who add money"
+      ],
+      [
+        "Input metrics",
+        "Smaller numbers you can move that drive the north star",
+        "Sign-ups, activation rate, deposit frequency"
+      ],
+      [
+        "Guardrails",
+        "Numbers that must not get worse while you chase the goal",
+        "Complaint rate, default rate, support tickets"
+      ]
     ]
   },
+  "examples": [
+    {
+      "q": "How would you measure if a new savings feature is working?",
+      "a": "Goal: more customers build a savings habit. North star: share of active customers who add money each month. Inputs: feature adoption, first deposit within 7 days, deposit frequency. Guardrails: overdraft rate, complaints, balance moved out of other products. Compare users who got the feature with similar users who did not."
+    },
+    {
+      "q": "Approval rate went up 5 points. Is that good?",
+      "a": "Not by itself. Check guardrails: default rate and loss per loan for the new approvals. Check the mix of applicants too. If risk held steady, it is good. If defaults rise later, it is not."
+    },
+    {
+      "q": "What is wrong with using 'number of logins' as the north star?",
+      "a": "It is easy to inflate and does not show value. A confusing app can raise logins. Better: a login that ends in a useful action, such as a payment or a deposit."
+    }
+  ]
+},
 
   // [label, key, sample]
   worksheet: [

@@ -2187,5 +2187,1550 @@ DATA.guess = {
       "I'd say roughly 200K to 300K, with about 250K as a midpoint. If only 2.5% of adults ride on a given day it is about 240K, and at 3.5% it is about 335K. The answer is most sensitive to the share of adults who ride on a given day."
     ]
   ]
+},
+  "bikes": {
+  "title": "Estimate the number of bicycles sold in the US each year",
+  "lead": "Stock and flow: bikes in use divided by average life gives replacements, then add growth in the stock.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>New bicycles sold in the US per year<br/>Kids and adult bikes, count units\"]\n  B[\"Approach: stock and flow<br/>Bikes wear out or are outgrown, so stock / life = yearly sales\"]\n  C[\"US population<br/>about 335M\"]\n  D[\"Bikes in use<br/>335M x 0.4 per person = about 135M\"]\n  E[\"Average life<br/>kids outgrow them, adults keep them<br/>about 8 years\"]\n  F[\"Replacement sales per year<br/>135M / 8 = about 17M\"]\n  G[\"Growth in the stock<br/>about 5% more bikes each year\"]\n  H[\"Add growth<br/>17M x 1.05 = about 18M\"]\n  I[\"Sanity check<br/>Households: 130M x 12% buy x 1.1 bikes<br/>= about 17M, both routes agree\"]\n  J[\"Answer<br/>about 15M to 20M bikes per year\"]\n  A --> B\n  B --> C\n  C --> D\n  B --> E\n  D --> F\n  E --> F\n  B --> G\n  F --> H\n  G --> H\n  H --> I\n  I --> J\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D,E step\n  class F,G,H calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 18M bikes\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Pandemic boom year<br/>sales up 40%<br/>18M x 1.4 = about 25M\"]\n  P --> Q2[\"Bikes last 10 years<br/>135M / 10 = 13.5M<br/>13.5M x 1.05 = about 14M\"]\n  P --> Q3[\"Only 0.3 bikes per person<br/>335M x 0.3 = 100M<br/>100M / 8 x 1.05 = about 13M\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 13M to 25M\"]\n  R --> S[\"Say: the answer is most sensitive to<br/>average bike life\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "US population",
+        "",
+        "about 335M"
+      ],
+      [
+        "Bikes in use",
+        "335M x 0.4 bikes per person",
+        "about 135M"
+      ],
+      [
+        "Average life",
+        "kids outgrow them, adults keep them",
+        "about 8 years"
+      ],
+      [
+        "Replacement sales per year",
+        "135M / 8",
+        "about 17M"
+      ],
+      [
+        "Growth in the stock (+5%)",
+        "17M x 1.05",
+        "about 18M"
+      ],
+      [
+        "Cross-check: households",
+        "130M x 12% x 1.1 bikes",
+        "about 17M"
+      ],
+      [
+        "Total",
+        "",
+        "about 18M"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 18M)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Pandemic boom year (+40%)",
+        "18M x 1.4",
+        "about 25M"
+      ],
+      [
+        "Bikes last 10 years",
+        "135M / 10 x 1.05",
+        "about 14M"
+      ],
+      [
+        "Only 0.3 bikes per person",
+        "335M x 0.3 / 8 x 1.05",
+        "about 13M"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate new bicycles sold in the US in a year, kids and adult bikes, counted in units. Does that work?"
+    ],
+    [
+      "Approach",
+      "Stock and flow. Bikes wear out or get outgrown, so bikes in use divided by their average life gives yearly replacements, and then I add growth in the stock."
+    ],
+    [
+      "Inputs",
+      "About 335M people with roughly 0.4 bikes each, so about 135M bikes in use. Kids outgrow bikes and adults keep them longer, so I'll use an average life of about 8 years."
+    ],
+    [
+      "Math",
+      "135M divided by 8 is about 17M replacements. The stock grows about 5%, so 17M x 1.05 is about 18M bikes a year."
+    ],
+    [
+      "Sanity check",
+      "From households: 130M households, about 12% buy a bike in a year, about 1.1 bikes each, which is about 17M. Both routes agree."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 15 to 20M. If there is a pandemic boom, sales jump to about 25M for a year or two, then fall below normal because the stock is new. If bikes last 10 years it falls to about 14M. The answer is most sensitive to average bike life."
+    ]
+  ]
+},
+  "taxis": {
+  "title": "Estimate the number of taxi and ride-hail trips per day in New York City",
+  "lead": "Supply side: active vehicles times trips per vehicle per day, checked against a demand-side estimate.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Taxi and ride-hail trips in NYC per day<br/>Yellow, green and app cars, one booking = one trip\"]\n  B[\"Approach: supply side<br/>Active vehicles x trips per vehicle, then check demand\"]\n  C[\"Licensed for-hire vehicles<br/>about 100K\"]\n  D[\"Active on a typical day<br/>60% x 100K = about 60K\"]\n  E[\"Trips per hour on the road<br/>about 1.5\"]\n  F[\"Hours on the road per day<br/>about 10\"]\n  G[\"Trips per vehicle per day<br/>1.5 x 10 = about 15\"]\n  H[\"Total trips per day<br/>60K x 15 = about 900K\"]\n  I[\"Sanity check<br/>Demand: 8.3M x 10% = 830K<br/>plus 20% for visitors = about 1.0M\"]\n  J[\"Answer<br/>about 800K to 1.2M trips per day\"]\n  A --> B\n  B --> C\n  C --> D\n  B --> E\n  B --> F\n  E --> G\n  F --> G\n  D --> H\n  G --> H\n  H --> I\n  I --> J\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D step\n  class E,F,G,H calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 900K trips\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 50% of vehicles active<br/>100K x 50% x 15 = about 750K\"]\n  P --> Q2[\"Only 1.2 trips per hour<br/>60K x 1.2 x 10 = about 720K\"]\n  P --> Q3[\"12 hours on the road<br/>60K x 1.5 x 12 = about 1.08M\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 720K to 1.08M\"]\n  R --> S[\"Say: the answer is most sensitive to<br/>trips per hour on the road\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Licensed for-hire vehicles",
+        "yellow, green and app cars",
+        "about 100K"
+      ],
+      [
+        "Active on a typical day",
+        "60% x 100K",
+        "about 60K"
+      ],
+      [
+        "Trips per hour on the road",
+        "",
+        "about 1.5"
+      ],
+      [
+        "Hours on the road per vehicle per day",
+        "",
+        "about 10"
+      ],
+      [
+        "Trips per vehicle per day",
+        "1.5 x 10",
+        "about 15"
+      ],
+      [
+        "Total trips per day",
+        "60K x 15",
+        "about 900K"
+      ],
+      [
+        "Cross-check: demand",
+        "8.3M x 10% x 1.2",
+        "about 1.0M"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 900K)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Only 50% of vehicles active",
+        "100K x 50% x 15",
+        "about 750K"
+      ],
+      [
+        "Only 1.2 trips per hour",
+        "60K x 1.2 x 10",
+        "about 720K"
+      ],
+      [
+        "12 hours on the road",
+        "60K x 1.5 x 12",
+        "about 1.08M"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate taxi and ride-hail trips in New York City per day, yellow, green and app cars, counting each booking as one trip. Does that work?"
+    ],
+    [
+      "Approach",
+      "Supply side. Active vehicles times trips per vehicle per day, and then I'll check it against a demand-side estimate."
+    ],
+    [
+      "Inputs",
+      "About 100K licensed for-hire vehicles, with about 60% active on a typical day, so about 60K. Each is on the road about 10 hours and does about 1.5 trips an hour."
+    ],
+    [
+      "Math",
+      "1.5 x 10 is about 15 trips per vehicle per day. 60K x 15 is about 900K trips a day."
+    ],
+    [
+      "Sanity check",
+      "From demand: 8.3M residents, about 10% take a cab or app car on a given day, which is about 830K. Add about 20% for visitors and commuters and I get about 1.0M."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 800K to 1.2M. If only half the vehicles are active it is about 750K, and at 1.2 trips an hour it is about 720K. A shared ride counts as one booking and changes the total by only a few percent. The answer is most sensitive to trips per hour on the road."
+    ]
+  ]
+},
+  "gyms": {
+  "title": "Estimate the number of people in the US who have a gym membership",
+  "lead": "Top-down: adults times the share who exercise times the share who pay for a gym, plus members who rarely go.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>People in the US with a paid gym membership<br/>Gyms and studios, count members not visits\"]\n  B[\"Approach: top-down<br/>Adults x share who exercise x share who pay\"]\n  C[\"US population<br/>about 335M\"]\n  D[\"Adults<br/>78% x 335M = about 260M\"]\n  E[\"Adults who exercise regularly<br/>50% x 260M = about 130M\"]\n  F[\"Paying for a gym<br/>55% x 130M = about 72M\"]\n  G[\"Sign-ups who rarely go<br/>about 10% extra\"]\n  H[\"Add rarely-go members<br/>72M x 1.1 = about 79M\"]\n  I[\"Sanity check<br/>Supply: 55,000 gyms x 1,400 members<br/>= about 77M\"]\n  J[\"Answer<br/>about 65M to 85M members\"]\n  A --> B\n  B --> C\n  C --> D\n  D --> E\n  E --> F\n  B --> G\n  F --> H\n  G --> H\n  H --> I\n  I --> J\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D step\n  class E,F,G,H calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 79M members\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 40% of adults exercise<br/>260M x 40% x 55% x 1.1 = about 63M\"]\n  P --> Q2[\"65% of exercisers pay<br/>130M x 65% x 1.1 = about 93M\"]\n  P --> Q3[\"Skip the rarely-go add-on<br/>130M x 55% = about 72M\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 63M to 93M\"]\n  R --> S[\"Say: the answer is most sensitive to<br/>share of exercisers who pay\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "US population",
+        "",
+        "about 335M"
+      ],
+      [
+        "Adults",
+        "78% x 335M",
+        "about 260M"
+      ],
+      [
+        "Adults who exercise regularly",
+        "50% x 260M",
+        "about 130M"
+      ],
+      [
+        "Paying for a gym",
+        "55% x 130M",
+        "about 72M"
+      ],
+      [
+        "Sign-ups who rarely go (+10%)",
+        "72M x 1.1",
+        "about 79M"
+      ],
+      [
+        "Cross-check: supply",
+        "55,000 gyms x 1,400 members",
+        "about 77M"
+      ],
+      [
+        "Total",
+        "",
+        "about 79M"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 79M)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Only 40% of adults exercise",
+        "260M x 40% x 55% x 1.1",
+        "about 63M"
+      ],
+      [
+        "65% of exercisers pay",
+        "130M x 65% x 1.1",
+        "about 93M"
+      ],
+      [
+        "Skip the rarely-go add-on",
+        "130M x 55%",
+        "about 72M"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate how many people in the US hold a paid gym membership, at gyms and studios, counting members rather than visits. Does that work?"
+    ],
+    [
+      "Approach",
+      "Top-down. Adults times the share who exercise times the share who pay for a gym, and then I add sign-ups who rarely go."
+    ],
+    [
+      "Inputs",
+      "About 335M people, and about 78% are adults, so about 260M. About half exercise regularly, so about 130M, and about 55% of them pay for a gym."
+    ],
+    [
+      "Math",
+      "130M x 55% is about 72M. Adding about 10% for people who sign up but rarely go gives 72M x 1.1, about 79M."
+    ],
+    [
+      "Sanity check",
+      "From supply: about 55,000 gyms and studios with about 1,400 members each is about 77M, which agrees."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 65 to 85M. If only 40% of adults exercise it falls to about 63M, and if 65% of exercisers pay it rises to about 93M. Some people hold two memberships, so unique people may be about 5% lower, still inside the range. The answer is most sensitive to the share of exercisers who pay."
+    ]
+  ]
+},
+  "bank-branches": {
+  "title": "Estimate the number of ATM withdrawals per day in a city of 1 million people",
+  "lead": "Top-down: adults times the share who use ATMs times withdrawals per user, converted to a daily rate.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>ATM cash withdrawals per day in a city of 1M<br/>Count withdrawals, not balance checks\"]\n  B[\"Approach: top-down<br/>Adults x ATM users x withdrawals per user\"]\n  C[\"Population<br/>about 1M\"]\n  D[\"Adults<br/>80% x 1M = about 800K\"]\n  E[\"ATM or debit card users<br/>75% x 800K = about 600K\"]\n  F[\"Withdrawals per user per year<br/>1.5 per month x 12 = about 18\"]\n  G[\"Withdrawals per year<br/>600K x 18 = about 10.8M\"]\n  H[\"Per day<br/>10.8M / 365 = about 30K\"]\n  K[\"Add visitors and commuters<br/>30K x 1.1 = about 33K\"]\n  I[\"Sanity check<br/>Supply: 1,200 ATMs x 25 per day<br/>= about 30K\"]\n  J[\"Answer<br/>about 25K to 40K withdrawals per day\"]\n  A --> B\n  B --> C\n  C --> D\n  D --> E\n  B --> F\n  E --> G\n  F --> G\n  G --> H\n  H --> K\n  K --> I\n  I --> J\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D step\n  class E,F,G,H,K calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 33K withdrawals\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 1 withdrawal per month<br/>600K x 12 / 365 x 1.1 = about 22K\"]\n  P --> Q2[\"Only 60% use ATMs<br/>800K x 60% x 18 / 365 x 1.1 = about 26K\"]\n  P --> Q3[\"Skip the visitor add-on<br/>10.8M / 365 = about 30K\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 22K to 33K\"]\n  R --> S[\"Say: the answer is most sensitive to<br/>withdrawals per user per month\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Population",
+        "",
+        "about 1M"
+      ],
+      [
+        "Adults",
+        "80% x 1M",
+        "about 800K"
+      ],
+      [
+        "ATM or debit card users",
+        "75% x 800K",
+        "about 600K"
+      ],
+      [
+        "Withdrawals per user per year",
+        "1.5 per month x 12",
+        "about 18"
+      ],
+      [
+        "Withdrawals per year",
+        "600K x 18",
+        "about 10.8M"
+      ],
+      [
+        "Per day",
+        "10.8M / 365",
+        "about 30K"
+      ],
+      [
+        "Visitors and commuters (+10%)",
+        "30K x 1.1",
+        "about 33K"
+      ],
+      [
+        "Cross-check: supply",
+        "1,200 ATMs x 25 per day",
+        "about 30K"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 33K)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Only 1 withdrawal per month",
+        "600K x 12 / 365 x 1.1",
+        "about 22K"
+      ],
+      [
+        "Only 60% use ATMs",
+        "800K x 60% x 18 / 365 x 1.1",
+        "about 26K"
+      ],
+      [
+        "Skip the visitor add-on",
+        "10.8M / 365",
+        "about 30K"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate ATM cash withdrawals per day in a city of 1 million people, counting withdrawals and not balance checks. Does that work?"
+    ],
+    [
+      "Approach",
+      "Top-down. Adults times the share who use ATMs times withdrawals per user, then I convert to a daily rate and add visitors."
+    ],
+    [
+      "Inputs",
+      "1M people, 80% adults, so 800K. About 75% use ATMs or a debit card, so 600K. They withdraw about 1.5 times a month, which is about 18 a year."
+    ],
+    [
+      "Math",
+      "600K x 18 is about 10.8M a year. Divided by 365 that is about 30K a day. Adding about 10% for visitors and commuters gives about 33K."
+    ],
+    [
+      "Sanity check",
+      "From supply: about 1.2 ATMs per 1,000 people gives about 1,200 ATMs, at about 25 withdrawals a day each, which is about 30K."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 25 to 40K. If people withdraw only once a month it falls to about 22K, and if only 60% use ATMs it is about 26K. Cash use is falling a few percent a year, so this is likely 20 to 30% lower than a decade ago. The answer is most sensitive to withdrawals per user per month."
+    ]
+  ]
+},
+  "streaming": {
+  "title": "Estimate the number of hours of streaming video people in the US watch per day",
+  "lead": "Top-down: people times the share who stream times hours per streamer, with phone viewing added separately.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Total hours of streaming video in the US per day<br/>All services including YouTube, all screens\"]\n  B[\"Approach: top-down<br/>People x share who stream x hours per streamer\"]\n  C[\"US population<br/>about 335M\"]\n  D[\"Streamers on a given day<br/>75% x 335M = about 250M\"]\n  E[\"TV and laptop hours per streamer<br/>about 1.8\"]\n  F[\"TV and laptop hours<br/>250M x 1.8 = about 450M\"]\n  G[\"Phone hours per streamer<br/>about 0.3\"]\n  H[\"Extra phone hours<br/>250M x 0.3 = about 75M\"]\n  K[\"Total hours per day<br/>450M + 75M = about 525M\"]\n  I[\"Sanity check<br/>Households: 130M x 4 hours<br/>= about 520M\"]\n  J[\"Answer<br/>about 400M to 650M hours per day\"]\n  A --> B\n  B --> C\n  C --> D\n  D --> F\n  B --> E\n  E --> F\n  B --> G\n  D --> H\n  G --> H\n  F --> K\n  H --> K\n  K --> I\n  I --> J\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D,E step\n  class F,G,H,K calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 525M hours\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 60% stream<br/>335M x 60% x 2.1 = about 422M\"]\n  P --> Q2[\"2.5 hours on TV and laptop<br/>250M x 2.5 + 75M = about 700M\"]\n  P --> Q3[\"Paid services only<br/>525M / 2 = about 260M\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 260M to 700M\"]\n  R --> S[\"Say: the answer is most sensitive to<br/>hours per streamer\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "US population",
+        "",
+        "about 335M"
+      ],
+      [
+        "People who stream on a given day",
+        "75% x 335M",
+        "about 250M"
+      ],
+      [
+        "TV and laptop hours per streamer",
+        "",
+        "about 1.8"
+      ],
+      [
+        "TV and laptop hours",
+        "250M x 1.8",
+        "about 450M"
+      ],
+      [
+        "Extra hours on phones",
+        "250M x 0.3",
+        "about 75M"
+      ],
+      [
+        "Total hours per day",
+        "450M + 75M",
+        "about 525M"
+      ],
+      [
+        "Cross-check: households",
+        "130M x 4 hours",
+        "about 520M"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 525M)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Only 60% stream",
+        "335M x 60% x (1.8 + 0.3)",
+        "about 422M"
+      ],
+      [
+        "2.5 hours on TV and laptop",
+        "250M x 2.5 + 75M",
+        "about 700M"
+      ],
+      [
+        "Paid services only",
+        "525M / 2",
+        "about 260M"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate total hours of streaming video watched in the US per day, across all services including YouTube and on all screens. Does that work?"
+    ],
+    [
+      "Approach",
+      "Top-down. People times the share who stream on a given day times hours per streamer, with phone viewing added separately."
+    ],
+    [
+      "Inputs",
+      "About 335M people and about 75% stream on a given day, so about 250M. They watch about 1.8 hours on TV and laptop, plus about 0.3 hours on phones."
+    ],
+    [
+      "Math",
+      "250M x 1.8 is about 450M hours. Phones add 250M x 0.3, about 75M. The total is about 525M hours a day."
+    ],
+    [
+      "Sanity check",
+      "From households: about 130M households at about 4 hours of streaming each on all screens is about 520M, which agrees."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 400 to 650M. If only 60% stream it is about 422M, and at 2.5 hours on TV and laptop it is about 700M. I included YouTube, and if you mean only paid services I'd cut it roughly in half. The answer is most sensitive to hours per streamer."
+    ]
+  ]
+},
+  "cards-issued": {
+  "title": "Estimate the number of new credit card applications made per day in the US",
+  "lead": "Stock and flow: cards in use divided by card life gives new accounts, then divide by the approval rate to get applications.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>New credit card applications per day in the US<br/>Approved and declined, all issuers\"]\n  B[\"Approach: stock and flow<br/>Cards in use / card life = new accounts<br/>New accounts / approval rate = applications\"]\n  C[\"Adults with a card<br/>260M adults x 80% = about 210M\"]\n  D[\"Cards in use<br/>210M x 4 cards each = about 840M\"]\n  E[\"Card life<br/>about 7 years before a card is replaced or closed\"]\n  F[\"New accounts per year<br/>840M / 7 = about 120M\"]\n  G[\"Approval rate<br/>about 50% of applications\"]\n  H[\"Applications per year<br/>120M / 0.5 = about 240M\"]\n  I[\"Applications per day<br/>240M / 365 = about 650K\"]\n  J[\"Sanity check<br/>260M x 35% apply x 2.5 applications each = 230M per year<br/>230M / 365 = about 620K per day\"]\n  K[\"Answer<br/>about 500K to 800K applications per day\"]\n  B --> C\n  C --> D\n  B --> E\n  D --> F\n  E --> F\n  B --> G\n  F --> H\n  G --> H\n  H --> I\n  I --> J\n  J --> K\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D,E,G step\n  class F,H,I calc\n  class J,K out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 650K applications per day\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Approval rate is 40%<br/>120M / 0.4 = 300M per year<br/>300M / 365 = about 820K\"]\n  P --> Q2[\"Cards last 5 years<br/>840M / 5 = 168M new<br/>168M / 0.5 / 365 = about 920K\"]\n  P --> Q3[\"Approval rate is 60%<br/>120M / 0.6 = 200M<br/>200M / 365 = about 550K\"]\n  Q1 --> R[\"Updated range<br/>about 550K to 920K per day\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>the approval rate and card life\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "US adults",
+        "",
+        "about 260M"
+      ],
+      [
+        "Adults with a credit card",
+        "260M x 80%",
+        "about 210M"
+      ],
+      [
+        "Cards in use",
+        "210M x 4 cards each",
+        "about 840M"
+      ],
+      [
+        "New accounts per year",
+        "840M / 7 year life",
+        "about 120M"
+      ],
+      [
+        "Applications per year",
+        "120M / 50% approval rate",
+        "about 240M"
+      ],
+      [
+        "Applications per day",
+        "240M / 365",
+        "about 650K"
+      ],
+      [
+        "Cross-check: adults route",
+        "260M x 35% x 2.5 / 365",
+        "about 620K"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 650K)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Approval rate is 40%",
+        "120M / 0.4 / 365",
+        "about 820K"
+      ],
+      [
+        "Cards last 5 years",
+        "840M / 5 / 0.5 / 365",
+        "about 920K"
+      ],
+      [
+        "Approval rate is 60%",
+        "120M / 0.6 / 365",
+        "about 550K"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate new credit card applications per day in the US, approved or declined, across all issuers. Does that work?"
+    ],
+    [
+      "Approach",
+      "Stock and flow. Cards in use divided by how long a card lasts gives new accounts per year, and dividing by the approval rate turns accounts into applications."
+    ],
+    [
+      "Inputs",
+      "About 260M US adults, with about 80% holding a card, so about 210M. Each holds about 4 cards, so about 840M cards. A card lasts about 7 years, and about half of applications are approved."
+    ],
+    [
+      "Math",
+      "840M / 7 is about 120M new accounts a year. Divided by 0.5 that is about 240M applications. Divided by 365 that is about 650K a day."
+    ],
+    [
+      "Sanity check",
+      "Another route: 260M adults, about 35% apply in a year, about 2.5 applications each, is about 230M a year, or about 620K a day. It matches."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 500K to 800K. If approval is 40% it rises to about 820K, and if cards last only 5 years it rises to about 920K. The answer is most sensitive to the approval rate, so I would ask the bank for its real number."
+    ]
+  ]
+},
+  "coffeeshops": {
+  "title": "Estimate the number of coffee shops in a mid-size city of 500,000 people",
+  "lead": "Demand versus supply: cups sold in dedicated coffee shops divided by the cups one shop sells per day.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Dedicated coffee shops in a city of 500K<br/>Chains and independents, not fast food or offices\"]\n  B[\"Approach: demand vs supply<br/>Cups sold in coffee shops / cups per shop = shops\"]\n  C[\"Population<br/>about 500K\"]\n  D[\"Cups bought outside the home<br/>500K x 0.25 per day = about 125K\"]\n  E[\"Dedicated coffee shop share<br/>125K x 40% = about 50K<br/>rest: fast food, offices, stores\"]\n  F[\"Visitors and commuters<br/>50K x 1.1 = about 55K cups per day\"]\n  G[\"Supply per shop<br/>about 350 cups per day<br/>mix of small cafes and chains\"]\n  H[\"Number of shops<br/>55K / 350 = about 160\"]\n  I[\"Sanity check<br/>US has about 60,000 shops, 1 per 5,500 people<br/>gives about 90 here, a city is denser so 150 fits\"]\n  J[\"Answer<br/>about 100 to 250 coffee shops\"]\n  B --> C\n  C --> D\n  D --> E\n  E --> F\n  B --> G\n  F --> H\n  G --> H\n  H --> I\n  I --> J\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,G step\n  class D,E,F,H calc\n  class I,J out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 160 coffee shops\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"0.35 cups per resident<br/>500K x 0.35 x 0.4 x 1.1 = 77K<br/>77K / 350 = about 220\"]\n  P --> Q2[\"Shops sell 500 cups per day<br/>55K / 500<br/>= about 110\"]\n  P --> Q3[\"Only 30% sold by coffee shops<br/>125K x 0.3 x 1.1 = 41K<br/>41K / 350 = about 118\"]\n  Q1 --> R[\"Updated range<br/>about 110 to 220 shops\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>cups bought per resident per day\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Population",
+        "",
+        "about 500K"
+      ],
+      [
+        "Cups bought outside the home per day",
+        "500K x 0.25",
+        "about 125K"
+      ],
+      [
+        "Sold by dedicated coffee shops",
+        "125K x 40%",
+        "about 50K"
+      ],
+      [
+        "Add visitors and commuters (+10%)",
+        "50K x 1.1",
+        "about 55K"
+      ],
+      [
+        "Cups per shop per day",
+        "mix of small cafes and chains",
+        "about 350"
+      ],
+      [
+        "Number of shops",
+        "55K / 350",
+        "about 160"
+      ],
+      [
+        "Cross-check: US ratio",
+        "500K / 5,500 people per shop",
+        "about 90"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 160)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "0.35 cups per resident",
+        "500K x 0.35 x 0.4 x 1.1 / 350",
+        "about 220"
+      ],
+      [
+        "Shops sell 500 cups per day",
+        "55K / 500",
+        "about 110"
+      ],
+      [
+        "Only 30% sold by coffee shops",
+        "500K x 0.25 x 0.3 x 1.1 / 350",
+        "about 118"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate dedicated coffee shops, chains and independents, in a city of 500,000. I'll leave out fast food, offices and grocery stores. Does that work?"
+    ],
+    [
+      "Approach",
+      "Demand versus supply. I'll estimate cups sold by coffee shops each day, then divide by how many cups one shop sells."
+    ],
+    [
+      "Inputs",
+      "500K residents buying about 0.25 cups a day outside the home, so about 125K cups. About 40% come from dedicated coffee shops. Visitors and commuters add about 10%. A typical shop sells about 350 cups a day, mixing small cafes and chains."
+    ],
+    [
+      "Math",
+      "125K x 40% is about 50K. Adding 10% gives about 55K cups a day. Divided by 350 that is about 160 shops."
+    ],
+    [
+      "Sanity check",
+      "The US has roughly 60,000 coffee shops, about 1 per 5,500 people, which gives about 90 here. A city is denser than average, so about 150 is reasonable."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 100 to 250. If shops sell 500 cups a day it falls to about 110, and at 0.35 cups per resident it rises to about 220. The answer is most sensitive to cups bought per resident per day."
+    ]
+  ]
+},
+  "elevators": {
+  "title": "Estimate the number of elevators in Manhattan",
+  "lead": "Bottom-up: buildings with an elevator times elevators per building, plus special buildings.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Passenger and freight elevators in Manhattan<br/>Not escalators\"]\n  B[\"Approach: bottom-up<br/>Buildings with elevators x elevators per building\"]\n  C[\"Buildings in Manhattan<br/>about 40K\"]\n  D[\"Buildings with an elevator<br/>40K x 35% = about 14K<br/>walk-ups and low rises have none\"]\n  E[\"Elevators per such building<br/>1 in small ones, 20+ in towers<br/>average about 2\"]\n  F[\"Elevators in these buildings<br/>14K x 2 = about 28K\"]\n  G[\"Add hotels, hospitals and stations<br/>28K x 1.1 = about 31K\"]\n  H[\"Sanity check<br/>offices: 400M sq ft / 20K = 20K<br/>homes: 1.3M / 150 = 8.7K, total about 29K\"]\n  I[\"Answer<br/>about 25,000 to 40,000 elevators\"]\n  B --> C\n  C --> D\n  B --> E\n  D --> F\n  E --> F\n  F --> G\n  G --> H\n  H --> I\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,E step\n  class D,F,G calc\n  class H,I out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 31K elevators\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 25% of buildings have one<br/>10K x 2 = 20K<br/>20K x 1.1 = about 22K\"]\n  P --> Q2[\"Average 3 per building<br/>14K x 3 = 42K<br/>42K x 1.1 = about 46K\"]\n  P --> Q3[\"Skip the special buildings<br/>14K x 2<br/>= about 28K\"]\n  Q1 --> R[\"Updated range<br/>about 22K to 46K elevators\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>elevators per building\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Buildings in Manhattan",
+        "",
+        "about 40K"
+      ],
+      [
+        "Buildings with an elevator",
+        "40K x 35%",
+        "about 14K"
+      ],
+      [
+        "Elevators per such building",
+        "1 in small ones, 20+ in towers",
+        "about 2"
+      ],
+      [
+        "Elevators in these buildings",
+        "14K x 2",
+        "about 28K"
+      ],
+      [
+        "Hotels, hospitals, stations (+10%)",
+        "28K x 1.1",
+        "about 31K"
+      ],
+      [
+        "Cross-check: offices",
+        "400M sq ft / 20K sq ft per elevator",
+        "about 20K"
+      ],
+      [
+        "Cross-check: homes",
+        "1.3M residents / 150 per elevator",
+        "about 8.7K"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 31K)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Only 25% of buildings have one",
+        "40K x 25% x 2 x 1.1",
+        "about 22K"
+      ],
+      [
+        "Average 3 per building",
+        "14K x 3 x 1.1",
+        "about 46K"
+      ],
+      [
+        "Skip hotels, hospitals, stations",
+        "14K x 2",
+        "about 28K"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll count passenger and freight elevators in Manhattan, and leave out escalators. Does that work?"
+    ],
+    [
+      "Approach",
+      "Bottom-up. I'll count buildings, find how many have an elevator, multiply by elevators per building, and add special buildings."
+    ],
+    [
+      "Inputs",
+      "About 40K buildings, of which about 35% have an elevator because walk-ups and low rises have none. That is about 14K. Small buildings have 1 and towers have 20 or more, so I'll use an average of about 2."
+    ],
+    [
+      "Math",
+      "14K x 2 is about 28K. Hotels, hospitals and stations add about 10%, so about 31K."
+    ],
+    [
+      "Sanity check",
+      "By space: 400M sq ft of offices at 20K sq ft per elevator is about 20K, and 1.3M residents at 150 per elevator is about 8.7K. That is about 29K in total, close to my number."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 25,000 to 40,000. If only 25% of buildings have one it falls to about 22K, and at 3 per building it rises to about 46K. The answer is most sensitive to elevators per building."
+    ]
+  ]
+},
+  "laptops": {
+  "title": "Estimate the number of laptops sold in the US each year",
+  "lead": "Stock and flow: laptops in use divided by the replacement cycle, plus first-time and extra buyers.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>New laptops sold in the US per year<br/>Consumer, business and education, not tablets\"]\n  B[\"Approach: stock and flow<br/>Laptops in use / replacement cycle = yearly sales\"]\n  C[\"US population<br/>about 335M\"]\n  D[\"People with a laptop<br/>335M x 70% = about 235M<br/>home, work or school\"]\n  E[\"Replacement cycle<br/>about 4 years\"]\n  F[\"Replacement sales per year<br/>235M / 4 = about 59M\"]\n  G[\"Add first-time and extra buyers<br/>59M x 1.05 = about 62M\"]\n  H[\"Sanity check<br/>work 16M + homes 38M + schools 12M<br/>= about 66M\"]\n  I[\"Answer<br/>about 50M to 70M laptops per year\"]\n  B --> C\n  C --> D\n  B --> E\n  D --> F\n  E --> F\n  F --> G\n  G --> H\n  H --> I\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,E step\n  class D,F,G calc\n  class H,I out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 62M laptops\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Cycle is 5 years<br/>235M / 5 = 47M<br/>47M x 1.05 = about 50M\"]\n  P --> Q2[\"Only 60% have a laptop<br/>335M x 60% / 4 = 50M<br/>50M x 1.05 = about 53M\"]\n  P --> Q3[\"Skip first-time buyers<br/>235M / 4<br/>= about 59M\"]\n  Q1 --> R[\"Updated range<br/>about 50M to 62M laptops\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>the replacement cycle\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "US population",
+        "",
+        "about 335M"
+      ],
+      [
+        "People with a laptop",
+        "335M x 70%",
+        "about 235M"
+      ],
+      [
+        "Replacement cycle",
+        "",
+        "about 4 years"
+      ],
+      [
+        "Replacement sales per year",
+        "235M / 4",
+        "about 59M"
+      ],
+      [
+        "First-time and extra buyers (+5%)",
+        "59M x 1.05",
+        "about 62M"
+      ],
+      [
+        "Cross-check: segments",
+        "160M x 40% / 4 + 130M x 1.3 / 4.5 + 50M / 4",
+        "about 66M"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 62M)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Cycle is 5 years",
+        "235M / 5 x 1.05",
+        "about 50M"
+      ],
+      [
+        "Only 60% have a laptop",
+        "335M x 60% / 4 x 1.05",
+        "about 53M"
+      ],
+      [
+        "Skip first-time buyers",
+        "235M / 4",
+        "about 59M"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate new laptops sold in the US per year, for consumers, businesses and schools, and leave out tablets. Does that work?"
+    ],
+    [
+      "Approach",
+      "Stock and flow. Laptops in use divided by how often they are replaced gives yearly sales, and then I add first-time and extra buyers."
+    ],
+    [
+      "Inputs",
+      "About 335M people, of whom about 70% have a laptop at home, work or school, so about 235M. People replace a laptop about every 4 years."
+    ],
+    [
+      "Math",
+      "235M / 4 is about 59M replacements. Adding about 5% for first-time and extra buyers gives about 62M."
+    ],
+    [
+      "Sanity check",
+      "By segment: workers 160M x 40% / 4 is about 16M, homes 130M x 1.3 / 4.5 is about 38M, and schools 50M / 4 is about 12M. That is about 66M in total."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 50M to 70M. If the cycle is 5 years it falls to about 50M, and if only 60% have a laptop it is about 53M. The answer is most sensitive to the replacement cycle."
+    ]
+  ]
+},
+  "flights": {
+  "title": "Estimate the number of flights in the air over the US at 2 pm",
+  "lead": "Stock and flow: flights per day times flight length gives flight-hours, divided by active hours to get planes in the air.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Aircraft airborne over the US at 2 pm on a normal weekday<br/>Airline, cargo, business and military\"]\n  B[\"Approach: stock and flow<br/>Flights per day x hours per flight / active hours\"]\n  C[\"Airline passengers per day<br/>about 2.5M\"]\n  D[\"Passengers per flight<br/>about 100\"]\n  E[\"Airline flights per day<br/>2.5M / 100 = about 25K\"]\n  F[\"Flight-hours per day<br/>25K x 2 hours each = about 50K\"]\n  G[\"Active hours per day<br/>about 16, few flights from midnight to 6 am\"]\n  H[\"Planes in the air on average<br/>50K / 16 = about 3.1K<br/>2 pm is near peak: x 1.1 = about 3.4K\"]\n  I[\"Add cargo, business jets, military<br/>3.4K x 1.3 = about 4.4K\"]\n  J[\"Sanity check<br/>45K flights x 1.8 hours / 17 active hours = about 4.8K<br/>matches the quoted peak of about 5,000\"]\n  K[\"Answer<br/>about 3,500 to 5,500 flights\"]\n  B --> C\n  B --> D\n  C --> E\n  D --> E\n  E --> F\n  B --> G\n  F --> H\n  G --> H\n  H --> I\n  I --> J\n  J --> K\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C,D,G step\n  class E,F,H,I calc\n  class J,K out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 4.4K flights\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Divide by 24 hours, not 16<br/>50K / 24 = 2.1K<br/>2.1K x 1.1 x 1.3 = about 3.0K\"]\n  P --> Q2[\"120 passengers per flight<br/>2.5M / 120 x 2 / 16 = 2.6K<br/>2.6K x 1.1 x 1.3 = about 3.7K\"]\n  P --> Q3[\"Skip cargo, jets, military<br/>3.1K x 1.1<br/>= about 3.4K\"]\n  Q1 --> R[\"Updated range<br/>about 3.0K to 4.4K flights\"]\n  Q2 --> R\n  Q3 --> R\n  R --> S[\"Say: the answer is most sensitive to<br/>active hours in the day\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Airline passengers per day",
+        "",
+        "about 2.5M"
+      ],
+      [
+        "Passengers per flight",
+        "",
+        "about 100"
+      ],
+      [
+        "Airline flights per day",
+        "2.5M / 100",
+        "about 25K"
+      ],
+      [
+        "Flight-hours per day",
+        "25K x 2 hours",
+        "about 50K"
+      ],
+      [
+        "Planes in the air on average",
+        "50K / 16 active hours",
+        "about 3.1K"
+      ],
+      [
+        "2 pm near peak (+10%)",
+        "3.1K x 1.1",
+        "about 3.4K"
+      ],
+      [
+        "Cargo, business jets, military (+30%)",
+        "3.4K x 1.3",
+        "about 4.4K"
+      ],
+      [
+        "Cross-check: all flights",
+        "45K x 1.8 hours / 17 active hours",
+        "about 4.8K"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 4.4K)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Divide by 24 hours, not 16",
+        "50K / 24 x 1.1 x 1.3",
+        "about 3.0K"
+      ],
+      [
+        "120 passengers per flight",
+        "2.5M / 120 x 2 / 16 x 1.1 x 1.3",
+        "about 3.7K"
+      ],
+      [
+        "Skip cargo, jets, military",
+        "3.1K x 1.1",
+        "about 3.4K"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate aircraft airborne over the US at 2 pm on a normal weekday, counting airline, cargo, business and military flights. Does that work?"
+    ],
+    [
+      "Approach",
+      "Stock and flow. Flights per day times hours per flight gives flight-hours, and spreading those over the active hours of the day gives planes in the air at once."
+    ],
+    [
+      "Inputs",
+      "About 2.5M airline passengers a day at about 100 per flight, so about 25K flights. Each flight is about 2 hours. Flights are packed into about 16 active hours. 2 pm is near the peak, and cargo, jets and military add about 30%."
+    ],
+    [
+      "Math",
+      "25K x 2 is about 50K flight-hours. Divided by 16 that is about 3.1K in the air. Times 1.1 for the peak is about 3.4K, and times 1.3 for other aircraft is about 4.4K."
+    ],
+    [
+      "Sanity check",
+      "Another route: about 45K flights of all types a day x 1.8 hours / 17 active hours is about 4.8K, which matches the often-quoted figure of about 5,000 at peak."
+    ],
+    [
+      "Range and pushback",
+      "I'd say roughly 3,500 to 5,500. If you divide by 24 hours it falls to about 3.0K, and at 120 passengers per flight it is about 3.7K. The answer is most sensitive to the active hours, because flights are bunched into the daytime."
+    ]
+  ]
+},
+  "data-center": {
+  "title": "Estimate the number of servers a video app with 10 million daily users needs",
+  "lead": "Bottom-up from peak load: size the streaming servers from peak bandwidth and the app servers from peak requests, then add headroom.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Servers to serve video and app requests at peak<br/>10M daily users, leave out encoding and storage\"]\n  B[\"Approach: bottom-up from peak load<br/>Two parallel workloads, streaming and app requests\"]\n  C1[\"Watch hours per day<br/>10M users x 1 hour = about 10M\"]\n  C2[\"Peak concurrent streams<br/>10 percent of hours in the busiest hour = about 1M\"]\n  C3[\"Peak bandwidth<br/>1M x 3 Mbps = about 3 Tbps\"]\n  C4[\"Streaming servers<br/>3,000 Gbps / 20 Gbps per server = about 150\"]\n  D1[\"App requests at peak<br/>10M x 50 / 86,400 s = about 5.8K per second<br/>x 3 for peak = about 17K per second\"]\n  D2[\"App servers<br/>17K / 1,000 per server = about 20\"]\n  E[\"Combine<br/>150 + 20 = about 170 servers\"]\n  F[\"Headroom and spare: +50 percent<br/>170 x 1.5 = about 250\"]\n  G[\"Sanity check<br/>10M / 250 = 1 server per 40,000 daily users<br/>light apps run 1 per 10K to 50K\"]\n  H[\"Answer<br/>about 200 to 400 servers\"]\n  A --> B\n  B --> C1\n  C1 --> C2\n  C2 --> C3\n  C3 --> C4\n  B --> D1\n  D1 --> D2\n  C4 --> E\n  D2 --> E\n  E --> F\n  F --> G\n  G --> H\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C1,D1 step\n  class C2,C3,C4,D2,E,F calc\n  class G,H out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 250 servers\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"CDN boxes at 100 Gbps<br/>3,000 Gbps / 100 = 30 streaming servers<br/>(30 + 20) x 1.5 = about 75\"]\n  P --> Q2[\"Peak is only 5 percent of hours<br/>500K x 3 Mbps = 1.5 Tbps, 1,500 / 20 = 75<br/>(75 + 20) x 1.5 = about 140\"]\n  P --> Q3[\"Lower headroom of 20 percent<br/>(150 + 20) x 1.2<br/>= about 204\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 75 to 250 servers\"] --> S[\"Say: the answer is most sensitive to<br/>peak share of viewing and bandwidth per server\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Watch hours per day",
+        "10M users x 1 hour",
+        "about 10M"
+      ],
+      [
+        "Peak concurrent streams",
+        "10 percent of daily hours in the busiest hour",
+        "about 1M"
+      ],
+      [
+        "Peak bandwidth",
+        "1M x 3 Mbps",
+        "about 3 Tbps"
+      ],
+      [
+        "Streaming servers",
+        "3,000 Gbps / 20 Gbps per server",
+        "about 150"
+      ],
+      [
+        "App requests at peak",
+        "10M x 50 / 86,400 s, x 3 for peak",
+        "about 17K per second"
+      ],
+      [
+        "App servers",
+        "17K / 1,000 per server",
+        "about 20"
+      ],
+      [
+        "Subtotal",
+        "150 + 20",
+        "about 170"
+      ],
+      [
+        "With 50 percent headroom and spare",
+        "170 x 1.5",
+        "about 250"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 250 servers)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "CDN boxes at 100 Gbps",
+        "(3,000 / 100 + 20) x 1.5 = (30 + 20) x 1.5",
+        "about 75"
+      ],
+      [
+        "Peak is 5 percent of hours",
+        "(500K x 3 Mbps / 20 Gbps + 20) x 1.5 = (75 + 20) x 1.5",
+        "about 140"
+      ],
+      [
+        "Headroom of only 20 percent",
+        "(150 + 20) x 1.2",
+        "about 204"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate how many servers a video app with 10 million daily users needs to serve video and app requests at peak. I'll leave out video encoding and storage. Is that fine?"
+    ],
+    [
+      "Approach",
+      "Bottom-up from peak load. Streaming bandwidth sizes one group of servers and app requests size another, then I add headroom."
+    ],
+    [
+      "Inputs",
+      "Each user watches about 1 hour a day, about 10 percent of that lands in the busiest hour, and a stream is about 3 Mbps. A streaming server pushes about 20 Gbps. Each user makes about 50 app requests a day, peak is 3 times average, and an app server handles about 1,000 per second."
+    ],
+    [
+      "Math",
+      "10M hours a day, 10 percent in the peak hour is 1M concurrent streams. 1M x 3 Mbps is 3 Tbps, and 3,000 Gbps / 20 is about 150 streaming servers. Requests are 10M x 50 / 86,400, about 5.8K per second, 17K at peak, so about 20 app servers. 150 + 20 is 170, and 50 percent headroom gives about 250."
+    ],
+    [
+      "Sanity check",
+      "250 servers for 10M daily users is 1 server per 40,000 users. Light apps run 1 server per 10K to 50K users, so it is the right order of magnitude."
+    ],
+    [
+      "Range and pushback",
+      "I'd say about 200 to 400 servers. Real services put video on CDN boxes close to users, and with 100 Gbps boxes streaming drops to about 30 servers, so about 75 in total, but you pay for the CDN. The answer is most sensitive to peak share of viewing and bandwidth per server."
+    ]
+  ]
+},
+  "data-storage": {
+  "title": "Estimate the number of photos a social app with 50 million users stores per year, and the space they take",
+  "lead": "Bottom-up flow: active posters x photos each x size, then add resized copies and replication.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Photos uploaded per year and storage needed<br/>50M registered users, photos only\"]\n  B[\"Approach: bottom-up flow<br/>Count photos, then size per photo, then multiply\"]\n  C1[\"Active posters<br/>50M x 40 percent = about 20M\"]\n  C2[\"Photos per poster per year<br/>2 per week x 52 = about 100\"]\n  C3[\"Photos per year<br/>20M x 100 = about 2B\"]\n  D1[\"Stored size per photo<br/>compressed original = about 2 MB\"]\n  E[\"Original data per year<br/>2B x 2 MB = about 4 PB\"]\n  F1[\"Resized copies: +50 percent<br/>4 PB x 1.5 = about 6 PB\"]\n  F2[\"Disk with 3 copies<br/>6 PB x 3 = about 18 PB\"]\n  G[\"Sanity check<br/>2B / year = about 63 photos per second<br/>50M x 0.2 x 365 = about 3.7B, same order\"]\n  H[\"Answer<br/>about 2B photos, 6 PB of data, 18 PB of disk\"]\n  A --> B\n  B --> C1\n  C1 --> C2\n  C2 --> C3\n  B --> D1\n  C3 --> E\n  D1 --> E\n  E --> F1\n  F1 --> F2\n  F2 --> G\n  G --> H\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C1,D1 step\n  class C2,C3,E,F1,F2 calc\n  class G,H out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 6 PB of data\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"10 percent of uploads are video at 40 MB<br/>200M x 40 MB = about 8 PB of video<br/>more than all the photos\"]\n  P --> Q2[\"Only 20 percent post<br/>10M x 100 = 1B photos<br/>1B x 2 MB x 1.5 = about 3 PB\"]\n  P --> Q3[\"Photos are 4 MB<br/>2B x 4 MB x 1.5<br/>= about 12 PB\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 3 to 12 PB\"] --> S[\"Say: the answer is most sensitive to<br/>video share, then photo size\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Registered users",
+        "Given",
+        "about 50M"
+      ],
+      [
+        "Users who post in a month",
+        "50M x 40 percent",
+        "about 20M"
+      ],
+      [
+        "Photos per poster per year",
+        "2 per week x 52",
+        "about 100"
+      ],
+      [
+        "Photos per year",
+        "20M x 100",
+        "about 2B"
+      ],
+      [
+        "Stored size per photo",
+        "Compressed original",
+        "about 2 MB"
+      ],
+      [
+        "Original data per year",
+        "2B x 2 MB",
+        "about 4 PB"
+      ],
+      [
+        "Add resized copies (+50 percent)",
+        "4 PB x 1.5",
+        "about 6 PB"
+      ],
+      [
+        "Disk with 3 copies",
+        "6 PB x 3",
+        "about 18 PB"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 6 PB)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "10 percent of uploads are video at 40 MB",
+        "2B x 10 percent = 200M; 200M x 40 MB",
+        "about 8 PB of video"
+      ],
+      [
+        "Only 20 percent of users post",
+        "(10M x 100 = 1B) x 2 MB x 1.5",
+        "about 3 PB"
+      ],
+      [
+        "Photos are 4 MB",
+        "2B x 4 MB x 1.5",
+        "about 12 PB"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate how many photos a social app with 50 million registered users stores per year and how much space that is. I'll count photos only, not video. Is that fine?"
+    ],
+    [
+      "Approach",
+      "Bottom-up flow. Active posters times photos each gives photos per year, then size per photo gives data, then I add resized copies and replication."
+    ],
+    [
+      "Inputs",
+      "About 40 percent of users post in a month, so about 20M posters. They post about 2 a week, so about 100 a year. A compressed original is about 2 MB, resized copies add about 50 percent, and disk keeps 3 copies."
+    ],
+    [
+      "Math",
+      "20M x 100 is 2B photos a year. 2B x 2 MB is 4 PB. Resized copies make it 4 x 1.5 = 6 PB, and 3 copies on disk is about 18 PB."
+    ],
+    [
+      "Sanity check",
+      "2B a year is about 63 photos per second on average. A big photo app sees about 0.2 posts per user per day, so 50M x 0.2 x 365 is about 3.7B, the same order."
+    ],
+    [
+      "Range and pushback",
+      "I'd say about 2 billion photos and 6 PB, 18 PB of disk. If 10 percent of uploads are video at 40 MB, that is 200M x 40 MB, about 8 PB, more than all the photos. The answer is most sensitive to video share, then photo size."
+    ]
+  ]
+},
+  "fraud-alerts": {
+  "title": "Estimate the number of fraud alerts a bank with 20 million card accounts must review per day",
+  "lead": "Top-down funnel: transactions, then flagged, then the share that needs a person, with analyst staffing as a check.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Fraud alerts needing a human review per day<br/>20M card accounts\"]\n  B[\"Approach: top-down funnel<br/>Transactions, then flagged, then left for an analyst\"]\n  C1[\"Card accounts<br/>about 20M\"]\n  C2[\"Transactions per account per day<br/>about 30 per month = about 1\"]\n  C3[\"Transactions per day<br/>20M x 1 = about 20M\"]\n  D1[\"Flagged by rules or a model<br/>20M x 0.2 percent = about 40K\"]\n  D2[\"Cleared by a text to the customer<br/>40K x 70 percent = about 28K\"]\n  E[\"Left for an analyst<br/>40K x 30 percent = about 12K\"]\n  F[\"Analysts needed<br/>12K / 40 reviews each per day = about 300\"]\n  G[\"Sanity check<br/>0.1 percent of 20M = 20K fraud, 3 per case = 7K cases<br/>half false alarms: 7K / 0.5 = about 13K\"]\n  H[\"Answer<br/>about 10,000 to 15,000 alerts per day\"]\n  A --> B\n  B --> C1\n  B --> D1\n  C1 --> C2\n  C2 --> C3\n  C3 --> D1\n  D1 --> D2\n  D1 --> E\n  D2 --> E\n  E --> F\n  F --> G\n  G --> H\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C1,C2 step\n  class C3,D1,D2,E,F calc\n  class G,H out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 12K alerts per day\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Flag rate is 0.3 percent<br/>20M x 0.3 percent = 60K<br/>60K x 30 percent = about 18K\"]\n  P --> Q2[\"Only half cleared by text<br/>40K x 50 percent<br/>= about 20K\"]\n  P --> Q3[\"Only 0.5 transactions a day<br/>10M x 0.2 percent = 20K<br/>20K x 30 percent = about 6K\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 6K to 20K alerts per day\"] --> S[\"Say: the answer is most sensitive to<br/>the flag rate and the auto-clear share\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Card accounts",
+        "Given",
+        "about 20M"
+      ],
+      [
+        "Transactions per account per day",
+        "About 30 per month",
+        "about 1"
+      ],
+      [
+        "Transactions per day",
+        "20M x 1",
+        "about 20M"
+      ],
+      [
+        "Flagged by rules or a model",
+        "20M x 0.2 percent",
+        "about 40K"
+      ],
+      [
+        "Cleared automatically by a text",
+        "40K x 70 percent",
+        "about 28K"
+      ],
+      [
+        "Left for an analyst",
+        "40K x 30 percent (or 40K - 28K)",
+        "about 12K"
+      ],
+      [
+        "Analysts needed",
+        "12K / 40 reviews each per day",
+        "about 300"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 12K alerts per day)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Flag rate is 0.3 percent",
+        "20M x 0.3 percent x 30 percent = 60K x 30 percent",
+        "about 18K"
+      ],
+      [
+        "Only 50 percent cleared by text",
+        "40K x (1 - 0.5)",
+        "about 20K"
+      ],
+      [
+        "Only 0.5 transactions per account per day",
+        "10M x 0.2 percent x 30 percent = 20K x 30 percent",
+        "about 6K"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate how many fraud alerts a bank with 20 million card accounts must have a person review each day. Alerts cleared automatically by a text to the customer don't count. Does that work?"
+    ],
+    [
+      "Approach",
+      "A top-down funnel. Transactions per day, then the share flagged, then the share that can't be cleared automatically and so needs an analyst."
+    ],
+    [
+      "Inputs",
+      "About 30 transactions per account per month, so about 1 a day. About 0.2 percent get flagged by rules or a model. About 70 percent of flags are cleared by a text, leaving 30 percent. An analyst reviews about 40 a day."
+    ],
+    [
+      "Math",
+      "20M accounts x 1 is 20M transactions a day. 0.2 percent is 40K flagged. 70 percent clear automatically, which is 28K, so 12K are left for people. At 40 reviews each that is about 300 analysts."
+    ],
+    [
+      "Sanity check",
+      "Fraud-rate route: about 0.1 percent of 20M is 20K fraud transactions, about 3 per case gives about 7K real cases. If about half the reviews are false alarms, that is about 13K reviews, so it matches."
+    ],
+    [
+      "Range and pushback",
+      "I'd say 10,000 to 15,000 a day. If you ask why not review all 40K flags, at 40 each that needs about 1,000 analysts, so auto-clearing saves about 700 staff. The answer is most sensitive to the flag rate and the auto-clear share."
+    ]
+  ]
+},
+  "support-calls": {
+  "title": "Estimate the number of customer support calls a bank with 10 million customers gets per day",
+  "lead": "Top-down: customers x calls per customer, then convert to agents as a staffing check.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Inbound support calls per day<br/>10M customers, phone only\"]\n  B[\"Approach: top-down with staffing check<br/>Customers x calls each, then agent time\"]\n  C1[\"Customers<br/>about 10M\"]\n  C2[\"Calls per customer per year<br/>balance, card, fraud, fees = about 2.5\"]\n  C3[\"Calls per year<br/>10M x 2.5 = about 25M\"]\n  D1[\"Calls per weekday<br/>25M / 250 weekdays = about 100K\"]\n  D2[\"Calls per day, whole week<br/>25M / 365 = about 70K\"]\n  E1[\"Agent time per weekday<br/>100K x 6 min = 600K min = about 10K hours\"]\n  E2[\"Agents needed<br/>10K hours / 5 productive hours = about 2,000\"]\n  G[\"Sanity check<br/>10M / 2,000 = 1 agent per 5,000 customers<br/>centers run 1 per few thousand\"]\n  H[\"Answer<br/>about 70K per day over the week, 100K on a weekday\"]\n  A --> B\n  B --> C1\n  B --> C2\n  C1 --> C3\n  C2 --> C3\n  C3 --> D1\n  C3 --> D2\n  D1 --> E1\n  E1 --> E2\n  E2 --> G\n  D2 --> G\n  G --> H\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C1,C2 step\n  class C3,D1,D2,E1,E2 calc\n  class G,H out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 100K calls per weekday, 2,000 agents\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 1.5 calls per customer<br/>10M x 1.5 / 250<br/>= about 60K per weekday\"]\n  P --> Q2[\"Calls last 12 minutes<br/>100K x 12 min = 20K hours<br/>20K / 5 = about 4,000 agents\"]\n  P --> Q3[\"Peak hour is 12 percent of calls<br/>12K calls x 6 min = 1,200 hours<br/>= about 1,200 agents at once\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 60K to 100K calls, 1,200 to 4,000 agents\"] --> S[\"Say: the answer is most sensitive to<br/>calls per customer and call length\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "Customers",
+        "Given",
+        "about 10M"
+      ],
+      [
+        "Calls per customer per year",
+        "Balance, card, fraud, fees",
+        "about 2.5"
+      ],
+      [
+        "Calls per year",
+        "10M x 2.5",
+        "about 25M"
+      ],
+      [
+        "Calls per weekday",
+        "25M / 250 weekdays",
+        "about 100K"
+      ],
+      [
+        "Calls per day averaged over the week",
+        "25M / 365",
+        "about 70K"
+      ],
+      [
+        "Agent time per weekday",
+        "100K x 6 min = 600K min / 60",
+        "about 10K hours"
+      ],
+      [
+        "Agents needed",
+        "10K hours / 5 productive hours each",
+        "about 2,000"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 100K calls per weekday and 2,000 agents)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Only 1.5 calls per customer per year",
+        "10M x 1.5 / 250 weekdays = 15M / 250",
+        "about 60K calls per weekday"
+      ],
+      [
+        "Calls last 12 minutes",
+        "100K x 12 min / 60 = 20K hours; 20K / 5",
+        "about 4,000 agents"
+      ],
+      [
+        "12 percent of daily calls in the busiest hour",
+        "100K x 12 percent = 12K; 12K x 6 min / 60 = 1,200 hours",
+        "about 1,200 agents at once"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate inbound customer support calls per day for a bank with 10 million customers, phone calls only. Is that fine?"
+    ],
+    [
+      "Approach",
+      "Top-down. Customers times calls per customer gives calls per year, which I turn into a daily number. Then I convert to agents as a staffing check."
+    ],
+    [
+      "Inputs",
+      "About 2.5 calls per customer per year for balances, cards, fraud and fees. About 250 weekdays a year. A call takes about 6 minutes, and an agent has about 5 productive hours a day."
+    ],
+    [
+      "Math",
+      "10M x 2.5 is 25M calls a year. Divided by 250 weekdays that is about 100K a weekday, or about 70K a day averaged over 365 days. 100K x 6 minutes is 600K minutes, about 10K hours, and at 5 hours each that is about 2,000 agents."
+    ],
+    [
+      "Sanity check",
+      "2,000 agents for 10M customers is 1 agent per 5,000 customers. Contact centers often run 1 agent per few thousand customers, so it fits."
+    ],
+    [
+      "Range and pushback",
+      "I'd say about 70,000 a day averaged over the week, near 100,000 on a weekday. At the peak hour, if 12 percent of daily calls land there, that is 12K calls x 6 minutes, 1,200 agent-hours, so about 1,200 agents at once. The answer is most sensitive to calls per customer and call length."
+    ]
+  ]
+},
+  "window-washers": {
+  "title": "Estimate the number of window cleaners needed for a city skyline of about 300 high-rises",
+  "lead": "Bottom-up: windows x cleanings per year divided by the windows one washer cleans per year.",
+  "chart": "flowchart TD\n  A[\"Clarify<br/>Full-time exterior window cleaners for 300 high-rises<br/>Glass only, no residential low-rise\"]\n  B[\"Approach: demand over capacity<br/>Windows to clean per year / windows one washer can do\"]\n  C1[\"Windows per tower<br/>40 floors x 100 windows = about 4,000\"]\n  C2[\"Windows in the skyline<br/>300 x 4,000 = about 1.2M\"]\n  C3[\"Cleanings per year<br/>1.2M x 4 = about 4.8M\"]\n  D1[\"Windows per washer per day<br/>20 per hour x 6 hours = about 120\"]\n  D2[\"Windows per washer per year<br/>120 x 200 working days = about 24K\"]\n  E[\"Washers needed<br/>4.8M / 24K = about 200\"]\n  G[\"Sanity check<br/>300 x 150K sq ft x 4 = 180M sq ft a year<br/>1,000 sq ft/hr x 6 x 200 = 1.2M, so 150 washers\"]\n  H[\"Answer<br/>about 150 to 300 window cleaners\"]\n  A --> B\n  B --> C1\n  C1 --> C2\n  C2 --> C3\n  B --> D1\n  D1 --> D2\n  C3 --> E\n  D2 --> E\n  E --> G\n  G --> H\n\n  classDef step fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef calc fill:#dcfce7,stroke:#16a34a,color:#000\n  classDef out fill:#fee2e2,stroke:#dc2626,color:#000\n  class A,B,C1,D1 step\n  class C2,C3,D2,E calc\n  class G,H out",
+  "pushChart": "flowchart LR\n  B[\"Base answer<br/>about 200 washers\"] --> P{\"Interviewer pushback\"}\n  P --> Q1[\"Only 3 cleanings a year<br/>300 x 4,000 x 3 = 3.6M<br/>3.6M / 24K = about 150\"]\n  P --> Q2[\"Only 150 working days (weather)<br/>120 x 150 = 18K<br/>4.8M / 18K = about 267\"]\n  P --> Q3[\"Some towers use rigs or robots<br/>trim the answer by 10 percent<br/>200 x 0.9 = about 180\"]\n  Q1 --> R\n  Q2 --> R\n  Q3 --> R\n  R[\"Updated range<br/>about 150 to 270 washers\"] --> S[\"Say: the answer is most sensitive to<br/>cleanings per year and working days\"]\n\n  classDef base fill:#dbeafe,stroke:#2563eb,color:#000\n  classDef push fill:#fee2e2,stroke:#dc2626,color:#000\n  classDef adj fill:#fef3c7,stroke:#d97706,color:#000\n  classDef out fill:#dcfce7,stroke:#16a34a,color:#000\n  class B base\n  class P push\n  class Q1,Q2,Q3 adj\n  class R,S out",
+  "table": {
+    "title": "Summary table",
+    "headers": [
+      "Step",
+      "Calculation",
+      "Value"
+    ],
+    "rows": [
+      [
+        "High-rises",
+        "Given",
+        "about 300"
+      ],
+      [
+        "Windows per tower",
+        "40 floors x 100 windows",
+        "about 4,000"
+      ],
+      [
+        "Windows in the skyline",
+        "300 x 4,000",
+        "about 1.2M"
+      ],
+      [
+        "Cleanings per year",
+        "1.2M x 4 times a year",
+        "about 4.8M"
+      ],
+      [
+        "Windows per washer per day",
+        "20 per hour x 6 hours",
+        "about 120"
+      ],
+      [
+        "Windows per washer per year",
+        "120 x 200 working days",
+        "about 24K"
+      ],
+      [
+        "Washers needed",
+        "4.8M / 24K",
+        "about 200"
+      ]
+    ]
+  },
+  "pushMath": {
+    "title": "Pushback math (base about 200 washers)",
+    "headers": [
+      "Pushback",
+      "Calculation",
+      "Result"
+    ],
+    "rows": [
+      [
+        "Only 3 cleanings a year",
+        "300 x 4,000 x 3 / 24K = 3.6M / 24K",
+        "about 150"
+      ],
+      [
+        "Only 150 working days a year",
+        "4.8M / (120 x 150) = 4.8M / 18K",
+        "about 267"
+      ],
+      [
+        "Some towers use rigs or robots",
+        "200 x 0.9",
+        "about 180"
+      ]
+    ]
+  },
+  "sample": [
+    [
+      "Clarify",
+      "I'll estimate how many window cleaners a skyline of about 300 high-rises needs, counting exterior glass cleaning only. Is that fine?"
+    ],
+    [
+      "Approach",
+      "Bottom-up. Total windows times cleanings per year gives the work, and windows one washer can clean in a year gives the capacity. Work divided by capacity is the headcount."
+    ],
+    [
+      "Inputs",
+      "About 40 floors and 100 windows per floor, so 4,000 windows per tower. Each is cleaned about 4 times a year. A washer does about 20 windows an hour for about 6 hours, and works about 200 days a year because of weather."
+    ],
+    [
+      "Math",
+      "300 x 4,000 is 1.2M windows, times 4 is 4.8M cleanings a year. A washer does 20 x 6 = 120 a day, times 200 days is 24K a year. 4.8M / 24K is about 200."
+    ],
+    [
+      "Sanity check",
+      "Area route: 300 towers x about 150K sq ft of glass x 4 is about 180M sq ft a year. A washer does about 1,000 sq ft an hour x 6 x 200 days, 1.2M, so about 150 washers, the same order."
+    ],
+    [
+      "Range and pushback",
+      "I'd say about 150 to 300 window cleaners. If some buildings use rigs or robots I'd trim by about 10 percent, to about 180. With only 3 cleanings a year it falls to about 150. The answer is most sensitive to cleanings per year and working days."
+    ]
+  ]
 }
 };
