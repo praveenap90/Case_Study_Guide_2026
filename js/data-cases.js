@@ -2,2515 +2,4154 @@
 window.DATA = window.DATA || {};
 
 DATA.cases = [
-  /* ---------------------------------------------------------------- 1 */
   {
-    id: "park-profit",
-    title: "Amusement Park Profitability",
-    track: ["banking", "consulting"],
-    framework: "profitability",
-    difficulty: "Medium",
-    minutes: 30,
-    prompt: "You are advising the CEO of a 2,000-acre amusement park with $150M in annual revenue and 3M visitors a year. Attendance is stable but costs are rising and profit is shrinking. The board wants profit up 20 to 30% within 18 months and is asking whether to lease 1,000 additional acres. What do you recommend?",
-    clarify: [
-      { q: "What profit measure and timeline?", a: "EBITDA. Target +20 to 30% (about $10M to $15M) within 18 months. About $15M of capital is available." },
-      { q: "What changed recently?", a: "Revenue is flat. Operating costs grew about 6% over two years, mostly labor and maintenance." },
-      { q: "What does demand look like through the year?", a: "300 operating days. Summer (about 100 days) draws 60% of visitors. Off-season (about 200 days) draws 40%." },
-      { q: "What is ride capacity?", a: "40,000 visitors per day. Summer weekends reach about 36,000 (90% of capacity). Off-season weekdays are around 4,000 (10%)." },
-      { q: "How are prices set today?", a: "Essentially one price all year, with heavy promotions. No demand-based pricing." }
+    "id": "park-profit",
+    "title": "Amusement Park Profitability",
+    "track": [
+      "banking",
+      "consulting"
     ],
-    tables: [
+    "framework": "profitability",
+    "difficulty": "Medium",
+    "minutes": 30,
+    "prompt": "You are advising the CEO of a 2,000-acre amusement park with $150M in annual revenue and 3M visitors a year. Attendance is stable but costs are rising and profit is shrinking. The board wants profit up 20 to 30% within 18 months and is asking whether to lease 1,000 additional acres. What do you recommend?",
+    "clarify": [
       {
-        title: "Revenue and spend per visitor (3M visitors)",
-        headers: ["Stream", "Revenue", "Per visitor", "Share"],
-        rows: [
-          ["Gate / admission", "$75.0M", "$25.00", "50%"],
-          ["Food & beverage", "$45.0M", "$15.00", "30%"],
-          ["Retail", "$18.0M", "$6.00", "12%"],
-          ["Parking / ancillary", "$8.0M", "$2.67", "5%"],
-          ["Premium experiences", "$4.0M", "$1.33", "3%"],
-          ["Total", "$150.0M", "$50.00", "100%"]
-        ]
+        "q": "What profit measure, target and capital?",
+        "a": "EBITDA, currently $48.6M. Target is +20 to 30% (about $9.7M to $14.6M) within 18 months. About $15M of capital is available."
       },
       {
-        title: "Operating costs",
-        headers: ["Category", "Cost", "% of revenue"],
-        rows: [
-          ["Labor: operations", "$36.0M", "24.0%"],
-          ["Labor: food & retail", "$18.0M", "12.0%"],
-          ["COGS: food & beverage", "$13.5M", "9.0%"],
-          ["COGS: retail", "$5.4M", "3.6%"],
-          ["Utilities & maintenance", "$15.0M", "10.0%"],
-          ["Marketing & promotions", "$9.0M", "6.0%"],
-          ["Insurance & legal", "$4.5M", "3.0%"],
-          ["Total operating cost", "$101.4M", "67.6%"],
-          ["EBITDA", "$48.6M", "32.4%"]
-        ]
+        "q": "What changed recently?",
+        "a": "Revenue is flat. Operating costs grew about 6% over two years, mostly labor and maintenance."
       },
       {
-        title: "Below EBITDA",
-        headers: ["Item", "Amount"],
-        rows: [["Depreciation", "$12.0M"], ["Interest", "$5.0M"], ["Pre-tax income", "$31.6M"]]
+        "q": "What does demand look like through the year?",
+        "a": "300 operating days. Summer (about 100 days) draws 60% of visitors. Off-season (about 200 days) draws 40%."
       },
       {
-        title: "Land use (2,000 acres)",
-        headers: ["Use", "Acres"],
-        rows: [["Rides / attractions", "400"], ["Food & retail", "100"], ["Parking", "600"], ["Landscaping / walkways", "700"], ["Buffer / infrastructure", "200"]]
-      }
-    ],
-    answer: {
-          "speak": [
-                [
-                      "C: Clarify",
-                      "So we have a 2,000-acre park with $150M of revenue, 3M visitors and about $48.6M of EBITDA. The board wants profit up 20 to 30% in 18 months, which is $10M to $15M, and is asking about leasing 1,000 more acres. I have $15M of capital to work with. Two quick questions: how does demand vary through the year, and how are prices set today?"
-                ],
-                [
-                      "L: Lay out",
-                      "Profit is revenue minus cost. On revenue I would look at price, spend per visitor and volume. On cost, labor, utilities, procurement and marketing. And before spending on land, I would check whether capacity is actually the constraint, by looking at utilization by season."
-                ],
-                [
-                      "E: Evaluate",
-                      "Average utilization is only 25%: about 10,000 visitors a day against 40,000 capacity. Summer weekends hit 90%, but that is about 30 days, while off-season weekdays run around 10%. So land only binds on a few peak days. Sizing five levers in EBITDA: yield pricing $3M, food and beverage $4.1M, premium tiers $3M, off-season programming $2.7M and cost efficiency $3M, about $15.8M in total."
-                ],
-                [
-                      "A: Assess",
-                      "I would not count on 100%. At 70% realization that is about $11M, up 23%, inside the board's range, and it uses only $6M to $8M of the $15M capital. On the lease: about 4,000 unmet visitors on 30 peak days is $6M of revenue, around $3M of EBITDA at best, against $2M a year of lease plus the capital to build attractions. It also does nothing for the 200 under-used days."
-                ],
-                [
-                      "R: Recommend",
-                      "Do not lease now. Start with yield pricing and cost efficiency because they are fast and cheap, then food and beverage and premium tiers, then off-season programming. Re-evaluate land after 12 months with peak-demand data, and only if unmet peak demand persists above roughly 10% of capacity. Risks are customer backlash on pricing, which I would mitigate with season-pass protections and online-only dynamic prices, and labor availability."
-                ]
-          ],
-          "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>2,000-acre park: $150M revenue, 3M visitors, EBITDA $48.6M<br/>Board wants +20 to 30% in 18 months and asks about leasing 1,000 acres\"]\nC --> C2[\"Target = $10M to $15M of EBITDA, $15M capital available<br/>Revenue flat, costs up 6% in 2 years, one price all year\"]\n\nC2 --> L[\"L: Lay out<br/>Profit = revenue - costs<br/>1 Revenue: price, spend per visitor, volume<br/>2 Costs: labor, utilities, procurement, marketing<br/>3 Capacity: is land the constraint?\"]\n\nL --> E1[\"E: Evaluate<br/>Utilization: average 25%, summer weekends 90%, off-season 10%<br/>Land binds on about 30 days only\"]\nE1 --> E2[\"Five levers: yield pricing $3.0M, F&B $4.1M, premium $3.0M<br/>off-season $2.7M, cost efficiency $3.0M = $15.8M\"]\n\nE2 --> A1[\"A: Assess<br/>At 70% realization: about $11.0M, +23%<br/>Inside the board's range, using $6M to $8M of capital\"]\nA1 --> A2[\"Lease: unmet peak demand about $6M revenue, $3M EBITDA at best<br/>vs $2M a year lease plus build capital: does not pay\"]\n\nA2 --> R[\"R: Recommend<br/>Do not lease now\"]\nR --> R1[\"Phase 1: yield pricing and cost efficiency, fast and cheap\"]\nR --> R2[\"Phase 2: F&B and premium tiers. Phase 3: off-season programming\"]\nR --> R3[\"Re-evaluate land after 12 months with peak-demand data\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C2 c1;\nclass L c2;\nclass E1,E2 c3;\nclass A1,A2 c4;\nclass R,R1,R2,R3 c5;",
-          "exampleCharts": [
-                {
-                      "id": "evaluate",
-                      "title": "Evaluate: is land the constraint, and what can the core earn?",
-                      "note": "Two paths: test the capacity question, and size the levers.",
-                      "code": "flowchart TD\nQ[\"Lease 1,000 acres, or fix the core?\"] --> U[\"Is land the constraint?<br/>Check utilization by season\"]\nQ --> LV[\"What can the current park earn?<br/>Size each lever in EBITDA\"]\n\nU --> U1[\"Average: 10,000 a day vs 40,000 capacity = 25%\"]\nU --> U2[\"Summer weekends: 36,000 = 90%, about 30 days\"]\nU --> U3[\"Off-season weekdays: 4,000 = 10%, about 200 days\"]\nU1 --> U4[\"Unmet peak: 4,000 x 30 days x $50 = $6M revenue<br/>about $3M EBITDA at best\"]\nU2 --> U4\nU3 --> U5[\"Empty days: land adds nothing there\"]\n\nLV --> V1[\"Yield pricing<br/>+4% x $75M gate = $3.0M\"]\nLV --> V2[\"F&B<br/>+$3 x 3M = $9M x 45% = $4.1M\"]\nLV --> V3[\"Premium tiers<br/>$4M x 75% = $3.0M\"]\nLV --> V4[\"Off-season events<br/>120K x $50 = $6M x 45% = $2.7M\"]\nLV --> V5[\"Cost efficiency<br/>3% x $101.4M = $3.0M\"]\nV1 --> P[\"Plan = $15.8M at full realization\"]\nV2 --> P\nV3 --> P\nV4 --> P\nV5 --> P\n\nclassDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef u fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef v fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef r fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass Q,U,LV q;\nclass U1,U2,U3,U5 u;\nclass V1,V2,V3,V4,V5 v;\nclass U4,P r;"
-                },
-                {
-                      "id": "impact",
-                      "title": "Impact math: haircuts, risks and the lease test",
-                      "note": "Realization scenarios, then the lease economics.",
-                      "code": "flowchart TD\nB[\"Plan at full realization: $15.8M, +32%<br/>Haircut for execution risk\"] --> H[\"70% realization = $11.0M<br/>+23% on $48.6M EBITDA<br/>Inside the +20% to +30% target\"]\nB --> S1[\"50% realization<br/>$7.9M, +16%: below target\"]\nB --> S2[\"Pricing backlash, yield lever = 0<br/>$12.8M x 70% = $9.0M, +18%\"]\nB --> S3[\"100% realization<br/>$15.8M, +32%: above target\"]\n\nH --> K[\"Capital: about $6M to $8M of the $15M available\"]\n\nB --> LS[\"Lease test<br/>Unmet peak 4,000 x 30 days x $50 = $6M, about $3M EBITDA\"]\nLS --> LS1[\"Lease costs $2M a year plus capital to build attractions<br/>Near zero net, no help on 200 empty days\"]\nLS --> LS2[\"Would revisit if peak unmet demand is much larger<br/>e.g. 12,000 x 30 x $50 = $18M revenue, about $9M EBITDA\"]\n\nS1 --> R[\"Fix pricing and utilization first<br/>re-check land after 12 months\"]\nS2 --> R\nK --> R\nLS1 --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass H,K,S3 good;\nclass S1,S2 bad;\nclass LS,LS1,LS2 mid;\nclass R out;"
-                }
-          ],
-          "exampleTables": [
-                {
-                      "title": "CLEAR applied to the profitability steps",
-                      "headers": [
-                            "CLEAR step",
-                            "Profitability step it uses",
-                            "In this case"
-                      ],
-                      "rows": [
-                            [
-                                  "Clarify",
-                                  "Profit measure, target, constraints, what changed",
-                                  "EBITDA $48.6M; +$10M to $15M; $15M capital; costs +6%, revenue flat"
-                            ],
-                            [
-                                  "Lay out",
-                                  "Revenue, costs, and the capacity question",
-                                  "Price, spend, volume; labor, utilities; is land binding?"
-                            ],
-                            [
-                                  "Evaluate",
-                                  "Utilization by season, then size the levers",
-                                  "25% average, 90% peak days, 10% off-season; five levers $15.8M"
-                            ],
-                            [
-                                  "Assess",
-                                  "Haircut the plan and test the lease",
-                                  "70% = $11.0M (+23%); lease adds about $3M EBITDA at best"
-                            ],
-                            [
-                                  "Recommend",
-                                  "Sequence and set a trigger to revisit",
-                                  "No lease now; phase the levers; re-check land in 12 months"
-                            ]
-                      ]
-                },
-                {
-                      "title": "The math in a table",
-                      "headers": [
-                            "Lever",
-                            "Sizing logic",
-                            "Flow-through",
-                            "EBITDA"
-                      ],
-                      "rows": [
-                            [
-                                  "Yield management (dynamic gate pricing)",
-                                  "+4% x $75M gate",
-                                  "~100%",
-                                  "+$3.0M"
-                            ],
-                            [
-                                  "F&B throughput and mix",
-                                  "+$3 x 3M = $9M",
-                                  "~45%",
-                                  "+$4.1M"
-                            ],
-                            [
-                                  "Premium tiers",
-                                  "+$4M revenue",
-                                  "~75%",
-                                  "+$3.0M"
-                            ],
-                            [
-                                  "Off-season programming",
-                                  "120K visitors x $50 = $6M",
-                                  "~45%",
-                                  "+$2.7M"
-                            ],
-                            [
-                                  "Cost efficiency",
-                                  "3% x $101.4M",
-                                  "-",
-                                  "+$3.0M"
-                            ],
-                            [
-                                  "Total at full realization",
-                                  "",
-                                  "",
-                                  "$15.8M (+32%)"
-                            ],
-                            [
-                                  "At 70% realization",
-                                  "",
-                                  "",
-                                  "$11.0M (+23%)"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Sensitivity and lease test",
-                      "headers": [
-                            "Scenario",
-                            "Calculation",
-                            "EBITDA gain",
-                            "vs target"
-                      ],
-                      "rows": [
-                            [
-                                  "100% realization",
-                                  "$15.8M",
-                                  "+$15.8M (+32%)",
-                                  "Above"
-                            ],
-                            [
-                                  "70% realization (base)",
-                                  "$15.8M x 70%",
-                                  "+$11.0M (+23%)",
-                                  "Inside"
-                            ],
-                            [
-                                  "50% realization",
-                                  "$15.8M x 50%",
-                                  "+$7.9M (+16%)",
-                                  "Below"
-                            ],
-                            [
-                                  "Pricing backlash, yield lever lost",
-                                  "($15.8M - $3.0M) x 70%",
-                                  "+$9.0M (+18%)",
-                                  "Slightly below"
-                            ],
-                            [
-                                  "Lease today",
-                                  "4,000 x 30 days x $50 = $6M revenue, about 50% flow-through",
-                                  "about +$3M at best, less $2M a year lease and build capital",
-                                  "Does not pay"
-                            ],
-                            [
-                                  "Lease if peak unmet demand were 3x",
-                                  "12,000 x 30 x $50 = $18M revenue",
-                                  "about +$9M",
-                                  "Worth revisiting"
-                            ]
-                      ]
-                }
-          ],
-          "table": {
-                "title": "Capacity decision cheat sheet",
-                "headers": [
-                      "Question before adding capacity",
-                      "How to check",
-                      "In this case"
-                ],
-                "rows": [
-                      [
-                            "Is the constraint binding?",
-                            "Utilization by season and day type",
-                            "25% average; binds on about 30 days"
-                      ],
-                      [
-                            "How big is unmet demand?",
-                            "Unmet visitors x days x spend per visitor",
-                            "4,000 x 30 x $50 = $6M"
-                      ],
-                      [
-                            "What is the real margin on it?",
-                            "Flow-through after variable cost",
-                            "About 50%: $3M EBITDA"
-                      ],
-                      [
-                            "What does the expansion cost?",
-                            "Lease plus build capital and payback",
-                            "$2M a year plus capital"
-                      ],
-                      [
-                            "Can cheaper levers fill the gap?",
-                            "Yield pricing, shifting peak to off-peak, premium tiers",
-                            "Five levers worth $15.8M"
-                      ],
-                      [
-                            "What would change the answer?",
-                            "Much larger unmet demand, or a high-margin use that also fills the off-season",
-                            "Water park or hotel with payback under about 5 years"
-                      ]
-                ]
-          }
-    },
-    followups: [
-      { q: "Why not just raise gate prices across the board?", a: "Demand is very uneven. Peak days are full and can bear higher prices; off-season days need lower prices to stimulate volume. A flat increase hurts the days you want to fill and under-charges the days that sell out. Test elasticity by day type first." },
-      { q: "How confident are you in the F&B number?", a: "Medium. It rests on conversion (queues, locations) and mix. I would pilot at the highest-queue locations, measure spend per visitor and flow-through, and scale only if margin holds above ~40%." },
-      { q: "What if a competitor matches your pricing?", a: "Yield management is hard to copy well because it needs data on demand by day. The bigger moat is the season-pass base and loyalty. I would watch visitor share by day type and keep a response plan for promotions." },
-      { q: "What would change your mind about leasing?", a: "Evidence that unmet peak demand is much larger than 4,000 per day, or a high-margin non-park use for the land (water park, hotel) with payback under about 5 years and a way to also fill off-season days." }
-    ],
-    pitfalls: [
-      "Jumping to leasing without checking utilization by season.",
-      "Using one blended price for visitors and one blended margin for all revenue.",
-      "Presenting 100% realization as the plan. Always haircut and show a range."
-    ]
-  },
-
-  /* ---------------------------------------------------------------- 2 */
-  {
-    id: "ecom-retention",
-    title: "E-commerce Retention Decline",
-    track: ["tech", "banking"],
-    framework: "retention",
-    difficulty: "Medium",
-    minutes: 30,
-    prompt: "An e-commerce platform's monthly retention fell from 65% to 55% over six months. Marketing spent an extra $500K on acquisition, yet profit is falling. Find the root cause and recommend actions.",
-    clarify: [
-      { q: "How is retention defined?", a: "Share of last month's active users who place at least one order this month. 480K active users today (500K six months ago)." },
-      { q: "Do customers acquired a year or more ago retain differently than before?", a: "No. Customers acquired 12+ months ago retain within about 1 point of six months ago." },
-      { q: "What changed in acquisition?", a: "Spend moved toward paid social and coupon-led channels. CAC rose by cohort ($12, $15, $18)." },
-      { q: "Any product or operations change?", a: "No documented product change. Support tickets are up 22%, concentrated among customers in their first 60 days." },
-      { q: "Competition?", a: "Category retention is about 60%. No major new entrant." }
-    ],
-    tables: [
-      {
-        title: "Cohort retention (% of cohort still active)",
-        headers: ["Cohort", "CAC", "Month 1", "Month 3", "Month 6"],
-        rows: [["6 months ago", "$12", "85%", "72%", "65%"], ["3 months ago", "$15", "82%", "68%", "58%"], ["Current", "$18", "78%", "60%", "-"]]
+        "q": "What is ride capacity, and how full does it get?",
+        "a": "40,000 visitors a day. Summer weekends reach about 36,000 (90%) on about 30 days. Off-season weekdays are around 4,000 (10%)."
       },
       {
-        title: "Current segments",
-        headers: ["Segment", "Users", "Orders / month", "AOV", "Retention", "Retained users"],
-        rows: [
-          ["High value", "50K", "2.5", "$120", "80%", "40.0K"],
-          ["Mid value", "200K", "1.5", "$50", "64%", "128.0K"],
-          ["Low value", "230K", "0.8", "$15", "42%", "96.6K"],
-          ["Total", "480K", "-", "-", "55%", "264.6K"]
-        ]
+        "q": "How many people are turned away on the busiest days?",
+        "a": "About 4,000 a day on those 30 days. Assume we keep about 50% of the revenue from extra visitors, at $50 each."
       },
       {
-        title: "Unit economics",
-        headers: ["Metric", "6 months ago", "Now"],
-        rows: [["Blended CAC", "$12", "$18"], ["LTV", "$150", "$130"], ["LTV : CAC", "12.5x", "7.2x"], ["Avg order value", "$45", "$47"]]
-      }
-    ],
-    answer: {
-          "speak": [
-                [
-                      "C: Clarify",
-                      "Monthly retention fell from 65% to 55% over six months, with 480K active users, and the company spent an extra $500K on acquisition while profit is falling. I will define retention as the share of last month's active users who order this month. Two quick questions: do older customers retain differently than before, and what changed in acquisition?"
-                ],
-                [
-                      "L: Lay out",
-                      "I would look at four things. Who is leaving: old versus new cohorts, value tiers and acquisition channels. When: month one, three and six of the customer lifecycle. Why: customer quality, experience, price or external factors. And so what: size the prize and choose levers. The first test is old versus new cohorts."
-                ],
-                [
-                      "E: Evaluate",
-                      "Customers acquired a year or more ago retain within a point of before, so the product has not broadly broken. The decline is in new cohorts: month-3 retention fell from 72% to 60% while CAC rose from $12 to $18. Low-value users are 48% of users but only 36% of retained users, and support tickets are up 22% in the first 60 days."
-                ],
-                [
-                      "A: Assess",
-                      "So we are paying 50% more for customers who stay less. LTV to CAC fell from 12.5x to 7.2x, still above 3x on average, but marginal channels are worse than the average. Each retention point is 4,800 users, so recovering 5 points to the category average is 24K users, about $0.96M a month at an assumed $40 each."
-                ],
-                [
-                      "R: Recommend",
-                      "My hypothesis is low-intent acquisition from coupon and paid-social channels plus weak early-life onboarding. I would cap channels with low 90-day LTV to CAC and shift to referral, search and email, build a day-14 to day-60 onboarding and second-order program, and fix the top support drivers for new users. I would validate with a holdout test by channel and track cohort curves, LTV to CAC and tickets per new user."
-                ]
-          ],
-          "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>E-commerce platform: monthly retention fell 65% to 55% in 6 months<br/>480K active users, $500K extra acquisition spend, profit falling\"]\nC --> C2[\"Retention = share of last month's actives who order this month<br/>Category average is about 60%, no new entrant\"]\n\nC2 --> L[\"L: Lay out<br/>1 Who: old vs new cohorts, value tier, channel<br/>2 When: month 1, 3, 6 of the lifecycle<br/>3 Why: customer quality, experience, price, external<br/>4 So what: size the prize, pick levers\"]\n\nL --> E1[\"E: Evaluate<br/>Old cohorts: within 1 point, so the product is not broken\"]\nE1 --> E2[\"New cohorts: month-3 retention 72% to 60%, CAC $12 to $18<br/>Low-value users are 48% of users but 36% of retained users\"]\nE2 --> E3[\"Support tickets +22%, concentrated in the first 60 days\"]\n\nE3 --> A1[\"A: Assess<br/>We pay 50% more for customers who stay less<br/>LTV:CAC fell from 12.5x to 7.2x\"]\nA1 --> A2[\"Prize: each point = 4,800 users<br/>5 points = 24K users x $40 = $0.96M a month\"]\n\nA2 --> R[\"R: Recommend<br/>Fix acquisition quality and early life\"]\nR --> R1[\"Cap channels with low 90-day LTV:CAC, shift to referral, search, email\"]\nR --> R2[\"Day-14 to day-60 onboarding and second-order program\"]\nR --> R3[\"Fix top support drivers for new users, validate with a holdout\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C2 c1;\nclass L c2;\nclass E1,E2,E3 c3;\nclass A1,A2 c4;\nclass R,R1,R2,R3 c5;",
-          "exampleCharts": [
-                {
-                      "id": "evaluate",
-                      "title": "Evaluate: product problem or customer problem?",
-                      "note": "The old vs new cohort test comes first; it decides where to dig.",
-                      "code": "flowchart TD\nQ[\"Is it the product, or the new customers?\"] --> O[\"Old cohorts (12+ months)<br/>Retention within 1 point of six months ago\"]\nQ --> N[\"New cohorts<br/>Month 3: 72% to 60%<br/>CAC: $12 to $18\"]\n\nO --> O1[\"Product has not broadly deteriorated\"]\nN --> N1[\"Segment mix<br/>High 80%, mid 64%, low 42% retention<br/>Low value = 48% of users, 36% of retained\"]\nN --> N2[\"Timing<br/>Curves split by month 3: first order, no habit<br/>Support tickets +22% in first 60 days\"]\n\nN1 --> W[\"Root cause (hypothesis)<br/>Low-intent acquisition from coupon and paid social<br/>plus weak early-life onboarding\"]\nN2 --> W\nO1 --> W\nW --> V[\"Validate: retention and LTV:CAC by channel,<br/>pause test on one suspect channel\"]\n\nclassDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef o fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef r fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass Q q;\nclass O,O1 o;\nclass N,N1,N2 n;\nclass W,V r;"
-                },
-                {
-                      "id": "impact",
-                      "title": "Impact math: size the prize",
-                      "note": "Value per recovered user decides how big the prize is.",
-                      "code": "flowchart TD\nB[\"Size the prize<br/>1 point on 480K users = 4,800 users<br/>5 points back to the 60% category average = 24K users\"] --> V[\"Value per recovered user, assumed $40 a month<br/>24K x $40 = $0.96M a month = about $11.5M a year\"]\nB --> F[\"Full recovery to 65%<br/>10 points = 48K users x $40<br/>= $1.9M a month = about $23M a year\"]\n\nV --> S1[\"If recovered users look like low-value, $12 a month<br/>24K x $12 = $0.29M a month\"]\nV --> S2[\"If they look like mid-value, $75 a month<br/>24K x $75 = $1.8M a month\"]\n\nV --> U[\"Acquisition economics<br/>LTV:CAC 12.5x to 7.2x: still above 3x<br/>but the marginal channels are lower than the average\"]\n\nS1 --> R[\"Prize depends on who we win back<br/>so target mid and high value first\"]\nS2 --> R\nF --> R\nU --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass V,F,U mid;\nclass S1 bad;\nclass S2 good;\nclass R out;"
-                }
-          ],
-          "exampleTables": [
-                {
-                      "title": "CLEAR applied to the retention steps",
-                      "headers": [
-                            "CLEAR step",
-                            "Retention step it uses",
-                            "In this case"
-                      ],
-                      "rows": [
-                            [
-                                  "Clarify",
-                                  "Define retention, window, what changed",
-                                  "Monthly actives who order again; 65% to 55%; extra $500K acquisition"
-                            ],
-                            [
-                                  "Lay out",
-                                  "Who, when, why, so what",
-                                  "Cohorts, value tiers, channels; month 1, 3, 6; quality, experience, price"
-                            ],
-                            [
-                                  "Evaluate",
-                                  "Old vs new cohorts, segments, timing",
-                                  "Old flat; new month-3 72% to 60%; low-value mix; support +22%"
-                            ],
-                            [
-                                  "Assess",
-                                  "Economics and size of the prize",
-                                  "LTV:CAC 12.5x to 7.2x; 5 points = 24K users = $0.96M a month"
-                            ],
-                            [
-                                  "Recommend",
-                                  "Levers with a measurement plan",
-                                  "Channel mix, onboarding, support fixes, holdout test"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Cohort retention by acquisition date",
-                      "headers": [
-                            "Cohort",
-                            "CAC",
-                            "Month 1",
-                            "Month 3",
-                            "Month 6"
-                      ],
-                      "rows": [
-                            [
-                                  "6 months ago",
-                                  "$12",
-                                  "85%",
-                                  "72%",
-                                  "65%"
-                            ],
-                            [
-                                  "3 months ago",
-                                  "$15",
-                                  "82%",
-                                  "68%",
-                                  "58%"
-                            ],
-                            [
-                                  "Current",
-                                  "$18",
-                                  "78%",
-                                  "60%",
-                                  "-"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Segment mix",
-                      "headers": [
-                            "Segment",
-                            "Users",
-                            "Retention",
-                            "Retained users",
-                            "Share of users",
-                            "Share of retained"
-                      ],
-                      "rows": [
-                            [
-                                  "High value",
-                                  "50K",
-                                  "80%",
-                                  "40.0K",
-                                  "10%",
-                                  "15%"
-                            ],
-                            [
-                                  "Mid value",
-                                  "200K",
-                                  "64%",
-                                  "128.0K",
-                                  "42%",
-                                  "48%"
-                            ],
-                            [
-                                  "Low value",
-                                  "230K",
-                                  "42%",
-                                  "96.6K",
-                                  "48%",
-                                  "36%"
-                            ],
-                            [
-                                  "Total",
-                                  "480K",
-                                  "55%",
-                                  "264.6K",
-                                  "100%",
-                                  "100%"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Unit economics and prize",
-                      "headers": [
-                            "Item",
-                            "Logic",
-                            "Value"
-                      ],
-                      "rows": [
-                            [
-                                  "CAC change",
-                                  "$18 / $12 - 1",
-                                  "+50%"
-                            ],
-                            [
-                                  "LTV:CAC six months ago",
-                                  "$150 / $12",
-                                  "12.5x"
-                            ],
-                            [
-                                  "LTV:CAC now",
-                                  "$130 / $18",
-                                  "7.2x"
-                            ],
-                            [
-                                  "Users per retention point",
-                                  "1% x 480K",
-                                  "4,800"
-                            ],
-                            [
-                                  "Prize: 5 points",
-                                  "5 x 4,800 x $40 a month",
-                                  "$0.96M a month, about $11.5M a year"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Sensitivity: value per recovered user",
-                      "headers": [
-                            "Recovered users look like",
-                            "Revenue per user per month",
-                            "24K users (5 points)"
-                      ],
-                      "rows": [
-                            [
-                                  "Low-value ($0.8 orders x $15)",
-                                  "$12",
-                                  "$0.29M a month"
-                            ],
-                            [
-                                  "Assumed blend",
-                                  "$40",
-                                  "$0.96M a month"
-                            ],
-                            [
-                                  "Mid-value (1.5 orders x $50)",
-                                  "$75",
-                                  "$1.8M a month"
-                            ],
-                            [
-                                  "Full recovery to 65% (48K users, $40)",
-                                  "$40",
-                                  "$1.9M a month"
-                            ]
-                      ]
-                }
-          ],
-          "table": {
-                "title": "Retention levers cheat sheet",
-                "headers": [
-                      "Lifecycle stage",
-                      "Problem signal",
-                      "Lever",
-                      "Metric to track"
-                ],
-                "rows": [
-                      [
-                            "Acquire",
-                            "New cohorts retain worse, CAC rising",
-                            "Shift to higher-intent channels, cap low LTV:CAC channels",
-                            "90-day LTV:CAC by channel"
-                      ],
-                      [
-                            "Onboard",
-                            "Curves split by month 1 to 3, support tickets up early",
-                            "Day-14 to day-60 program, second-order incentive, fix support drivers",
-                            "Second order within 30 days"
-                      ],
-                      [
-                            "Engage",
-                            "Mid-life drop-off, no habit",
-                            "Personalization, loyalty, tiered offers by value",
-                            "Orders per month by tier"
-                      ],
-                      [
-                            "Win back",
-                            "Lapsed high and mid-value users",
-                            "Targeted offers, only where LTV justifies cost",
-                            "Reactivation rate and payback"
-                      ],
-                      [
-                            "Diagnose first",
-                            "Blended averages hide mix",
-                            "Old vs new cohort test, then segment, then channel",
-                            "Cohort curves"
-                      ]
-                ]
-          }
-    },
-    followups: [
-      { q: "How would you validate the channel hypothesis?", a: "Join users to acquisition source, compare 90-day retention and revenue by source, and run a geo or audience holdout where a suspect channel is paused." },
-      { q: "What if old cohorts were also declining?", a: "Then it would be a product or market problem: look at delivery times, assortment, pricing and competitor activity, and cut old cohorts by tenure to find when the drop began." },
-      { q: "Should we stop acquiring low-value users?", a: "Not necessarily. Acquire them only at a CAC that pays back within a threshold (e.g., 6 months) given their expected LTV, and treat them differently in lifecycle marketing." },
-      { q: "What metric would you put on the executive dashboard?", a: "Cohort retention curves, LTV : CAC and payback by channel, and share of new users placing a second order within 30 days." }
-    ],
-    pitfalls: [
-      "Declaring a root cause before testing old vs. new cohorts.",
-      "Calling LTV : CAC 'healthy' without looking at the trend and channel level.",
-      "Mixing 'retention of the base' with 'cohort retention'. State the definition."
-    ]
-  },
-
-  /* ---------------------------------------------------------------- 3 */
-  {
-    id: "card-profit",
-    title: "Credit Card Profit Decline",
-    track: ["banking"],
-    framework: "unit",
-    difficulty: "Medium",
-    minutes: 25,
-    prompt: "A credit card issuer has 5M accounts, flat year over year. Portfolio profit fell from $500M to $400M. Credit losses actually improved. What is going on and what would you do?",
-    clarify: [
-      { q: "Is account count or mix stable?", a: "Accounts are flat at 5M. Spend per account is flat. Mix between revolvers and transactors is stable." },
-      { q: "What happened to market interest rates?", a: "The bank's funding cost rose over the year. Customer APRs are mostly variable and reprice with a lag; promotional balances do not reprice." },
-      { q: "Any competitive changes?", a: "Competitors raised rewards rates. The bank matched on its flagship card." },
-      { q: "Any fee changes?", a: "A late-fee change by regulators and customer behavior reduced fee income." }
-    ],
-    tables: [
-      {
-        title: "Annual profit per account ($)",
-        headers: ["Line", "Last year", "This year", "Change"],
-        rows: [
-          ["Interest income", "330", "335", "+5"],
-          ["Interchange", "150", "150", "0"],
-          ["Fees", "40", "35", "-5"],
-          ["Total revenue", "520", "520", "0"],
-          ["Funding cost", "60", "75", "-15"],
-          ["Rewards", "110", "120", "-10"],
-          ["Charge-offs (credit loss)", "120", "115", "+5"],
-          ["Operating cost", "100", "100", "0"],
-          ["Marketing", "30", "30", "0"],
-          ["Total cost", "420", "440", "-20"],
-          ["Profit per account", "100", "80", "-20"],
-          ["Portfolio profit (5M accounts)", "$500M", "$400M", "-$100M"]
-        ]
-      }
-    ],
-    answer: {
-          "speak": [
-                [
-                      "C: Clarify",
-                      "A credit card issuer has 5M accounts, flat, and profit fell from $500M to $400M, even though credit losses improved. Two quick questions: what happened to funding costs and interest rates, and did spend, revolver mix or competitor rewards change?"
-                ],
-                [
-                      "L: Lay out",
-                      "I would build the per-account P&L. Revenue is interest income, interchange and fees. Costs are funding, rewards, credit losses, operating cost and marketing. Then I compare each line year over year and watch for offsetting moves, because a line that improved can hide one that got worse."
-                ],
-                [
-                      "E: Evaluate",
-                      "Profit per account fell from $100 to $80, which times 5M accounts is $100M. Revenue is flat at $520: interest is up $5, fees are down $5. Costs are up $20: funding up $15, rewards up $10, and credit losses down $5. That bridge reconciles: plus 5, minus 5, minus 15, minus 10, plus 5 is minus 20."
-                ],
-                [
-                      "A: Assess",
-                      "So this is a margin squeeze, not a credit problem. Funding costs rose faster than customer yields repriced, because APRs reprice with a lag and promotional balances do not reprice, and the bank matched competitors on rewards. A risk-first story would have missed it. Each $5 per account is worth $25M."
-                ],
-                [
-                      "R: Recommend",
-                      "I would recover margin and leave underwriting alone. First, accelerate APR repricing and manage promo balances, worth $5 to $8 per account. Second, target rewards at low-engagement accounts, $4 to $6. Third, review fees and product tiers, $2 to $3. That is $11 to $17 per account, or $55M to $85M, and I would test by segment with a holdout and watch attrition, NPS and early delinquency."
-                ]
-          ],
-          "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Credit card issuer: 5M accounts, flat. Profit fell $500M to $400M<br/>Credit losses actually improved. What is going on?\"]\nC --> C2[\"Spend per account and revolver mix stable<br/>Funding cost up, rewards matched to rivals, late-fee income down\"]\n\nC2 --> L[\"L: Lay out<br/>Profit per account = revenue - costs<br/>Revenue: interest, interchange, fees<br/>Cost: funding, rewards, credit loss, operating, marketing<br/>Compare line by line, watch offsetting moves\"]\n\nL --> E1[\"E: Evaluate<br/>Profit per account $100 to $80, so -$20 x 5M = -$100M\"]\nE1 --> E2[\"Revenue flat at $520: interest +5, fees -5<br/>Costs up $20: funding +15, rewards +10, credit loss -5\"]\n\nE2 --> A1[\"A: Assess<br/>Margin squeeze, not a credit problem<br/>Funding cost rose faster than yields repriced\"]\nA1 --> A2[\"Each $5 per account = $25M<br/>Bridge reconciles: +5 -5 -15 -10 +5 = -$20\"]\n\nA2 --> R[\"R: Recommend<br/>Recover margin, keep underwriting unchanged\"]\nR --> R1[\"APR repricing and promo balances: +$5 to +$8\"]\nR --> R2[\"Target rewards at low-engagement accounts: +$4 to +$6\"]\nR --> R3[\"Fee and tier review +$2 to +$3, total +$11 to +$17 = $55M to $85M\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C2 c1;\nclass L c2;\nclass E1,E2 c3;\nclass A1,A2 c4;\nclass R,R1,R2,R3 c5;",
-          "exampleCharts": [
-                {
-                      "id": "evaluate",
-                      "title": "Evaluate: the profit-per-account bridge",
-                      "note": "Walk each line from $100 to $80, then scale to the portfolio.",
-                      "code": "flowchart TD\nS[\"Last year<br/>Profit per account $100\"] --> I[\"Interest income<br/>$330 to $335<br/>+$5\"]\nI --> X[\"Interchange<br/>$150 to $150<br/>$0\"]\nX --> F[\"Fees<br/>$40 to $35<br/>-$5\"]\nF --> FU[\"Funding cost<br/>$60 to $75<br/>-$15\"]\nFU --> RW[\"Rewards<br/>$110 to $120<br/>-$10\"]\nRW --> CL[\"Credit losses<br/>$120 to $115<br/>+$5\"]\nCL --> E[\"This year<br/>Profit per account $80\"]\n\nE --> P[\"x 5M accounts = -$100M<br/>Funding -$75M, rewards -$50M, fees -$25M<br/>interest +$25M, credit +$25M\"]\nP --> T[\"Trap: credit improved, so a risk-first story misses the problem<br/>Real driver: funding and rewards, a margin squeeze\"]\n\nclassDef s fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef g fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef b fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef n fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef r fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass S,E s;\nclass I,CL g;\nclass F,FU,RW b;\nclass X n;\nclass P,T r;"
-                },
-                {
-                      "id": "impact",
-                      "title": "Impact math: size the levers and the risks",
-                      "note": "Three levers sized per account, then two downside risks.",
-                      "code": "flowchart TD\nB[\"Gap to recover: $20 per account = $100M<br/>Each $5 per account = $25M\"] --> L1[\"APR repricing and promo balances<br/>+$5 to +$8 = $25M to $40M\"]\nB --> L2[\"Rewards for low-engagement accounts<br/>+$4 to +$6 = $20M to $30M\"]\nB --> L3[\"Fee and tier review<br/>+$2 to +$3 = $10M to $15M\"]\n\nL1 --> T[\"Total +$11 to +$17 per account<br/>= $55M to $85M<br/>Profit $91 to $97 per account\"]\nL2 --> T\nL3 --> T\nT --> G[\"Recovers 55% to 85% of the decline<br/>Portfolio profit about $455M to $485M\"]\n\nB --> R1[\"Risk: rewards cuts lose 1% of accounts<br/>50K x $80 profit = $4M\"]\nB --> R2[\"Risk: funding cost rises another $5<br/>-$25M, wipes out one lever\"]\nR1 --> M[\"So test by segment with a holdout<br/>and watch attrition, NPS, early delinquency\"]\nR2 --> M\nG --> M\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass L1,L2,L3 mid;\nclass T,G good;\nclass R1,R2 bad;\nclass M out;"
-                }
-          ],
-          "exampleTables": [
-                {
-                      "title": "CLEAR applied to the unit economics steps",
-                      "headers": [
-                            "CLEAR step",
-                            "Unit economics step it uses",
-                            "In this case"
-                      ],
-                      "rows": [
-                            [
-                                  "Clarify",
-                                  "Scope: accounts, mix, rates, competition",
-                                  "5M accounts flat; funding up; rivals raised rewards; credit improved"
-                            ],
-                            [
-                                  "Lay out",
-                                  "Per-account P&L, compare line by line",
-                                  "Interest, interchange, fees vs funding, rewards, credit loss, opex, marketing"
-                            ],
-                            [
-                                  "Evaluate",
-                                  "Bridge the change and reconcile",
-                                  "$100 to $80 per account = -$100M; +5 -5 -15 -10 +5"
-                            ],
-                            [
-                                  "Assess",
-                                  "Find the real driver, avoid the trap",
-                                  "Margin squeeze from funding and rewards, not credit"
-                            ],
-                            [
-                                  "Recommend",
-                                  "Tie each driver to a lever and size it",
-                                  "Repricing, rewards targeting, fees: +$11 to +$17 = $55M to $85M"
-                            ]
-                      ]
-                },
-                {
-                      "title": "The math in a table",
-                      "headers": [
-                            "Line ($ per account a year)",
-                            "Last year",
-                            "This year",
-                            "Change",
-                            "Portfolio (x 5M)"
-                      ],
-                      "rows": [
-                            [
-                                  "Interest income",
-                                  "330",
-                                  "335",
-                                  "+5",
-                                  "+$25M"
-                            ],
-                            [
-                                  "Interchange",
-                                  "150",
-                                  "150",
-                                  "0",
-                                  "0"
-                            ],
-                            [
-                                  "Fees",
-                                  "40",
-                                  "35",
-                                  "-5",
-                                  "-$25M"
-                            ],
-                            [
-                                  "Total revenue",
-                                  "520",
-                                  "520",
-                                  "0",
-                                  "0"
-                            ],
-                            [
-                                  "Funding cost",
-                                  "60",
-                                  "75",
-                                  "-15",
-                                  "-$75M"
-                            ],
-                            [
-                                  "Rewards",
-                                  "110",
-                                  "120",
-                                  "-10",
-                                  "-$50M"
-                            ],
-                            [
-                                  "Credit losses",
-                                  "120",
-                                  "115",
-                                  "+5",
-                                  "+$25M"
-                            ],
-                            [
-                                  "Operating cost",
-                                  "100",
-                                  "100",
-                                  "0",
-                                  "0"
-                            ],
-                            [
-                                  "Marketing",
-                                  "30",
-                                  "30",
-                                  "0",
-                                  "0"
-                            ],
-                            [
-                                  "Total cost",
-                                  "420",
-                                  "440",
-                                  "-20",
-                                  "-$100M"
-                            ],
-                            [
-                                  "Profit per account",
-                                  "100",
-                                  "80",
-                                  "-20",
-                                  "-$100M"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Lever sizing",
-                      "headers": [
-                            "Lever",
-                            "Gain per account",
-                            "Portfolio (x 5M)"
-                      ],
-                      "rows": [
-                            [
-                                  "APR repricing, promo balances",
-                                  "+$5 to +$8",
-                                  "$25M to $40M"
-                            ],
-                            [
-                                  "Rewards for low-engagement accounts",
-                                  "+$4 to +$6",
-                                  "$20M to $30M"
-                            ],
-                            [
-                                  "Fee and tier review",
-                                  "+$2 to +$3",
-                                  "$10M to $15M"
-                            ],
-                            [
-                                  "Total",
-                                  "+$11 to +$17",
-                                  "$55M to $85M"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Sensitivity",
-                      "headers": [
-                            "Change",
-                            "Calculation",
-                            "Effect"
-                      ],
-                      "rows": [
-                            [
-                                  "Levers deliver the low end",
-                                  "$80 + $11",
-                                  "$91 per account, about $455M"
-                            ],
-                            [
-                                  "Levers deliver the high end",
-                                  "$80 + $17",
-                                  "$97 per account, about $485M"
-                            ],
-                            [
-                                  "Rewards cuts lose 1% of accounts",
-                                  "50K x $80 profit",
-                                  "-$4M"
-                            ],
-                            [
-                                  "Funding cost rises another $5",
-                                  "$5 x 5M",
-                                  "-$25M"
-                            ]
-                      ]
-                }
-          ],
-          "table": {
-                "title": "Unit economics cheat sheet",
-                "headers": [
-                      "Line",
-                      "Formula",
-                      "Lever",
-                      "Watch out for"
-                ],
-                "rows": [
-                      [
-                            "Interest income",
-                            "Balance x yield",
-                            "Repricing, promo management",
-                            "Repricing lag; revolvers vs transactors"
-                      ],
-                      [
-                            "Interchange",
-                            "Spend x rate",
-                            "Spend per account, category mix",
-                            "Regulation of rates"
-                      ],
-                      [
-                            "Fees",
-                            "Count x fee",
-                            "Fee design, value-based tiers",
-                            "Regulatory limits on late fees"
-                      ],
-                      [
-                            "Funding cost",
-                            "Balances x cost of funds",
-                            "Deposit mix, hedging",
-                            "Rises faster than yields reprice"
-                      ],
-                      [
-                            "Credit loss",
-                            "PD x LGD x EAD",
-                            "Underwriting, collections, line management",
-                            "One good year is not a trend"
-                      ],
-                      [
-                            "Rewards",
-                            "Spend x reward rate x redemption",
-                            "Tier by engagement, rebalance categories",
-                            "Competitor response and attrition"
-                      ],
-                      [
-                            "Lifetime view",
-                            "LTV = profit per period x expected life; LTV:CAC and payback",
-                            "Retention, CAC, cross-sell",
-                            "Averaging revolvers and transactors"
-                      ]
-                ]
-          }
-    },
-    followups: [
-      { q: "How would you know if rewards cuts hurt retention?", a: "Run a controlled rollout by segment with a holdout, and track spend per account, attrition and active rate. Cuts that move low-spend accounts barely affect profit but save cost; cuts for top spenders risk attrition." },
-      { q: "What if interest income per account fell instead of rose?", a: "I would look at balance and revolve rate (mix between revolvers and transactors), promo balances, APR mix and delinquency-driven non-accrual." },
-      { q: "How do credit losses relate to funding cost?", a: "Independent drivers in the P&L but linked in strategy: higher rates stress customers, so I would watch early delinquency as a leading indicator and avoid cutting loss provisions based on one good year." },
-      { q: "Which single number would you show the CEO?", a: "Profit per account bridge: $100 to $80, with funding -$15, rewards -$10, fees -$5, interest +$5, credit +$5." }
-    ],
-    pitfalls: [
-      "Assuming credit losses must be the cause.",
-      "Looking only at the portfolio total instead of per-account lines.",
-      "Not reconciling your bridge back to the $100M."
-    ]
-  },
-
-  /* ---------------------------------------------------------------- 4 */
-  {
-    id: "grocery-entry",
-    title: "Grocery Chain: Launch Delivery?",
-    track: ["consulting"],
-    framework: "entry",
-    difficulty: "Medium",
-    minutes: 30,
-    prompt: "A regional grocery chain with 40 stores in one metro area is considering launching home delivery. It would invest $25M. Should it go?",
-    clarify: [
-      { q: "What is the metro size?", a: "2M households. The chain's current shoppers are about 20% of households (400K)." },
-      { q: "What is the goal and timeline?", a: "Payback within 4 years and no damage to the store business." },
-      { q: "Competition?", a: "Two national players already deliver, with about 20% of metro households ordering groceries online at least monthly." },
-      { q: "Economics per order?", a: "Average basket $90. Gross margin on groceries ~25%. Picking, packing and last mile cost about $11 per order. Marketing and platform cost ~$2 per order." }
-    ],
-    tables: [
-      {
-        title: "Key assumptions",
-        headers: ["Item", "Value"],
-        rows: [["Households in metro", "2M"], ["Online-grocery adopters", "20% (400K)"], ["Target share of adopters in year 3", "10% (40K households)"], ["Orders per household per month", "2"], ["Average basket", "$90"], ["Gross margin", "25%"], ["Fulfillment cost per order", "$11"], ["Marketing / platform per order", "$2"], ["Investment", "$25M"]]
-      }
-    ],
-    answer: {
-          "speak": [
-                [
-                      "C: Clarify",
-                      "Let me make sure I understand. A regional grocer with 40 stores in a metro of 2M households is considering a $25M investment to launch home delivery. The goal is payback within four years without hurting the stores. Two quick questions: how many households already order groceries online, and what do the economics look like per order?"
-                ],
-                [
-                      "L: Lay out",
-                      "I would look at four things. First, the market, meaning size and the share we can win. Second, our ability to win. Third, how to enter: build, buy or partner. Fourth, the economics, meaning contribution per order, payback and risks. I will start with volume and unit economics because the payback question depends on them."
-                ],
-                [
-                      "E: Evaluate",
-                      "About 20% of 2M households order online, which is 400K. If we win 10%, that is 40K households. At 2 orders a month that is about 960K orders a year. Each $90 basket at 25% margin earns $22.50, less $11 fulfillment and $2 marketing, so $9.50 contribution per order."
-                ],
-                [
-                      "A: Assess",
-                      "960K orders at $9.50 is about $9.1M a year, so $25M pays back in 2.7 years at run-rate and 3.5 to 4 years with a ramp, which is borderline. The big risk is cannibalization: if 20% of delivery orders replace store trips, contribution falls to about $5 an order and payback stretches to about 5 years."
-                ],
-                [
-                      "R: Recommend",
-                      "I would not commit the full $25M yet. I would pilot in 10 to 12 dense stores or through a delivery partner, and scale only if share is near 10%, fulfillment cost is $11 or less per order and cannibalization is around 20% or less. In parallel, protect the stores with membership and pickup options."
-                ]
-          ],
-          "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Regional grocer, 40 stores, one metro of 2M households<br/>Should it invest $25M to launch home delivery?\"]\nC --> C2[\"Goal: payback within 4 years, no damage to stores<br/>Two national rivals already deliver\"]\n\nC2 --> L[\"L: Lay out<br/>1 Market: size and share<br/>2 Ability to win<br/>3 How to enter: build, buy, partner<br/>4 Economics: per order, payback, risk\"]\n\nL --> E1[\"E: Evaluate<br/>Volume: 2M households x 20% online = 400K<br/>x 10% share = 40K households\"]\nE1 --> E2[\"40K x 2 orders x 12 months = 960K orders a year\"]\nE2 --> E3[\"Per order: $90 x 25% = $22.50 gross profit<br/>- $11 fulfillment - $2 marketing = $9.50\"]\n\nE3 --> A1[\"A: Assess<br/>960K x $9.50 = $9.1M a year\"]\nA1 --> A2[\"Payback $25M / $9.1M = 2.7 years at full run-rate<br/>3.5 to 4 years with a 12-month ramp: borderline\"]\nA2 --> A3[\"Risk: 20% cannibalization cuts it to about $5.00 an order<br/>and payback to about 5 years\"]\n\nA3 --> R[\"R: Recommend<br/>Not yet a full go: pilot first\"]\nR --> R1[\"Pilot in 10 to 12 dense stores or via a delivery partner\"]\nR --> R2[\"Scale only if share is near 10%, cost per order is $11 or less,<br/>cannibalization is about 20% or less\"]\nR --> R3[\"Protect stores: membership and pickup options\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C2 c1;\nclass L c2;\nclass E1,E2,E3 c3;\nclass A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
-          "exampleCharts": [
-                {
-                      "id": "evaluate",
-                      "title": "Evaluate: volume and unit economics",
-                      "note": "Two paths that meet at the annual contribution.",
-                      "code": "flowchart TD\nQ[\"Is the market worth entering?\"] --> V[\"Volume\"]\nQ --> U[\"Unit economics\"]\n\nV --> V1[\"2M households in the metro\"]\nV1 --> V2[\"20% order groceries online = 400K\"]\nV2 --> V3[\"We win 10% share = 40K households\"]\nV3 --> V4[\"2 orders a month x 12 = 960K orders a year\"]\n\nU --> U1[\"Basket $90\"]\nU1 --> U2[\"25% gross margin = $22.50\"]\nU2 --> U3[\"- $11 fulfillment - $2 marketing\"]\nU3 --> U4[\"Contribution = $9.50 per order\"]\n\nV4 --> T[\"960K x $9.50 = $9.1M a year<br/>Revenue 960K x $90 = $86M\"]\nU4 --> T\nT --> D{\"Does $25M pay back in 4 years?\"}\nD --> Y[\"Borderline: 2.7 years at run-rate, 3.5 to 4 with ramp\"]\n\nclassDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef v fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef u fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef r fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass Q,D q;\nclass V,V1,V2,V3,V4 v;\nclass U,U1,U2,U3,U4 u;\nclass T,Y r;"
-                },
-                {
-                      "id": "impact",
-                      "title": "Impact math: what breaks the payback",
-                      "note": "Cannibalization, share and cost per order, one at a time.",
-                      "code": "flowchart TD\nB[\"Base case<br/>$9.50 per order x 960K = $9.1M a year<br/>Payback 2.7 years at run-rate\"] --> S1[\"Cannibalization 20%<br/>$9.50 - 20% x $22.50 = $5.00 per order<br/>960K x $5.00 = $4.8M a year<br/>Payback about 5 years\"]\nB --> S2[\"Cannibalization 40%<br/>$9.50 - 40% x $22.50 = $0.50 per order<br/>$0.5M a year: no payback\"]\nB --> S3[\"Share only 5%<br/>480K orders x $9.50 = $4.6M a year<br/>Payback about 5.5 years\"]\nB --> S4[\"Fulfillment cost $1 lower per order<br/>+ $1M a year\"]\n\nS1 --> R[\"Pays back only if cannibalization stays low<br/>and share reaches about 10%\"]\nS2 --> R\nS3 --> R\nS4 --> R\nR --> M[\"So pilot first, with clear go and no-go thresholds\"]\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass S1,S2,S3 bad;\nclass S4 mid;\nclass R,M out;"
-                }
-          ],
-          "exampleTables": [
-                {
-                      "title": "CLEAR applied to the market entry steps",
-                      "headers": [
-                            "CLEAR step",
-                            "Market entry step it uses",
-                            "In this case"
-                      ],
-                      "rows": [
-                            [
-                                  "Clarify",
-                                  "Objective, budget, timeline",
-                                  "$25M, payback within 4 years, protect the store business"
-                            ],
-                            [
-                                  "Lay out",
-                                  "Market, ability to win, how to enter, economics",
-                                  "Size and share, store network and brand, build vs partner, per-order economics"
-                            ],
-                            [
-                                  "Evaluate",
-                                  "Size the market and the share we can win",
-                                  "400K online households x 10% = 40K; 960K orders; $9.50 per order"
-                            ],
-                            [
-                                  "Assess",
-                                  "Competition, payback and risk",
-                                  "$9.1M a year; 2.7 to 4 years; cannibalization is the swing risk"
-                            ],
-                            [
-                                  "Recommend",
-                                  "Go or no-go with conditions",
-                                  "Pilot first, with thresholds on share, cost per order and cannibalization"
-                            ]
-                      ]
-                },
-                {
-                      "title": "The math in a table",
-                      "headers": [
-                            "Item",
-                            "Logic",
-                            "Value"
-                      ],
-                      "rows": [
-                            [
-                                  "Households ordering online",
-                                  "2M x 20%",
-                                  "400K"
-                            ],
-                            [
-                                  "Households we win",
-                                  "400K x 10%",
-                                  "40K"
-                            ],
-                            [
-                                  "Orders per year",
-                                  "40K x 2 x 12",
-                                  "960K"
-                            ],
-                            [
-                                  "Gross profit per order",
-                                  "$90 x 25%",
-                                  "$22.50"
-                            ],
-                            [
-                                  "Contribution per order",
-                                  "$22.50 - $11 - $2",
-                                  "$9.50"
-                            ],
-                            [
-                                  "Annual contribution",
-                                  "960K x $9.50",
-                                  "$9.1M"
-                            ],
-                            [
-                                  "Revenue",
-                                  "960K x $90",
-                                  "$86M"
-                            ],
-                            [
-                                  "Payback at run-rate",
-                                  "$25M / $9.1M",
-                                  "2.7 years"
-                            ],
-                            [
-                                  "Payback with 12-month ramp",
-                                  "",
-                                  "3.5 to 4 years"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Sensitivity",
-                      "headers": [
-                            "Change",
-                            "Calculation",
-                            "Annual contribution",
-                            "Payback on $25M"
-                      ],
-                      "rows": [
-                            [
-                                  "Cannibalization 20%",
-                                  "$9.50 - 0.2 x $22.50 = $5.00; 960K x $5.00",
-                                  "$4.8M a year",
-                                  "about 5 years"
-                            ],
-                            [
-                                  "Cannibalization 40%",
-                                  "$9.50 - 0.4 x $22.50 = $0.50; 960K x $0.50",
-                                  "$0.5M a year",
-                                  "no payback"
-                            ],
-                            [
-                                  "Share 5%",
-                                  "480K x $9.50",
-                                  "$4.6M a year",
-                                  "about 5.5 years"
-                            ],
-                            [
-                                  "Fulfillment $1 lower",
-                                  "960K x $1",
-                                  "+$1M a year",
-                                  "-"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Go / no-go thresholds for the pilot",
-                      "headers": [
-                            "Metric",
-                            "Base case",
-                            "Scale only if"
-                      ],
-                      "rows": [
-                            [
-                                  "Share of online households",
-                                  "10%",
-                                  "near 10%"
-                            ],
-                            [
-                                  "Fulfillment cost per order",
-                                  "$11",
-                                  "$11 or less"
-                            ],
-                            [
-                                  "Cannibalization of store trips",
-                                  "not in base",
-                                  "about 20% or less"
-                            ],
-                            [
-                                  "Payback on $25M",
-                                  "3.5 to 4 years with ramp",
-                                  "within 4 years"
-                            ]
-                      ]
-                }
-          ],
-          "table": {
-                "title": "Entry modes compared",
-                "headers": [
-                      "Mode",
-                      "Cost",
-                      "Speed",
-                      "Control",
-                      "Main risk"
-                ],
-                "rows": [
-                      [
-                            "Build (organic)",
-                            "Highest",
-                            "Slowest",
-                            "Full",
-                            "Capability gaps, slow ramp"
-                      ],
-                      [
-                            "Buy (acquire)",
-                            "High",
-                            "Fast",
-                            "Full",
-                            "Overpaying, integration"
-                      ],
-                      [
-                            "Partner / JV / license",
-                            "Low",
-                            "Fastest",
-                            "Shared",
-                            "Gives away margin and customer data"
-                      ]
-                ]
-          }
-    },
-    followups: [
-      { q: "How would you reduce fulfillment cost?", a: "Batch picking in stores with highest density, delivery windows to cluster routes, minimum basket or fee thresholds, and partnership with a gig platform for the last mile." },
-      { q: "Build vs. partner?", a: "Partnering is faster and cheaper but gives away margin and customer data. Building has higher control and long-term margin but needs capital and capability. A phased approach: partner first, build in dense zones." },
-      { q: "How do competitors react?", a: "Expect promotions and free-delivery offers. Differentiate on freshness, assortment of local brands and price perception, not on delivery fees." }
-    ],
-    pitfalls: [
-      "Stopping at market size without per-order economics.",
-      "Ignoring cannibalization of store sales.",
-      "Not stating what would make you say no."
-    ]
-  },
-
-  /* ---------------------------------------------------------------- 5 */
-  {
-    id: "dau-drop",
-    title: "Social App: DAU Down 8%",
-    track: ["tech"],
-    framework: "metric",
-    difficulty: "Easy",
-    minutes: 20,
-    prompt: "Daily active users (DAU) of a social app fell 8% week over week. As the data analyst, how do you figure out what happened and what to do?",
-    clarify: [
-      { q: "Is the data reliable? Any logging or definition change?", a: "No changes to logging or the DAU definition. Backend dashboards agree with the data warehouse." },
-      { q: "Which segments are affected?", a: "Android only, about 55% of DAU, down about 14%. iOS and web are flat." },
-      { q: "When did it start?", a: "On Tuesday, the day after Android release 8.4 rolled out to 100% of users." },
-      { q: "What about new vs. existing users?", a: "New-user signups are normal. The drop is in existing users who open the app fewer days per week." },
-      { q: "Where do sessions come from?", a: "Sessions started from push notifications on Android fell by about 35%. Organic app opens are flat." }
-    ],
-    tables: [
-      {
-        title: "Weekly change",
-        headers: ["Segment", "Share of DAU", "DAU change"],
-        rows: [["Android", "55%", "-14%"], ["iOS", "35%", "0%"], ["Web", "10%", "0%"], ["Total", "100%", "-7.7% (approx. -8%)"]]
-      }
-    ],
-    answer: {
-          "speak": [
-                [
-                      "C: Clarify",
-                      "DAU of a social app fell 8% week over week. I will treat DAU as users with at least one session in a day. First, is the data reliable: any change to logging or the DAU definition? And can I see the drop by platform, and when it started?"
-                ],
-                [
-                      "L: Lay out",
-                      "I would go in this order. First, is it real: logging, definitions, pipeline. Second, where: platform, app version, geography, new versus existing users. Third, when: line it up with releases and external events. Fourth, why, internal versus external, and then fix and guardrails. I will cut the data before brainstorming causes."
-                ],
-                [
-                      "E: Evaluate",
-                      "The data is clean, so the drop is real. Android is 55% of DAU and fell 14%, iOS and web are flat. 55% times 14% is 7.7 points, so Android explains essentially the whole 8%. It started on Tuesday, the day after release 8.4 reached 100%, it hits existing users only, and push-started sessions fell 35% while organic opens are flat."
-                ],
-                [
-                      "A: Assess",
-                      "So my hypothesis is that release 8.4 broke push delivery on Android. Consistent with that, 14% divided by 35% implies about 40% of Android DAU comes through push. To confirm, I would compare 8.4 against older versions on push delivery rate, token registration, opt-in and push-to-open, and check Android OS versions and concurrent experiments."
-                ],
-                [
-                      "R: Recommend",
-                      "Hotfix or roll back the push component of 8.4, re-register tokens for affected users and watch DAU by version. For prevention, add push delivery and opt-in as guardrail metrics, and use staged rollouts at 1%, 10% and 50% with automatic halts when sessions or notification metrics drop."
-                ]
-          ],
-          "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Social app: DAU fell 8% week over week<br/>As the analyst: what happened and what do we do?\"]\nC --> C2[\"Metric = users with at least one session a day<br/>Logging and DAU definition unchanged, warehouse matches backend\"]\n\nC2 --> L[\"L: Lay out<br/>1 Is it real: logging, definition, pipeline<br/>2 Where: platform, version, geography, tenure, funnel<br/>3 When: line up with releases and external events<br/>4 Why: internal vs external, then fix and guardrails\"]\n\nL --> E1[\"E: Evaluate<br/>Data is clean, so the drop is real<br/>Android -14%, iOS 0%, web 0%\"]\nE1 --> E2[\"Check: 55% x 14% = 7.7 points of the 8%<br/>So Android explains the whole drop\"]\nE2 --> E3[\"Timing: Tuesday, day after release 8.4 hit 100%<br/>Existing users only, push sessions -35%, organic opens flat\"]\n\nE3 --> A1[\"A: Assess<br/>Hypothesis: release 8.4 broke push delivery on Android\"]\nA1 --> A2[\"Confirm: 8.4 vs older versions on push delivery,<br/>token registration, opt-in, push-to-open\"]\n\nA2 --> R[\"R: Recommend<br/>Fix fast, then add guardrails\"]\nR --> R1[\"Hotfix or roll back the push component of 8.4\"]\nR --> R2[\"Re-register tokens, monitor DAU by version\"]\nR --> R3[\"Staged rollouts with auto-halt on session and push metrics\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C2 c1;\nclass L c2;\nclass E1,E2,E3 c3;\nclass A1,A2 c4;\nclass R,R1,R2,R3 c5;",
-          "exampleCharts": [
-                {
-                      "id": "evaluate",
-                      "title": "Evaluate: the cut-the-data path",
-                      "note": "Each cut removes causes; stop when the drop concentrates in one place.",
-                      "code": "flowchart TD\nQ[\"DAU down 8%: where did it go?\"] --> R1{\"1 Is it real?\"}\nR1 --> R1a[\"No logging or definition change<br/>Backend and warehouse agree: real drop\"]\nR1a --> W{\"2 Where?\"}\nW --> W1[\"Android 55% of DAU: -14%\"]\nW --> W2[\"iOS 35%: 0%<br/>Web 10%: 0%\"]\nW1 --> M[\"Arithmetic: 0.55 x 14% = 7.7 points<br/>Android is the whole drop\"]\nW2 --> M\nM --> T{\"3 When and who?\"}\nT --> T1[\"Started Tuesday, day after release 8.4 at 100%\"]\nT --> T2[\"Existing users open fewer days<br/>New signups normal\"]\nT1 --> Y{\"4 Which channel?\"}\nT2 --> Y\nY --> Y1[\"Push-started sessions -35%<br/>Organic opens flat\"]\nY1 --> H[\"Hypothesis: 8.4 broke push on Android<br/>Implied: 14% / 35% = 40% of Android DAU came via push\"]\n\nclassDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef w fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef t fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef r fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass Q,R1,W,T,Y q;\nclass R1a,W1,W2 w;\nclass T1,T2,Y1 t;\nclass M,H r;"
-                },
-                {
-                      "id": "impact",
-                      "title": "Impact math: cost of the bug and what would change the answer",
-                      "note": "Illustrative dollar sizing, then findings that would change the diagnosis.",
-                      "code": "flowchart TD\nB[\"Size the damage (illustrative: 10M DAU, $0.10 per DAU per day)<br/>Lost DAU = 7.7% x 10M = 770K<br/>Revenue = 770K x $0.10 = $77K a day\"] --> D1[\"Hotfix in 3 days<br/>3 x $77K = $0.23M\"]\nB --> D2[\"Fix takes 10 days<br/>10 x $77K = $0.77M\"]\nB --> D3[\"Unfixed for a month<br/>30 x $77K = $2.3M\"]\n\nD1 --> A[\"Speed of the fix is the lever<br/>so roll back first if the hotfix is slow\"]\nD2 --> A\nD3 --> A\n\nB --> X[\"What would change the answer\"]\nX --> X1[\"Old versions also dropped<br/>Not the release: look at outage, seasonality, algorithm change\"]\nX --> X2[\"Only new users dropped<br/>Acquisition problem, not push\"]\nX --> X3[\"All platforms dropped<br/>External or backend cause\"]\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass D1,D2 mid;\nclass D3 bad;\nclass A out;\nclass X,X1,X2,X3 mid;"
-                }
-          ],
-          "exampleTables": [
-                {
-                      "title": "CLEAR applied to the diagnosis steps",
-                      "headers": [
-                            "CLEAR step",
-                            "Diagnosis step it uses",
-                            "In this case"
-                      ],
-                      "rows": [
-                            [
-                                  "Clarify",
-                                  "Define metric, size and timing; data quality",
-                                  "DAU, -8% week over week; logging and definition unchanged"
-                            ],
-                            [
-                                  "Lay out",
-                                  "Real? Where? When? Why?",
-                                  "Platform, version, tenure, funnel; releases and external events"
-                            ],
-                            [
-                                  "Evaluate",
-                                  "Cut the data until the drop concentrates",
-                                  "Android -14%, 55% x 14% = 7.7 points; push sessions -35%"
-                            ],
-                            [
-                                  "Assess",
-                                  "Form a hypothesis and test it",
-                                  "Release 8.4 broke push; compare 8.4 vs older versions"
-                            ],
-                            [
-                                  "Recommend",
-                                  "Fix, rollback, guardrails",
-                                  "Hotfix or roll back, re-register tokens, staged rollouts"
-                            ]
-                      ]
-                },
-                {
-                      "title": "The math in a table",
-                      "headers": [
-                            "Segment",
-                            "Share of DAU",
-                            "DAU change",
-                            "Contribution to total"
-                      ],
-                      "rows": [
-                            [
-                                  "Android",
-                                  "55%",
-                                  "-14%",
-                                  "-7.7 points"
-                            ],
-                            [
-                                  "iOS",
-                                  "35%",
-                                  "0%",
-                                  "0"
-                            ],
-                            [
-                                  "Web",
-                                  "10%",
-                                  "0%",
-                                  "0"
-                            ],
-                            [
-                                  "Total",
-                                  "100%",
-                                  "",
-                                  "-7.7%, about -8%"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Derived checks",
-                      "headers": [
-                            "Item",
-                            "Logic",
-                            "Value"
-                      ],
-                      "rows": [
-                            [
-                                  "Share of the drop explained by Android",
-                                  "7.7 / 7.7",
-                                  "about 100%"
-                            ],
-                            [
-                                  "Implied push share of Android DAU",
-                                  "14% / 35%",
-                                  "about 40%"
-                            ],
-                            [
-                                  "Lost DAU (illustrative, 10M DAU)",
-                                  "7.7% x 10M",
-                                  "770K"
-                            ],
-                            [
-                                  "Revenue per day (illustrative, $0.10 per DAU)",
-                                  "770K x $0.10",
-                                  "$77K a day"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Sensitivity",
-                      "headers": [
-                            "Change",
-                            "Calculation",
-                            "Result"
-                      ],
-                      "rows": [
-                            [
-                                  "Fixed in 3 days",
-                                  "3 x $77K",
-                                  "$0.23M lost"
-                            ],
-                            [
-                                  "Fixed in 10 days",
-                                  "10 x $77K",
-                                  "$0.77M lost"
-                            ],
-                            [
-                                  "Unfixed for a month",
-                                  "30 x $77K",
-                                  "$2.3M lost"
-                            ],
-                            [
-                                  "Old versions also dropped",
-                                  "Not the release",
-                                  "Look at outage, seasonality, algorithm change"
-                            ],
-                            [
-                                  "Only new users dropped",
-                                  "Not push",
-                                  "Acquisition problem"
-                            ],
-                            [
-                                  "All platforms dropped",
-                                  "Not Android-specific",
-                                  "External or backend cause"
-                            ]
-                      ]
-                }
-          ],
-          "table": {
-                "title": "Metric diagnosis checklist",
-                "headers": [
-                      "Question",
-                      "Cuts to run",
-                      "Typical causes",
-                      "Example here"
-                ],
-                "rows": [
-                      [
-                            "Is it real?",
-                            "Logging, definition, pipeline delay, dashboards vs warehouse",
-                            "Instrumentation change, late data",
-                            "Ruled out: backend matches warehouse"
-                      ],
-                      [
-                            "Where?",
-                            "Platform, app version, geography, new vs existing, funnel step",
-                            "Bug, localized outage, channel change",
-                            "Android only"
-                      ],
-                      [
-                            "When?",
-                            "Daily timeline vs launches and events",
-                            "Release, experiment, holiday, day-of-week",
-                            "Day after 8.4 rollout"
-                      ],
-                      [
-                            "Why: internal",
-                            "Release, experiment, notification, ranking change",
-                            "Bug, config, notification change",
-                            "Push delivery in 8.4"
-                      ],
-                      [
-                            "Why: external",
-                            "Seasonality, competitor, outage, OS change",
-                            "Calendar, news, platform policy",
-                            "Not indicated"
-                      ],
-                      [
-                            "So what",
-                            "Fix, rollback or experiment; guardrail metric",
-                            "Staged rollout with auto-halt",
-                            "Push and session guardrails"
-                      ]
-                ]
-          }
-    },
-    followups: [
-      { q: "What if the drop were across all platforms?", a: "Then I would suspect an external or backend cause: outage, seasonality, competitor launch, a ranking or feed-algorithm change, or acquisition changes. I would check day-of-week patterns and year-over-year seasonality." },
-      { q: "How would you size the revenue impact?", a: "DAU lost x ad impressions per DAU x revenue per impression, per day, until fixed; compare with a counterfactual from iOS trend." },
-      { q: "How do you prevent this next time?", a: "Staged rollouts, automatic guardrail alerts, and a release dashboard with notification and session metrics by version." }
-    ],
-    pitfalls: [
-      "Brainstorming ten causes before looking at the data.",
-      "Forgetting to check data quality first.",
-      "Not computing that Android's share explains the whole drop."
-    ]
-  },
-
-  /* ---------------------------------------------------------------- 6 */
-  {
-    id: "pump-maker",
-    title: "Industrial Pump Maker: Profit Down",
-    track: ["consulting"],
-    framework: "profitability",
-    difficulty: "Medium",
-    minutes: 30,
-    prompt: "A Midwest manufacturer of industrial pumps has flat revenue of $400M, but profit fell from $40M to $28M over two years. Find out why and recommend what to do.",
-    clarify: [
-      { q: "What products do they sell?", a: "Two lines: Premium (engineered, custom) and Standard (commodity catalog pumps)." },
-      { q: "What happened to prices?", a: "Prices are flat on both lines." },
-      { q: "What happened to costs?", a: "Steel and component costs are up about 8%. Fixed costs are $60M and unchanged." },
-      { q: "Competition?", a: "Imports are undercutting the Standard line. Premium customers are buying fewer custom units as some move to cheaper catalog pumps." }
-    ],
-    tables: [
-      {
-        title: "Product line economics ($M)",
-        headers: ["", "Two years ago", "Now"],
-        rows: [
-          ["Premium revenue", "200", "160"],
-          ["Premium contribution margin", "30% (60)", "30% (48)"],
-          ["Standard revenue", "200", "240"],
-          ["Standard contribution margin", "20% (40)", "16.7% (40)"],
-          ["Total revenue", "400", "400"],
-          ["Total contribution", "100", "88"],
-          ["Fixed costs", "60", "60"],
-          ["Profit", "40", "28"]
-        ]
-      }
-    ],
-    answer: {
-          "speak": [
-                [
-                      "C: Clarify",
-                      "Let me make sure I understand. A pump maker has flat revenue of $400M, but profit fell from $40M to $28M over two years, and we want to know why and how to recover. Two quick questions: what are the product lines, and what happened to prices and costs?"
-                ],
-                [
-                      "L: Lay out",
-                      "I would look at four things. First, profit is revenue minus costs, so is the problem revenue or cost? Second, within each, where specifically? Third, size each cause in dollars. Fourth, the fixes and risks. Since revenue is flat, I will start with mix and margin by product line."
-                ],
-                [
-                      "E: Evaluate",
-                      "Fixed costs did not change, so the problem is in the lines. Premium fell $40M but held a 30% margin, which costs $12M of contribution. Standard grew $40M, which adds $8M at the old 20% margin, so the mix effect is minus $4M. Standard's margin also slid from 20% to 16.7%, which is another minus $8M. Together that is the $12M decline."
-                ],
-                [
-                      "A: Assess",
-                      "So one third of the decline is mix and two thirds is margin compression on Standard, driven by steel costs and import pricing. Premium is healthy, it is just losing volume. Restoring Standard to 19% is worth about $5.5M, and winning back $20M of Premium is worth about $6M, which gets profit to about $39.5M."
-                ],
-                [
-                      "R: Recommend",
-                      "I would protect Premium first, because each $10M of Premium is $3M of profit versus under $2M for Standard. In parallel, pass steel costs through and re-source on Standard. I would stage it, and watch customer pushback on surcharges and further import pressure, since that could cut the gain roughly in half."
-                ]
-          ],
-          "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Pump maker: revenue flat at $400M, profit down $40M to $28M in two years<br/>Goal: explain why and get back near $40M\"]\nC --> C2[\"Facts: two lines (Premium, Standard), prices flat,<br/>steel costs up 8%, fixed costs flat at $60M\"]\n\nC2 --> L[\"L: Lay out<br/>1 Profit = Revenue - Costs<br/>2 Is the problem revenue or cost?<br/>3 Size each cause<br/>4 Fixes and risks\"]\n\nL --> E1[\"E: Evaluate<br/>Revenue flat, fixed costs flat, so look at mix and margin by line\"]\nE1 --> E2[\"Premium: $200M to $160M, margin steady at 30%<br/>Standard: $200M to $240M, margin 20% to 16.7%\"]\nE2 --> E3[\"Mix effect -$4M + margin squeeze on Standard -$8M = -$12M\"]\n\nE3 --> A1[\"A: Assess<br/>One third mix, two thirds margin compression<br/>Premium is healthy but losing volume\"]\nA1 --> A2[\"Standard back to 19%: 240M x 2.3 pts = +$5.5M\"]\nA1 --> A3[\"Win back $20M Premium x 30% = +$6M\"]\nA2 --> A4[\"Profit $28M + $11.5M = about $39.5M\"]\nA3 --> A4\n\nA4 --> R[\"R: Recommend<br/>Protect Premium first, restore Standard margin second\"]\nR --> R1[\"Steel pass-through and re-sourcing on Standard\"]\nR --> R2[\"Good-better-best packages to stop trade-down\"]\nR --> R3[\"Guardrails: customer pushback, import pricing\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C2 c1;\nclass L c2;\nclass E1,E2,E3 c3;\nclass A1,A2,A3,A4 c4;\nclass R,R1,R2,R3 c5;",
-          "exampleCharts": [
-                {
-                      "id": "evaluate",
-                      "title": "Evaluate: where did the $12M go?",
-                      "note": "Rule out revenue and fixed costs, then split the decline into mix and margin.",
-                      "code": "flowchart TD\nQ[\"Profit fell $12M. Where?\"] --> R1{\"Revenue?\"}\nR1 --> R2[\"Flat at $400M: not a revenue total problem\"]\nQ --> K1{\"Fixed costs?\"}\nK1 --> K2[\"Flat at $60M: not the cause\"]\nQ --> M1{\"Contribution by line\"}\n\nM1 --> P1[\"Premium<br/>$200M to $160M<br/>contribution $60M to $48M<br/>= -$12M\"]\nM1 --> S1[\"Standard<br/>$200M to $240M<br/>contribution $40M to $40M<br/>= $0 despite +$40M sales\"]\n\nP1 --> X1[\"Mix effect<br/>-$12M Premium + $8M Standard at old 20%<br/>= -$4M\"]\nS1 --> X1\nS1 --> X2[\"Margin squeeze on Standard<br/>$240M x (20% - 16.7%)<br/>= -$8M\"]\n\nX1 --> T[\"Total -$4M + -$8M = -$12M<br/>$40M to $28M\"]\nX2 --> T\nT --> Z[\"Fix the Standard margin and win back Premium volume\"]\n\nclassDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef ok fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef line fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef calc fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass Q,R1,K1,M1 q;\nclass R2,K2 ok;\nclass P1,S1 line;\nclass X1,X2,T,Z calc;"
-                },
-                {
-                      "id": "impact",
-                      "title": "Impact math: from fixes to the new profit",
-                      "note": "Each fix, the new profit, the haircut and the sensitivity.",
-                      "code": "flowchart TD\nB[\"Current profit<br/>$28M\"] --> O1[\"Option 1: Standard margin 16.7% to 19%<br/>steel pass-through and sourcing<br/>240M x 2.3 pts = +$5.5M\"]\nB --> O2[\"Option 2: win back Premium volume<br/>$20M x 30% margin = +$6M\"]\n\nO1 --> T[\"Total gain<br/>$5.5M + $6M = $11.5M\"]\nO2 --> T\nT --> N[\"New profit<br/>$28M + $11.5M = about $39.5M\"]\nN --> H[\"Haircut 50% for pushback and import pressure<br/>$5.75M gain = about $33.8M\"]\nH --> D{\"Back to the $40M goal?\"}\nD --> Y[\"Not fully: do both, in stages, and add cost work on Standard\"]\n\nO1 --> S[\"Sensitivity<br/>each $10M of Premium = $3M profit<br/>each $10M of Standard = $1.7M profit\"]\nO2 --> S\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef opt fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef calc fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef dec fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass O1,O2 opt;\nclass T,N,H,S calc;\nclass D dec;\nclass Y out;"
-                }
-          ],
-          "exampleTables": [
-                {
-                      "title": "CLEAR applied to the profitability steps",
-                      "headers": [
-                            "CLEAR step",
-                            "Profitability step it uses",
-                            "In this case"
-                      ],
-                      "rows": [
-                            [
-                                  "Clarify",
-                                  "Restate the company, ask the objective",
-                                  "Flat $400M revenue, profit $40M to $28M. Goal: explain and recover."
-                            ],
-                            [
-                                  "Lay out",
-                                  "Revenue vs costs, then drill",
-                                  "Profit = Revenue - Costs; revenue = volume x price x mix; costs = fixed + variable"
-                            ],
-                            [
-                                  "Evaluate",
-                                  "Find what changed, and where",
-                                  "Fixed costs flat, prices flat, so mix and Standard margin explain the $12M"
-                            ],
-                            [
-                                  "Assess",
-                                  "Size each cause and each fix",
-                                  "Mix -$4M, margin -$8M; fixes +$5.5M and +$6M"
-                            ],
-                            [
-                                  "Recommend",
-                                  "Staged action with risks",
-                                  "Protect Premium, fix Standard margin, test surcharges first"
-                            ]
-                      ]
-                },
-                {
-                      "title": "The impact math",
-                      "headers": [
-                            "Item",
-                            "Logic",
-                            "Value"
-                      ],
-                      "rows": [
-                            [
-                                  "Premium revenue change",
-                                  "$160M - $200M = -$40M",
-                                  "-$40M"
-                            ],
-                            [
-                                  "Premium contribution lost",
-                                  "-$40M x 30%",
-                                  "-$12M"
-                            ],
-                            [
-                                  "Standard revenue gained",
-                                  "$240M - $200M = +$40M",
-                                  "+$40M"
-                            ],
-                            [
-                                  "Standard gain at old margin",
-                                  "+$40M x 20%",
-                                  "+$8M"
-                            ],
-                            [
-                                  "Mix effect",
-                                  "-$12M + $8M",
-                                  "-$4M"
-                            ],
-                            [
-                                  "Standard margin squeeze",
-                                  "$240M x (20% - 16.7%)",
-                                  "-$8M"
-                            ],
-                            [
-                                  "Total decline",
-                                  "-$4M + -$8M",
-                                  "-$12M ($40M to $28M)"
-                            ],
-                            [
-                                  "Fix 1: Standard to 19%",
-                                  "$240M x 2.3 pts",
-                                  "+$5.5M"
-                            ],
-                            [
-                                  "Fix 2: win back Premium",
-                                  "$20M x 30%",
-                                  "+$6M"
-                            ],
-                            [
-                                  "New profit",
-                                  "$28M + $5.5M + $6M",
-                                  "about $39.5M"
-                            ],
-                            [
-                                  "With 50% haircut",
-                                  "$28M + $5.75M",
-                                  "about $33.8M"
-                            ]
-                      ]
-                }
-          ],
-          "table": {
-                "title": "What changes by business type",
-                "headers": [
-                      "Business",
-                      "Main profit levers",
-                      "Main risks"
-                ],
-                "rows": [
-                      [
-                            "Manufacturer",
-                            "Price realization, material cost, mix, capacity utilization",
-                            "Commodity inputs, imports, trade-down"
-                      ],
-                      [
-                            "Retailer",
-                            "Traffic x conversion x basket, gross margin, shrink, rent",
-                            "Markdowns, inventory, labor cost"
-                      ],
-                      [
-                            "Subscription or software",
-                            "New customers, churn, ARPU, cost to serve",
-                            "Discounting, churn, rising acquisition cost"
-                      ],
-                      [
-                            "Bank or lender",
-                            "Net interest spread, fees, credit losses, cost to serve",
-                            "Rate moves, defaults, regulation"
-                      ]
-                ]
-          }
-    },
-    followups: [
-      { q: "What if Standard is structurally unprofitable?", a: "Consider exiting the least profitable SKUs, outsourcing to a low-cost manufacturer under our brand, or focusing capacity on Premium." },
-      { q: "How would you explain the mix effect to the CEO?", a: "We sold the same dollars but swapped $40M of 30%-margin products for $40M of 20%-margin products, that alone costs $4M." }
-    ],
-    pitfalls: [
-      "Cutting fixed costs first when fixed costs did not change.",
-      "Missing the mix effect because revenue is flat."
-    ]
-  },
-
-  /* ---------------------------------------------------------------- 7 */
-  {
-    id: "bank-fintech",
-    title: "Bank Acquires a Payments Fintech",
-    track: ["banking", "consulting"],
-    framework: "ma",
-    difficulty: "Hard",
-    minutes: 35,
-    prompt: "A regional bank is considering acquiring a payments fintech for $300M. The fintech has $40M of revenue growing 35% per year and is slightly loss-making. Should the bank do the deal, and at what maximum price?",
-    clarify: [
-      { q: "Why does the bank want it?", a: "To offer modern payments to its 2M retail customers and reduce its payment-processing costs." },
-      { q: "What are comparable valuations?", a: "Listed payments fintechs trade at 6 to 8 times revenue." },
-      { q: "What synergies are plausible?", a: "Cross-sell to bank customers and insourcing of processing the bank pays third parties for." },
-      { q: "Any constraints?", a: "The bank has capacity for a deal up to about $300M and wants returns above its cost of capital within five years." }
-    ],
-    tables: [
-      {
-        title: "Deal facts",
-        headers: ["Item", "Value"],
-        rows: [["Fintech revenue", "$40M, +35% / year"], ["Fintech EBITDA margin", "-5% (-$2M)"], ["Asking price", "$300M (7.5x revenue)"], ["Bank retail customers", "2M"], ["Expected cross-sell adoption", "3% of customers"], ["Revenue per adopter per year", "$60"], ["Bank's third-party processing spend", "$12M per year"], ["Share of processing that can be insourced", "40%"], ["Annual integration cost (year 1-2)", "$4M"]]
-      }
-    ],
-    answer: {
-          "speak": [
-                [
-                      "C: Clarify",
-                      "A regional bank with 2M retail customers is considering buying a payments fintech for $300M. The fintech has $40M of revenue growing 35% and is slightly loss-making. The bank wants modern payments and lower processing costs, and needs returns above its cost of capital within five years. Two quick questions: what do comparable companies trade at, and what synergies are realistic?"
-                ],
-                [
-                      "L: Lay out",
-                      "I would look at four things. Strategic fit, meaning buy versus build versus partner. The target's standalone value. Synergies, with a haircut and timing. And finally price against value, including risks. I will start with value because the price question depends on it."
-                ],
-                [
-                      "E: Evaluate",
-                      "Comparable payments companies trade at 6 to 8 times revenue, so $40M is worth $240M to $320M, about $280M at the midpoint. Synergies: insourcing 40% of $12M of processing saves $4.8M a year, and cross-selling to 3% of 2M customers at $60 adds $3.6M. Capitalized, that is about $50M. I would haircut it by half and subtract $8M of integration cost, which leaves about $17M."
-                ],
-                [
-                      "A: Assess",
-                      "So the deal is worth about $297M to the bank, and the ask is $300M. The bank would pay away all the synergies and take on integration and talent risk for no margin of safety. It only works if 35% growth holds."
-                ],
-                [
-                      "R: Recommend",
-                      "I would not pay $300M. My maximum price is about $275M: break-even is about $297M, and $275M keeps a margin of safety of about $22M. I would open at $250M, or put part of the price in an earn-out tied to growth, and make diligence on engineer retention, customer concentration and regulation a condition. If the seller will not move, I would partner or take a minority stake instead."
-                ]
-          ],
-          "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Regional bank, 2M retail customers, may buy a payments fintech for $300M<br/>Fintech: $40M revenue, +35% a year, EBITDA -$2M\"]\nC --> C2[\"Why: offer modern payments, cut processing costs<br/>Needs returns above cost of capital within 5 years\"]\n\nC2 --> L[\"L: Lay out<br/>1 Strategic fit: buy, build or partner<br/>2 Standalone value<br/>3 Synergies, with haircut and timing<br/>4 Price vs value, and risks\"]\n\nL --> E1[\"E: Evaluate<br/>Standalone: 6 to 8x revenue = $240M to $320M<br/>Midpoint 7x = $280M\"]\nE1 --> E2[\"Synergies: cost $4.8M + revenue $3.6M = $8.4M a year<br/>Capitalized about $50M\"]\nE2 --> E3[\"Haircut 50% = $25M, less $8M integration = about $17M\"]\n\nE3 --> A1[\"A: Assess<br/>Value to the bank = $280M + $17M = about $297M\"]\nA1 --> A2[\"At $300M the bank pays away all the value<br/>No margin of safety, and growth must hold at 35%\"]\n\nA2 --> R[\"R: Recommend<br/>Do not pay $300M: maximum price about $275M\"]\nR --> R1[\"Open at $250M, cap at $275M, or part earn-out tied to growth\"]\nR --> R2[\"Diligence: engineer retention, customer concentration, regulation\"]\nR --> R3[\"If the seller will not move, partner or take a minority stake\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C2 c1;\nclass L c2;\nclass E1,E2,E3 c3;\nclass A1,A2 c4;\nclass R,R1,R2,R3 c5;",
-          "exampleCharts": [
-                {
-                      "id": "evaluate",
-                      "title": "Evaluate: standalone value plus synergies",
-                      "note": "Two paths that meet at value to the bank, then compared with the price.",
-                      "code": "flowchart TD\nQ[\"What is the fintech worth to us?\"] --> S[\"Standalone value\"]\nQ --> Y[\"Synergies\"]\n\nS --> S1[\"Revenue $40M\"]\nS1 --> S2[\"Comparable multiple 6 to 8x\"]\nS2 --> S3[\"Range $240M to $320M<br/>Midpoint 7x = $280M\"]\n\nY --> Y1[\"Cost: $12M processing x 40% insourced<br/>= $4.8M a year x 8 = about $38M\"]\nY --> Y2[\"Revenue: 2M customers x 3% x $60<br/>= $3.6M a year x 4 = about $14M\"]\nY1 --> Y3[\"Gross synergy value about $50M\"]\nY2 --> Y3\nY3 --> Y4[\"50% haircut = $25M<br/>Less $4M x 2 years integration = $17M\"]\n\nS3 --> T[\"Value to the bank<br/>$280M + $17M = about $297M\"]\nY4 --> T\nT --> D{\"Price vs value\"}\nD --> P[\"At $300M: -$3M, nothing left for the bank<br/>At $275M: +$22M. At $250M: +$47M\"]\n\nclassDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef s fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef y fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef r fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass Q,D q;\nclass S,S1,S2,S3 s;\nclass Y,Y1,Y2,Y3,Y4 y;\nclass T,P r;"
-                },
-                {
-                      "id": "impact",
-                      "title": "Impact math: what happens at the price we pay",
-                      "note": "Price and scenario sensitivity at the target price.",
-                      "code": "flowchart TD\nB[\"Base case at a $275M price<br/>Value $297M, so +$22M for the bank\"] --> S1[\"Growth slows, multiple 6x<br/>$240M + $17M = $257M<br/>-$18M\"]\nB --> S2[\"Synergies fail completely<br/>$280M - $8M integration = $272M<br/>-$3M\"]\nB --> S3[\"Synergies fully realized<br/>$280M + $50M - $8M = $322M<br/>+$47M\"]\nB --> S4[\"Pay the full $300M ask<br/>$297M - $300M<br/>-$3M, and worse in either downside\"]\n\nS1 --> R[\"The deal only works at a price below about $275M<br/>or with the seller sharing the growth risk\"]\nS2 --> R\nS4 --> R\nS3 --> R\nR --> M[\"So negotiate down, add an earn-out,<br/>and make diligence a condition\"]\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass S1,S2,S4 bad;\nclass S3 good;\nclass R,M out;"
-                }
-          ],
-          "exampleTables": [
-                {
-                      "title": "CLEAR applied to the M&A steps",
-                      "headers": [
-                            "CLEAR step",
-                            "M&A step it uses",
-                            "In this case"
-                      ],
-                      "rows": [
-                            [
-                                  "Clarify",
-                                  "Strategic rationale, constraints, comparables",
-                                  "Payments and lower processing cost; return above cost of capital in 5 years; 6 to 8x revenue"
-                            ],
-                            [
-                                  "Lay out",
-                                  "Fit, standalone value, synergies, price and risk",
-                                  "Buy vs build vs partner; value; synergies; price vs value"
-                            ],
-                            [
-                                  "Evaluate",
-                                  "Standalone value and haircut synergies",
-                                  "$280M standalone; synergies about $50M, haircut to about $17M net"
-                            ],
-                            [
-                                  "Assess",
-                                  "Value to us vs price",
-                                  "About $297M vs $300M ask: no margin of safety"
-                            ],
-                            [
-                                  "Recommend",
-                                  "Maximum price, offer, structure, conditions, alternative",
-                                  "Open at $250M, cap at $275M, earn-out, diligence, partner if no deal"
-                            ]
-                      ]
-                },
-                {
-                      "title": "The math in a table",
-                      "headers": [
-                            "Item",
-                            "Logic",
-                            "Value"
-                      ],
-                      "rows": [
-                            [
-                                  "Standalone value",
-                                  "$40M x 7 (range 6 to 8x = $240M to $320M)",
-                                  "$280M"
-                            ],
-                            [
-                                  "Cost synergies",
-                                  "$12M x 40%",
-                                  "$4.8M a year"
-                            ],
-                            [
-                                  "Revenue synergies",
-                                  "2M x 3% x $60",
-                                  "$3.6M a year"
-                            ],
-                            [
-                                  "Run-rate synergies",
-                                  "$4.8M + $3.6M",
-                                  "$8.4M a year"
-                            ],
-                            [
-                                  "Capitalized synergies",
-                                  "$4.8M x 8 + $3.6M x 4",
-                                  "about $50M"
-                            ],
-                            [
-                                  "Risk-adjusted synergies",
-                                  "50% haircut",
-                                  "$25M"
-                            ],
-                            [
-                                  "Integration cost",
-                                  "$4M x 2 years",
-                                  "$8M"
-                            ],
-                            [
-                                  "Net synergy value",
-                                  "$25M - $8M",
-                                  "about $17M"
-                            ],
-                            [
-                                  "Value to the bank",
-                                  "$280M + $17M",
-                                  "about $297M"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Sensitivity: price paid vs value",
-                      "headers": [
-                            "Price paid",
-                            "Value $297M minus price",
-                            "Bank keeps"
-                      ],
-                      "rows": [
-                            [
-                                  "$300M (ask)",
-                                  "$297M - $300M",
-                                  "-$3M"
-                            ],
-                            [
-                                  "$275M",
-                                  "$297M - $275M",
-                                  "+$22M"
-                            ],
-                            [
-                                  "$250M",
-                                  "$297M - $250M",
-                                  "+$47M"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Scenarios at a $275M price",
-                      "headers": [
-                            "Scenario at $275M",
-                            "Calculation",
-                            "Result"
-                      ],
-                      "rows": [
-                            [
-                                  "Base",
-                                  "$297M - $275M",
-                                  "+$22M"
-                            ],
-                            [
-                                  "Multiple 6x",
-                                  "$240M + $17M - $275M",
-                                  "-$18M"
-                            ],
-                            [
-                                  "Synergies fail",
-                                  "$280M - $8M - $275M",
-                                  "-$3M"
-                            ],
-                            [
-                                  "Synergies fully realized",
-                                  "$280M + $50M - $8M - $275M",
-                                  "+$47M"
-                            ]
-                      ]
-                },
-                {
-                      "title": "What is the maximum price?",
-                      "headers": [
-                            "Price point",
-                            "Logic",
-                            "Bank keeps"
-                      ],
-                      "rows": [
-                            [
-                                  "Opening offer",
-                                  "$250M = 6.25x revenue",
-                                  "+$47M"
-                            ],
-                            [
-                                  "Maximum price (walk away above)",
-                                  "$275M = 6.9x revenue, keeps about 7% of value as margin of safety",
-                                  "+$22M"
-                            ],
-                            [
-                                  "Break-even price",
-                                  "$280M standalone + $17M net synergies",
-                                  "$0 at about $297M"
-                            ],
-                            [
-                                  "Seller ask",
-                                  "$300M = 7.5x revenue",
-                                  "-$3M"
-                            ]
-                      ]
-                }
-          ],
-          "table": {
-                "title": "Synergy and deal cheat sheet",
-                "headers": [
-                      "Item",
-                      "Examples",
-                      "How to value",
-                      "Watch out for"
-                ],
-                "rows": [
-                      [
-                            "Cost synergies",
-                            "Procurement, overlap, insourcing",
-                            "Annual saving x multiple",
-                            "Realized late; one-off integration cost"
-                      ],
-                      [
-                            "Revenue synergies",
-                            "Cross-sell, new markets",
-                            "Lower multiple, bigger haircut",
-                            "Often over-counted at full value"
-                      ],
-                      [
-                            "Standalone value",
-                            "Revenue and EBITDA, growth",
-                            "Comparable multiples, precedent deals, DCF",
-                            "Paying a peak multiple for growth that fades"
-                      ],
-                      [
-                            "Walk-away price",
-                            "Standalone + share of synergies",
-                            "Never the full synergy value",
-                            "Paying 100% of synergies to the seller"
-                      ],
-                      [
-                            "Alternatives",
-                            "Build, partner, minority stake, earn-out",
-                            "Compare cost, speed, control",
-                            "Build is slow; partner gives away margin"
-                      ],
-                      [
-                            "Risks",
-                            "Talent, culture, tech, regulation",
-                            "Diligence conditions",
-                            "Key engineers leaving after the deal"
-                      ]
-                ]
-          }
-    },
-    followups: [
-      { q: "What are the main integration risks?", a: "Talent retention, culture clash, technology integration, regulatory approvals and bank compliance requirements on the fintech's product." },
-      { q: "How would you structure an earn-out?", a: "Fixed payment at around standalone value, with extra consideration if revenue growth and margin targets are met in the next 2 to 3 years, so the seller shares the risk." },
-      { q: "Why not build in-house?", a: "Build costs less but is slower and riskier; time to market of 2 to 3 years against a 35% growth market. A partnership is a middle path." }
-    ],
-    pitfalls: [
-      "Counting synergies at 100% and paying them all to the seller.",
-      "Ignoring integration cost and talent risk."
-    ]
-  },
-
-  /* ---------------------------------------------------------------- 8 */
-  {
-    id: "call-center",
-    title: "Contact Center Cost Reduction",
-    track: ["banking", "consulting"],
-    framework: "ops",
-    difficulty: "Medium",
-    minutes: 25,
-    prompt: "A retail bank spends $130M per year on its customer contact center. The COO wants costs down 15% without hurting customer satisfaction. How would you do it?",
-    clarify: [
-      { q: "What is the call volume and mix?", a: "8M calls per year in three types: simple (balance, password reset), transactional (disputes, card replacement) and complex (fraud, complaints, loans)." },
-      { q: "What does each type cost?", a: "Simple $8 per call, transactional $15, complex $30." },
-      { q: "Is there a digital channel?", a: "A mobile app exists but is not integrated with the IVR. About 50% of simple calls could be handled in the app." },
-      { q: "How many calls are repeats?", a: "About 5% of complex calls are repeat contacts for the same issue." }
-    ],
-    tables: [
-      {
-        title: "Call volumes and cost",
-        headers: ["Type", "Share", "Calls / year", "Cost per call", "Total cost"],
-        rows: [["Simple", "35%", "2.8M", "$8", "$22.4M"], ["Transactional", "40%", "3.2M", "$15", "$48.0M"], ["Complex", "25%", "2.0M", "$30", "$60.0M"], ["Total", "100%", "8.0M", "-", "$130.4M"]]
-      }
-    ],
-    answer: {
-          "speak": [
-                [
-                      "C: Clarify",
-                      "A retail bank spends $130M a year on its contact center, 8M calls, and the COO wants costs down 15%, about $19.5M, without hurting customer satisfaction. Two quick questions: how do the calls split by type and cost, and is there a digital channel that could take some of them?"
-                ],
-                [
-                      "L: Lay out",
-                      "Cost is volume times cost per call, so I would break it down by call type and look at two kinds of levers. Volume levers: deflect simple calls to digital and fix the root causes of repeat calls. Cost-per-call levers: handle time, automation and staffing. Then I would check one-time cost and the risk to service quality."
-                ],
-                [
-                      "E: Evaluate",
-                      "There are three pools: simple calls cost $22.4M, transactional $48M and complex $60M. If half the simple calls move to the app, that is 1.4M calls at $8, or $11.2M. Cutting transactional handle time by 10% saves $4.8M. Cutting repeat complex calls by 5% saves 100K calls at $30, or $3M."
-                ],
-                [
-                      "A: Assess",
-                      "That totals $19M, or 14.6%, very close to the target, and a small scheduling lever closes the last half million. One-time cost is about $3M, so payback is around two months. The biggest risk is deflection: at 30% instead of 50% savings fall to about $14.5M, so that lever decides whether we hit the target."
-                ],
-                [
-                      "R: Recommend",
-                      "I would sequence three levers: digital deflection first because it is the largest and fastest, then agent tools to cut transactional handle time, then root-cause fixes for repeat calls. I would track satisfaction and first-contact resolution weekly and pause any lever that hurts them, and I would not cut handle time on complex calls."
-                ]
-          ],
-          "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Retail bank contact center: $130M a year, 8M calls<br/>COO wants costs down 15% without hurting satisfaction\"]\nC --> C2[\"Target = 15% x $130M = about $19.5M<br/>Calls: simple $8, transactional $15, complex $30\"]\n\nC2 --> L[\"L: Lay out<br/>Cost = volume x cost per call, by call type<br/>1 Reduce volume: deflect, fix repeat calls<br/>2 Reduce cost per call: handle time, automation, staffing<br/>3 One-time cost and quality risk\"]\n\nL --> E1[\"E: Evaluate<br/>Pools: simple $22.4M, transactional $48.0M, complex $60.0M\"]\nE1 --> E2[\"Deflect simple calls to the app: 1.4M x $8 = $11.2M<br/>Cut transactional handle time 10%: $4.8M<br/>Cut repeat complex calls: 100K x $30 = $3.0M\"]\n\nE2 --> A1[\"A: Assess<br/>Total $19.0M = 14.6% of cost, close to target\"]\nA1 --> A2[\"One-time cost about $3M: payback in about 2 months<br/>Risk: deflection rate of only 30% cuts savings to about $14.5M\"]\n\nA2 --> R[\"R: Recommend<br/>Three levers in sequence\"]\nR --> R1[\"1 Digital deflection of simple calls: biggest and fastest\"]\nR --> R2[\"2 Agent tools to cut transactional handle time, 3 root-cause fixes\"]\nR --> R3[\"Track satisfaction and first-contact resolution weekly, pause any lever that hurts them\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C2 c1;\nclass L c2;\nclass E1,E2 c3;\nclass A1,A2 c4;\nclass R,R1,R2,R3 c5;",
-          "exampleCharts": [
-                {
-                      "id": "evaluate",
-                      "title": "Evaluate: pools and levers",
-                      "note": "Break cost into volume x unit cost by call type, then match one lever to each pool.",
-                      "code": "flowchart TD\nQ[\"Where does the $130M go,<br/>and what can we cut?\"] --> S[\"Simple calls<br/>2.8M x $8 = $22.4M\"]\nQ --> T[\"Transactional calls<br/>3.2M x $15 = $48.0M\"]\nQ --> X[\"Complex calls<br/>2.0M x $30 = $60.0M\"]\n\nS --> S1[\"Lever: deflect to the app<br/>50% of 2.8M = 1.4M calls x $8<br/>Saves $11.2M\"]\nT --> T1[\"Lever: agent tools, handle time down 10%<br/>$48.0M x 10%<br/>Saves $4.8M\"]\nX --> X1[\"Lever: fix root causes of repeat calls<br/>5% of 2.0M = 100K x $30<br/>Saves $3.0M\"]\n\nS1 --> N[\"Total savings = $19.0M<br/>14.6% of $130M, target is $19.5M\"]\nT1 --> N\nX1 --> N\nN --> G[\"Gap about $0.5M<br/>close with scheduling or a lower-cost site\"]\n\nclassDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef p fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef l fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef r fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass Q q;\nclass S,T,X p;\nclass S1,T1,X1 l;\nclass N,G r;"
-                },
-                {
-                      "id": "impact",
-                      "title": "Impact math: what if the levers underdeliver",
-                      "note": "Each lever weakened one at a time, then all together.",
-                      "code": "flowchart TD\nB[\"Base case<br/>$19.0M saved, 14.6%<br/>One-time cost $3M, payback about 2 months\"] --> S1[\"Deflection only 30%<br/>840K calls x $8 = $6.7M instead of $11.2M<br/>Total $14.5M, 11.2%\"]\nB --> S2[\"Handle time cut only 5%<br/>$2.4M instead of $4.8M<br/>Total $16.6M, 12.8%\"]\nB --> S3[\"Repeat calls cut by half<br/>$1.5M instead of $3.0M<br/>Total $17.5M, 13.5%\"]\nB --> S4[\"All three weaker<br/>$6.7M + $2.4M + $1.5M = $10.6M<br/>8.2%: target missed\"]\n\nS1 --> R[\"Deflection is the lever that decides the answer<br/>it is 59% of the savings\"]\nS2 --> R\nS3 --> R\nS4 --> R\nR --> M[\"So fix the app and IVR hand-off first,<br/>and watch satisfaction before scaling\"]\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass S1,S2,S3 mid;\nclass S4 bad;\nclass R,M out;"
-                }
-          ],
-          "exampleTables": [
-                {
-                      "title": "CLEAR applied to the cost reduction steps",
-                      "headers": [
-                            "CLEAR step",
-                            "Cost reduction step it uses",
-                            "In this case"
-                      ],
-                      "rows": [
-                            [
-                                  "Clarify",
-                                  "Target, constraints, baseline",
-                                  "15% of $130M = $19.5M; keep satisfaction; 8M calls"
-                            ],
-                            [
-                                  "Lay out",
-                                  "Cost = volume x cost per unit; volume and unit-cost levers",
-                                  "By call type: deflect, handle time, repeat calls"
-                            ],
-                            [
-                                  "Evaluate",
-                                  "Find the pools and size each lever",
-                                  "Pools $22.4M, $48.0M, $60.0M; levers $11.2M, $4.8M, $3.0M"
-                            ],
-                            [
-                                  "Assess",
-                                  "Total vs target, one-time cost, quality risk",
-                                  "$19.0M = 14.6%; $3M one-time; deflection is the swing"
-                            ],
-                            [
-                                  "Recommend",
-                                  "Sequence by payback with guardrails",
-                                  "Deflect, then tools, then root causes; weekly quality tracking"
-                            ]
-                      ]
-                },
-                {
-                      "title": "The math in a table",
-                      "headers": [
-                            "Call type",
-                            "Calls",
-                            "Cost per call",
-                            "Total cost",
-                            "Lever",
-                            "Savings"
-                      ],
-                      "rows": [
-                            [
-                                  "Simple",
-                                  "2.8M",
-                                  "$8",
-                                  "$22.4M",
-                                  "Deflect 50% to app: 1.4M x $8",
-                                  "$11.2M"
-                            ],
-                            [
-                                  "Transactional",
-                                  "3.2M",
-                                  "$15",
-                                  "$48.0M",
-                                  "Handle time -10%: $48.0M x 10%",
-                                  "$4.8M"
-                            ],
-                            [
-                                  "Complex",
-                                  "2.0M",
-                                  "$30",
-                                  "$60.0M",
-                                  "Repeat calls -5%: 100K x $30",
-                                  "$3.0M"
-                            ],
-                            [
-                                  "Total",
-                                  "8.0M",
-                                  "-",
-                                  "$130.4M",
-                                  "",
-                                  "$19.0M (14.6%)"
-                            ]
-                      ]
-                },
-                {
-                      "title": "Sensitivity",
-                      "headers": [
-                            "Change",
-                            "Calculation",
-                            "Total savings",
-                            "% of cost"
-                      ],
-                      "rows": [
-                            [
-                                  "Deflection 30%, not 50%",
-                                  "2.8M x 30% x $8 = $6.7M (not $11.2M)",
-                                  "$14.5M",
-                                  "11.2%"
-                            ],
-                            [
-                                  "Handle time cut 5%, not 10%",
-                                  "$48M x 5% = $2.4M",
-                                  "$16.6M",
-                                  "12.8%"
-                            ],
-                            [
-                                  "Repeat calls cut by half",
-                                  "$3.0M / 2 = $1.5M",
-                                  "$17.5M",
-                                  "13.5%"
-                            ],
-                            [
-                                  "All three weaker",
-                                  "$6.7M + $2.4M + $1.5M",
-                                  "$10.6M",
-                                  "8.2%"
-                            ]
-                      ]
-                }
-          ],
-          "table": {
-                "title": "Cost levers cheat sheet",
-                "headers": [
-                      "Lever",
-                      "Examples",
-                      "Sizing logic",
-                      "Watch out for"
-                ],
-                "rows": [
-                      [
-                            "Reduce volume",
-                            "Self-service, deflect to digital, fix repeat contacts",
-                            "Calls avoided x cost per call",
-                            "Customers who fail in the app call back angrier"
-                      ],
-                      [
-                            "Reduce handle time",
-                            "Agent tools, scripts, better routing",
-                            "Cost pool x % time saved",
-                            "Rushed calls hurt resolution"
-                      ],
-                      [
-                            "Automate",
-                            "IVR, chatbots, workflow automation",
-                            "Tasks automated x cost per task",
-                            "Upfront build cost; complex cases still need people"
-                      ],
-                      [
-                            "Staffing and scheduling",
-                            "Match staff to call peaks",
-                            "Idle hours x hourly cost",
-                            "Burnout and service levels at peaks"
-                      ],
-                      [
-                            "Sourcing",
-                            "Offshore, outsource, lower-cost site",
-                            "Rate difference x volume",
-                            "Quality, language, regulation"
-                      ],
-                      [
-                            "One-time cost",
-                            "Technology, training, severance",
-                            "Investment / annual savings = payback",
-                            "Counting savings with no investment"
-                      ]
-                ]
-          }
-    },
-    followups: [
-      { q: "What if customers do not adopt the app?", a: "Add proactive nudges in the IVR, in-call SMS links, and simplify the top journeys. Measure adoption by journey and iterate." },
-      { q: "Would you offshore?", a: "Possible for simple and transactional calls, but weigh regulatory, quality and brand risks. Do it after digital deflection, since that reduces the volume to move." },
-      { q: "How do you protect customer experience?", a: "Guardrail metrics, staged rollout, and keeping humans for complex and sensitive calls." }
-    ],
-    pitfalls: [
-      "Across-the-board headcount cuts.",
-      "Not tying levers to specific cost pools."
-    ]
-  },
-
-  /* ---------------------------------------------------------------- 9 */
-  {
-    id: "digital-feature",
-    title: "Digital Feature: Scale It or Not?",
-    track: ["banking", "tech"],
-    framework: "product",
-    difficulty: "Medium",
-    minutes: 30,
-    prompt: "A card issuer launched a spending-insights feature in its mobile app six months ago. The product team shows that customers who use it spend more and leave less, and asks for $2M to promote it from 25% to 40% of active app customers. As the analyst, what do you tell them?",
-    clarify: [
-      { q: "What does the feature do and who is eligible?", a: "It categorizes spending and sends monthly insights and alerts. All 4M active app card customers can use it." },
-      { q: "How was it launched?", a: "It was offered to 95% of customers. A random 5% were held out and could not see it, so there is a clean test." },
-      { q: "What is the objective?", a: "Decide whether to spend $2M to raise adoption from 25% to 40%, and set the payback bar at 18 months." },
-      { q: "What does one account earn?", a: "Net interchange is about 2% of spend. Average annual card spend is $9,000. A retained account is worth about $400 in lifetime profit. A service call costs about $10." },
-      { q: "What are the running costs?", a: "$1.5M per year to run the feature today. The $2M promotion is one-time." }
-    ],
-    tables: [
-      {
-        title: "What the product team showed (adopters vs. non-adopters)",
-        headers: ["Group", "Customers", "Annual spend", "Annual attrition"],
-        rows: [["Adopters", "1.0M (25%)", "$10,200", "9%"], ["Non-adopters", "3.0M (75%)", "$8,600", "13%"], ["All", "4.0M", "$9,000", "12%"]]
+        "q": "What would the lease cost?",
+        "a": "$2M a year in rent, plus about $10M to build attractions on the new land."
       },
       {
-        title: "Randomized holdout result (offered vs. not offered, per customer)",
-        headers: ["Metric", "Not offered", "Offered", "Difference"],
-        rows: [["Annual spend", "$9,000", "$9,045", "+$45 (+0.5%)"], ["Annual attrition", "12.0%", "11.9%", "-0.1 pt"], ["Service calls per account", "1.20", "1.164", "-3%"], ["Delinquency rate", "no difference", "no difference", "0"], ["Complaint rate", "no difference", "no difference", "0"]]
-      },
-      {
-        title: "Unit values",
-        headers: ["Item", "Value"],
-        rows: [["Active app customers", "4.0M"], ["Net interchange on spend", "2%"], ["Lifetime profit of a retained account", "$400"], ["Cost per service call", "$10"], ["Current adoption", "25%"], ["Run cost per year", "$1.5M"], ["Promotion to reach 40% adoption", "$2M one-time"]]
+        "q": "How are prices set today?",
+        "a": "Essentially one price all year, with heavy promotions. No demand-based pricing."
       }
     ],
-    answer: {
-        "speak": [
-            [
-                "C: Clarify",
-                "So we are deciding whether to spend $2M to raise adoption of this feature from 25% to 40%, and it needs to pay back within 18 months. Can I confirm we have a random group that was never shown the feature?"
-            ],
-            [
-                "L: Lay out",
-                "I will check three things. First, is the evidence real, meaning did the feature cause the extra spending. Second, what one customer is worth. Third, what scaling adds and what could go wrong."
-            ],
-            [
-                "E: Evaluate",
-                "The team compares users with non-users and sees $1,600 more spend. But people who pick a budgeting tool are already careful, so that is not just the feature. The fair test shows $45 more per customer offered. Only a quarter use it, so it is about $180 per user. The first number was roughly nine times too big."
-            ],
-            [
-                "A: Assess",
-                "Using the fair numbers, the feature earns about $6.6M a year, or $5.1M after running costs, so it already pays for itself. Going from 25% to 40% could add about $4M a year, but new users are probably less keen, so I would plan on about $2M. That repays the $2M in about 12 months."
-            ],
-            [
-                "R: Recommend",
-                "Yes, in stages. Try the promotion on half of the non-adopters for eight weeks. Scale up only if each new user delivers at least half of today's benefit, and stop if complaints, late payments or opt-outs rise."
-            ]
+    "tables": [
+      {
+        "title": "What the interviewer shares if you ask (assumptions)",
+        "headers": [
+          "Item",
+          "Value",
+          "Note"
         ],
-        "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Decision: spend $2M to raise app adoption from 25% to 40%<br/>Bar: pays back within 18 months\"]\nC --> C2[\"What we have: 4M app customers<br/>and a fair test, a random 5% were never shown the feature\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Is the evidence real?<br/>Did the feature cause the extra spending?\"]\nL --> L2[\"2 What is one customer worth?<br/>Spend, staying, fewer calls\"]\nL --> L3[\"3 What does scaling add?<br/>And what could go wrong?\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Test the team's numbers\"]\nE1 --> E2[\"The team says: users spend $1,600 more<br/>($10,200 vs $8,600)\"]\nE2 --> E3[\"But careful savers choose budgeting tools anyway,<br/>so that gap may not be the feature\"]\nE3 --> E4[\"Fair test: customers offered it spend only $45 more.<br/>Only 25% use it, so $45 / 25% = $180 per user\"]\nE4 --> E5[\"The team's number was about 9x too big\"]\n\nE5 --> A[\"A: Assess<br/>What do the real numbers mean?\"]\nA --> A1[\"Worth today: $6.6M a year<br/>$5.1M after $1.5M running cost\"]\nA --> A2[\"Scaling adds: 15 more points x $0.27M = $4.0M<br/>Halve it, new users are less keen = $2.0M a year\"]\nA --> A3[\"Payback: $2M / $2M a year = 12 months<br/>Inside the 18-month bar\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Yes, in stages\"]\nR --> R1[\"Test on half of non-adopters for 8 weeks\"]\nR --> R2[\"Scale only if each new user delivers at least half of today's benefit\"]\nR --> R3[\"Watch complaints, late payments and opt-outs\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4,E5 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
-        "exampleCharts": [
-            {
-                "id": "evaluate",
-                "title": "Evaluate: the team's number vs a fair test",
-                "note": "Why the raw gap between users and non-users is misleading, in plain steps.",
-                "code": "flowchart TD\nQ[\"Did the feature cause the extra spending?\"]\nQ --> N[\"Team's way: compare users with non-users\"]\nQ --> H[\"Fair-test way: compare customers offered the feature<br/>with customers who were never shown it\"]\n\nN --> N1[\"Users spend $10,200\"]\nN --> N2[\"Non-users spend $8,600\"]\nN1 --> N3[\"Gap = +$1,600\"]\nN2 --> N3\nN3 --> N4[\"Problem: careful savers choose budgeting tools anyway,<br/>so the gap is not all the feature (self-selection)\"]\n\nH --> H1[\"Offered: $9,045\"]\nH --> H2[\"Never shown: $9,000\"]\nH1 --> H3[\"Gap = +$45 per offered customer\"]\nH2 --> H3\nH3 --> H4[\"Only 25% use it, so the effect on users is<br/>$45 / 25% = +$180 per user\"]\n\nN3 --> X[\"$1,600 / $180 = about 9x<br/>The team's number was about 9 times too big\"]\nH4 --> X\nX --> Z[\"Use the fair-test number\"]\n\nclassDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef naive fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef hold fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef result fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass Q q;\nclass N,N1,N2,N3,N4 naive;\nclass H,H1,H2,H3,H4 hold;\nclass X,Z result;"
-            },
-            {
-                "id": "impact",
-                "title": "Impact math: from three sources to the decision",
-                "note": "Each benefit, the net, the scale-up, the haircut and the payback check.",
-                "code": "flowchart TD\nS1[\"Extra spend: $45 x 4M customers = $180M<br/>The bank keeps 2% = $3.6M\"] --> T[\"Total benefit today<br/>$3.6M + $1.6M + $1.44M = $6.64M a year\"]\nS2[\"Customers staying: 0.1 point x 4M = 4,000 accounts<br/>x $400 each = $1.6M\"] --> T\nS3[\"Fewer service calls: 4M x 1.2 calls x 3% = 144K calls<br/>x $10 = $1.44M\"] --> T\n\nT --> N[\"Minus $1.5M running cost<br/>= $5.1M net a year\"]\nT --> P[\"Value of one adoption point<br/>$6.64M / 25 points = $0.27M\"]\nP --> G[\"Scaling from 25% to 40% = 15 more points<br/>15 x $0.27M = $4.0M a year\"]\nG --> H[\"Halve it, because new users are less keen<br/>= $2.0M a year\"]\nH --> PB[\"Payback: $2M promotion / $2M a year<br/>= 12 months\"]\nPB --> D{\"Under the 18-month bar?\"}\nD --> Y[\"Yes: go, in stages\"]\n\nclassDef src fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef calc fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef dec fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass S1,S2,S3 src;\nclass T,N,P,G,H,PB calc;\nclass D dec;\nclass Y out;"
-            }
+        "rows": [
+          [
+            "Profit measure and target",
+            "EBITDA $48.6M. Target +20 to 30% in 18 months",
+            "= +$9.7M to +$14.6M"
+          ],
+          [
+            "Capital available",
+            "$15M",
+            ""
+          ],
+          [
+            "Revenue",
+            "$150M, which is $50 per visitor",
+            "Gate $25, food and drink $15, retail $6, other $4"
+          ],
+          [
+            "Operating cost",
+            "$101.4M",
+            "Labor $54M, goods sold $18.9M, utilities and upkeep $15M, marketing $9M, insurance $4.5M"
+          ],
+          [
+            "Visitors and capacity",
+            "3M a year over 300 days = 10,000 a day. Capacity 40,000 a day",
+            "25% used on average"
+          ],
+          [
+            "Busy and quiet days",
+            "About 30 summer weekend days at 36,000 (90%). About 200 off-season days at about 4,000 (10%)",
+            ""
+          ],
+          [
+            "Turned away on peak days",
+            "About 4,000 a day",
+            "Assumed"
+          ],
+          [
+            "Margin on extra visitors",
+            "About 50%",
+            "Assumed"
+          ],
+          [
+            "Lease",
+            "$2M a year rent. About $10M to build attractions",
+            "Assumed"
+          ],
+          [
+            "Pricing today",
+            "About one price all year, with heavy promotions",
+            "No pricing by demand"
+          ]
+        ]
+      }
+    ],
+    "answer": {
+      "speak": [
+        [
+          "C: Clarify",
+          "So we have a 2,000-acre park with $150M of revenue, 3M visitors and about $48.6M of EBITDA. The board wants profit up 20 to 30% in 18 months, which is $9.7M to $14.6M, and is asking about leasing 1,000 more acres. I have $15M of capital. Before I start: how does demand vary through the year, how are prices set today, and what would the lease and build cost? If you do not have them, I will assume."
         ],
-        "exampleTables": [
-            {
-                "title": "Step by step: what to do and why",
-                "headers": [
-                    "Step",
-                    "What you do",
-                    "Why it matters",
-                    "In this case"
-                ],
-                "rows": [
-                    [
-                        "C Clarify",
-                        "Repeat the decision, ask what you can measure, agree how success is judged",
-                        "Stops you solving the wrong problem",
-                        "Decision: $2M for 25% to 40%. Bar: payback in 18 months. Data: 4M customers and a fair test (5% never shown the feature)"
-                    ],
-                    [
-                        "L Lay out",
-                        "Tell the interviewer your 3 questions before any numbers",
-                        "Shows you have a plan and lets them steer",
-                        "Is the evidence real? What is a customer worth? What does scaling add, and what are the risks?"
-                    ],
-                    [
-                        "E Evaluate",
-                        "Test the evidence first, then calculate",
-                        "A big number built on weak evidence is worthless",
-                        "The team's +$1,600 shrinks to +$180 once you use the fair test"
-                    ],
-                    [
-                        "A Assess",
-                        "Turn the cleaned-up numbers into value, then payback",
-                        "This is where you answer the real question",
-                        "$5.1M a year today; scaling adds about $2M a year; payback 12 months"
-                    ],
-                    [
-                        "R Recommend",
-                        "Give a clear yes or no first, then the conditions",
-                        "Interviewers want a decision, not a list",
-                        "Yes, in stages, with a test and clear stop signals"
-                    ]
-                ]
-            },
-            {
-                "title": "Plain-English glossary",
-                "headers": [
-                    "Term",
-                    "Plain meaning",
-                    "Example here"
-                ],
-                "rows": [
-                    [
-                        "Adoption",
-                        "Share of customers who actually use the feature",
-                        "25% now, 40% target"
-                    ],
-                    [
-                        "Holdout (fair test)",
-                        "A random group kept from seeing the feature, to compare against everyone else",
-                        "5% of customers never saw it"
-                    ],
-                    [
-                        "Causal",
-                        "The feature itself made the difference, not something else",
-                        "Does insights cause more spending?"
-                    ],
-                    [
-                        "Self-selection (the trap)",
-                        "People who choose something are different from people who do not",
-                        "Careful savers pick budgeting tools, so they already spend sensibly"
-                    ],
-                    [
-                        "Per adopter",
-                        "The effect on someone who actually uses it",
-                        "$45 across all offered customers = $180 per user"
-                    ],
-                    [
-                        "Haircut",
-                        "Cut a forecast to be safe",
-                        "New users are less keen, so halve the benefit"
-                    ],
-                    [
-                        "Payback",
-                        "Months until the benefit repays the cost",
-                        "$2M / $2M a year = 12 months"
-                    ],
-                    [
-                        "Guardrail",
-                        "A warning sign that tells you to stop",
-                        "Complaints, late payments, opt-outs"
-                    ]
-                ]
-            },
-            {
-                "title": "The math, one step at a time",
-                "headers": [
-                    "Step",
-                    "What we are working out",
-                    "Calculation",
-                    "Result"
-                ],
-                "rows": [
-                    [
-                        "1",
-                        "The team's claim",
-                        "$10,200 - $8,600",
-                        "+$1,600 a year"
-                    ],
-                    [
-                        "2",
-                        "The fair-test effect for everyone offered",
-                        "$9,045 - $9,000",
-                        "+$45 a year"
-                    ],
-                    [
-                        "3",
-                        "Per person who actually uses it",
-                        "$45 / 25% (only 1 in 4 uses it)",
-                        "+$180"
-                    ],
-                    [
-                        "4",
-                        "How wrong was the claim?",
-                        "$1,600 / $180",
-                        "about 9 times too high"
-                    ],
-                    [
-                        "5",
-                        "Extra spending, as profit",
-                        "$45 x 4M customers = $180M spend x 2% fee earned",
-                        "$3.6M a year"
-                    ],
-                    [
-                        "6",
-                        "Customers who stay",
-                        "0.1% x 4M = 4,000 accounts x $400 each",
-                        "$1.6M a year"
-                    ],
-                    [
-                        "7",
-                        "Fewer service calls",
-                        "4M x 1.2 calls x 3% fewer = 144K calls x $10",
-                        "$1.44M a year"
-                    ],
-                    [
-                        "8",
-                        "Value today, after running cost",
-                        "$3.6M + $1.6M + $1.44M = $6.6M, minus $1.5M",
-                        "$5.1M a year"
-                    ],
-                    [
-                        "9",
-                        "Value of one adoption point",
-                        "$6.6M / 25 points",
-                        "about $0.27M"
-                    ],
-                    [
-                        "10",
-                        "Value of going 25% to 40%",
-                        "15 points x $0.27M",
-                        "about $4.0M a year"
-                    ],
-                    [
-                        "11",
-                        "Be careful: new users are less keen",
-                        "$4.0M x 50%",
-                        "about $2.0M a year"
-                    ],
-                    [
-                        "12",
-                        "Payback",
-                        "$2M cost / $2M a year",
-                        "12 months (bar: 18 months)"
-                    ]
-                ]
-            },
-            {
-                "title": "Common beginner mistakes",
-                "headers": [
-                    "Mistake",
-                    "What to do instead"
-                ],
-                "rows": [
-                    [
-                        "Trusting \"users do better\"",
-                        "Always ask whether better customers simply chose the feature."
-                    ],
-                    [
-                        "Skipping the structure",
-                        "Say your 3 questions before calculating anything."
-                    ],
-                    [
-                        "Forgetting the haircut",
-                        "Early users are the keenest, so later users rarely match them."
-                    ],
-                    [
-                        "Ending without a decision",
-                        "Finish with a clear yes or no, the conditions, and the stop signals."
-                    ]
-                ]
-            }
+        [
+          "L: Lay out",
+          "I will ask two questions: do we need more land, and can we grow profit without it? On the second, I would look at price, spend per visitor and volume, and then costs."
         ],
-        "table": {
-            "title": "Evidence checklist: correlation vs cause",
-            "headers": [
-                "Evidence",
-                "What it shows",
-                "Problem",
-                "Better"
-            ],
-            "rows": [
-                [
-                    "Adopters vs non-adopters",
-                    "Adopters spend $1,600 more and churn 4 points less",
-                    "Self-selection: engaged people adopt",
-                    "Randomized holdout"
-                ],
-                [
-                    "Before vs after",
-                    "Metrics moved after launch",
-                    "Seasonality, other launches",
-                    "Holdout running at the same time"
-                ],
-                [
-                    "Randomized holdout",
-                    "Offered vs not offered: +$45 spend, -0.1 pt attrition",
-                    "Measures effect per offered customer, diluted by 25% adoption",
-                    "Divide by adoption for per-adopter effect"
-                ],
-                [
-                    "Staged promotion test",
-                    "Effect on the marginal adopters",
-                    "Takes 8 weeks",
-                    "Randomize half of non-adopters before scaling"
-                ]
-            ]
+        [
+          "E: Evaluate",
+          "We use only 25% of capacity on average: 10,000 visitors a day against 40,000. Summer weekends are full, but that is about 30 days. If 4,000 people are turned away on those days at $50 each, that is $6M of revenue, and about $3M of profit. Without land, I see five ideas: pricing $3.0M, food and drink $4.1M, premium tickets $3.0M, off-season events $2.7M and cost savings $3.0M. That is $15.8M."
+        ],
+        [
+          "A: Assess",
+          "I would not count on all of it. At 70% that is about $11M, up 23%, inside the target. The lease earns about $3M but costs $2M a year in rent, so $1M a year. A $10M build then takes 10 years to pay back. It also does nothing for the 200 quiet days."
+        ],
+        [
+          "R: Recommend",
+          "Do not lease now. Two reasons: the ideas reach the target without land, and the lease pays back too slowly. Start with pricing and cost savings because they are fast and cheap, then food and premium, then off-season events. Recheck land after 12 months, and lease only if more than about 5,000 visitors a day are turned away. Risks are customer backlash on prices and labor. If you wanted a more aggressive answer, I would lease only if a high-margin use such as a hotel also fills the quiet days."
+        ]
+      ],
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Park earns $48.6M EBITDA. Board wants +20 to 30%<br/>and asks about leasing 1,000 acres\"]\nC --> L[\"L: Lay out<br/>1 Do we need more land?<br/>2 Can we grow profit without it?\"]\nL --> E[\"E: Evaluate<br/>Check the land, then size the ideas\"]\nE --> E1[\"Land<br/>Average use 25%, full on only 30 days<br/>4,000 turned away x 30 x $50 = $6M<br/>x 50% = $3M\"]\nE --> E2[\"Ideas<br/>Pricing $3.0M, food $4.1M, premium $3.0M<br/>off-season $2.7M, costs $3.0M = $15.8M\"]\nE --> E3[\"Reality check<br/>Expect 70% = $11M, which is +23%<br/>Target is +$9.7M to +$14.6M\"]\nE1 --> A[\"A: Assess<br/>Lease nets $1M a year after $2M rent<br/>$10M build pays back in 10 years\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Do not lease now. Do the ideas first.<br/>Look at land again in 12 months\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
+      "exampleCharts": [
+        {
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Where we are<br/>Revenue $150M - cost $101.4M<br/>= <b>$48.6M profit (EBITDA)</b><br/>Target +20 to 30% = <b>+$9.7M to +$14.6M</b>\"]\nA --> B[\"2 Do we need more land?<br/>3M visitors / 300 days = 10,000 a day<br/>vs 40,000 capacity = <b>25% used</b>\"]\nB --> B1[\"Full on only 30 summer days<br/>4,000 turned away a day\"]\nB1 --> B2[\"4,000 x 30 days x $50 = $6M revenue<br/>x 50% margin = <b>$3M profit</b>\"]\nA --> C[\"3 Ideas without land, profit in $M\"]\nC --> C1[\"Pricing<br/>4% x $75M gate<br/>= <b>$3.0M</b>\"]\nC --> C2[\"Food and drink<br/>+$3 x 3M = $9M<br/>x 45% = <b>$4.1M</b>\"]\nC --> C3[\"Premium tickets<br/>$4M x 75%<br/>= <b>$3.0M</b>\"]\nC --> C4[\"Off-season events<br/>120K x $50 = $6M<br/>x 45% = <b>$2.7M</b>\"]\nC --> C5[\"Cost savings<br/>3% x $101.4M<br/>= <b>$3.0M</b>\"]\nC1 --> D[\"Total $15.8M<br/>x 70% we actually get<br/>= <b>$11M, which is +23%</b>\"]\nC2 --> D\nC3 --> D\nC4 --> D\nC5 --> D\nD --> E[\"4 Compare the lease<br/>$3M profit - $2M rent = <b>$1M a year</b><br/>$10M build / $1M = <b>10-year payback</b>\"]\nB2 --> E\nE --> F1[\"Needed to pay back in 5 years<br/>5,333 turned away a day, not 4,000\"]\nD --> F2[\"Needed for +20%<br/>61% of the ideas, not 70%\"]\nD --> F3[\"If pricing backlash kills that idea<br/>$12.8M x 70% = $9.0M, +18%\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,B1,B2 n1;\nclass C,C1,C2,C3,C4,C5 n2;\nclass D n3;\nclass E n4;\nclass F1,F2,F3 n1;"
         }
+      ],
+      "exampleTables": [
+        {
+          "title": "Step by step: what to do and why",
+          "headers": [
+            "Step",
+            "What you do",
+            "Why it matters",
+            "In this case"
+          ],
+          "rows": [
+            [
+              "C Clarify",
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Profit measure, target, capital, busy and quiet days, capacity, pricing, lease cost"
+            ],
+            [
+              "L Lay out",
+              "Say your two questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Do we need more land? Can we grow profit without it?"
+            ],
+            [
+              "E Evaluate",
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "Land is full on 30 days only. Five ideas add up to $15.8M"
+            ],
+            [
+              "A Assess",
+              "Say what the numbers mean: what you will really get, payback, break-even",
+              "Turns numbers into a business view",
+              "70% of the ideas is about $11M, inside the target. The lease pays back in 10 years"
+            ],
+            [
+              "R Recommend",
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "No lease now. A defensible alternative: lease if turned-away visitors are much higher"
+            ]
+          ]
+        },
+        {
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How much profit do we make, and what is the target?",
+              "$150M revenue - $101.4M cost = $48.6M. 20% to 30% of $48.6M",
+              "+$9.7M to +$14.6M"
+            ],
+            [
+              "2",
+              "Is land really the problem?",
+              "3M visitors / 300 days = 10,000 a day. Capacity is 40,000. 10,000 / 40,000. Only about 30 summer days are full",
+              "25% used on average"
+            ],
+            [
+              "3",
+              "What would more land earn?",
+              "4,000 turned away x 30 days x $50 = $6M revenue. We keep about 50% of it",
+              "$3M profit at best"
+            ],
+            [
+              "4",
+              "What do the five ideas earn?",
+              "Pricing $3.0M + food $4.1M + premium $3.0M + off-season $2.7M + costs $3.0M",
+              "$15.8M"
+            ],
+            [
+              "5",
+              "How much will we really get?",
+              "$15.8M x 70% (not every idea works fully). Compare with $48.6M",
+              "About $11M, +23%"
+            ],
+            [
+              "6",
+              "Does the lease pay for itself?",
+              "$3M profit - $2M rent = $1M a year. Build cost $10M. $10M / $1M",
+              "10 years"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Profit gain",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "We get all 100% of the ideas",
+              "+$15.8M (+32%)",
+              "Above the target. Good, but do not promise it."
+            ],
+            [
+              "We get only 50% of the ideas",
+              "+$7.9M (+16%)",
+              "Below the target. We would need more ideas or a longer timeline."
+            ],
+            [
+              "Pricing backlash kills the pricing idea",
+              "+$9.0M (+18%)",
+              "($15.8M - $3.0M) x 70%. Slightly below target."
+            ],
+            [
+              "Turned-away visitors are 3 times higher (12,000 a day)",
+              "Lease profit: $9M - $2M rent = $7M",
+              "$10M pays back in about 1.4 years. Now worth a look."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What share of the ideas must work to reach +20%?",
+              "15.8M x r = 20% x 48.6M = 9.72M",
+              "r = 9.72 / 15.8 = 61.5%. At +30% (14.58M) it is 92%"
+            ],
+            [
+              "If pricing fails, what share of the other ideas must work for +20%?",
+              "12.8M x r = 9.72M",
+              "r = 9.72 / 12.8 = 76%"
+            ],
+            [
+              "If only food and drink changed, how much more must each visitor spend for +20%?",
+              "x per visitor x 3M visitors x 45% = 9.72M",
+              "x = 9.72M / 1.35M = $7.20 more per visitor"
+            ],
+            [
+              "How many visitors a day must be turned away for the lease to pay back in 5 years?",
+              "Need $10M / 5 = $2M a year. 30 days x $50 x 50% x n - $2M rent = $2M",
+              "750 n = $4M, so n = 5,333 a day"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Customer backlash on prices",
+              "Visitors may dislike paying more on busy days",
+              "Raise prices only on peak days, online, and protect season-pass holders"
+            ],
+            [
+              "Ideas deliver less than planned",
+              "Most plans fall short of the full number",
+              "Plan for 70%, track each idea monthly, and keep spare ideas ready"
+            ],
+            [
+              "Labor shortage",
+              "More food, events and visitors need more staff",
+              "Hire and train early; schedule staff by expected crowds"
+            ],
+            [
+              "Quality drops on full days",
+              "Long queues and crowding hurt reviews and repeat visits",
+              "Watch wait times and satisfaction scores on peak days"
+            ],
+            [
+              "Spending too much capital",
+              "Building too early ties up cash",
+              "Start with cheap ideas first and release capital in stages"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "EBITDA",
+              "Profit from running the park, before depreciation, interest and tax"
+            ],
+            [
+              "Utilization",
+              "How much of the capacity is used. 10,000 visitors a day out of 40,000 = 25%"
+            ],
+            [
+              "Yield pricing",
+              "Charging more when demand is high and less when it is low"
+            ],
+            [
+              "Flow-through",
+              "How much of extra revenue turns into profit. 50% means 50 cents of each dollar"
+            ],
+            [
+              "Realization (haircut)",
+              "The share of a plan that we actually expect to get, such as 70%"
+            ],
+            [
+              "Payback",
+              "Years it takes for the profit to repay the cost"
+            ],
+            [
+              "Peak and off-season",
+              "Peak is the busy summer days. Off-season is the quiet days"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Jumping to the lease",
+              "First check whether land is actually full. Here it is full on only 30 days."
+            ],
+            [
+              "Using one blended price and margin for everything",
+              "Each part earns a different margin. Food is about 45%, tickets close to 100%."
+            ],
+            [
+              "Presenting 100% as the plan",
+              "Always haircut and show a range."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
+            ],
+            [
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
+            ],
+            [
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
+            ]
+          ]
+        }
+      ],
+      "table": {
+        "title": "Capital One style checklist",
+        "headers": [
+          "Do this",
+          "Why",
+          "Example here"
+        ],
+        "rows": [
+          [
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Which profit measure? What is the target? How much capital?"
+          ],
+          [
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Busy and quiet days, capacity, turned-away visitors, lease and build cost"
+          ],
+          [
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume we keep 50% of the revenue from extra visitors'"
+          ],
+          [
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Share needed = $9.72M / $15.8M = 61.5%"
+          ],
+          [
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we do not lease now, because the land is full on only 30 days and the lease pays back in 10 years'"
+          ],
+          [
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Customer backlash, ideas delivering less, labor; recheck land in 12 months"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Lease only if 5,000 or more visitors a day are turned away on peak days"
+          ]
+        ]
+      }
     },
-    followups: [
-      { q: "Why not just compare adopters with non-adopters?", a: "Because adopters chose the feature, so they differ from non-adopters in engagement and financial habits. A randomized holdout makes the two groups identical on average, so the difference is caused by the feature." },
-      { q: "What if the effect is much smaller for new adopters?", a: "Then the gain from scaling falls. The staged test measures this before committing the full $2M, and I would target the segments where early effects were largest." },
-      { q: "What other metrics would you track?", a: "Weekly active use of the feature, spend by category, 90-day and 12-month retention, calls, complaints, delinquency and opt-out rates." },
-      { q: "How long should the test run?", a: "Long enough to cover at least one full billing cycle and the behaviors you care about; 8 weeks for engagement, with retention tracked longer using a leading indicator such as inactivity." }
+    "followups": [
+      {
+        "q": "Why not just raise gate prices across the board?",
+        "a": "Demand is very uneven. Peak days are full and can bear higher prices; off-season days need lower prices to stimulate volume. A flat increase hurts the days you want to fill and under-charges the days that sell out. Test elasticity by day type first."
+      },
+      {
+        "q": "How confident are you in the F&B number?",
+        "a": "Medium. It rests on conversion (queues, locations) and mix. I would pilot at the highest-queue locations, measure spend per visitor and flow-through, and scale only if margin holds above ~40%."
+      },
+      {
+        "q": "What if a competitor matches your pricing?",
+        "a": "Yield management is hard to copy well because it needs data on demand by day. The bigger moat is the season-pass base and loyalty. I would watch visitor share by day type and keep a response plan for promotions."
+      },
+      {
+        "q": "What would change your mind about leasing?",
+        "a": "Evidence that unmet peak demand is much larger than 4,000 per day, or a high-margin non-park use for the land (water park, hotel) with payback under about 5 years and a way to also fill off-season days."
+      },
+      {
+        "q": "What data would you ask for next?",
+        "a": "Turned-away visitors by day for the last two summers, price tests by day type, spend per visitor by area, and queue times on the busiest days."
+      }
     ],
-    pitfalls: [
-      "Taking adopter vs. non-adopter differences as the feature's effect.",
-      "Forgetting that the holdout effect is per offered customer, not per adopter.",
-      "Assuming new adopters will behave like early adopters."
+    "pitfalls": [
+      "Jumping to the lease. First check whether land is actually full. Here it is full on only 30 days.",
+      "Using one blended price and margin for everything. Each part earns a different margin. Food is about 45%, tickets close to 100%.",
+      "Presenting 100% as the plan. Always haircut and show a range.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction."
+    ]
+  },
+  {
+    "id": "ecom-retention",
+    "title": "E-commerce Retention Decline",
+    "track": [
+      "tech",
+      "banking"
+    ],
+    "framework": "retention",
+    "difficulty": "Medium",
+    "minutes": 30,
+    "prompt": "An e-commerce platform's monthly retention fell from 65% to 55% over six months. Marketing spent an extra $500K on acquisition, yet profit is falling. Find the root cause and recommend actions.",
+    "clarify": [
+      {
+        "q": "How is retention defined, and how many users do we have?",
+        "a": "Retention is the share of last month's active users who place at least one order this month. We have 480K active users now and had 500K six months ago. One point is 4,800 users."
+      },
+      {
+        "q": "Do customers acquired a year or more ago retain differently than before?",
+        "a": "No. They retain at about 66%, within 1 point of six months ago."
+      },
+      {
+        "q": "What about newer customers?",
+        "a": "Customers under 6 months old retained 61% before and 44% now. They were 20% of the base and are now 50%."
+      },
+      {
+        "q": "What changed in acquisition?",
+        "a": "We spend an extra $500K a month, moved toward paid social and coupon channels. CAC went from $12 to $15 to $18 by cohort. Month-3 retention of those cohorts went 72%, 68%, 60%."
+      },
+      {
+        "q": "Any product or operations change? Any competition?",
+        "a": "No product change. Support tickets are up 22%, mostly in the first 60 days. Category retention is about 60% and there is no major new entrant."
+      },
+      {
+        "q": "What is a retained user worth?",
+        "a": "About $40 of sales a month and 25% profit, so $10 a month or $120 a year."
+      },
+      {
+        "q": "What is the goal and the budget for a fix?",
+        "a": "Get back toward 60%. An onboarding and second-order program would cost about $1.2M a year."
+      }
+    ],
+    "tables": [
+      {
+        "title": "What the interviewer shares if you ask (assumptions)",
+        "headers": [
+          "Item",
+          "Value",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Goal",
+            "Find the root cause and get retention back toward the category average of 60%",
+            "Retention is now 55%"
+          ],
+          [
+            "Retention and users",
+            "Share of last month's active users who order this month. 480K active now, 500K six months ago",
+            "1 point = 4,800 users"
+          ],
+          [
+            "Old customers (12+ months)",
+            "About 66% before and now",
+            "Within 1 point of six months ago"
+          ],
+          [
+            "New customers (under 6 months)",
+            "61% before, 44% now. Share of the base 20% before, 50% now",
+            "Mix of the base changed a lot"
+          ],
+          [
+            "Acquisition",
+            "Extra $500K a month. CAC $12, $15, $18 by cohort. Month-3 retention 72%, 68%, 60%",
+            "Blended LTV $150 to $130, so LTV to CAC 12.5 to 7.2"
+          ],
+          [
+            "Value of a user",
+            "$40 sales a month, 25% profit = $10 a month",
+            "$120 a year (assumed)"
+          ],
+          [
+            "Fix cost",
+            "$1.2M a year for onboarding and second-order program",
+            "Assumed"
+          ],
+          [
+            "Support",
+            "Tickets up 22%, mostly in the first 60 days",
+            ""
+          ],
+          [
+            "Competition",
+            "Category retention about 60%. No major new entrant",
+            ""
+          ]
+        ]
+      }
+    ],
+    "answer": {
+      "speak": [
+        [
+          "C: Clarify",
+          "So retention fell from 65% to 55% in six months, and we have 480K active users. We spent an extra $500K a month on acquisition and profit is still falling. I will define retention as the share of last month's active users who order this month. Can I ask: do older customers retain differently than before, what changed in acquisition, and what is a retained user worth? If I do not get data, I will assume."
+        ],
+        [
+          "L: Lay out",
+          "I will ask three questions. Who is leaving, old or new customers? Why are the new ones leaving? And what is a fix worth?"
+        ],
+        [
+          "E: Evaluate",
+          "Customers older than 12 months hold at about 66%, so the product is not broken. New customers fell from 61% to 44%, and they are now half of the base, up from 20%. Before: 0.8 x 66 + 0.2 x 61 = 65. Now: 0.5 x 66 + 0.5 x 44 = 55. If new customers had stayed at 61%, we would be at 63.5, so 8.5 of the 10 points are weaker new customers and 1.5 are mix. Each point is 4,800 users. Back to the category 60% is 24K users, at $120 a year each, which is $2.88M a year."
+        ],
+        [
+          "A: Assess",
+          "So we pay 50% more for a customer, $18 versus $12, who stays less. LTV to CAC fell from 12.5 to 7.2. That is still above 3 on average, but the newest channels are worse than the average. A $1.2M fix breaks even at 10K users, which is 2.1 points. If only half of it works, we still net $0.24M."
+        ],
+        [
+          "R: Recommend",
+          "I recommend we fix new-customer quality and early life, not the whole product. Two reasons: 85% of the drop sits in new customers, and the fix pays back with only 2.1 points. First, cap coupon and paid social channels with a low 90-day LTV to CAC and shift money to referral, search and email. Second, build a day-14 to day-60 onboarding and second-order program and fix the top support issues for new users. Risks: I may be wrong on the channel, and cutting acquisition too hard slows growth, so I would run a holdout by channel first. A defensible alternative is to keep acquisition as it is and fix onboarding only, if the test shows no gap between channels."
+        ]
+      ],
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Retention fell from 65% to 55% in six months<br/>480K active users. Extra $500K a month on acquisition\"]\nC --> L[\"L: Lay out<br/>1 Who is leaving, old or new customers?<br/>2 Why are new customers leaving?<br/>3 What is a fix worth?\"]\nL --> E[\"E: Evaluate<br/>Split the customers, then size the prize\"]\nE --> E1[\"Who<br/>Old customers hold at 66%<br/>New customers fell from 61% to 44%\"]\nE --> E2[\"Why<br/>New customers are now half the base, up from 20%<br/>CAC rose $12 to $18\"]\nE --> E3[\"Prize<br/>Back to 60% = 5 points = 24K users<br/>x $120 a year = $2.88M\"]\nE1 --> A[\"A: Assess<br/>85% of the drop is weaker new customers<br/>A $1.2M fix breaks even at 10K users, 2.1 points\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Fix new-customer quality and early life.<br/>Cap weak channels, add onboarding, test first\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
+      "exampleCharts": [
+        {
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Where we are<br/>Retention 65% to 55%. Category is 60%<br/>Gap to category = <b>5 points</b>\"]\nA --> B[\"2 Who is leaving?<br/>Old customers 66% before and now<br/>New customers 61% before, <b>44% now</b>\"]\nB --> B1[\"Before: 80% old x 66% + 20% new x 61%<br/>= 52.8 + 12.2 = <b>65%</b>\"]\nB --> B2[\"Now: 50% old x 66% + 50% new x 44%<br/>= 33 + 22 = <b>55%</b>\"]\nB1 --> B3[\"Split the 10 point drop<br/>Mix: 65 to 63.5 = <b>1.5 points</b><br/>Quality: 63.5 to 55 = <b>8.5 points</b>\"]\nB2 --> B3\nA --> C[\"3 What did the extra spend buy?<br/>$500K / $18 CAC = <b>28K customers a month</b><br/>who stay less\"]\nB3 --> D[\"4 What is the prize?<br/>1 point = 4,800 users<br/>5 points = <b>24K users</b>\"]\nD --> D1[\"24K x $10 profit a month x 12<br/>= <b>$2.88M a year</b>\"]\nD1 --> E[\"5 Does a $1.2M fix pay?<br/>$2.88M - $1.2M = <b>$1.68M net</b>\"]\nE --> F1[\"Break-even<br/>$1.2M / $120 = 10K users<br/>= 2.1 points\"]\nD1 --> F2[\"Needed for 60% overall<br/>0.5 x 66 + 0.5 x r = 60<br/>New retention r = 54%\"]\nD1 --> F3[\"If only half works<br/>12K x $120 = $1.44M<br/>Net still $0.24M\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,B1,B2,B3 n1;\nclass C,D,D1 n2;\nclass E n4;\nclass F1,F2,F3 n3;"
+        }
+      ],
+      "exampleTables": [
+        {
+          "title": "Step by step: what to do and why",
+          "headers": [
+            "Step",
+            "What you do",
+            "Why it matters",
+            "In this case"
+          ],
+          "rows": [
+            [
+              "C Clarify",
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Retention definition, old versus new customers, CAC, value per user, fix budget"
+            ],
+            [
+              "L Lay out",
+              "Say your three questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Who is leaving? Why are new customers leaving? What is a fix worth?"
+            ],
+            [
+              "E Evaluate",
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "Old 66%, new 44%. New customers are half the base. 8.5 of 10 points are quality"
+            ],
+            [
+              "A Assess",
+              "Say what the numbers mean: size of prize, break-even, what if it goes wrong",
+              "Turns numbers into a business view",
+              "24K users is worth $2.88M a year. A $1.2M fix breaks even at 10K users"
+            ],
+            [
+              "R Recommend",
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Fix new-customer quality and onboarding. Alternative: onboarding only, if the channel test shows no gap"
+            ]
+          ]
+        },
+        {
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How big is the drop?",
+              "65% - 55%. Category is 60%",
+              "-10 points. 5 points below the category"
+            ],
+            [
+              "2",
+              "Who is leaving?",
+              "Old customers 66% before and now. New customers 61% before, 44% now. New share of the base 20% before, 50% now",
+              "New customers"
+            ],
+            [
+              "3",
+              "How much is quality, how much is mix?",
+              "Hold new at 61%: 0.5 x 66 + 0.5 x 61 = 63.5. Mix = 65 - 63.5. Quality = 63.5 - 55",
+              "Mix 1.5, quality 8.5 (85%)"
+            ],
+            [
+              "4",
+              "What is getting back to 60% worth?",
+              "5 points x 4,800 users = 24,000 users. Each user earns $10 a month = $120 a year",
+              "$2.88M a year"
+            ],
+            [
+              "5",
+              "What is left after the fix cost?",
+              "$2.88M - $1.2M",
+              "$1.68M a year"
+            ],
+            [
+              "6",
+              "When does the fix break even?",
+              "$1.2M / $120 = 10,000 users. 10,000 / 4,800",
+              "2.1 points"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "New-customer retention only reaches 50%",
+              "Overall 58%. +3 points = 14,400 users = $1.73M a year",
+              "Still above the $1.2M cost, but short of the category average."
+            ],
+            [
+              "Old customers slip 2 points to 64%",
+              "Overall 54%. -1 point = -4,800 users = -$0.58M a year",
+              "Watch the old base too. Small slips add up."
+            ],
+            [
+              "Only half of the 24K users come back",
+              "12K users x $120 = $1.44M. Net $0.24M",
+              "Still pays, but the margin for error is thin."
+            ],
+            [
+              "A user is worth $5 a month, not $10",
+              "24K x $60 = $1.44M. Break-even needs 20K users (4.2 points)",
+              "If we win back low-value users, the fix is much harder to justify."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What retention must new customers reach for 60% overall?",
+              "0.5 x 66 + 0.5 x r = 60",
+              "33 + 0.5 r = 60, so r = 54%"
+            ],
+            [
+              "How many retained users does a $1.2M fix need to break even?",
+              "$120 x n = $1,200,000",
+              "n = 10,000 users, which is 2.1 points"
+            ],
+            [
+              "How low can the value per user fall before 24K users no longer covers $1.2M?",
+              "24,000 x v = $1,200,000",
+              "v = $50 a year, about $4.17 a month"
+            ],
+            [
+              "What share of the base can be new customers (at 44%) with old at 66% and overall 55%?",
+              "66 x (1 - s) + 44 x s = 55",
+              "66 - 22 s = 55, so s = 0.5, or 50%"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Wrong cause",
+              "It may be the channel, not onboarding, or both",
+              "Split retention by channel and run a holdout test before spending"
+            ],
+            [
+              "Cutting acquisition too hard",
+              "Fewer new customers means slower growth",
+              "Cut only channels with weak 90-day LTV to CAC and move money to better ones"
+            ],
+            [
+              "Fix works only partly",
+              "Most programs deliver less than planned",
+              "Plan for half, as in the check above, and track monthly"
+            ],
+            [
+              "Coupons train customers",
+              "People only buy when there is a discount",
+              "Offer a second-order reward, not a bigger first coupon"
+            ],
+            [
+              "Support overload",
+              "Tickets are up 22% in the first 60 days",
+              "Fix the top ticket reasons for new users first"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "Retention",
+              "Share of last month's active users who order again this month"
+            ],
+            [
+              "Cohort",
+              "A group of customers who joined in the same period"
+            ],
+            [
+              "CAC",
+              "Customer acquisition cost: what it costs to win one new customer"
+            ],
+            [
+              "LTV",
+              "Lifetime value: the profit one customer brings over their life with us"
+            ],
+            [
+              "Mix effect",
+              "A change in the total just because the group sizes changed"
+            ],
+            [
+              "Holdout test",
+              "Leave one group out of a change so you can compare"
+            ],
+            [
+              "Onboarding",
+              "The steps that help a new customer get value in the first weeks"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Declaring a root cause before testing old versus new customers",
+              "Split the data first. Here old customers are flat, so the product is not the problem."
+            ],
+            [
+              "Calling LTV to CAC healthy without looking at the trend",
+              "It fell from 12.5 to 7.2. Check by channel, because the newest channels are worse than the average."
+            ],
+            [
+              "Mixing 'retention of the base' with 'cohort retention'",
+              "State your definition at the start and use it the whole way."
+            ],
+            [
+              "Looking only at the overall number",
+              "Overall 55% hides old at 66% and new at 44%. Always split."
+            ],
+            [
+              "Skipping the break-even",
+              "Say what the fix costs and how many users it needs. Here, 10K users or 2.1 points."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
+            ]
+          ]
+        }
+      ],
+      "table": {
+        "title": "Capital One style checklist",
+        "headers": [
+          "Do this",
+          "Why",
+          "Example here"
+        ],
+        "rows": [
+          [
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "How is retention defined? What is a retained user worth? What is the fix budget?"
+          ],
+          [
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Old versus new customers, CAC by cohort, support tickets, category retention"
+          ],
+          [
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume a retained user earns $10 profit a month'"
+          ],
+          [
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "0.5 x 66 + 0.5 x 44 = 55. New retention needed for 60% = 54%"
+          ],
+          [
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we fix new-customer quality, because 85% of the drop is there and the fix breaks even at 2.1 points'"
+          ],
+          [
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Wrong cause, partial fix, growth slows; run a holdout by channel first"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Fix onboarding only and keep acquisition if the channel test shows no gap"
+          ]
+        ]
+      }
+    },
+    "followups": [
+      {
+        "q": "How would you validate the channel hypothesis?",
+        "a": "Join users to acquisition source, compare 90-day retention and revenue by source, and run a geo or audience holdout where a suspect channel is paused."
+      },
+      {
+        "q": "What if old cohorts were also declining?",
+        "a": "Then it would be a product or market problem: look at delivery times, assortment, pricing and competitor activity, and cut old cohorts by tenure to find when the drop began."
+      },
+      {
+        "q": "Should we stop acquiring low-value users?",
+        "a": "Not necessarily. Acquire them only at a CAC that pays back within a threshold (e.g., 6 months) given their expected LTV, and treat them differently in lifecycle marketing."
+      },
+      {
+        "q": "What metric would you put on the executive dashboard?",
+        "a": "Cohort retention curves, LTV : CAC and payback by channel, and share of new users placing a second order within 30 days."
+      },
+      {
+        "q": "What data would you ask for next?",
+        "a": "Retention by acquisition channel for the last three cohorts, share of new users who place a second order in 30 days, tickets per new user, and 90-day LTV to CAC by channel."
+      }
+    ],
+    "pitfalls": [
+      "Declaring a root cause before testing old versus new customers. Split the data first. Here old customers are flat, so the product is not the problem.",
+      "Calling LTV to CAC healthy without looking at the trend. It fell from 12.5 to 7.2. Check by channel, because the newest channels are worse than the average.",
+      "Mixing 'retention of the base' with 'cohort retention'. State your definition at the start and use it the whole way.",
+      "Looking only at the overall number. Overall 55% hides old at 66% and new at 44%. Always split.",
+      "Skipping the break-even. Say what the fix costs and how many users it needs. Here, 10K users or 2.1 points.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case."
+    ]
+  },
+  {
+    "id": "card-profit",
+    "title": "Credit Card Profit Decline",
+    "track": [
+      "banking"
+    ],
+    "framework": "unit",
+    "difficulty": "Medium",
+    "minutes": 25,
+    "prompt": "A credit card issuer has 5M accounts, flat year over year. Portfolio profit fell from $500M to $400M. Credit losses actually improved. What is going on and what would you do?",
+    "clarify": [
+      {
+        "q": "Is the account count or mix stable?",
+        "a": "Accounts are flat at 5M. Spend per account is flat at about $7,500 a year. The mix of revolvers and transactors is stable."
+      },
+      {
+        "q": "What happened to interest rates and funding cost?",
+        "a": "Our funding cost rose over the year, from 2.4% to 3.0% of a $2,500 average balance. Customer APRs are mostly variable but reprice with a lag. Promo balances do not reprice."
+      },
+      {
+        "q": "Any competitive changes?",
+        "a": "Rivals raised rewards rates. We matched on our flagship card."
+      },
+      {
+        "q": "Any change in fees?",
+        "a": "Fee income fell from $40 to $35 per account after a rule change on late fees and changes in customer behavior."
+      },
+      {
+        "q": "What does profit per account look like by line?",
+        "a": "Revenue is $520 both years. Costs went from $420 to $440. Funding $60 to $75, rewards $110 to $120, credit loss $120 to $115, operating $100, marketing $30."
+      },
+      {
+        "q": "What is the goal and the time frame?",
+        "a": "Win back at least $50M, which is $10 per account, within 12 months, without raising credit risk."
+      },
+      {
+        "q": "Do we have an estimate of what each fix is worth?",
+        "a": "Yes. Per account: repricing $5 to $8, targeted rewards $4 to $6, fee and tier review $2 to $3."
+      }
+    ],
+    "tables": [
+      {
+        "title": "What the interviewer shares if you ask (assumptions)",
+        "headers": [
+          "Item",
+          "Value",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Accounts and profit",
+            "5M accounts, flat. Profit $500M to $400M",
+            "$100 to $80 per account. $1 per account = $5M"
+          ],
+          [
+            "Revenue per account",
+            "$520 both years",
+            "Interest $330 to $335, interchange $150, fees $40 to $35"
+          ],
+          [
+            "Costs per account",
+            "$420 to $440",
+            "Funding $60 to $75, rewards $110 to $120, credit loss $120 to $115, operating $100, marketing $30"
+          ],
+          [
+            "Average balance",
+            "$2,500 per account",
+            "Funding 2.4% to 3.0% of balance, interest yield about 13.4%"
+          ],
+          [
+            "Spend",
+            "$7,500 per account a year",
+            "Interchange is 2.0% of spend"
+          ],
+          [
+            "Rates and APRs",
+            "APRs are mostly variable and reprice with a lag",
+            "Promo balances do not reprice"
+          ],
+          [
+            "Competition",
+            "Rivals raised rewards. We matched on the flagship card",
+            ""
+          ],
+          [
+            "Goal",
+            "Win back at least $50M within 12 months",
+            "Without raising credit risk"
+          ],
+          [
+            "Lever sizes (per account)",
+            "Repricing $5 to $8, rewards $4 to $6, fees $2 to $3",
+            "Team estimate"
+          ]
+        ]
+      }
+    ],
+    "answer": {
+      "speak": [
+        [
+          "C: Clarify",
+          "So a card issuer has 5M accounts, flat, and profit fell from $500M to $400M, even though credit losses improved. That is $100 to $80 per account. Can I ask: what happened to funding cost and rates, did spend or the mix of revolvers change, and what is the goal? If I do not get data, I will assume."
+        ],
+        [
+          "L: Lay out",
+          "I will ask three questions. Is it revenue or cost? Which lines moved? And what can we win back? I will build profit per account first, because a line that improved can hide one that got worse."
+        ],
+        [
+          "E: Evaluate",
+          "Profit per account fell $20, and $20 x 5M is $100M. Revenue is flat at $520: interest is up $5 and fees are down $5. Costs are up $20: funding up $15, rewards up $10, credit losses down $5. The bridge adds up: 0 minus 20 is minus 20. On a $2,500 balance, funding cost went from 2.4% to 3.0%, which is the $15."
+        ],
+        [
+          "A: Assess",
+          "So this is a margin squeeze, not a credit problem. Funding cost rose faster than APRs repriced, because promo balances do not reprice, and we matched rivals on rewards. Each $1 per account is $5M. Repricing is worth $5 to $8, targeted rewards $4 to $6 and fees $2 to $3, so $11 to $17, or $55M to $85M. A $50M goal needs about 71% of the midpoint."
+        ],
+        [
+          "R: Recommend",
+          "I recommend we recover margin and leave underwriting alone. Two reasons: costs, not credit, caused the drop, and the levers are worth $55M to $85M, more than we lost. First reprice faster and manage promo balances, then target rewards at low-engagement accounts, then review fees. Risks are attrition, where losing 13.75% of accounts would wipe out the low end, and rising rates, so I would test by segment with a holdout. A defensible alternative is repricing and fees only, worth $35M to $55M, if rewards cuts look risky."
+        ]
+      ],
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>5M accounts, flat. Profit fell from $500M to $400M<br/>That is $100 to $80 per account. Credit losses improved\"]\nC --> L[\"L: Lay out<br/>1 Is it revenue or cost?<br/>2 Which lines moved?<br/>3 What can we win back?\"]\nL --> E[\"E: Evaluate<br/>Build profit per account, then compare each line\"]\nE --> E1[\"Revenue<br/>Flat at $520<br/>Interest +$5, fees -$5\"]\nE --> E2[\"Costs<br/>Up $20 to $440<br/>Funding +$15, rewards +$10, credit loss -$5\"]\nE --> E3[\"Win back<br/>Repricing $5 to $8, rewards $4 to $6, fees $2 to $3<br/>= $11 to $17 = $55M to $85M\"]\nE1 --> A[\"A: Assess<br/>A margin squeeze, not a credit problem<br/>Even the low end, $55M, beats a $50M goal\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Recover margin and leave underwriting alone<br/>Reprice, target rewards, review fees, test first\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
+      "exampleCharts": [
+        {
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Where we are<br/>$100 to $80 per account<br/>x 5M = $500M to $400M = <b>-$100M</b>\"]\nA --> B[\"2 Revenue per account<br/>Interest +5, interchange 0, fees -5<br/>$520 to $520 = <b>flat</b>\"]\nA --> C[\"3 Cost per account<br/>Funding +15, rewards +10, credit loss -5<br/>$420 to $440 = <b>+$20</b>\"]\nC --> C1[\"Why funding rose<br/>On a $2,500 balance: 2.4% to 3.0%<br/>$60 to $75 = <b>+$15</b>\"]\nB --> D[\"4 Check the bridge<br/>Revenue 0 - cost 20 = <b>-$20</b><br/>-$20 x 5M = <b>-$100M</b>\"]\nC --> D\nD --> E[\"5 What can we win back?<br/>Repricing 5 to 8, rewards 4 to 6, fees 2 to 3<br/>= <b>$11 to $17 = $55M to $85M</b>\"]\nE --> F1[\"Goal is $50M = $10 an account<br/>Needs <b>71%</b> of the $14 midpoint\"]\nD --> F2[\"If funding rises 0.5 points more<br/>2,500 x 0.5% = $12.50<br/>= <b>-$62.5M</b>\"]\nE --> F3[\"Break-even attrition<br/>$55M / $80 = 687.5K accounts<br/>= <b>13.75%</b> of 5M\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,C,C1 n1;\nclass D n2;\nclass E n4;\nclass F1,F2,F3 n3;"
+        }
+      ],
+      "exampleTables": [
+        {
+          "title": "Step by step: what to do and why",
+          "headers": [
+            "Step",
+            "What you do",
+            "Why it matters",
+            "In this case"
+          ],
+          "rows": [
+            [
+              "C Clarify",
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Account count, rates, rewards, fees, balance, goal"
+            ],
+            [
+              "L Lay out",
+              "Say your questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Is it revenue or cost? Which lines moved? What can we win back?"
+            ],
+            [
+              "E Evaluate",
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "Profit per account $100 to $80. Costs up $20, revenue flat"
+            ],
+            [
+              "A Assess",
+              "Say what the numbers mean: what is driving it, what the fixes are worth, what could go wrong",
+              "Turns numbers into a business view",
+              "A margin squeeze. $11 to $17 per account is $55M to $85M"
+            ],
+            [
+              "R Recommend",
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Recover margin, do not touch underwriting. Alternative: reprice and fees only"
+            ]
+          ]
+        },
+        {
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How big is the profit drop?",
+              "($100 - $80) per account x 5M accounts",
+              "-$100M"
+            ],
+            [
+              "2",
+              "Did revenue move?",
+              "Interest +5, interchange 0, fees -5. $520 to $520",
+              "Flat"
+            ],
+            [
+              "3",
+              "Did costs move?",
+              "Funding +15, rewards +10, credit loss -5, others 0",
+              "+$20 per account"
+            ],
+            [
+              "4",
+              "Does the bridge add up?",
+              "0 revenue change - 20 cost change = -20. -20 x 5M",
+              "-$100M. It matches"
+            ],
+            [
+              "5",
+              "What can we win back?",
+              "Repricing 5 to 8 + rewards 4 to 6 + fees 2 to 3, then x 5M",
+              "$55M to $85M"
+            ],
+            [
+              "6",
+              "Does that reach a $50M goal?",
+              "$50M / 5M = $10 per account. Midpoint is $14. 10 / 14",
+              "Need 71% of the midpoint"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Funding cost rises another 0.5 points",
+              "-$12.50 per account. Profit $67.50, or $337.5M",
+              "The squeeze can keep growing. Repricing speed matters."
+            ],
+            [
+              "Only 60% of the midpoint works",
+              "$8.40 per account = $42M back. Profit $442M",
+              "Short of the $50M goal. Push the faster levers first."
+            ],
+            [
+              "Credit losses go back to $120",
+              "-$5 per account = -$25M. Profit $375M",
+              "The credit gain may not last. Do not count on it."
+            ],
+            [
+              "Repricing works fully at $8 and nothing else does",
+              "+$40M. Profit $440M",
+              "Repricing alone covers most of the goal."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "How much must APRs rise to win back $8 per account on a $2,500 balance?",
+              "2,500 x x = 8",
+              "x = 0.0032, so about 0.32 points"
+            ],
+            [
+              "If a rewards change applies to 40% of accounts and must save $5 per account overall, how much per affected account?",
+              "0.4 x s = 5",
+              "s = $12.50 per affected account"
+            ],
+            [
+              "What share of the $14 midpoint must work to recover $50M ($10 per account)?",
+              "14 x r = 10",
+              "r = 0.714, so 71%"
+            ],
+            [
+              "How many points can funding cost rise before profit hits zero?",
+              "2,500 x p = $80",
+              "p = 0.032, so 3.2 points. Funding would go from 3.0% to 6.2%"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Customers leave after a rewards change",
+              "Heavy users may move to a rival",
+              "Change rewards only for low-engagement accounts and test with a holdout. 3% attrition costs about $12M"
+            ],
+            [
+              "Rules on fees",
+              "Regulators already hit late fee income",
+              "Plan with lower fees and avoid relying on them"
+            ],
+            [
+              "Rates keep rising",
+              "Funding cost can climb again",
+              "Move APRs faster and watch the lag on promo balances"
+            ],
+            [
+              "Credit losses return",
+              "Losses improved this year but may not stay low",
+              "Watch early delinquency and do not cut loss reserves"
+            ],
+            [
+              "Rivals react",
+              "A rival may raise rewards again",
+              "Compete on the flagship card only and track attrition monthly"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "Funding cost",
+              "What the bank pays to get the money it lends"
+            ],
+            [
+              "Interchange",
+              "A fee the merchant pays when a customer swipes the card"
+            ],
+            [
+              "APR",
+              "The yearly interest rate a customer pays on a balance"
+            ],
+            [
+              "Charge-off",
+              "A balance the bank writes off because it will not be paid"
+            ],
+            [
+              "Revolver and transactor",
+              "A revolver carries a balance and pays interest. A transactor pays in full each month"
+            ],
+            [
+              "Promo balance",
+              "A balance at a special low rate that does not reprice"
+            ],
+            [
+              "Margin squeeze",
+              "Costs rise faster than income, so profit per account falls"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Assuming credit losses must be the cause",
+              "Look at every line. Here credit losses improved by $5."
+            ],
+            [
+              "Looking only at the portfolio total",
+              "Work per account first ($100 to $80), then multiply by 5M."
+            ],
+            [
+              "Not reconciling the bridge back to $100M",
+              "Add up every line: +5 -5 -15 -10 +5 = -20, and -20 x 5M = -$100M."
+            ],
+            [
+              "Presenting the full fix as the plan",
+              "Haircut it and show a range, such as 60% of the midpoint."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
+            ],
+            [
+              "Forgetting what could go wrong",
+              "Name attrition, fee rules and rates, and say how you will test."
+            ]
+          ]
+        }
+      ],
+      "table": {
+        "title": "Capital One style checklist",
+        "headers": [
+          "Do this",
+          "Why",
+          "Example here"
+        ],
+        "rows": [
+          [
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Are accounts and mix stable? What happened to rates? What is the goal?"
+          ],
+          [
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Profit per account by line, average balance, spend per account"
+          ],
+          [
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume the fix levers are worth $11 to $17 per account'"
+          ],
+          [
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "+5 -5 -15 -10 +5 = -20. -20 x 5M = -$100M"
+          ],
+          [
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we recover margin and leave underwriting alone, because costs, not credit, caused the drop'"
+          ],
+          [
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Attrition after rewards changes, fee rules, rising rates; test by segment"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Reprice and fees only: $7 to $11 per account, $35M to $55M"
+          ]
+        ]
+      }
+    },
+    "followups": [
+      {
+        "q": "How would you know if rewards cuts hurt retention?",
+        "a": "Run a controlled rollout by segment with a holdout, and track spend per account, attrition and active rate. Cuts that move low-spend accounts barely affect profit but save cost; cuts for top spenders risk attrition."
+      },
+      {
+        "q": "What if interest income per account fell instead of rose?",
+        "a": "I would look at balance and revolve rate (mix between revolvers and transactors), promo balances, APR mix and delinquency-driven non-accrual."
+      },
+      {
+        "q": "How do credit losses relate to funding cost?",
+        "a": "Independent drivers in the P&L but linked in strategy: higher rates stress customers, so I would watch early delinquency as a leading indicator and avoid cutting loss provisions based on one good year."
+      },
+      {
+        "q": "Which single number would you show the CEO?",
+        "a": "Profit per account bridge: $100 to $80, with funding -$15, rewards -$10, fees -$5, interest +$5, credit +$5."
+      }
+    ],
+    "pitfalls": [
+      "Assuming credit losses must be the cause. Look at every line. Here credit losses improved by $5.",
+      "Looking only at the portfolio total. Work per account first ($100 to $80), then multiply by 5M.",
+      "Not reconciling the bridge back to $100M. Add up every line: +5 -5 -15 -10 +5 = -20, and -20 x 5M = -$100M.",
+      "Presenting the full fix as the plan. Haircut it and show a range, such as 60% of the midpoint.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Forgetting what could go wrong. Name attrition, fee rules and rates, and say how you will test."
+    ]
+  },
+  {
+    "id": "grocery-entry",
+    "title": "Grocery Chain: Launch Delivery?",
+    "track": [
+      "consulting"
+    ],
+    "framework": "entry",
+    "difficulty": "Medium",
+    "minutes": 30,
+    "prompt": "A regional grocery chain with 40 stores in one metro area is considering launching home delivery. It would invest $25M. Should it go?",
+    "clarify": [
+      {
+        "q": "How big is the metro, and how many households order groceries online?",
+        "a": "2M households. About 20% of them, 400K, order groceries online at least monthly."
+      },
+      {
+        "q": "What is the goal and the timeline?",
+        "a": "Payback of the $25M within 4 years, and no damage to the store business."
+      },
+      {
+        "q": "What is the competition?",
+        "a": "Two national players already deliver in the metro."
+      },
+      {
+        "q": "How much of the online market could we win?",
+        "a": "Assume 10% of online households by year 3, which is 40,000 households. They order about 2 times a month."
+      },
+      {
+        "q": "What does one order look like?",
+        "a": "Average basket $90 at a 25% gross margin, which is $22.50. Picking, packing and last mile cost about $11. Marketing and platform cost about $2."
+      },
+      {
+        "q": "How fast would volume build up?",
+        "a": "Assume 40% of full volume in year 1, 80% in year 2 and 100% from year 3."
+      },
+      {
+        "q": "Would delivery take sales from our stores?",
+        "a": "Assume 20% of delivery orders would have been a store trip, losing about $22.50 of store margin each."
+      }
+    ],
+    "tables": [
+      {
+        "title": "What the interviewer shares if you ask (assumptions)",
+        "headers": [
+          "Item",
+          "Value",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Goal and investment",
+            "Invest $25M. Payback within 4 years. No damage to the store business",
+            ""
+          ],
+          [
+            "Market",
+            "2M households. 20% order groceries online = 400K",
+            "Two national players already deliver"
+          ],
+          [
+            "Share we can win",
+            "10% of online households by year 3 = 40,000",
+            "Assumed"
+          ],
+          [
+            "Orders",
+            "2 per household per month = 960,000 a year",
+            ""
+          ],
+          [
+            "Basket and margin",
+            "$90 basket. 25% gross margin = $22.50",
+            ""
+          ],
+          [
+            "Costs per order",
+            "$11 picking, packing and last mile. $2 marketing and platform",
+            "Contribution $9.50 before cannibalization"
+          ],
+          [
+            "Ramp",
+            "40% of full volume in year 1, 80% in year 2, 100% in year 3",
+            "Assumed"
+          ],
+          [
+            "Cannibalization",
+            "20% of delivery orders would have been store trips",
+            "Each loses $22.50 of store margin. Assumed"
+          ],
+          [
+            "Our shoppers",
+            "About 20% of households, or 400K",
+            "Our current customers"
+          ]
+        ]
+      }
+    ],
+    "answer": {
+      "speak": [
+        [
+          "C: Clarify",
+          "So a regional grocer with 40 stores in a metro of 2M households is thinking of putting $25M into home delivery. The goal is payback in four years without hurting the stores. Can I ask: how many households already order groceries online, what do the economics look like per order, and how many delivery orders would replace a store trip? If I do not get data, I will assume."
+        ],
+        [
+          "L: Lay out",
+          "I will ask three questions. How many orders can we win? What do we earn on each? And does $25M pay back, and what could break that?"
+        ],
+        [
+          "E: Evaluate",
+          "Twenty percent of 2M households order online, which is 400K. If we win 10%, that is 40K households. At 2 orders a month, that is 960K orders a year. A $90 basket at 25% margin is $22.50. Take off $11 for delivery and $2 for marketing, and we earn $9.50 an order. So 960K x $9.50 is $9.12M a year."
+        ],
+        [
+          "A: Assess",
+          "At full volume, $25M pays back in 2.7 years, or about 3.5 years with a ramp. That passes the four year goal. But if 20% of delivery orders just replace a store trip, we lose $4.50 on each, so we earn $5.00 an order, $4.8M a year, and payback is 5.2 years. To stay inside four years, cannibalization must stay below 13.3%, or delivery cost must fall to $9.49."
+        ],
+        [
+          "R: Recommend",
+          "I recommend we do not commit the full $25M yet. We pilot first. Two reasons: the plan only works if cannibalization is low, and we do not know yet whether we can win 10% share against two national rivals. I would pilot in 10 to 12 dense stores or through a delivery partner, and scale only if share is near 10%, delivery cost is $11 or less, and cannibalization is below about 13%. Risks are cannibalization, rivals with promotions, and delivery cost. A defensible alternative is to partner first and build our own only in dense zones."
+        ]
+      ],
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Regional grocer, 40 stores, metro of 2M households<br/>Invest $25M in home delivery? Payback in 4 years\"]\nC --> L[\"L: Lay out<br/>1 How many orders can we win?<br/>2 What do we earn per order?<br/>3 Does $25M pay back, and what could break it?\"]\nL --> E[\"E: Evaluate<br/>Size the orders, then the profit per order\"]\nE --> E1[\"Orders<br/>2M x 20% online = 400K households<br/>x 10% share = 40K, x 24 = 960K orders a year\"]\nE --> E2[\"Per order<br/>$90 x 25% = $22.50<br/>- $11 delivery - $2 marketing = $9.50\"]\nE --> E3[\"Payback<br/>960K x $9.50 = $9.12M a year<br/>$25M / $9.12M = 2.7 years, 3.5 with a ramp\"]\nE1 --> A[\"A: Assess<br/>If 20% of orders replace store trips<br/>profit is $5.00 an order and payback is 5.2 years\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Do not commit the full $25M yet. Pilot first<br/>Scale only if the three tests pass\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
+      "exampleCharts": [
+        {
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 How many orders?<br/>2M households x 20% = 400K online<br/>x 10% share = <b>40K households</b>\"]\nA --> B[\"2 Orders a year<br/>40K x 2 a month x 12<br/>= <b>960K orders</b>\"]\nA --> C[\"3 Profit per order<br/>$90 x 25% = $22.50<br/>- $11 - $2 = <b>$9.50</b>\"]\nB --> D[\"4 Profit a year<br/>960K x $9.50 = <b>$9.12M</b>\"]\nC --> D\nD --> D1[\"5 Payback<br/>$25M / $9.12M = <b>2.7 years</b><br/>With a ramp of 40%, 80%, 100%: <b>3.5 years</b>\"]\nC --> C1[\"6 Cannibalization<br/>20% of orders replace a store trip<br/>20% x $22.50 = $4.50 lost\"]\nC1 --> C2[\"Net per order<br/>$9.50 - $4.50 = <b>$5.00</b><br/>960K x $5 = $4.8M. Payback <b>5.2 years</b>\"]\nD1 --> E[\"7 Verdict on a 4 year goal<br/>Passes without cannibalization<br/>Fails with 20%\"]\nC2 --> E\nE --> F1[\"Break-even cannibalization<br/>9.50 - 22.50 x c = 6.51<br/><b>c = 13.3%</b>\"]\nE --> F2[\"Needed cost per order<br/>22.50 - f - 2 - 4.50 = 6.51<br/><b>f = $9.49</b>\"]\nE --> F3[\"Needed orders<br/>9.6M x n = $25M<br/><b>n = 2.6 a month</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,B1 n1;\nclass C,C1,C2 n2;\nclass D,D1 n3;\nclass E n4;\nclass F1,F2,F3 n1;"
+        }
+      ],
+      "exampleTables": [
+        {
+          "title": "Step by step: what to do and why",
+          "headers": [
+            "Step",
+            "What you do",
+            "Why it matters",
+            "In this case"
+          ],
+          "rows": [
+            [
+              "C Clarify",
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Market size, goal, rivals, basket, margin, delivery cost, cannibalization"
+            ],
+            [
+              "L Lay out",
+              "Say your three questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "How many orders? What per order? Does $25M pay back and what could break it?"
+            ],
+            [
+              "E Evaluate",
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "960K orders x $9.50 = $9.12M a year"
+            ],
+            [
+              "A Assess",
+              "Say what the numbers mean: payback, break-even, what if it goes wrong",
+              "Turns numbers into a business view",
+              "2.7 years looks good, but 20% cannibalization makes it 5.2"
+            ],
+            [
+              "R Recommend",
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Pilot first, do not commit the full $25M. Alternative: go in dense zones with a partner"
+            ]
+          ]
+        },
+        {
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How many households will order from us?",
+              "2M x 20% = 400K online. 400K x 10% share",
+              "40,000 households"
+            ],
+            [
+              "2",
+              "How many orders a year?",
+              "40,000 x 2 a month x 12 months",
+              "960,000 orders"
+            ],
+            [
+              "3",
+              "What do we earn on one order?",
+              "$90 x 25% = $22.50. Then - $11 delivery - $2 marketing",
+              "$9.50"
+            ],
+            [
+              "4",
+              "What do we earn in a year at full run-rate?",
+              "960,000 x $9.50",
+              "$9.12M"
+            ],
+            [
+              "5",
+              "How long to pay back $25M?",
+              "$25M / $9.12M. With a ramp of 40%, 80%, 100% of volume, we have $20.06M after year 3, then 0.54 of year 4",
+              "2.7 years, or 3.5 with the ramp"
+            ],
+            [
+              "6",
+              "What if 20% of orders replace a store trip?",
+              "20% x $22.50 = $4.50 lost. $9.50 - $4.50 = $5.00. 960K x $5 = $4.8M. $25M / $4.8M",
+              "5.2 years"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "We win 5% share, not 10%",
+              "20K households, $4.56M a year, payback 5.5 years",
+              "Share is the biggest driver. The pilot must prove it."
+            ],
+            [
+              "Delivery cost falls to $9 an order",
+              "$11.50 an order, $11.04M a year, payback 2.3 years",
+              "Route batching and density matter a lot."
+            ],
+            [
+              "10% of orders replace a store trip",
+              "$7.25 an order, $6.96M a year, payback 3.6 years",
+              "Still inside 4 years. Cannibalization is the swing factor."
+            ],
+            [
+              "20% of orders replace a store trip",
+              "$5.00 an order, $4.8M a year, payback 5.2 years",
+              "Misses the 4 year goal. Do not go all in."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "How many households do we need to pay back $25M in 4 years at $9.50 an order and 24 orders a household a year?",
+              "9.50 x 24 x h x 4 = 25,000,000",
+              "912 h = 25M, so h = 27,412. That is 6.9% of the 400K online households"
+            ],
+            [
+              "What share of orders can replace store trips (c) and still pay back in 4 years at run-rate?",
+              "Need $25M / 4 = $6.25M a year, or $6.51 an order. 9.50 - 22.50 c = 6.51",
+              "22.50 c = 2.99, so c = 13.3%"
+            ],
+            [
+              "With 20% cannibalization, what delivery cost f gives a 4 year payback?",
+              "22.50 - f - 2 - 4.50 = 6.51",
+              "f = 22.50 - 2 - 4.50 - 6.51 = $9.49 an order"
+            ],
+            [
+              "With $5.00 net an order, how many orders a month (n) per household give a 4 year payback?",
+              "40,000 x 12 x n x 5 x 4 = 25,000,000",
+              "9.6M n = 25M, so n = 2.6 orders a month"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Cannibalization",
+              "Delivery takes sales from our own stores",
+              "Measure it in the pilot and add pickup and membership to keep store trips"
+            ],
+            [
+              "Share is lower than 10%",
+              "Two national players already deliver and may use promotions",
+              "Pilot in dense zones and compete on freshness and local brands, not on fees"
+            ],
+            [
+              "Delivery cost stays above $11",
+              "Picking and last mile are hard to run well",
+              "Batch picks, cluster delivery windows, and set minimum baskets"
+            ],
+            [
+              "Service and freshness problems",
+              "One bad delivery can lose a customer",
+              "Track late, missing and substitute rates from day one"
+            ],
+            [
+              "Spending $25M too early",
+              "Money is locked in before we know the answer",
+              "Release money in stages tied to pilot results"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "Household",
+              "One home that buys groceries"
+            ],
+            [
+              "Basket",
+              "The total value of one order"
+            ],
+            [
+              "Gross margin",
+              "The share of sales left after the cost of the goods. 25% of $90 is $22.50"
+            ],
+            [
+              "Contribution",
+              "Profit on one order after the costs that come with that order"
+            ],
+            [
+              "Cannibalization",
+              "New sales that simply take sales from our own existing stores"
+            ],
+            [
+              "Payback",
+              "Years it takes for the profit to repay the investment"
+            ],
+            [
+              "Ramp",
+              "The slow build-up to full volume, such as 40%, 80%, 100%"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Stopping at market size",
+              "Go on to profit per order and payback. Size alone does not answer the question."
+            ],
+            [
+              "Ignoring cannibalization of store sales",
+              "Ask how many delivery orders replace a store trip. Here 20% cuts profit from $9.50 to $5.00."
+            ],
+            [
+              "Not stating what would make you say no",
+              "Name your tests: share near 10%, delivery cost at or below $11, cannibalization at or below about 13%."
+            ],
+            [
+              "Using full volume from day one",
+              "Show a ramp. 2.7 years at full run-rate becomes 3.5 years with a ramp."
+            ],
+            [
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
+            ]
+          ]
+        }
+      ],
+      "table": {
+        "title": "Capital One style checklist",
+        "headers": [
+          "Do this",
+          "Why",
+          "Example here"
+        ],
+        "rows": [
+          [
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "What is the goal? How many households order online? What are the rivals doing?"
+          ],
+          [
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Basket, margin, delivery cost, marketing cost, cannibalization"
+          ],
+          [
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume we win 10% of online households by year 3'"
+          ],
+          [
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "960,000 x $9.50 = $9.12M. $25M / $9.12M = 2.7 years"
+          ],
+          [
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we pilot first, because payback is 2.7 years only if delivery does not take sales from our stores'"
+          ],
+          [
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Cannibalization, lower share, delivery cost; pilot in 10 to 12 dense stores"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Partner with a delivery platform first and build only in dense zones"
+          ]
+        ]
+      }
+    },
+    "followups": [
+      {
+        "q": "How would you reduce fulfillment cost?",
+        "a": "Batch picking in stores with highest density, delivery windows to cluster routes, minimum basket or fee thresholds, and partnership with a gig platform for the last mile."
+      },
+      {
+        "q": "Build vs. partner?",
+        "a": "Partnering is faster and cheaper but gives away margin and customer data. Building has higher control and long-term margin but needs capital and capability. A phased approach: partner first, build in dense zones."
+      },
+      {
+        "q": "How do competitors react?",
+        "a": "Expect promotions and free-delivery offers. Differentiate on freshness, assortment of local brands and price perception, not on delivery fees."
+      },
+      {
+        "q": "What data would you ask for next?",
+        "a": "Delivery orders that replace store trips in a pilot, cost per order by zone, repeat rate after the first order, and the promotions rivals run."
+      }
+    ],
+    "pitfalls": [
+      "Stopping at market size. Go on to profit per order and payback. Size alone does not answer the question.",
+      "Ignoring cannibalization of store sales. Ask how many delivery orders replace a store trip. Here 20% cuts profit from $9.50 to $5.00.",
+      "Not stating what would make you say no. Name your tests: share near 10%, delivery cost at or below $11, cannibalization at or below about 13%.",
+      "Using full volume from day one. Show a ramp. 2.7 years at full run-rate becomes 3.5 years with a ramp.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case."
+    ]
+  },
+  {
+    "id": "dau-drop",
+    "title": "Social App: DAU Down 8%",
+    "track": [
+      "tech"
+    ],
+    "framework": "metric",
+    "difficulty": "Easy",
+    "minutes": 20,
+    "prompt": "Daily active users (DAU) of a social app fell 8% week over week. As the data analyst, how do you figure out what happened and what to do?",
+    "clarify": [
+      {
+        "q": "How is DAU defined, and how big is the drop?",
+        "a": "DAU is users with at least one session in a day. It was 10M last week and is 9.23M this week, down 0.77M, or 7.7%, about 8%."
+      },
+      {
+        "q": "Is the data reliable? Any logging or definition change?",
+        "a": "No changes to logging or the DAU definition. Backend dashboards agree with the data warehouse."
+      },
+      {
+        "q": "Which segments are affected?",
+        "a": "Android only. It is 55% of DAU (5.5M) and is down 14%. iOS (35%) and web (10%) are flat."
+      },
+      {
+        "q": "When did it start?",
+        "a": "On Tuesday, the day after Android release 8.4 reached 100% of users. It was released to everyone at once."
+      },
+      {
+        "q": "What about new versus existing users?",
+        "a": "New-user signups are normal. The drop is in existing users who open the app on fewer days per week."
+      },
+      {
+        "q": "Where do sessions come from?",
+        "a": "Sessions started from push notifications on Android fell about 35%. Organic app opens are flat."
+      },
+      {
+        "q": "What is a user worth, and what is the goal?",
+        "a": "Assume about $0.10 of ad revenue per DAU per day. The goal is to find the cause and recover DAU within a week."
+      }
+    ],
+    "tables": [
+      {
+        "title": "What the interviewer shares if you ask (assumptions)",
+        "headers": [
+          "Item",
+          "Value",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Metric and size",
+            "DAU is users with at least one session in a day. 10M last week, 9.23M this week",
+            "-0.77M = -7.7%, about 8%"
+          ],
+          [
+            "Data quality",
+            "No logging or definition change",
+            "Backend and warehouse agree"
+          ],
+          [
+            "Android",
+            "55% of DAU = 5.5M. Down 14%",
+            "= 0.77M users lost"
+          ],
+          [
+            "iOS and web",
+            "iOS 35% = 3.5M. Web 10% = 1.0M. Both flat",
+            ""
+          ],
+          [
+            "Timing",
+            "Release 8.4 reached 100% of Android users on Monday. The drop started Tuesday",
+            "Shipped to 100% at once, no staged rollout (assumed)"
+          ],
+          [
+            "Who",
+            "Existing users open the app on fewer days. New signups are normal",
+            ""
+          ],
+          [
+            "Channel",
+            "Push-started sessions on Android down 35%. Organic opens flat",
+            ""
+          ],
+          [
+            "Value of a user",
+            "About $0.10 of ad revenue per DAU per day",
+            "Assumed"
+          ],
+          [
+            "Goal",
+            "Find the cause and recover DAU within a week",
+            ""
+          ]
+        ]
+      }
+    ],
+    "answer": {
+      "speak": [
+        [
+          "C: Clarify",
+          "So DAU on a social app fell about 8% week over week, from 10M to 9.23M. I will treat DAU as users with at least one session in a day. Can I ask: has logging or the DAU definition changed, can I see the drop by platform, and when did it start? If I do not get data, I will assume."
+        ],
+        [
+          "L: Lay out",
+          "I will ask three questions. Is the drop real? Where is it, and when did it start? Why did it happen, and what is it costing us? I will cut the data before I guess causes."
+        ],
+        [
+          "E: Evaluate",
+          "The data is clean, so the drop is real. Android is 55% of DAU, 5.5M users, and fell 14%. iOS and web are flat. 0.55 x 14% is 7.7 points, so Android explains the whole 8%. It started the day after release 8.4 reached 100%, and it hits existing users only. Push-started sessions fell 35% while organic opens are flat. So p x 35% = 14%, which means 40% of Android DAU came from push."
+        ],
+        [
+          "A: Assess",
+          "So my view is that release 8.4 broke push on Android. We lose 770K users. At about $0.10 a day each, that is $77K a day, or $539K a week, and we hit $1M in 13 days. To confirm, I would compare 8.4 with older versions on push delivery, token registration and opt-in."
+        ],
+        [
+          "R: Recommend",
+          "I recommend we hotfix or roll back the push part of 8.4 now. Two reasons: Android is the whole drop, and every day costs about $77K. Next steps: re-register push tokens, send a win-back message, and watch DAU by version. For prevention, use staged rollouts at 1%, 10% and 50% with auto-halt on session and push metrics. A 10% rollout would have cost us about $7.7K a day. Risk: push may be only part of the cause, so I would keep checking. A defensible alternative is to pause the rollout and fix forward, if a rollback would break other features."
+        ]
+      ],
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Social app: daily active users fell 8% in a week<br/>10M down to 9.23M. What happened and what do we do?\"]\nC --> L[\"L: Lay out<br/>1 Is the drop real?<br/>2 Where is it, and when did it start?<br/>3 Why, and what is it costing?\"]\nL --> E[\"E: Evaluate<br/>Check the data, cut it by platform, then by channel\"]\nE --> E1[\"Real?<br/>No logging or definition change<br/>Backend and warehouse agree\"]\nE --> E2[\"Where and when<br/>Android is 55% of DAU and fell 14%<br/>0.55 x 14% = 7.7 points. Started the day after release 8.4\"]\nE --> E3[\"Why<br/>Push sessions fell 35%, organic opens are flat<br/>14% / 35% = 40% of Android DAU came from push\"]\nE1 --> A[\"A: Assess<br/>8.4 likely broke push on Android<br/>We lose 770K users and about $77K a day\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Hotfix or roll back the push part of 8.4 now<br/>Then add staged rollouts and push alerts\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
+      "exampleCharts": [
+        {
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Size of the drop<br/>DAU 10M to 9.23M<br/>-0.77M = <b>-7.7%, about 8%</b>\"]\nA --> B[\"2 Where is it?<br/>Android 55% = 5.5M, down 14%<br/>5.5M x 14% = <b>0.77M lost</b>\"]\nB --> B1[\"iOS 3.5M and web 1.0M are flat<br/>So Android is <b>all of the drop</b>\"]\nB --> C[\"3 Why Android?<br/>Push sessions -35%, organic flat<br/>p x 35% = 14%, so p = <b>40%</b>\"]\nC --> C1[\"Check: 40% x 5.5M = 2.2M via push<br/>2.2M x 35% = <b>0.77M</b>\"]\nB1 --> D[\"4 What does it cost?<br/>0.77M x $0.10 a day<br/>= <b>$77K a day</b>\"]\nC1 --> D\nD --> D1[\"Per week<br/>$77K x 7 = <b>$539K</b>\"]\nD1 --> E[\"5 How fast must we fix it?<br/>Loss grows every day we wait\"]\nE --> F1[\"Break-even at $1M lost<br/>$1M / $77K = <b>13 days</b>\"]\nE --> F2[\"If fixed in 3 days<br/>$77K x 3 = <b>$231K lost</b>\"]\nE --> F3[\"If a 10% rollout had caught it<br/>10% x $77K = <b>$7.7K a day</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,B1 n1;\nclass C,C1 n2;\nclass D,D1 n3;\nclass E n4;\nclass F1,F2,F3 n1;"
+        }
+      ],
+      "exampleTables": [
+        {
+          "title": "Step by step: what to do and why",
+          "headers": [
+            "Step",
+            "What you do",
+            "Why it matters",
+            "In this case"
+          ],
+          "rows": [
+            [
+              "C Clarify",
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "How DAU is defined, data quality, platforms, timing, new versus existing users"
+            ],
+            [
+              "L Lay out",
+              "Say your three questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Is it real? Where and when? Why, and what does it cost?"
+            ],
+            [
+              "E Evaluate",
+              "Do the math out loud in short steps, with units. Cut the data before you guess causes",
+              "The interview has several separate math problems, often with algebra",
+              "Android 55% x 14% = 7.7 points. Push is 40% of Android DAU"
+            ],
+            [
+              "A Assess",
+              "Say what the numbers mean: size, cost per day, how long you can wait",
+              "Turns numbers into a business view",
+              "770K users and $77K a day. $1M is lost in 13 days"
+            ],
+            [
+              "R Recommend",
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Hotfix or roll back push in 8.4 now. Alternative: pause the rollout and fix forward"
+            ]
+          ]
+        },
+        {
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How big is the drop?",
+              "10M - 9.23M = 0.77M. 0.77M / 10M",
+              "-7.7%, about 8%"
+            ],
+            [
+              "2",
+              "Where is it?",
+              "Android is 55% x 10M = 5.5M. 5.5M x 14%. iOS and web are 0%",
+              "0.77M, all Android"
+            ],
+            [
+              "3",
+              "Does Android explain the total?",
+              "0.55 x 14% = 7.7 points",
+              "Yes, the whole drop"
+            ],
+            [
+              "4",
+              "How much of Android DAU comes from push?",
+              "Push sessions fell 35% and Android DAU fell 14%. p x 35% = 14%",
+              "p = 40% (2.2M users)"
+            ],
+            [
+              "5",
+              "What does it cost per day?",
+              "0.77M x $0.10 per DAU per day",
+              "$77K a day"
+            ],
+            [
+              "6",
+              "How long until we lose $1M?",
+              "$1M / $77K a day",
+              "13 days"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "We fix it in 1 day, not 5",
+              "$77K lost, not $385K",
+              "Speed saves real money. Hotfix first, polish later."
+            ],
+            [
+              "iOS also fell 14%",
+              "Total fall = 0.9 x 14% = 12.6%",
+              "Then it is not an Android release issue. Look at the backend or something outside the app."
+            ],
+            [
+              "Android were only 30% of DAU",
+              "0.30 x 14% = 4.2 points only",
+              "That would not explain an 8% drop. Keep searching."
+            ],
+            [
+              "Each DAU earns $0.20 a day, not $0.10",
+              "$154K a day lost, $1M in about 6.5 days",
+              "A higher value per user makes the fix more urgent."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What drop d in Android would explain a total 8% drop, if Android is 55% of DAU and nothing else moved?",
+              "0.55 x d = 8",
+              "d = 14.5%. We saw 14%, so it fits"
+            ],
+            [
+              "What share p of Android DAU comes from push, if push sessions fell 35% and Android DAU fell 14%?",
+              "p x 35% = 14%",
+              "p = 0.40, so 40%"
+            ],
+            [
+              "After how many days d have we lost $1M at $77K a day?",
+              "77,000 x d = 1,000,000",
+              "d = 13 days"
+            ],
+            [
+              "What rollout share r would have kept the total DAU loss under 1%?",
+              "0.55 x 14% x r = 1%",
+              "7.7% x r = 1%, so r = 13%. A 10% rollout would have lost 0.77%"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Wrong cause",
+              "Push may be only part of the story",
+              "Compare 8.4 with older versions on push delivery, tokens and opt-in"
+            ],
+            [
+              "The fix is slow",
+              "Each day costs about $77K",
+              "Roll back the push part first if a hotfix is not ready within days"
+            ],
+            [
+              "Users already lost do not return",
+              "Some will have formed a new habit",
+              "Send a win-back message and track DAU by app version"
+            ],
+            [
+              "Same bug returns",
+              "Another release may break something else",
+              "Use staged rollouts at 1%, 10% and 50% with auto-halt on session and push metrics"
+            ],
+            [
+              "Bad reading of the data",
+              "A logging error could fake a drop",
+              "We checked: backend and warehouse agree. Keep that check in the routine"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "DAU",
+              "Daily active users: users with at least one session in a day"
+            ],
+            [
+              "Segment",
+              "A slice of users, such as Android or iOS"
+            ],
+            [
+              "Push notification",
+              "A message the app sends to the phone that brings a user back"
+            ],
+            [
+              "Organic open",
+              "A user opens the app without being prompted by a message"
+            ],
+            [
+              "Staged rollout",
+              "Releasing a new version to a small share of users first"
+            ],
+            [
+              "Guardrail metric",
+              "A number we watch to make sure a change did not break something"
+            ],
+            [
+              "Percentage points",
+              "The plain difference between two percentages. 55% x 14% gives 7.7 points of total DAU"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Brainstorming ten causes before looking at the data",
+              "Cut the data by platform, version and channel first. The data shows where to look."
+            ],
+            [
+              "Forgetting to check data quality first",
+              "Ask about logging and definition changes first. Here both are clean."
+            ],
+            [
+              "Not computing that Android explains the whole drop",
+              "Say 0.55 x 14% = 7.7 points, out loud."
+            ],
+            [
+              "Stopping at the cause",
+              "Size the cost ($77K a day) and say how fast you must act."
+            ],
+            [
+              "Giving a fix with no prevention",
+              "Add staged rollouts and push alerts so it does not happen again."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
+            ]
+          ]
+        }
+      ],
+      "table": {
+        "title": "Capital One style checklist",
+        "headers": [
+          "Do this",
+          "Why",
+          "Example here"
+        ],
+        "rows": [
+          [
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "How is DAU defined? Any logging change? Which platform? When did it start?"
+          ],
+          [
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "DAU by platform, release dates, push sessions, new versus existing users"
+          ],
+          [
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume each DAU earns about $0.10 a day'"
+          ],
+          [
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "0.55 x 14% = 7.7 points. 14% / 35% = 40% from push"
+          ],
+          [
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we hotfix or roll back the push part of 8.4 now, because Android is the whole drop and it costs $77K a day'"
+          ],
+          [
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Wrong cause, slow fix, lost users; compare 8.4 with older versions"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Pause the rollout and fix forward if rollback is risky"
+          ]
+        ]
+      }
+    },
+    "followups": [
+      {
+        "q": "What if the drop were across all platforms?",
+        "a": "Then I would suspect an external or backend cause: outage, seasonality, competitor launch, a ranking or feed-algorithm change, or acquisition changes. I would check day-of-week patterns and year-over-year seasonality."
+      },
+      {
+        "q": "How would you size the revenue impact?",
+        "a": "DAU lost x ad impressions per DAU x revenue per impression, per day, until fixed; compare with a counterfactual from iOS trend."
+      },
+      {
+        "q": "How do you prevent this next time?",
+        "a": "Staged rollouts, automatic guardrail alerts, and a release dashboard with notification and session metrics by version."
+      },
+      {
+        "q": "What data would you ask for next?",
+        "a": "Push delivery rate, token registration and opt-in by app version, DAU by Android OS version, and any experiments running on Android at the same time."
+      }
+    ],
+    "pitfalls": [
+      "Brainstorming ten causes before looking at the data. Cut the data by platform, version and channel first. The data shows where to look.",
+      "Forgetting to check data quality first. Ask about logging and definition changes first. Here both are clean.",
+      "Not computing that Android explains the whole drop. Say 0.55 x 14% = 7.7 points, out loud.",
+      "Stopping at the cause. Size the cost ($77K a day) and say how fast you must act.",
+      "Giving a fix with no prevention. Add staged rollouts and push alerts so it does not happen again.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case."
+    ]
+  },
+  {
+    "id": "pump-maker",
+    "title": "Industrial Pump Maker: Profit Down",
+    "track": [
+      "consulting"
+    ],
+    "framework": "profitability",
+    "difficulty": "Medium",
+    "minutes": 30,
+    "prompt": "A Midwest manufacturer of industrial pumps has flat revenue of $400M, but profit fell from $40M to $28M over two years. Find out why and recommend what to do.",
+    "clarify": [
+      {
+        "q": "What is the goal and the timeline?",
+        "a": "Get profit back toward $40M within 18 months. Anything near $36M or more would be a good result."
+      },
+      {
+        "q": "What products do they sell, and how big is each?",
+        "a": "Two lines. Premium is custom engineered pumps, $200M two years ago and $160M now. Standard is catalog pumps, $200M before and $240M now."
+      },
+      {
+        "q": "What happened to prices?",
+        "a": "Flat on both lines. Imports make it hard to raise Standard prices."
+      },
+      {
+        "q": "What are the margins on each line?",
+        "a": "Premium makes 30% after variable costs. Standard made 20% before and makes 16.7% now, which is $40M on $240M. Profit is contribution of $88M minus $60M of fixed cost."
+      },
+      {
+        "q": "What happened to costs?",
+        "a": "Steel and parts are about half of Standard's cost and are up 8%, which is about $8M a year. Fixed costs are $60M and unchanged."
+      },
+      {
+        "q": "What is happening with customers and competitors?",
+        "a": "Imports undercut the Standard line. Some Premium customers now buy cheaper catalog pumps. We think we can win back about $20M of Premium sales."
+      },
+      {
+        "q": "What can we spend, and how much can we cut?",
+        "a": "About $6M one time. Fixed costs could fall about 5%, which is $3M. Plan on getting 70% of any plan."
+      }
+    ],
+    "tables": [
+      {
+        "title": "What the interviewer shares if you ask (assumptions)",
+        "headers": [
+          "Item",
+          "Value",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Goal and timeline",
+            "Get profit back toward $40M within 18 months",
+            "At least $36M is a good result"
+          ],
+          [
+            "Revenue",
+            "$400M two years ago and now",
+            "Premium $200M to $160M. Standard $200M to $240M"
+          ],
+          [
+            "Margin by line",
+            "Premium 30%. Standard 20% before, 16.7% now",
+            "Contribution = revenue minus variable cost"
+          ],
+          [
+            "Profit",
+            "$40M two years ago, $28M now",
+            "Fixed costs $60M, unchanged"
+          ],
+          [
+            "Prices",
+            "Flat on both lines",
+            "Imports stop us raising Standard prices"
+          ],
+          [
+            "Steel and parts",
+            "About half of Standard cost, up 8%",
+            "Costs about $8M a year"
+          ],
+          [
+            "Premium customers",
+            "Some move to cheaper catalog pumps",
+            "Could win back about $20M"
+          ],
+          [
+            "One-time cost of fixes",
+            "About $6M",
+            "Assumed. Sourcing work and sales team"
+          ],
+          [
+            "Fixed cost savings",
+            "About 5% of $60M is possible",
+            "Assumed. About $3M"
+          ],
+          [
+            "Share of plan we expect",
+            "70%",
+            "Assumed haircut"
+          ]
+        ]
+      }
+    ],
+    "answer": {
+      "speak": [
+        [
+          "C: Clarify",
+          "So a pump maker has flat sales of $400M, but profit fell from $40M to $28M in two years. We want to know why and how to win it back. I would like to get back toward $40M in 18 months. Can I ask about the two product lines, prices, margins and what we can spend? If I do not get answers, I will assume."
+        ],
+        [
+          "L: Lay out",
+          "I will ask two questions. First, where did the $12M go? Second, what can win it back? Since sales are flat and fixed costs did not change, I will split the drop by product line."
+        ],
+        [
+          "E: Evaluate",
+          "Premium sales fell $40M at a 30% margin, so that is minus $12M. Standard sales grew $40M at 20%, so that is plus $8M. Together the mix costs $4M. Then Standard's margin slid from 20% to 16.7%, which on $240M is minus $8M. That adds up to $12M. For fixes, I see Standard margin back to 19% for $5.6M, winning back $20M of Premium for $6.0M, and 5% off fixed cost for $3M. That is $14.6M."
+        ],
+        [
+          "A: Assess",
+          "So two thirds of the drop is Standard margin, mostly steel and import pressure. I would not count on all of the plan. At 70% we get $10.2M and profit is about $38.2M. The one-time cost is $6M, so it pays back in about 7 months. To reach $40M we would need 82% of the plan."
+        ],
+        [
+          "R: Recommend",
+          "I recommend we fix Standard first and win back Premium in parallel. Two reasons: each $10M of Premium earns $3M against under $2M for Standard, and the Standard fix is fast and the largest. The risks are customer pushback on surcharges and steel rising again, so I would stage it and track each fix monthly. As an alternative, if imports keep squeezing Standard, I would shrink it and put capacity into Premium."
+        ]
+      ],
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Pump maker: sales flat at $400M<br/>Profit fell from $40M to $28M<br/>Why, and how do we fix it?\"]\nC --> L[\"L: Lay out<br/>1 Where did the $12M go?<br/>2 What can win it back?\"]\nL --> E[\"E: Evaluate<br/>Split the drop by product line\"]\nE --> E1[\"Where it went<br/>Premium volume and mix: -$4M<br/>Standard margin 20% to 16.7%: -$8M<br/>Total -$12M\"]\nE --> E2[\"Fixes<br/>Standard margin to 19%: +$5.6M<br/>Win back $20M Premium: +$6.0M<br/>Fixed cost 5%: +$3.0M = $14.6M\"]\nE --> E3[\"Reality check<br/>Expect 70% = $10.2M<br/>Profit about $38.2M<br/>Costs $6M one time\"]\nE1 --> A[\"A: Assess<br/>Two thirds is Standard margin<br/>Fixes pay back in 7 months<br/>$40M needs 82% of the plan\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Fix Standard price and steel cost, win back Premium.<br/>Go in stages and track each fix every month\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
+      "exampleCharts": [
+        {
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Where we are<br/>Profit fell $40M to $28M<br/>= <b>$12M lost</b>\"]\nA --> B[\"2 Premium<br/>Sales $200M to $160M<br/>-$40M x 30% = <b>-$12M</b>\"]\nA --> C[\"3 Standard sales grew<br/>$200M to $240M<br/>+$40M x 20% = <b>+$8M</b>\"]\nB --> M[\"4 Mix effect<br/>-$12M + $8M = <b>-$4M</b>\"]\nC --> M\nA --> D[\"5 Standard margin<br/>$40M / $240M = 16.7%, was 20%<br/>$240M x -3.3% = <b>-$8M</b>\"]\nM --> T[\"6 Check: -$4M + -$8M<br/>= <b>-$12M</b>\"]\nD --> T\nT --> F1[\"7 Fix Standard<br/>$240M x 19% = $45.6M<br/>$45.6M - $40M = <b>+$5.6M</b>\"]\nT --> F2[\"8 Win back Premium<br/>$20M x 30% = <b>+$6.0M</b>\"]\nT --> F3[\"9 Fixed costs<br/>$60M x 5% = <b>+$3.0M</b>\"]\nF1 --> G[\"10 Total plan $14.6M<br/>x 70% we get = <b>$10.2M</b><br/>$28M + $10.2M = <b>$38.2M</b>\"]\nF2 --> G\nF3 --> G\nG --> H1[\"Break-even for $40M<br/>$12M / $14.6M = 82% of plan\"]\nG --> H2[\"Payback of $6M cost<br/>$6M / $10.2M = 7 months\"]\nG --> H3[\"If steel rises 8% again<br/>-$7.7M, profit falls to $30.5M\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,C,M n1;\nclass D,T n2;\nclass F1,F2,F3 n3;\nclass G n4;\nclass H1,H2,H3 n1;"
+        }
+      ],
+      "exampleTables": [
+        {
+          "title": "Step by step: what to do and why",
+          "headers": [
+            "Step",
+            "What you do",
+            "Why it matters",
+            "In this case"
+          ],
+          "rows": [
+            [
+              "C Clarify",
+              "Say the problem back in your own words. Ask for the goal, the timeline and the data. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Profit measure, target, margin by line, steel cost, one-time budget"
+            ],
+            [
+              "L Lay out",
+              "Say your two questions before you calculate",
+              "Shows structure and lets the interviewer steer",
+              "Where did the $12M go? What can win it back?"
+            ],
+            [
+              "E Evaluate",
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "Premium and mix -$4M, Standard margin -$8M, fixes $14.6M"
+            ],
+            [
+              "A Assess",
+              "Say what the numbers mean: what you will really get, payback, break-even",
+              "Turns numbers into a business view",
+              "70% of the plan is $10.2M, profit about $38.2M, payback 7 months"
+            ],
+            [
+              "R Recommend",
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Fix Standard price and steel first, win back Premium. Alternative: shrink Standard"
+            ]
+          ]
+        },
+        {
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How much profit did we lose?",
+              "$40M - $28M",
+              "$12M"
+            ],
+            [
+              "2",
+              "What did the Premium drop cost?",
+              "Sales fell $40M. $40M x 30%",
+              "-$12M"
+            ],
+            [
+              "3",
+              "What did Standard growth add?",
+              "Sales grew $40M. $40M x 20% (the old margin)",
+              "+$8M, so mix is -$4M"
+            ],
+            [
+              "4",
+              "What did the Standard margin slide cost?",
+              "$40M / $240M = 16.7%. $240M x (16.7% - 20%)",
+              "-$8M"
+            ],
+            [
+              "5",
+              "What can the fixes earn?",
+              "$5.6M (Standard) + $6.0M (Premium) + $3.0M (fixed cost)",
+              "$14.6M"
+            ],
+            [
+              "6",
+              "What will we really get?",
+              "$14.6M x 70% = $10.2M. $28M + $10.2M",
+              "Profit about $38.2M"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Profit after fixes",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "We get 100% of the plan",
+              "$42.6M",
+              "Above the old $40M. Good, but do not promise it."
+            ],
+            [
+              "We get only 50% of the plan",
+              "$35.3M",
+              "Close to the $36M floor. Plan for this case too."
+            ],
+            [
+              "Imports stop us fixing Standard ($0 from that idea)",
+              "$34.3M",
+              "($6.0M + $3.0M) x 70% = $6.3M added. Premium and costs must carry it."
+            ],
+            [
+              "We win back only half of the Premium sales ($10M)",
+              "$36.1M",
+              "Just above the $36M floor. Premium win-back is the key driver."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What Standard margin m gives Standard contribution of $45.6M?",
+              "$240M x m = $45.6M",
+              "m = 45.6 / 240 = 19%"
+            ],
+            [
+              "If only Premium is won back, how many Premium sales x are needed to get back to $40M?",
+              "$28M + 30% x x = $40M",
+              "0.3x = 12, so x = $40M, which is all of the $40M lost"
+            ],
+            [
+              "What share r of the $14.6M plan do we need to get back to $40M?",
+              "14.6 x r = 12",
+              "r = 12 / 14.6 = 82%"
+            ],
+            [
+              "If volume stays the same, how much must the Standard price rise to get back to a 20% margin?",
+              "Cost is $200M. Price p: (p - 200) / p = 20%",
+              "p = 200 / 0.8 = $250M, up 4.2% from $240M"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Customers push back on surcharges",
+              "Standard buyers can switch to imports",
+              "Pass on steel with a clear index, and give discounts to loyal customers"
+            ],
+            [
+              "Steel keeps rising",
+              "Another 8% rise would cost about $7.7M",
+              "Sign steel contracts early and find a second supplier"
+            ],
+            [
+              "Premium sales do not come back",
+              "Customers may like the cheaper catalog pumps",
+              "Talk to lost customers and offer a better entry-level Premium pump"
+            ],
+            [
+              "Cost cuts hurt service",
+              "Cutting too deep slows delivery and quality",
+              "Cut in stages and watch on-time delivery"
+            ],
+            [
+              "Plan delivers less than hoped",
+              "Most plans fall short",
+              "Use 70% as the base. Track each fix every month"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "Contribution",
+              "Revenue minus variable costs. It pays for fixed costs and then becomes profit"
+            ],
+            [
+              "Fixed cost",
+              "A cost that stays the same when sales move, like the $60M of plant and staff"
+            ],
+            [
+              "Margin",
+              "Contribution divided by revenue. Premium is 30%"
+            ],
+            [
+              "Mix effect",
+              "Profit change from selling more of a low-margin product and less of a high-margin one"
+            ],
+            [
+              "Price pass-through",
+              "Raising prices to cover a higher cost, such as steel"
+            ],
+            [
+              "Realization (haircut)",
+              "The share of a plan that we actually expect to get, such as 70%"
+            ],
+            [
+              "Payback",
+              "Months it takes for the extra profit to repay the one-time cost"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Blaming one thing like steel without sizing it",
+              "Split the $12M into mix and margin, and give each a dollar value."
+            ],
+            [
+              "Using one blended margin for the whole company",
+              "Each line has its own margin. Premium is 30% and Standard is 16.7%."
+            ],
+            [
+              "Presenting 100% of the plan as the result",
+              "Always haircut, for example to 70%, and show a range."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
+            ],
+            [
+              "Hiding the math",
+              "Say each step out loud, with units, and check that the parts add up to $12M."
+            ],
+            [
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
+            ]
+          ]
+        }
+      ],
+      "table": {
+        "title": "Capital One style checklist",
+        "headers": [
+          "Do this",
+          "Why",
+          "Example here"
+        ],
+        "rows": [
+          [
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "What is the goal? Which lines? What happened to price and cost?"
+          ],
+          [
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Sales and margin by line, steel cost, one-time budget"
+          ],
+          [
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume we get 70% of the plan'"
+          ],
+          [
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Share needed = $12M / $14.6M = 82%"
+          ],
+          [
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we fix Standard price and steel cost first and win back Premium'"
+          ],
+          [
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Surcharge pushback, steel prices, Premium not returning; track monthly"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "If imports win, shrink Standard and focus capacity on Premium"
+          ]
+        ]
+      }
+    },
+    "followups": [
+      {
+        "q": "What if Standard is structurally unprofitable?",
+        "a": "Consider exiting the least profitable SKUs, outsourcing to a low-cost manufacturer under our brand, or focusing capacity on Premium."
+      },
+      {
+        "q": "How would you explain the mix effect to the CEO?",
+        "a": "We sold the same dollars but swapped $40M of 30%-margin products for $40M of 20%-margin products, that alone costs $4M."
+      },
+      {
+        "q": "What would you do if steel rises another 8%?",
+        "a": "That costs about $7.7M and would pull profit to about $30.5M. I would lock steel contracts early, add a steel index to Standard prices, and use a second supplier."
+      },
+      {
+        "q": "What data would you ask for next?",
+        "a": "Sales and margin by customer and by SKU, quotes lost to imports, steel use per pump, and why Premium customers switched to catalog pumps."
+      }
+    ],
+    "pitfalls": [
+      "Blaming one thing like steel without sizing it. Split the $12M into mix and margin, and give each a dollar value.",
+      "Using one blended margin for the whole company. Each line has its own margin. Premium is 30% and Standard is 16.7%.",
+      "Presenting 100% of the plan as the result. Always haircut, for example to 70%, and show a range.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check that the parts add up to $12M.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction."
+    ]
+  },
+  {
+    "id": "bank-fintech",
+    "title": "Bank Acquires a Payments Fintech",
+    "track": [
+      "banking",
+      "consulting"
+    ],
+    "framework": "ma",
+    "difficulty": "Hard",
+    "minutes": 35,
+    "prompt": "A regional bank is considering acquiring a payments fintech for $300M. The fintech has $40M of revenue growing 35% per year and is slightly loss-making. Should the bank do the deal, and at what maximum price?",
+    "clarify": [
+      {
+        "q": "Why does the bank want the fintech?",
+        "a": "To offer modern payments to its 2M retail customers and to lower what it pays third parties to process payments."
+      },
+      {
+        "q": "What is the goal and the limit on price?",
+        "a": "The deal should earn more than the bank's cost of capital within five years. The bank can do a deal up to about $300M."
+      },
+      {
+        "q": "What are the fintech's numbers?",
+        "a": "Sales are $40M and growing 35% a year. EBITDA is -$2M, a -5% margin. The seller asks $300M, which is 7.5x sales."
+      },
+      {
+        "q": "What do similar companies sell for?",
+        "a": "Listed payments fintechs trade at 6x to 8x sales. That is $240M to $320M for $40M of sales, and $280M at 7x."
+      },
+      {
+        "q": "What cross-sell can the bank expect?",
+        "a": "About 3% of the bank's 2M customers adopt, and each pays about $60 a year. That is 60,000 x $60 = $3.6M a year."
+      },
+      {
+        "q": "What can the bank save on processing?",
+        "a": "The bank spends $12M a year with third parties. About 40% could move in-house, which saves $4.8M a year."
+      },
+      {
+        "q": "What does integration cost, and how do we value benefits?",
+        "a": "Integration costs $4M a year for two years, $8M in total. Value a year of benefit at 6 times, and count only 50% of it because benefits are uncertain."
+      }
+    ],
+    "tables": [
+      {
+        "title": "What the interviewer shares if you ask (assumptions)",
+        "headers": [
+          "Item",
+          "Value",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Goal and constraints",
+            "Return above cost of capital within 5 years. Deal size up to about $300M",
+            ""
+          ],
+          [
+            "Fintech sales",
+            "$40M, growing 35% a year",
+            "Doubles in about 2.3 years"
+          ],
+          [
+            "Fintech EBITDA",
+            "-$2M (-5% margin)",
+            "Slightly loss-making"
+          ],
+          [
+            "Asking price",
+            "$300M",
+            "7.5x sales"
+          ],
+          [
+            "Peer valuations",
+            "6x to 8x sales",
+            "$240M to $320M. Midpoint 7x = $280M"
+          ],
+          [
+            "Bank customers and cross-sell",
+            "2M customers. 3% adopt at $60 a year",
+            "60,000 x $60 = $3.6M a year"
+          ],
+          [
+            "Bank processing spend",
+            "$12M a year. 40% can be moved in-house",
+            "Saves $4.8M a year"
+          ],
+          [
+            "Integration cost",
+            "$4M a year for 2 years",
+            "$8M in total"
+          ],
+          [
+            "How to value yearly benefits",
+            "6 times one year of benefit",
+            "Assumed"
+          ],
+          [
+            "Haircut on benefits",
+            "Count 50%",
+            "Assumed"
+          ]
+        ]
+      }
+    ],
+    "answer": {
+      "speak": [
+        [
+          "C: Clarify",
+          "So a regional bank with 2M retail customers may buy a payments fintech for $300M. The fintech has $40M of sales growing 35% and is slightly loss-making. The bank wants better payments and lower processing costs, and needs a return above its cost of capital within five years. Can I ask what similar companies trade at, and what savings and cross-sell are realistic? If not, I will assume."
+        ],
+        [
+          "L: Lay out",
+          "I will look at three things. What is the fintech worth on its own? What extra value does the bank add, with a haircut and the cost to get it? And how does the price compare with that value, including risks?"
+        ],
+        [
+          "E: Evaluate",
+          "Peers trade at 6x to 8x sales, so $40M is worth $240M to $320M. I will use 7x, which is $280M. For benefits, moving 40% of $12M of processing in-house saves $4.8M a year. Cross-selling to 3% of 2M customers at $60 adds $3.6M. That is $8.4M a year. Valued at 6 times, it is $50.4M."
+        ],
+        [
+          "A: Assess",
+          "I would count only half, which is $25.2M, and subtract $8M of integration cost. That leaves $17.2M. So the deal is worth about $297M to the bank, and the ask is $300M. There is no safety margin, and it only works if growth stays near 35%. To justify $300M, 55.6% of the benefits must arrive."
+        ],
+        [
+          "R: Recommend",
+          "I recommend we do not pay $300M. My top price is $275M, which leaves about $22M of safety. I would open at $250M, or pay part through an earn-out tied to growth. Two reasons: the ask pays the seller for all the benefits, and growth risk stays with the bank. Risks are engineers leaving, slow integration and rules, so diligence is a condition. If the seller will not move, I would partner or take a minority stake instead."
+        ]
+      ],
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Bank asks $300M for a fintech<br/>Sales $40M, growing 35%, EBITDA -$2M<br/>What is the most we should pay?\"]\nC --> L[\"L: Lay out<br/>1 What is the fintech worth alone?<br/>2 What extra value does the bank add?<br/>3 Price against value, and risks\"]\nL --> E[\"E: Evaluate<br/>Value alone, then deal benefits\"]\nE --> E1[\"Worth alone<br/>Peers trade at 6x to 8x sales<br/>$40M x 7 = $280M\"]\nE --> E2[\"Deal benefits<br/>Processing $4.8M + cross-sell $3.6M<br/>= $8.4M a year x 6 = $50.4M\"]\nE --> E3[\"Reality check<br/>Half = $25.2M, less $8M cost<br/>= $17.2M\"]\nE1 --> A[\"A: Assess<br/>Worth about $297M to the bank<br/>Ask is $300M, so no safety margin<br/>Works only if 35% growth holds\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Do not pay $300M. Pay up to $275M<br/>Open at $250M, add an earn-out<br/>Else partner or buy a small stake\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
+      "exampleCharts": [
+        {
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Price asked<br/>$300M / $40M sales<br/>= <b>7.5x sales</b>\"]\nA --> B[\"2 Worth alone<br/>Peers 6x to 8x = $240M to $320M<br/>Midpoint 7x = <b>$280M</b>\"]\nA --> C[\"3 Deal benefits per year\"]\nC --> C1[\"Processing<br/>40% x $12M<br/>= <b>$4.8M</b>\"]\nC --> C2[\"Cross-sell<br/>3% x 2M = 60,000 x $60<br/>= <b>$3.6M</b>\"]\nC1 --> D[\"4 Total $8.4M a year<br/>x 6 (assumed) = <b>$50.4M</b>\"]\nC2 --> D\nD --> E[\"5 Haircut 50%<br/>$50.4M x 50% = $25.2M<br/>- $8M cost ($4M x 2 years)<br/>= <b>$17.2M</b>\"]\nB --> F[\"6 Value to the bank<br/>$280M + $17.2M<br/>= <b>$297.2M</b>\"]\nE --> F\nF --> G[\"7 Compare<br/>Ask $300M is $2.8M above value<br/>Max price $275M leaves <b>$22.2M</b> safety\"]\nG --> H1[\"Break-even: share of benefits needed<br/>$280M + $50.4M x r - $8M = $300M<br/>r = <b>55.6%</b>\"]\nG --> H2[\"Multiple needed to justify $300M<br/>40 x m + $17.2M = $300M<br/>m = <b>7.07x</b>\"]\nG --> H3[\"If no benefits arrive<br/>$280M - $8M = <b>$272M</b><br/>Ask is $28M too high\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,C,C1,C2 n1;\nclass D,E n2;\nclass F n3;\nclass G n4;\nclass H1,H2,H3 n1;"
+        }
+      ],
+      "exampleTables": [
+        {
+          "title": "Step by step: what to do and why",
+          "headers": [
+            "Step",
+            "What you do",
+            "Why it matters",
+            "In this case"
+          ],
+          "rows": [
+            [
+              "C Clarify",
+              "Say the problem back in your own words. Ask for the goal, the limit and the data. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Why buy, peer multiples, sales, cross-sell, processing spend, integration cost"
+            ],
+            [
+              "L Lay out",
+              "Say your questions before you calculate",
+              "Shows structure and lets the interviewer steer",
+              "What is it worth alone? What does the bank add? Price against value"
+            ],
+            [
+              "E Evaluate",
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "Alone $280M. Benefits $8.4M a year x 6 = $50.4M"
+            ],
+            [
+              "A Assess",
+              "Say what the numbers mean: what you will really get, break-even, safety margin",
+              "Turns numbers into a business view",
+              "Half the benefits less $8M gives $17.2M. Worth $297M. Ask is $300M"
+            ],
+            [
+              "R Recommend",
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Do not pay $300M. Pay up to $275M. Alternative: partner or minority stake"
+            ]
+          ]
+        },
+        {
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "What is the fintech worth on its own?",
+              "$40M x 7 (midpoint of 6x to 8x)",
+              "$280M"
+            ],
+            [
+              "2",
+              "What can the bank save on processing?",
+              "40% x $12M",
+              "$4.8M a year"
+            ],
+            [
+              "3",
+              "What can the bank earn from cross-sell?",
+              "3% x 2M = 60,000 customers x $60",
+              "$3.6M a year"
+            ],
+            [
+              "4",
+              "What are the benefits worth?",
+              "($4.8M + $3.6M) x 6",
+              "$50.4M"
+            ],
+            [
+              "5",
+              "What do we count after haircut and cost?",
+              "$50.4M x 50% - $8M integration",
+              "$17.2M"
+            ],
+            [
+              "6",
+              "What is the deal worth to the bank?",
+              "$280M + $17.2M. Compare with the $300M ask",
+              "$297.2M"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Value to the bank",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Peers trade at 6x, not 7x",
+              "$257.2M",
+              "$240M + $17.2M. The ask is $43M too high."
+            ],
+            [
+              "Peers trade at 8x",
+              "$337.2M",
+              "$320M + $17.2M. The ask looks cheap, but growth must hold."
+            ],
+            [
+              "No benefits arrive at all",
+              "$272M",
+              "$280M - $8M integration. The ask is $28M too high."
+            ],
+            [
+              "All the benefits arrive (100%)",
+              "$322.4M",
+              "$280M + $50.4M - $8M. The ask would be a good deal."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What share r of the benefits must arrive to justify $300M?",
+              "280 + 50.4 x r - 8 = 300",
+              "50.4r = 28, so r = 55.6%"
+            ],
+            [
+              "What sales multiple m makes $300M fair, if we keep the $17.2M?",
+              "40 x m + 17.2 = 300",
+              "40m = 282.8, so m = 7.07x"
+            ],
+            [
+              "How many cross-sell customers n would match the $4.8M processing saving?",
+              "n x $60 = $4.8M",
+              "n = 80,000, which is 4% of 2M customers"
+            ],
+            [
+              "How many years t until sales double at 35% growth?",
+              "40 x 1.35^t = 80",
+              "1.35^t = 2, so t = 2.3 years"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Growth slows",
+              "The price assumes 35% growth. Slower growth cuts the value",
+              "Pay part of the price later with an earn-out tied to growth"
+            ],
+            [
+              "Key engineers leave",
+              "The value is in the people and the technology",
+              "Retention bonuses and a check on this in diligence"
+            ],
+            [
+              "Benefits arrive late or small",
+              "Integration is often slower than planned",
+              "Count only 50% and track savings every quarter"
+            ],
+            [
+              "Rules and approvals",
+              "A bank must meet strict rules on the fintech's products",
+              "Check compliance and approvals before closing"
+            ],
+            [
+              "Overpaying",
+              "The ask leaves no safety margin",
+              "Set a walk-away price of $275M"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "Multiple",
+              "Price divided by sales. $300M / $40M = 7.5x"
+            ],
+            [
+              "Comparable (comp)",
+              "A similar listed company used to judge a fair price"
+            ],
+            [
+              "Synergies",
+              "Extra value the buyer creates by combining, such as savings and cross-sell"
+            ],
+            [
+              "Cross-sell",
+              "Selling the fintech's product to the bank's own customers"
+            ],
+            [
+              "Earn-out",
+              "Part of the price paid later, only if targets are met"
+            ],
+            [
+              "Haircut",
+              "Counting only part of a benefit, such as 50%, because it is uncertain"
+            ],
+            [
+              "Walk-away price",
+              "The highest price at which you still do the deal"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Paying the ask because the deal sounds strategic",
+              "Compute the value first, then compare it with the price."
+            ],
+            [
+              "Counting 100% of the deal benefits",
+              "Haircut them, for example to 50%, and subtract the cost to get them."
+            ],
+            [
+              "Forgetting integration cost",
+              "Subtract the $8M cost before you decide what the benefits are worth."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
+            ],
+            [
+              "Hiding the math",
+              "Say each step out loud, with units, and say which numbers are assumptions."
+            ],
+            [
+              "Giving only one price",
+              "Give a walk-away price, an opening offer and a different structure such as an earn-out."
+            ]
+          ]
+        }
+      ],
+      "table": {
+        "title": "Capital One style checklist",
+        "headers": [
+          "Do this",
+          "Why",
+          "Example here"
+        ],
+        "rows": [
+          [
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Why buy? What is the price limit? What return is needed?"
+          ],
+          [
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Peer multiples, cross-sell rate, processing spend, integration cost"
+          ],
+          [
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume benefits are worth 6 times a year, and count 50%'"
+          ],
+          [
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Share needed = ($300M - $280M + $8M) / $50.4M = 55.6%"
+          ],
+          [
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we do not pay $300M. My top price is $275M'"
+          ],
+          [
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Growth slowing, engineers leaving, late benefits; diligence and an earn-out"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Partner or take a minority stake if the seller will not move"
+          ]
+        ]
+      }
+    },
+    "followups": [
+      {
+        "q": "What are the main integration risks?",
+        "a": "Talent retention, culture clash, technology integration, regulatory approvals and bank compliance requirements on the fintech's product."
+      },
+      {
+        "q": "How would you structure an earn-out?",
+        "a": "Fixed payment at around standalone value, with extra consideration if revenue growth and margin targets are met in the next 2 to 3 years, so the seller shares the risk."
+      },
+      {
+        "q": "Why not build in-house?",
+        "a": "Build costs less but is slower and riskier; time to market of 2 to 3 years against a 35% growth market. A partnership is a middle path."
+      },
+      {
+        "q": "What data would you ask for next?",
+        "a": "Sales by customer and how concentrated they are, how long customers stay, engineer turnover, rules the product must meet, and what the bank's own processing contracts allow."
+      }
+    ],
+    "pitfalls": [
+      "Paying the ask because the deal sounds strategic. Compute the value first, then compare it with the price.",
+      "Counting 100% of the deal benefits. Haircut them, for example to 50%, and subtract the cost to get them.",
+      "Forgetting integration cost. Subtract the $8M cost before you decide what the benefits are worth.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and say which numbers are assumptions.",
+      "Giving only one price. Give a walk-away price, an opening offer and a different structure such as an earn-out."
+    ]
+  },
+  {
+    "id": "call-center",
+    "title": "Contact Center Cost Reduction",
+    "track": [
+      "banking",
+      "consulting"
+    ],
+    "framework": "ops",
+    "difficulty": "Medium",
+    "minutes": 25,
+    "prompt": "A retail bank spends $130M per year on its customer contact center. The COO wants costs down 15% without hurting customer satisfaction. How would you do it?",
+    "clarify": [
+      {
+        "q": "What is the goal and the timeline?",
+        "a": "Cut the $130.4M cost by 15%, which is $19.56M, within 12 months. Customer satisfaction must not fall."
+      },
+      {
+        "q": "How many calls are there, and what types?",
+        "a": "8M calls a year. Simple calls (balance, password reset) are 35%. Transactional calls (disputes, card replacement) are 40%. Complex calls (fraud, complaints, loans) are 25%."
+      },
+      {
+        "q": "What does each type cost?",
+        "a": "Simple $8 per call, transactional $15, complex $30. That is $22.4M, $48.0M and $60.0M."
+      },
+      {
+        "q": "Is there a digital channel?",
+        "a": "A mobile app exists but is not linked to the phone menu. About 50% of simple calls could be done in the app."
+      },
+      {
+        "q": "How long are calls, and can they be shorter?",
+        "a": "Better agent tools could cut transactional handle time by 10%. Complex calls should not be rushed."
+      },
+      {
+        "q": "How many calls are repeats?",
+        "a": "About 5% of complex calls are repeats for the same issue. That is 100,000 calls a year. Fixing root causes could remove them."
+      },
+      {
+        "q": "What does it cost to make the changes?",
+        "a": "About $3M one time. Better staff scheduling could also save about 0.5% of total cost, which is $0.65M."
+      }
+    ],
+    "tables": [
+      {
+        "title": "What the interviewer shares if you ask (assumptions)",
+        "headers": [
+          "Item",
+          "Value",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Goal and timeline",
+            "Cut cost 15% with no drop in satisfaction",
+            "15% of $130.4M = $19.56M. Within 12 months"
+          ],
+          [
+            "Total cost and calls",
+            "$130.4M a year. 8M calls",
+            "Average $16.30 a call"
+          ],
+          [
+            "Simple calls",
+            "35%, 2.8M calls, $8 each",
+            "$22.4M. About 50% could be done in the app"
+          ],
+          [
+            "Transactional calls",
+            "40%, 3.2M calls, $15 each",
+            "$48.0M. Handle time could fall 10%"
+          ],
+          [
+            "Complex calls",
+            "25%, 2.0M calls, $30 each",
+            "$60.0M"
+          ],
+          [
+            "Repeat calls",
+            "5% of complex calls, 100,000",
+            "Can be removed by fixing root causes"
+          ],
+          [
+            "Better scheduling",
+            "About 0.5% of total cost",
+            "About $0.65M. Assumed"
+          ],
+          [
+            "One-time cost",
+            "About $3M",
+            "App links, agent tools, training. Assumed"
+          ],
+          [
+            "Satisfaction guardrail",
+            "Must not fall",
+            "Watch satisfaction and first-call resolution"
+          ]
+        ]
+      }
+    ],
+    "answer": {
+      "speak": [
+        [
+          "C: Clarify",
+          "So a retail bank spends $130.4M a year on its contact center, with 8M calls. The COO wants cost down 15%, which is about $19.6M, without hurting customer satisfaction. Can I ask how the calls split by type and cost, and whether a digital channel could take some? If not, I will assume."
+        ],
+        [
+          "L: Lay out",
+          "Cost is calls times cost per call. So I will look at fewer calls, cheaper calls, and then protect service. I will size each type of call first."
+        ],
+        [
+          "E: Evaluate",
+          "Simple calls cost $22.4M, transactional $48.0M and complex $60.0M. If half of simple calls move to the app, that is 1.4M calls at $8, or $11.2M. Cutting transactional handle time by 10% saves $4.8M. Removing 100,000 repeat complex calls at $30 saves $3.0M. Better scheduling adds about $0.65M."
+        ],
+        [
+          "A: Assess",
+          "That totals $19.65M, which is 15.1%, just above the target. One-time cost is about $3M, so payback is under 2 months. The risk is the app. At 30% use instead of 50%, savings fall to $15.2M, or 11.6%. To hit the target, about 50% of simple calls must move."
+        ],
+        [
+          "R: Recommend",
+          "I recommend we do all four levers, with the app first. Two reasons: the app is the biggest and fastest lever, and agent tools and repeat fixes protect service. I would track satisfaction and first-call resolution every week and pause any lever that hurts them. I would not cut handle time on complex calls. As an alternative, if app use is low, I would move simple calls to a lower-cost team after the app work."
+        ]
+      ],
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Bank contact center costs $130.4M<br/>COO wants -15% = $19.6M<br/>Keep customers happy\"]\nC --> L[\"L: Lay out<br/>Cost = calls x cost per call<br/>1 Fewer calls<br/>2 Cheaper calls<br/>3 Protect service\"]\nL --> E[\"E: Evaluate<br/>Size each pool, then each lever\"]\nE --> E1[\"Where the cost is<br/>Simple $22.4M, transactional $48.0M<br/>Complex $60.0M\"]\nE --> E2[\"Levers<br/>Move simple calls to the app $11.2M<br/>Faster transactional calls $4.8M<br/>Fewer repeats $3.0M, scheduling $0.65M\"]\nE --> E3[\"Reality check<br/>Total $19.65M = 15.1%<br/>App use at 30% gives only $15.2M\"]\nE1 --> A[\"A: Assess<br/>Just above target, $3M one time<br/>Pays back in under 2 months<br/>App use must reach 50%\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Do all four, app first<br/>Watch satisfaction every week<br/>Pause any lever that hurts it\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
+      "exampleCharts": [
+        {
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Where the money goes<br/>Simple 2.8M x $8 = $22.4M<br/>Transactional 3.2M x $15 = $48.0M<br/>Complex 2.0M x $30 = $60.0M<br/>Total <b>$130.4M</b>\"]\nA --> B[\"2 Target<br/>15% x $130.4M<br/>= <b>$19.56M</b>\"]\nA --> C1[\"3 Move simple calls to app<br/>50% x 2.8M = 1.4M calls<br/>x $8 = <b>$11.2M</b>\"]\nA --> C2[\"4 Faster transactional calls<br/>10% x $48.0M<br/>= <b>$4.8M</b>\"]\nA --> C3[\"5 Fewer repeat complex calls<br/>5% x 2.0M = 100,000 calls<br/>x $30 = <b>$3.0M</b>\"]\nA --> C4[\"6 Better scheduling<br/>0.5% x $130.4M<br/>= <b>$0.65M</b>\"]\nC1 --> D[\"7 Total savings<br/>11.2 + 4.8 + 3.0 + 0.65<br/>= <b>$19.65M, which is 15.1%</b>\"]\nC2 --> D\nC3 --> D\nC4 --> D\nB --> D\nD --> E[\"8 Payback<br/>$3M one time / $19.65M a year<br/>= <b>1.8 months</b>\"]\nE --> F1[\"Break-even: app use needed<br/>22.4 x d + 8.45 = 19.56<br/>d = <b>49.6%, so about 50%</b>\"]\nE --> F2[\"If app use is only 30%<br/>$6.72M + 8.45M = <b>$15.17M</b><br/>11.6%, short by $4.4M\"]\nE --> F3[\"Then handle time must fall<br/>48 x h = 9.19<br/>h = <b>19.1%, not 10%</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B n1;\nclass C1,C2,C3,C4 n2;\nclass D,E n3;\nclass F1,F2,F3 n4;"
+        }
+      ],
+      "exampleTables": [
+        {
+          "title": "Step by step: what to do and why",
+          "headers": [
+            "Step",
+            "What you do",
+            "Why it matters",
+            "In this case"
+          ],
+          "rows": [
+            [
+              "C Clarify",
+              "Say the problem back in your own words. Ask for the goal, the timeline and the data. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Target in dollars, calls by type, cost per call, app, repeats, one-time cost"
+            ],
+            [
+              "L Lay out",
+              "Say your structure before you calculate",
+              "Shows structure and lets the interviewer steer",
+              "Cost = calls x cost per call. Fewer calls, cheaper calls, protect service"
+            ],
+            [
+              "E Evaluate",
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "Four levers add up to $19.65M"
+            ],
+            [
+              "A Assess",
+              "Say what the numbers mean: what you will really get, payback, break-even",
+              "Turns numbers into a business view",
+              "15.1% of cost. Payback under 2 months. App use must reach about 50%"
+            ],
+            [
+              "R Recommend",
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Do all four levers, app first. Alternative: offshore simple calls"
+            ]
+          ]
+        },
+        {
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How much is the 15% target?",
+              "15% x $130.4M",
+              "$19.56M"
+            ],
+            [
+              "2",
+              "What does moving simple calls to the app save?",
+              "50% x 2.8M = 1.4M calls x $8",
+              "$11.2M"
+            ],
+            [
+              "3",
+              "What does faster transactional handling save?",
+              "10% x $48.0M",
+              "$4.8M"
+            ],
+            [
+              "4",
+              "What does removing repeat complex calls save?",
+              "100,000 calls x $30",
+              "$3.0M"
+            ],
+            [
+              "5",
+              "What does better scheduling save?",
+              "0.5% x $130.4M",
+              "$0.65M"
+            ],
+            [
+              "6",
+              "Do we reach the target, and what is the payback?",
+              "$11.2M + $4.8M + $3.0M + $0.65M = $19.65M. $3M / $19.65M x 12",
+              "15.1% of cost, 1.8 months"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Total savings",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Only 30% of simple calls move to the app",
+              "$15.17M (11.6%)",
+              "Short of the target by $4.4M. The app lever decides the case."
+            ],
+            [
+              "Handle time falls only 5%",
+              "$17.25M (13.2%)",
+              "Short by $2.3M. Needs another lever."
+            ],
+            [
+              "Only half of the repeats are removed",
+              "$18.15M (13.9%)",
+              "Short by $1.4M."
+            ],
+            [
+              "We get 70% of everything",
+              "$13.76M (10.5%)",
+              "Well short. Be honest that the target is tight."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What share d of simple calls must move to the app to hit $19.56M?",
+              "2.8M x d x $8 + $4.8M + $3.0M + $0.65M = $19.56M",
+              "22.4d = 11.11, so d = 49.6%, about 50%"
+            ],
+            [
+              "If only 30% move to the app, what handle-time cut h is needed on transactional calls?",
+              "$6.72M + $48.0M x h + $3.0M + $0.65M = $19.56M",
+              "48h = 9.19, so h = 19.1%"
+            ],
+            [
+              "What is the payback in months if the one-time cost is $3M?",
+              "$3M = ($19.65M / 12) x months",
+              "months = 3 / 1.64 = 1.8 months"
+            ],
+            [
+              "How many calls at the average $16.30 would have to disappear to save $19.56M?",
+              "$16.30 x n = $19.56M",
+              "n = 1.2M calls, which is 15% of 8M"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Customers do not use the app",
+              "Savings fall quickly if fewer than 50% of simple calls move",
+              "Add phone menu nudges and text links, and fix the top journeys"
+            ],
+            [
+              "Satisfaction falls",
+              "Cheaper calls can feel worse",
+              "Watch satisfaction and first-call resolution weekly, and pause any lever that hurts them"
+            ],
+            [
+              "Rushed agents make mistakes",
+              "Faster calls may cause repeat calls",
+              "Give better tools, not just time targets, and watch repeat rate"
+            ],
+            [
+              "Complex calls get worse",
+              "Fraud and complaint callers need care",
+              "Keep humans and do not cut handle time on complex calls"
+            ],
+            [
+              "Savings arrive late",
+              "Changes take months to build",
+              "Stage the roll-out and track savings monthly"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "Contact center",
+              "The team that answers customer calls and chats"
+            ],
+            [
+              "Call deflection",
+              "Moving a call to a cheaper channel, such as the app"
+            ],
+            [
+              "Handle time",
+              "How long an agent spends on one call"
+            ],
+            [
+              "IVR",
+              "The phone menu that callers hear before they reach an agent"
+            ],
+            [
+              "First-call resolution",
+              "Share of issues solved on the first contact"
+            ],
+            [
+              "Repeat contact",
+              "A caller who calls again for the same issue"
+            ],
+            [
+              "Guardrail metric",
+              "A number you watch to make sure a change does no harm"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Using one average cost per call",
+              "Calls have three different costs: $8, $15 and $30. Size each pool."
+            ],
+            [
+              "Cutting cost without protecting service",
+              "Name a guardrail, such as satisfaction, and say when you would pause."
+            ],
+            [
+              "Assuming 100% of customers use the app",
+              "Haircut it and show what happens at 30%."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
+            ],
+            [
+              "Hiding the math",
+              "Say each step out loud, with units, and check the total against the $19.56M target."
+            ],
+            [
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
+            ]
+          ]
+        }
+      ],
+      "table": {
+        "title": "Capital One style checklist",
+        "headers": [
+          "Do this",
+          "Why",
+          "Example here"
+        ],
+        "rows": [
+          [
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "What is the target in dollars? What must not get worse?"
+          ],
+          [
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Calls and cost by type, app use, repeat rate, one-time cost"
+          ],
+          [
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume 50% of simple calls can move to the app'"
+          ],
+          [
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "App share needed = 11.11 / 22.4 = 49.6%"
+          ],
+          [
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we do all four levers, with the app first'"
+          ],
+          [
+            "Name risks and next steps",
+            "Shows business judgment",
+            "App use too low, satisfaction falls; track weekly and pause levers"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Offshore simple calls if the app falls short, after moving volume"
+          ]
+        ]
+      }
+    },
+    "followups": [
+      {
+        "q": "What if customers do not adopt the app?",
+        "a": "Add proactive nudges in the IVR, in-call SMS links, and simplify the top journeys. Measure adoption by journey and iterate."
+      },
+      {
+        "q": "Would you offshore?",
+        "a": "Possible for simple and transactional calls, but weigh regulatory, quality and brand risks. Do it after digital deflection, since that reduces the volume to move."
+      },
+      {
+        "q": "How do you protect customer experience?",
+        "a": "Guardrail metrics, staged rollout, and keeping humans for complex and sensitive calls."
+      },
+      {
+        "q": "What data would you ask for next?",
+        "a": "Calls by reason and by day, app use by journey, repeat rate by issue, handle time by agent team, and satisfaction by call type."
+      }
+    ],
+    "pitfalls": [
+      "Using one average cost per call. Calls have three different costs: $8, $15 and $30. Size each pool.",
+      "Cutting cost without protecting service. Name a guardrail, such as satisfaction, and say when you would pause.",
+      "Assuming 100% of customers use the app. Haircut it and show what happens at 30%.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the total against the $19.56M target.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction."
+    ]
+  },
+  {
+    "id": "digital-feature",
+    "title": "Digital Feature: Scale It or Not?",
+    "track": [
+      "banking",
+      "tech"
+    ],
+    "framework": "product",
+    "difficulty": "Medium",
+    "minutes": 30,
+    "prompt": "A card issuer launched a spending-insights feature in its mobile app six months ago. The product team shows that customers who use it spend more and leave less, and asks for $2M to promote it from 25% to 40% of active app customers. As the analyst, what do you tell them?",
+    "clarify": [
+      {
+        "q": "What is the decision and the bar for success?",
+        "a": "Decide whether to spend $2M one time to raise use of the feature from 25% to 40% of active app customers. It must pay back within 18 months."
+      },
+      {
+        "q": "What does the feature do and who can use it?",
+        "a": "It sorts spending into categories and sends monthly insights and alerts. All 4M active app card customers can use it. Today 25% use it, which is 1.0M."
+      },
+      {
+        "q": "What did the product team show?",
+        "a": "Users spend $10,200 a year and non-users $8,600, a gap of $1,600. Users also leave less: 9% against 13%."
+      },
+      {
+        "q": "Was there a test group?",
+        "a": "Yes. The feature was offered to 95% of customers. A random 5% could not see it, so we have a clean test."
+      },
+      {
+        "q": "What did the holdout show?",
+        "a": "Per customer offered, spend rose from $9,000 to $9,045 (+$45). Leaving fell from 12.0% to 11.9%. Service calls fell from 1.200 to 1.164 a year. Late payments and complaints did not change."
+      },
+      {
+        "q": "What is each result worth?",
+        "a": "We keep about 2% of spend as net interchange. A retained account is worth about $400. A service call costs about $10."
+      },
+      {
+        "q": "What does it cost to run?",
+        "a": "$1.5M a year today. The $2M promotion is one time. Assume running cost does not rise with more users."
+      }
+    ],
+    "tables": [
+      {
+        "title": "What the interviewer shares if you ask (assumptions)",
+        "headers": [
+          "Item",
+          "Value",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Decision and bar",
+            "Spend $2M one time to lift use from 25% to 40%",
+            "Payback within 18 months"
+          ],
+          [
+            "Customers",
+            "4M active app customers. 25% use it today (1.0M)",
+            "40% would be 1.6M, so 600K new users"
+          ],
+          [
+            "Naive comparison",
+            "Users $10,200, non-users $8,600 a year",
+            "Gap of $1,600. Users chose the feature"
+          ],
+          [
+            "Holdout: spend",
+            "$9,000 not offered, $9,045 offered",
+            "+$45 per customer, $180 per user"
+          ],
+          [
+            "Holdout: leaving",
+            "12.0% not offered, 11.9% offered",
+            "-0.1 point, which is 4,000 accounts of 4M"
+          ],
+          [
+            "Holdout: service calls",
+            "1.200 not offered, 1.164 offered",
+            "-3%, about 144,000 fewer calls"
+          ],
+          [
+            "Value per item",
+            "Net interchange 2% of spend. Retained account $400. Call $10",
+            ""
+          ],
+          [
+            "Late payments and complaints",
+            "No difference",
+            ""
+          ],
+          [
+            "Run cost",
+            "$1.5M a year",
+            "Assume it does not rise with more users"
+          ],
+          [
+            "Quality of new users",
+            "Likely less keen than today's users",
+            "Plan on 50% of today's gain per user"
+          ]
+        ]
+      }
+    ],
+    "answer": {
+      "speak": [
+        [
+          "C: Clarify",
+          "So we are deciding whether to spend $2M to raise use of this feature from 25% to 40% of 4M app customers, and it should pay back within 18 months. Can I ask whether there is a random group that was never shown the feature, and what an account is worth? If not, I will assume."
+        ],
+        [
+          "L: Lay out",
+          "I will check three things. Is the lift real? What is one customer worth? And what does scaling add, and what could go wrong?"
+        ],
+        [
+          "E: Evaluate",
+          "The team compares users with non-users and sees $1,600 more spend. But people who pick a budget tool are already careful, so that is not just the feature. The fair test shows $45 more per customer offered. Only a quarter use it, so that is $180 per user. The first number was about nine times too big. Valued at 2% of spend, plus fewer leavers and fewer calls, the feature earns $3.6M plus $1.6M plus $1.44M, which is $6.64M."
+        ],
+        [
+          "A: Assess",
+          "Net of $1.5M running cost, that is $5.1M, so the feature already pays for itself. Going from 25% to 40% adds 600K users, or about $4.0M a year. New users are probably less keen, so I plan on half, which is $2.0M. That repays the $2M in about 12 months. To beat 18 months, new users need only 33% of today's gain."
+        ],
+        [
+          "R: Recommend",
+          "I recommend yes, in stages. Try the promotion on half of the non-users for eight weeks, and scale up only if each new user gives at least half of today's gain. Two reasons: the effect is proven by the holdout, and the payback has room. I would stop if complaints, late payments or opt-outs rise. As an alternative, if the test is weak, I would improve the feature first and spend less on promotion."
+        ]
+      ],
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Spend $2M to lift feature use from 25% to 40%?<br/>Payback needed in 18 months<br/>4M app customers\"]\nC --> L[\"L: Lay out<br/>1 Is the lift real?<br/>2 What is it worth?<br/>3 What does scaling add, and what can go wrong?\"]\nL --> E[\"E: Evaluate<br/>Use the random holdout, not user vs non-user\"]\nE --> E1[\"Is it real<br/>Users vs non-users: +$1,600<br/>Holdout test: +$45 per customer<br/>= $180 per user\"]\nE --> E2[\"Worth today<br/>Spend $3.6M + retention $1.6M<br/>+ fewer calls $1.4M = $6.6M<br/>Net of $1.5M cost = $5.1M\"]\nE --> E3[\"Scaling<br/>600K new users x $6.64 = $4.0M<br/>New users weaker: plan 50% = $2.0M<br/>Payback 12 months\"]\nE1 --> A[\"A: Assess<br/>First number was 9 times too big<br/>Feature still pays for itself<br/>Need only 33% of today's gain per user\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Yes, in stages. Test on half of non-users for 8 weeks<br/>Scale if each new user gives half the gain<br/>Stop if complaints or late payments rise\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
+      "exampleCharts": [
+        {
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 What the team showed<br/>Users $10,200 - non-users $8,600<br/>= <b>$1,600 more spend</b>\"]\nA --> B[\"2 Why it is not fair<br/>People who pick a budget tool<br/>were already careful with money\"]\nB --> C[\"3 Fair test (random holdout)<br/>$9,045 - $9,000 = <b>$45 per customer</b><br/>$45 / 25% use = <b>$180 per user</b><br/>$1,600 / $180 = 8.9 times too big\"]\nC --> D1[\"4 More spend<br/>4M x $45 x 2%<br/>= <b>$3.6M</b>\"]\nC --> D2[\"5 Fewer leavers<br/>4M x 0.1 pt = 4,000 x $400<br/>= <b>$1.6M</b>\"]\nC --> D3[\"6 Fewer service calls<br/>4M x 0.036 = 144,000 x $10<br/>= <b>$1.44M</b>\"]\nD1 --> E[\"7 Total value<br/>3.6 + 1.6 + 1.44 = <b>$6.64M</b><br/>Per user, with 1M users = <b>$6.64</b><br/>Minus $1.5M cost = <b>$5.1M net</b>\"]\nD2 --> E\nD3 --> E\nE --> F[\"8 Scale from 25% to 40%<br/>600K new users x $6.64 = $4.0M<br/>Plan 50% of that = <b>$2.0M a year</b><br/>$2M / $2.0M = <b>12 months</b>\"]\nF --> G1[\"Break-even for 18 months<br/>Need $2M / 1.5 = $1.33M a year<br/>= <b>33% of today's gain per user</b>\"]\nF --> G2[\"Needed per new user<br/>$1.33M / 600K = <b>$2.22 a year</b><br/>vs $6.64 today\"]\nF --> G3[\"If new users give only 25%<br/>$1.0M a year<br/>payback <b>24 months, too slow</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,C n1;\nclass D1,D2,D3 n2;\nclass E,F n3;\nclass G1,G2,G3 n4;"
+        }
+      ],
+      "exampleTables": [
+        {
+          "title": "Step by step: what to do and why",
+          "headers": [
+            "Step",
+            "What you do",
+            "Why it matters",
+            "In this case"
+          ],
+          "rows": [
+            [
+              "C Clarify",
+              "Say the problem back in your own words. Ask for the goal, the bar and the data. Ask if there is a random test group",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "$2M, 25% to 40%, 18-month payback, holdout group, value per item"
+            ],
+            [
+              "L Lay out",
+              "Say your three questions before you calculate",
+              "Shows structure and lets the interviewer steer",
+              "Is the lift real? What is it worth? What does scaling add?"
+            ],
+            [
+              "E Evaluate",
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "Use the $45 holdout lift, not the $1,600 gap. Value is $6.64M"
+            ],
+            [
+              "A Assess",
+              "Say what the numbers mean: what you will really get, payback, break-even",
+              "Turns numbers into a business view",
+              "Scaling adds about $2.0M a year at 50%. Payback 12 months"
+            ],
+            [
+              "R Recommend",
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Yes, in stages. Alternative: hold the promotion and improve the feature first"
+            ]
+          ]
+        },
+        {
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How much extra does one user spend, fairly?",
+              "$45 per customer / 25% use",
+              "$180 per user"
+            ],
+            [
+              "2",
+              "What is the value of extra spend?",
+              "4M x $45 x 2%",
+              "$3.6M a year"
+            ],
+            [
+              "3",
+              "What is the value of fewer leavers and calls?",
+              "4M x 0.1 pt = 4,000 x $400. 4M x 0.036 = 144,000 x $10",
+              "$1.6M + $1.44M"
+            ],
+            [
+              "4",
+              "What is the feature worth today?",
+              "$3.6M + $1.6M + $1.44M. Minus $1.5M cost. Per user: $6.64M / 1.0M users",
+              "$6.64M, $5.1M net, $6.64 a user"
+            ],
+            [
+              "5",
+              "What would scaling add?",
+              "600K new users x $6.64 = $4.0M. New users give 50% of that",
+              "$2.0M a year"
+            ],
+            [
+              "6",
+              "What is the payback?",
+              "$2M / $2.0M a year x 12",
+              "12 months"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Extra profit and payback",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "New users give 100% of today's gain",
+              "$4.0M a year, 6 months",
+              "Best case. Do not plan on it."
+            ],
+            [
+              "New users give only 25% of today's gain",
+              "$1.0M a year, 24 months",
+              "Misses the 18-month bar. This is the case to test for."
+            ],
+            [
+              "Net interchange is 1%, not 2%",
+              "$1.45M a year, 16.5 months",
+              "Spend value halves to $1.8M, so per user falls to $4.84. Still inside 18 months."
+            ],
+            [
+              "The promotion only reaches 32.5% use (+7.5 points)",
+              "$1.0M a year, 24 months",
+              "300K new users x $6.64 x 50%. Too slow."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What share s of today's gain per user must new users give to pay back in 18 months?",
+              "600K x $6.64 x s = $2M / 1.5 = $1.33M",
+              "3.98M x s = 1.33M, so s = 33.5%, about $2.22 per user"
+            ],
+            [
+              "If new users give 50%, how many new users n are needed to pay back in 18 months?",
+              "n x $6.64 x 0.5 = $1.33M",
+              "n = 402,000, which is 10 points, so use must reach 35%"
+            ],
+            [
+              "How many times too big was the first number?",
+              "$1,600 = k x $180",
+              "k = 8.9, about 9 times"
+            ],
+            [
+              "How much extra spend x per customer would cover the $1.5M running cost on spend alone?",
+              "4M x x x 2% = $1.5M",
+              "x = 1.5M / 80,000 = $18.75, and the test shows $45"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "New users are less keen",
+              "The easy users joined first. New ones may gain less",
+              "Test on half of non-users and scale only if each gives at least half of today's gain"
+            ],
+            [
+              "The promotion annoys customers",
+              "Too many alerts can cause opt-outs and complaints",
+              "Cap messages and watch opt-outs and complaints weekly"
+            ],
+            [
+              "Late payments rise",
+              "Spending insights could change how people spend",
+              "Watch late payments in the test and stop if they rise"
+            ],
+            [
+              "The effect fades",
+              "Novelty can wear off after a few months",
+              "Track results for at least a full billing cycle and for retention longer"
+            ],
+            [
+              "Wrong data trail",
+              "Users vs non-users hides a selection effect",
+              "Always use the random holdout for the decision"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "Holdout group",
+              "A random group that is not offered the feature. It is the fair comparison"
+            ],
+            [
+              "Selection bias",
+              "Users differ from non-users before the feature, so the gap is not only the feature"
+            ],
+            [
+              "Adoption",
+              "Share of customers who use the feature"
+            ],
+            [
+              "Attrition",
+              "Share of customers who leave in a year"
+            ],
+            [
+              "Net interchange",
+              "The fee the issuer keeps on card spend, here 2%"
+            ],
+            [
+              "Payback",
+              "Months to earn back the money spent"
+            ],
+            [
+              "Guardrail metric",
+              "A number you watch to make sure a change does no harm"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Comparing users with non-users",
+              "Use the random holdout, because users chose the feature."
+            ],
+            [
+              "Using the $1,600 gap as the benefit",
+              "Use the $45 lift, which is $180 per user."
+            ],
+            [
+              "Assuming new users act like today's users",
+              "Haircut it, for example to 50%, and test it first."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it, and ask if there is a random test group."
+            ],
+            [
+              "Hiding the math",
+              "Say each step out loud, with units, and check payback against the 18-month bar."
+            ],
+            [
+              "Forgetting the risks and guardrails",
+              "Name complaints, late payments and opt-outs, and say when you would stop."
+            ]
+          ]
+        }
+      ],
+      "table": {
+        "title": "Capital One style checklist",
+        "headers": [
+          "Do this",
+          "Why",
+          "Example here"
+        ],
+        "rows": [
+          [
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "What is the bar? Is there a random holdout?"
+          ],
+          [
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Holdout results, value per item, run cost, promotion cost"
+          ],
+          [
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume new users give 50% of today's gain'"
+          ],
+          [
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Share needed = $1.33M / $3.98M = 33.5%"
+          ],
+          [
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend yes, in stages, starting with half of non-users'"
+          ],
+          [
+            "Name risks and next steps",
+            "Shows business judgment",
+            "New users weaker, opt-outs, late payments; 8-week test"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "If the test is weak, improve the feature first and spend less on promotion"
+          ]
+        ]
+      }
+    },
+    "followups": [
+      {
+        "q": "Why not just compare adopters with non-adopters?",
+        "a": "Because adopters chose the feature, so they differ from non-adopters in engagement and financial habits. A randomized holdout makes the two groups identical on average, so the difference is caused by the feature."
+      },
+      {
+        "q": "What if the effect is much smaller for new adopters?",
+        "a": "Then the gain from scaling falls. The staged test measures this before committing the full $2M, and I would target the segments where early effects were largest."
+      },
+      {
+        "q": "What other metrics would you track?",
+        "a": "Weekly active use of the feature, spend by category, 90-day and 12-month retention, calls, complaints, delinquency and opt-out rates."
+      },
+      {
+        "q": "How long should the test run?",
+        "a": "Long enough to cover at least one full billing cycle and the behaviors you care about; 8 weeks for engagement, with retention tracked longer using a leading indicator such as inactivity."
+      },
+      {
+        "q": "What would change your answer?",
+        "a": "If new users give only 25% of today's gain, payback is 24 months and misses the bar. If late payments or opt-outs rise in the test, I would stop."
+      }
+    ],
+    "pitfalls": [
+      "Comparing users with non-users. Use the random holdout, because users chose the feature.",
+      "Using the $1,600 gap as the benefit. Use the $45 lift, which is $180 per user.",
+      "Assuming new users act like today's users. Haircut it, for example to 50%, and test it first.",
+      "Waiting for the interviewer to give you data. Ask for it, and ask if there is a random test group.",
+      "Hiding the math. Say each step out loud, with units, and check payback against the 18-month bar.",
+      "Forgetting the risks and guardrails. Name complaints, late payments and opt-outs, and say when you would stop."
     ]
   },
   {
@@ -2526,78 +4165,82 @@ DATA.cases = [
     "prompt": "Credit card applications are up 15%, but the approval-to-activation rate has fallen. What is going on, and what do you do?",
     "clarify": [
       {
-        "q": "What does activation mean?",
-        "a": "The customer makes a first purchase within 30 days of receiving the card."
+        "q": "What is the goal and timeline?",
+        "a": "Find the cause of the drop and a fix this quarter. Success is more activated cards for each marketing dollar."
       },
       {
-        "q": "Did anything change in how we count applications, approvals or activation?",
-        "a": "No. The definitions are the same as last year."
+        "q": "What does activation mean, and did any definition change?",
+        "a": "The customer makes a first purchase within 30 days of receiving the card. Nothing changed from last year."
       },
       {
-        "q": "Did approval rates change?",
-        "a": "No. About 60% of applications are approved in both periods."
+        "q": "How many applications do we get, and what is the approval rate?",
+        "a": "About 100K a month before and 115K now (+15%). About 60% are approved in both periods, so 60K before and 69K now."
       },
       {
-        "q": "Did we start any new marketing or acquisition channel?",
-        "a": "Yes. A new digital partner channel launched this quarter, and it drives most of the extra applications."
+        "q": "Did we launch anything new?",
+        "a": "Yes. A new digital partner channel launched this quarter. It brings the extra 15K applications."
       },
       {
-        "q": "What is a card worth, and what does marketing cost?",
-        "a": "Assume an activated card is worth about $200 in profit and marketing costs about $30 per application. Use these as working assumptions."
+        "q": "How well do cards from each channel activate?",
+        "a": "Old channels activate about 70% of approved cards. The new channel is at about 20% so far. Assume approval is 60% in both."
+      },
+      {
+        "q": "What is an activated card worth, and what does marketing cost?",
+        "a": "An activated card is worth about $200 in profit. Marketing costs about $30 per application. Use these as working assumptions."
+      },
+      {
+        "q": "Any constraints?",
+        "a": "Approval and risk rules stay the same. We can change marketing terms, onboarding and how the card is delivered."
       }
     ],
     "tables": [
       {
-        "title": "The funnel (illustrative numbers)",
-        "headers": [
-          "Stage",
-          "Before",
-          "Now",
-          "What it means"
-        ],
-        "rows": [
-          [
-            "Applications",
-            "100K a month",
-            "115K (+15%)",
-            "People who applied"
-          ],
-          [
-            "Approved",
-            "60K (60%)",
-            "69K (60%)",
-            "Bank said yes"
-          ],
-          [
-            "Activated",
-            "42K (70% of approved)",
-            "43.8K (about 63%)",
-            "Made a first purchase within 30 days"
-          ]
-        ]
-      },
-      {
-        "title": "Unit values (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
           "Item",
-          "Value"
+          "Value",
+          "Note"
         ],
         "rows": [
           [
-            "Marketing cost per application",
-            "$30"
+            "Goal and timeline",
+            "Find the cause and a fix this quarter",
+            "Success = more activated cards per marketing dollar"
           ],
           [
-            "Value of an activated card",
-            "$200"
+            "Activation",
+            "First purchase within 30 days of getting the card",
+            "Same definition as last year"
+          ],
+          [
+            "Applications",
+            "100K a month before, 115K now (+15%)",
+            "Extra 15K come from the new channel"
           ],
           [
             "Approval rate",
-            "60% in both periods"
+            "60% in both periods",
+            "Approved: 60K before, 69K now"
           ],
           [
-            "Activation window",
-            "30 days from card receipt"
+            "Activation of approved cards",
+            "70% in old channels. About 20% in the new channel",
+            "Assumed from early data"
+          ],
+          [
+            "Value of an activated card",
+            "$200 profit",
+            "Working assumption"
+          ],
+          [
+            "Marketing cost",
+            "$30 per application",
+            "Working assumption"
+          ],
+          [
+            "Constraints",
+            "Approval and risk rules stay as they are",
+            "We fix activation, not approval"
           ]
         ]
       }
@@ -2606,38 +4249,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "So applications are up 15% but fewer approved customers are activating. I will define activation as a first purchase within 30 days, and the funnel as applications, approvals, then activations. Is approval rate stable, and did anything change in marketing recently?"
+          "So applications are up 15%, but fewer approved customers are activating. I will define activation as a first purchase within 30 days. My goal is to find the cause and a fix this quarter. Can I ask a few things? Did the definitions change? Did approval rates change? Did we launch any new channel? And what is a card worth and what does an application cost? If you do not have them, I will assume $200 and $30."
         ],
         [
           "L: Lay out",
-          "I will check three things. First, is the drop real, meaning same definition and same-age cards. Second, where it is: channel, approval mix, product or delivery. Third, why, and what it costs."
+          "I will ask three questions. Is the drop real? Where does it come from? And is it worth fixing? To answer the second one I will split the funnel by channel."
         ],
         [
           "E: Evaluate",
-          "Say we had 100K applications a month, 60% approved and 70% of those activating, so 42K activated cards. Now applications are 115K. If the extra 15K came from a new campaign and only 20% of those approved activate, that adds just 1.8K cards. Overall activation falls to about 63%, and activated cards grow only 4% while applications grew 15%."
+          "Say we had 100K applications a month. 60% are approved, so 60K, and 70% of those activate, so 42K cards. Now we have 115K applications, so 69K approved. The extra 15K came from the new channel. 9K were approved and only 20% activated, so 1.8K cards. In total we have 43.8K activated cards out of 69K approved. That is 63%, down from 70%. Cards grew about 4% while applications grew 15%."
         ],
         [
           "A: Assess",
-          "So the growth is mostly low-intent applicants. At $30 per application, the new channel costs about $250 per activated card, against about $71 in the existing channels. If an activated card is worth $200, the new channel loses money today. It breaks even at 25% activation."
+          "So the old channels are fine at 70%. The drop is a mix effect from the new channel. At $30 an application, the new channel pays $450K to get 1.8K cards, which is $250 a card. The old channels pay about $71. A card is worth $200, so the new channel loses about $90K a month. It breaks even at 25% activation."
         ],
         [
           "R: Recommend",
-          "I would fix activation first with onboarding nudges when the card arrives and on day 1, 7 and 14, and an easy digital-wallet setup. I would pay for the new channel per activated card, not per application, and track activated cards per dollar. If activation reaches around 50%, the channel is worth scaling."
+          "I recommend we keep the new channel but change the deal. Two reasons. First, the channel is only 15K of the 115K applications, and activation can be improved. Second, paying per application rewards the partner for traffic that does not use the card. So I would pay per activated card and add onboarding nudges on day 1, 7 and 14. If nudges lift activation to 35%, the channel earns about $180K a month. Risks are that the nudges annoy customers or that the traffic is low quality. I would review after 8 weeks. If activation is still under 25%, I would pause the channel."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Problem: card applications are up 15%,<br/>but fewer approved customers activate their card\"]\nC --> C2[\"Define terms: activation = first purchase within 30 days<br/>Funnel: Applications > Approved > Activated\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Is the drop real?<br/>Same definition, same-age customers\"]\nL --> L2[\"2 Where is it?<br/>Channel, approval mix, product, delivery\"]\nL --> L3[\"3 Why, and what is it worth?<br/>Fix the cause, not the number\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Split the funnel by where applicants came from\"]\nE1 --> E2[\"Existing channels: 100K applications<br/>60% approved, 70% activate = 42K\"]\nE2 --> E3[\"New channel: 15K extra applications<br/>60% approved, only 20% activate = 1.8K\"]\nE3 --> E4[\"Total: 43.8K activated of 69K approved = 63%<br/>Applications +15%, activated cards only +4%\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"Cause: the growth came from low-intent applicants<br/>(for example a bonus-hunting campaign)\"]\nA --> A2[\"Cost: existing channels $71 per activated card<br/>new channel $250, above an assumed $200 value\"]\nA --> A3[\"Fix potential: lift activation from 20% to 50%<br/>turns a $90K loss into a $450K gain\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Fix activation, then fund the channel that works\"]\nR --> R1[\"Onboarding nudges: card arrives, activate day 1, 7, 14\"]\nR --> R2[\"Pay for the new channel per activated card, not per application\"]\nR --> R3[\"Track activated cards per dollar, not applications\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Applications up 15%, activation rate down<br/>Activation = first purchase in 30 days<br/>Goal: find the cause and fix it this quarter\"]\nC --> L[\"L: Lay out<br/>1 Is the drop real?<br/>2 Where does it come from?<br/>3 Is it worth fixing?\"]\nL --> E[\"E: Evaluate<br/>Split the funnel by channel\"]\nE --> E1[\"Funnel<br/>Apps 100K to 115K (+15%)<br/>Approved 60K to 69K<br/>Activated 42K to 43.8K (+4%)<br/>Rate falls from 70% to 63%\"]\nE --> E2[\"Cause<br/>New channel: 15K apps, 9K approved<br/>Only 20% activate = 1.8K<br/>Old channels still at 70%\"]\nE --> E3[\"Money<br/>Old channels: $71 per activated card<br/>New channel: $250 per activated card<br/>A card is worth $200\"]\nE1 --> A[\"A: Assess<br/>The drop is a mix effect, not a general decline<br/>New channel loses $50 per card<br/>It breaks even at 25% activation\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Keep the channel, but fix it.<br/>Pay per activated card and add onboarding nudges.<br/>Pause it if activation stays under 25% after 8 weeks\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "diagnose",
-          "title": "How we found it: the diagnosis path",
-          "note": "Rule out a measurement problem first, then cut the funnel until the drop sits in one place.",
-          "code": "flowchart TD\nQ[\"Applications +15%, activation rate down. Why?\"] --> R1{\"1 Is it real?\"}\nR1 --> R1a[\"Check the definition has not changed<br/>Compare cards of the same age,<br/>for example activated within 30 days\"]\nR1a --> W{\"2 Where is it?\"}\n\nW --> W1[\"By channel<br/>Which source grew?\"]\nW --> W2[\"By approval mix<br/>More lower-score approvals?\"]\nW --> W3[\"By delivery and onboarding<br/>Card late? Activation hard?\"]\nW --> W4[\"By product<br/>One card offer weaker?\"]\n\nW1 --> X[\"Finding: the extra 15K applications came from one new campaign\"]\nX --> X1[\"Existing channels: 100K x 60% x 70% = 42K activated\"]\nX --> X2[\"New channel: 15K x 60% x 20% = 1.8K activated\"]\nX1 --> T[\"Total: 43.8K / 69K approved = 63% (was 70%)\"]\nX2 --> T\nT --> H[\"Hypothesis: low-intent applicants, not a broken product<br/>Test: activation by channel for same-age cards\"]\n\nclassDef q fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef w fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef x fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef r fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass Q,R1,W q;\nclass R1a,W1,W2,W3,W4 w;\nclass X,X1,X2 x;\nclass T,H r;"
-        },
-        {
-          "id": "worth",
-          "title": "What it is worth, and what would change the answer",
-          "note": "Cost per activated card, the value of a fix and the break-even point.",
-          "code": "flowchart TD\nB[\"Assumed: $30 marketing per application, $200 value per activated card<br/>Existing channels: $3.0M / 42K = $71 per activated card\"] --> N[\"New channel today<br/>15K x $30 = $450K spend, 1.8K activated<br/>$450K / 1.8K = $250 per activated card\"]\nN --> N1[\"Value 1.8K x $200 = $360K<br/>Net = $360K - $450K = -$90K\"]\n\nB --> F[\"After onboarding fixes: 50% activate<br/>9K approved x 50% = 4.5K activated\"]\nF --> F1[\"Value 4.5K x $200 = $900K<br/>Net = $900K - $450K = +$450K\"]\n\nB --> BE[\"Break-even for the new channel<br/>$450K / $200 = 2,250 activations<br/>2,250 / 9K approved = 25% activation\"]\n\nB --> S[\"Lift activation 5 points across all 69K approved<br/>69K x 5% = 3,450 cards x $200 = +$690K\"]\n\nN1 --> R[\"Fix activation before scaling the channel<br/>Pay per activated card\"]\nF1 --> R\nBE --> R\nS --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass N,N1 bad;\nclass F,F1,S good;\nclass BE mid;\nclass R out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Old channels, per month<br/>100K apps x 60% = 60K approved<br/>60K x 70% = <b>42K activated</b>\"]\nB[\"2 New channel, per month<br/>15K apps x 60% = 9K approved<br/>9K x 20% = <b>1.8K activated</b>\"]\nA --> C[\"3 Blended result<br/>42K + 1.8K = <b>43.8K activated</b><br/>43.8K / 69K approved = <b>63% (was 70%)</b><br/>Activated cards up only <b>4%</b>, apps up 15%\"]\nB --> C\nA --> D1[\"4 Cost per activated card, old<br/>100K x $30 = $3.0M<br/>$3.0M / 42K = <b>$71</b>\"]\nB --> D2[\"4 Cost per activated card, new<br/>15K x $30 = $450K<br/>$450K / 1.8K = <b>$250</b>\"]\nD1 --> E1[\"5 Profit at $200 a card, old<br/>42K x $200 - $3.0M = <b>+$5.4M</b>\"]\nD2 --> E2[\"5 Profit at $200 a card, new<br/>1.8K x $200 - $450K = <b>-$90K</b>\"]\nE2 --> F1[\"Check: break-even<br/>9K x a x $200 = $450K<br/>a = <b>25%</b>\"]\nE2 --> F2[\"Check: to hold 70% overall<br/>42K + 9K x a = 48.3K<br/>a = <b>70%</b>, not realistic\"]\nE2 --> F3[\"What if nudges lift it to 35%<br/>9K x 35% = 3.15K cards<br/>3.15K x $200 - $450K = <b>+$180K</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B n1;\nclass C n3;\nclass D1,D2 n2;\nclass E1,E2 n4;\nclass F1,F2,F3 n1;"
         }
       ],
       "exampleTables": [
@@ -2652,221 +4289,291 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define the funnel and what \"activated\" means",
-              "The answer changes if activation means first swipe or first 90-day spend",
-              "Applications > Approved > Activated; activation = first purchase in 30 days"
+              "Say the problem back. Define activation. Ask for the funnel and the money numbers. Say what you will assume if you do not get them",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "First purchase in 30 days. Approval is 60% in both periods. A new channel launched. A card is worth $200 and an application costs $30"
             ],
             [
               "L Lay out",
-              "Say your 3 questions before calculating",
-              "Shows a plan and lets the interviewer steer",
-              "Is it real? Where is it? Why, and what is it worth?"
+              "Say your questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Is the drop real? Where does it come from? Is it worth fixing?"
             ],
             [
               "E Evaluate",
-              "Split the funnel by source and compare",
-              "The average hides which group is causing the drop",
-              "Existing channels still activate 70%; the new channel only 20%"
+              "Split the funnel by channel and do the math out loud, with units",
+              "Blended numbers hide the cause. The interview often has several small math problems, some with algebra",
+              "Old channels: 42K activated. New channel: 1.8K. Blended rate 63%"
             ],
             [
               "A Assess",
-              "Turn the finding into a cause and a dollar cost",
-              "A diagnosis without money attached does not drive action",
-              "New channel costs $250 per activated card against a $200 value"
+              "Say what the numbers mean: who loses money, and what the break-even is",
+              "Turns numbers into a business view",
+              "New channel costs $250 per activated card against $200 of value. Break-even is 25% activation"
             ],
             [
               "R Recommend",
-              "Give the fix, who owns it and how to measure it",
-              "Interviewers want a decision",
-              "Fix onboarding, pay per activation, track activated cards"
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Keep the channel but pay per activated card and fix onboarding. Alternative: pause it"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
-          "headers": [
-            "Term",
-            "Plain meaning",
-            "Example here"
-          ],
-          "rows": [
-            [
-              "Funnel",
-              "The steps a customer goes through, with people dropping out at each step",
-              "Applied > Approved > Activated"
-            ],
-            [
-              "Activation",
-              "The first real use of the card",
-              "First purchase within 30 days"
-            ],
-            [
-              "Same-age cohort",
-              "Compare groups that have had the same time to act",
-              "Cards issued 30 days ago, not cards issued yesterday"
-            ],
-            [
-              "Low-intent applicant",
-              "Someone who applies for a perk, not to use the card",
-              "Applies for a sign-up bonus, never uses it"
-            ],
-            [
-              "Channel",
-              "Where the applicant came from",
-              "Search, partner site, a new promo campaign"
-            ],
-            [
-              "Cost per activated card",
-              "Marketing spend divided by cards that get used",
-              "$450K / 1.8K = $250"
-            ],
-            [
-              "Break-even",
-              "The point where cost equals value",
-              "25% activation on the new channel"
-            ]
-          ]
-        },
-        {
-          "title": "The math, one step at a time",
+          "title": "The numbers, one simple example",
           "headers": [
             "Step",
             "What we are working out",
-            "Calculation",
+            "The math",
             "Result"
           ],
           "rows": [
             [
               "1",
-              "Before: activated cards",
-              "100K x 60% x 70%",
-              "42,000"
+              "How many cards do the old channels activate?",
+              "100K apps x 60% approved x 70% activate",
+              "42K a month"
             ],
             [
               "2",
-              "Existing channels now (unchanged)",
-              "100K x 60% x 70%",
-              "42,000"
+              "How many does the new channel activate?",
+              "15K apps x 60% approved x 20% activate",
+              "1.8K a month"
             ],
             [
               "3",
-              "New channel: applications",
-              "115K - 100K",
-              "15,000"
+              "What is the blended activation rate?",
+              "(42K + 1.8K) / (60K + 9K) = 43.8K / 69K",
+              "63%, down from 70%. Cards are up only 4%"
             ],
             [
               "4",
-              "New channel: approved",
-              "15K x 60%",
-              "9,000"
+              "What does one activated card cost us?",
+              "Old: $3.0M / 42K. New: $450K / 1.8K",
+              "$71 old, $250 new"
             ],
             [
               "5",
-              "New channel: activated",
-              "9K x 20%",
-              "1,800"
+              "Is the new channel profitable?",
+              "1.8K x $200 value - 15K x $30 cost = $360K - $450K",
+              "-$90K a month"
             ],
             [
               "6",
-              "Total approved and activated now",
-              "60K + 9K = 69K; 42K + 1.8K = 43.8K",
-              "69,000 and 43,800"
-            ],
-            [
-              "7",
-              "New activation rate",
-              "43.8K / 69K",
-              "about 63% (was 70%)"
-            ],
-            [
-              "8",
-              "Growth check",
-              "Applications +15%; activated 43.8K / 42K",
-              "+15% vs only +4%"
-            ],
-            [
-              "9",
-              "Cost per activated card, existing",
-              "$30 x 100K = $3.0M / 42K",
-              "$71"
-            ],
-            [
-              "10",
-              "Cost per activated card, new channel",
-              "$30 x 15K = $450K / 1.8K",
-              "$250"
-            ],
-            [
-              "11",
-              "Is the new channel worth it?",
-              "1.8K x $200 = $360K, less $450K spend",
-              "-$90K"
-            ],
-            [
-              "12",
-              "Break-even activation, new channel",
-              "$450K / $200 = 2,250 cards; 2,250 / 9K",
+              "What activation rate would break even?",
+              "9K x a x $200 = 15K x $30, so a = $450K / $1.8M",
               "25%"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "New channel activation rises to 35%",
+              "+$180K a month",
+              "3.15K cards x $200 = $630K, minus $450K. Onboarding nudges could turn the channel profitable."
             ],
             [
-              "13",
-              "If onboarding lifts it to 50%",
-              "9K x 50% = 4.5K cards x $200 = $900K, less $450K",
-              "+$450K"
+              "New channel activation rises to 70%",
+              "+$810K a month",
+              "6.3K cards x $200 = $1.26M, minus $450K. Same quality as old channels, so the channel is great."
             ],
             [
-              "14",
-              "Company-wide 5-point lift",
-              "69K x 5% = 3,450 cards x $200",
-              "+$690K"
+              "New channel activation falls to 10%",
+              "-$270K a month",
+              "900 cards x $200 = $180K, minus $450K. Pause the channel quickly."
+            ],
+            [
+              "We negotiate $20 per application at 20% activation",
+              "+$60K a month",
+              "1.8K x $200 = $360K, minus 15K x $20 = $300K. Better terms alone can fix it."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What activation rate does the new channel need to break even?",
+              "9,000 x a x $200 = 15,000 x $30 = $450K",
+              "a = 450,000 / 1,800,000 = 25%"
+            ],
+            [
+              "At 20% activation, what is the most we can pay per application?",
+              "1,800 x $200 = 15,000 x c",
+              "c = 360,000 / 15,000 = $24"
+            ],
+            [
+              "What new-channel activation gives a blended rate of 65%?",
+              "(42,000 + 9,000 x a) / 69,000 = 0.65",
+              "9,000 a = 44,850 - 42,000 = 2,850, so a = 31.7%"
+            ],
+            [
+              "What new-channel activation earns $100K a month?",
+              "9,000 x a x $200 - $450K = $100K",
+              "1,800,000 a = 550,000, so a = 30.6%"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "It is not the channel",
+              "Other things may also hurt activation, such as late cards or a clumsy setup",
+              "Split activation by channel and by card age. If all channels fall, check card delivery and the activation steps"
+            ],
+            [
+              "Cards are too new",
+              "Recent cards have not had 30 days to activate yet",
+              "Compare cards of the same age"
+            ],
+            [
+              "Low-quality partner traffic",
+              "People may apply only for a bonus and never use the card",
+              "Pay per activated card, tighten targeting, and review fraud signals"
+            ],
+            [
+              "Nudges annoy customers",
+              "Too many messages can cause opt-outs",
+              "Test a few messages on day 1, 7 and 14 with a holdout group"
+            ],
+            [
+              "Cutting the channel too early",
+              "We lose growth and learning before we fix the problem",
+              "Set a clear test: pause only if activation is under 25% after 8 weeks"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
+          "headers": [
+            "Term",
+            "Meaning"
+          ],
+          "rows": [
+            [
+              "Funnel",
+              "The steps customers pass through: apply, get approved, activate"
+            ],
+            [
+              "Activation",
+              "The customer makes a first purchase within 30 days of receiving the card"
+            ],
+            [
+              "Mix effect",
+              "The overall rate falls because more of the group comes from a weaker segment, not because every segment got worse"
+            ],
+            [
+              "Cohort",
+              "A group of cards of the same age, so we compare like with like"
+            ],
+            [
+              "Cost per activated card",
+              "Marketing spend divided by activated cards, not by applications"
+            ],
+            [
+              "Break-even",
+              "The point where profit is zero. Here it is 25% activation on the new channel"
+            ],
+            [
+              "Holdout group",
+              "A group that does not get the change, so we can see what the change really did"
+            ]
+          ]
+        },
+        {
+          "title": "Common beginner mistakes",
+          "headers": [
+            "Mistake",
+            "What to do instead"
+          ],
+          "rows": [
+            [
+              "Saying 'the product is failing' without splitting the data",
+              "Split the funnel by channel, segment and card age before you decide the cause."
+            ],
+            [
+              "Using the blended rate only",
+              "Look at each channel. Old channels are still at 70%."
+            ],
+            [
+              "Counting cost per application",
+              "Count cost per activated card: $250 on the new channel, not $30."
+            ],
+            [
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
+            ],
+            [
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
+            ],
+            [
+              "Ending without a decision",
+              "Give the answer first, then two reasons, risks and an alternative."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Funnel diagnosis checklist",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to check",
-          "Typical cause",
-          "Fix"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "Is it real?",
-            "Definition, timing, same-age cohorts",
-            "Recent cards have not had time to activate",
-            "Compare at the same card age"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Applications are up 15% but activation is down. What does activation mean, and what is the goal?"
           ],
           [
-            "Which channel?",
-            "Activation by source",
-            "Bonus-hunting or low-intent traffic",
-            "Pay per activation, tighten targeting"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Funnel by stage, approval rate, new channels, value of a card, cost per application"
           ],
           [
-            "Which customers?",
-            "Activation by score band and income",
-            "More thin-file or lower-score approvals",
-            "Adjust offer, set credit limits and nudges by segment"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume a card is worth $200 and an application costs $30'"
           ],
           [
-            "Delivery and setup?",
-            "Days from approval to card arrival, activation steps",
-            "Late cards, clumsy activation",
-            "Faster delivery, in-app and wallet activation"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "9,000 x a x $200 = $450K, so a = 25%"
           ],
           [
-            "Offer and product?",
-            "Activation by card type",
-            "Offer not relevant to the customer",
-            "Match the card to the need"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we keep the new channel but pay per activated card'"
           ],
           [
-            "Competition?",
-            "Offers from rivals, share of wallet",
-            "Customer uses a rival card first",
-            "Early-use incentive, targeted spend offer"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Cards may be too new, partner quality, nudges annoying customers; review at 8 weeks"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Pause the channel if activation stays under 25%"
           ]
         ]
       }
@@ -2874,27 +4581,32 @@ DATA.cases = [
     "followups": [
       {
         "q": "How would you confirm the new channel is the cause?",
-        "a": "Split activation by acquisition channel and compare cards of the same age. If existing channels still activate about 70% and the new channel about 20%, the blended drop is a mix effect, not a general decline."
+        "a": "Split activation by channel and compare cards of the same age. If old channels still activate about 70% and the new channel about 20%, the blended drop is a mix effect, not a general decline."
       },
       {
         "q": "What if all channels show lower activation?",
-        "a": "Then look at things that affect everyone: card delivery time, the activation steps, the offer, and competitor behavior. Check days from approval to card arrival first."
+        "a": "Then look at things that affect everyone: card delivery time, the activation steps, the offer and competitor behavior. Check days from approval to card arrival first."
       },
       {
         "q": "Would you stop the new channel?",
-        "a": "Not yet. At $250 per activated card it loses money, but it breaks even at 25% activation. I would fix onboarding, then pay the partner per activated card."
+        "a": "Not yet. At $250 per activated card it loses about $90K a month, but it breaks even at 25% activation. I would fix onboarding, then pay the partner per activated card, and pause it if activation is still under 25% after 8 weeks."
       },
       {
         "q": "What metrics would you track going forward?",
         "a": "Activated cards per dollar of marketing, activation rate by channel and card age, days to first purchase, and 90-day spend."
+      },
+      {
+        "q": "What if the partner will not agree to pay per activation?",
+        "a": "Then negotiate the price per application. At 20% activation we can pay at most $24 per application. Otherwise I would cap the volume from that partner."
       }
     ],
     "pitfalls": [
-      "Celebrating applications. Always follow the funnel to the end.",
-      "Comparing cards of different ages. New cards have had less time to activate.",
-      "Using one blended average. Split by channel and customer type first.",
-      "Naming causes without numbers. Show the funnel math and the cost per activated card.",
-      "Forgetting to say your assumptions. The scenario had no figures, so state yours and invite correction."
+      "Saying 'the product is failing' without splitting the data. Split the funnel by channel, segment and card age before you decide the cause.",
+      "Using the blended rate only. Look at each channel. Old channels are still at 70%.",
+      "Counting cost per application. Count cost per activated card: $250 on the new channel, not $30.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Ending without a decision. Give the answer first, then two reasons, risks and an alternative."
     ]
   },
   {
@@ -2910,80 +4622,92 @@ DATA.cases = [
     "prompt": "A card issuer is considering expanding into a new transaction category it does not serve today, such as rent, healthcare or business-to-business payments. Should it go in, and how?",
     "clarify": [
       {
-        "q": "Which category are we considering?",
-        "a": "Rent payments by card. Treat all figures as working assumptions."
+        "q": "Which category are we considering, and what is the goal?",
+        "a": "Rent payments by card. We want to know whether to go in and how. Treat all figures as working assumptions."
       },
       {
         "q": "What does success look like?",
         "a": "Profit after build cost, marketing and losses, with payback inside two years."
       },
       {
-        "q": "Do we have a right to win here?",
-        "a": "We have a large card base and rewards products. Rivals include payment apps and landlord portals."
+        "q": "How big is the market?",
+        "a": "About 44M renter households paying about $1,400 a month. Only about 30% of rent can be paid electronically today."
       },
       {
-        "q": "Are there constraints?",
-        "a": "A budget of about $30M up front and a regulatory review. Fraud losses must stay near 0.1% of volume."
+        "q": "What share could we win?",
+        "a": "Assume 2% of the online rent market by year 3. A typical user pays $16.8K of rent a year through us."
+      },
+      {
+        "q": "What are the revenue and loss rates?",
+        "a": "Net revenue (fees minus rewards and processing) is 0.8% of volume. Fraud and dispute losses are 0.1% of volume."
+      },
+      {
+        "q": "What does it cost to build and run?",
+        "a": "Build about $14M. Marketing about $60 per new user. Running cost about $8M a year."
+      },
+      {
+        "q": "Are there constraints, and do we have a right to win?",
+        "a": "Budget is about $30M up front, and a regulatory review is needed. Fraud must stay near 0.1%. We have a large card base and rewards. Rivals are payment apps and landlord portals."
       }
     ],
     "tables": [
       {
-        "title": "The numbers we will use (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
-          "Number",
+          "Item",
           "Value",
-          "How we got it"
+          "Note"
         ],
         "rows": [
           [
-            "Renter households",
-            "44M",
-            "Assumed US figure; ask the interviewer"
+            "Goal and timeline",
+            "Profit after build, marketing and losses. Payback inside 2 years",
+            "Category is rent payments by card"
           ],
           [
-            "Rent per month",
-            "$1,400",
-            "Assumed average"
+            "Renter households and rent",
+            "44M households, $1,400 a month",
+            "Total = 44M x $1,400 x 12 = $740B a year"
           ],
           [
-            "Total yearly rent spend",
-            "about $740B",
-            "44M x $1,400 x 12 = $739B"
-          ],
-          [
-            "Share that can be paid electronically",
+            "Share that can be paid online",
             "30%",
-            "Assumed; rest is cheque, cash or direct bank transfer. $740B x 30% = $222B"
+            "$740B x 30% = $222B. Rest is cheque, cash or bank transfer"
           ],
           [
             "Our share in year 3",
             "2%",
-            "Assumed. $222B x 2% = $4.4B volume. 'Volume' means total dollars paid through us"
+            "$222B x 2% = $4.4B of volume"
           ],
           [
             "Users",
-            "about 260K",
-            "$4.4B / ($1,400 x 12 = $16.8K per user) = 262K"
+            "About 260K",
+            "$16.8K a year each: $4.4B / $16.8K"
           ],
           [
-            "Net revenue per dollar",
-            "0.8%",
-            "Assumed: fee income minus rewards and processing. $4.4B x 0.8% = $35M"
+            "Net revenue",
+            "0.8% of volume",
+            "Fees minus rewards and processing. $4.4B x 0.8% = $35.2M"
           ],
           [
             "Losses (fraud, disputes)",
             "0.1% of volume",
-            "Assumed = $4.4M"
+            "$4.4M. Must stay near 0.1%"
           ],
           [
             "Running cost",
             "$8M a year",
-            "Assumed team, tech and support"
+            "Team, tech and support"
           ],
           [
             "Up-front cost",
-            "about $31M",
-            "Build $15M + marketing 260K users x $60 = $15.6M"
+            "$29.6M",
+            "Build $14M + marketing 260K x $60 = $15.6M"
+          ],
+          [
+            "Constraints",
+            "Budget about $30M. Regulatory review",
+            "Fraud loss must stay near 0.1%"
           ]
         ]
       }
@@ -2992,38 +4716,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm the question: should we start serving a new spending category? I will assume rent payments and that success means profit after build, marketing and losses. Is that right?"
+          "So we are asking whether a card issuer should start serving a new category, and I will assume rent payments. I will treat success as profit after build cost, marketing and losses, with payback inside two years. Our budget is about $30M. Do we know the number of renters, the rent, and how much can be paid online? If not, I will assume."
         ],
         [
           "L: Lay out",
-          "I will look at three things: how big the market is and how much we can reach, whether we have a reason to win, and whether the economics and risks work."
+          "I will look at three things. First, how big is the market and how much can we reach? Second, can we win? We have a large card base and rewards, but rivals include payment apps. Third, do the economics and risks work?"
         ],
         [
           "E: Evaluate",
-          "About 44M renter households paying $1,400 a month is roughly $740B a year. About 30% can be paid electronically, so $222B is reachable. A 2% share is $4.4B. At 0.8% net revenue and 0.1% losses, that is about $31M before an $8M running cost, so about $23M a year."
+          "About 44M renter households pay $1,400 a month. That is 44M x $1,400 x 12, about $740B a year. About 30% can be paid online, so $222B. With a 2% share in year 3, that is $4.4B of volume, and about 260K users at $16.8K each a year. We earn 0.8% net revenue, which is $35.2M. Losses are 0.1%, so $4.4M. Running cost is $8M. So profit is about $22.8M a year."
         ],
         [
           "A: Assess",
-          "Up-front cost is about $31M, so payback is about 16 months at full size. Break-even is only about 68K users. The big risk is net revenue per dollar: at 0.3% the profit is about zero. Cannibalization and fraud are the next risks."
+          "The up-front cost is $14M to build plus $15.6M of marketing, so $29.6M. That pays back in about 16 months. We break even at about 68K users. The key number is net revenue per dollar. If it falls to 0.28%, profit is zero. And if 30% of the volume is already on our cards, profit drops to about $13.6M and payback is 2.2 years, which misses our two-year goal."
         ],
         [
           "R: Recommend",
-          "I would enter, in stages: pilot in two or three cities with one property-management partner, check that net revenue stays at 0.6% or more and fraud under 0.1%, then scale. If the gates fail, I would redesign pricing before spending more."
+          "I recommend we enter, but in stages. First, the market is large and the numbers pay back in 16 months. Second, a pilot limits the risk before we spend the full $30M. I would start in two or three cities with one property-management partner. We scale only if net revenue is 0.7% or more, fraud is 0.1% or less, and most of the volume is new. Risks are thin margin, cannibalization and rivals. If the pilot shows net revenue below about 0.6%, I would partner only and not build."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Decision: should a card issuer start serving a new<br/>transaction category? (we assume rent payments)\"]\nC --> C2[\"Define terms: category = a type of spending<br/>Success = profit after build, marketing and losses\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Market: how big is the spend,<br/>and how much can we reach?\"]\nL --> L2[\"2 Right to win: why would customers<br/>use us, and who competes?\"]\nL --> L3[\"3 Economics and risk: does it make money,<br/>and what could go wrong?\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Size the market, then the money\"]\nE1 --> E2[\"Spend: 44M renter households x $1,400 x 12<br/>= about $740B a year\"]\nE2 --> E3[\"Reachable: 30% pay electronically = $222B<br/>Our share in year 3: 2% = $4.4B\"]\nE3 --> E4[\"Money: $4.4B x 0.8% net revenue = $35M<br/>minus losses $4.4M and running cost $8M = $23M a year\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"Payback: $31M up-front cost<br/>pays back in about 16 months once at full size\"]\nA --> A2[\"Break-even: about $1.1B of volume,<br/>around 68K users, under 2% of the target\"]\nA --> A3[\"Biggest risk: net revenue per dollar.<br/>At 0.3% the profit is about zero\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Enter, but in stages\"]\nR --> R1[\"Pilot in 2 or 3 cities with one<br/>property-management partner\"]\nR --> R2[\"Go or stop gates: 0.6%+ net revenue,<br/>activation, fraud under 0.1%\"]\nR --> R3[\"Scale nationally only after the gates are met\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Should we start taking rent payments by card?<br/>Success = profit after build, marketing, losses<br/>Payback inside 2 years. Budget about $30M\"]\nC --> L[\"L: Lay out<br/>1 How big is the market?<br/>2 Can we win?<br/>3 Do the economics and risks work?\"]\nL --> E[\"E: Evaluate<br/>Size the market, then the profit\"]\nE --> E1[\"Market<br/>44M renters x $1,400 x 12 = $740B<br/>30% can be paid online = $222B<br/>2% share = $4.4B, about 260K users\"]\nE --> E2[\"Profit a year<br/>Net revenue 0.8% = $35.2M<br/>Losses 0.1% = $4.4M, running cost $8M<br/>Profit = $22.8M\"]\nE --> E3[\"Cost and payback<br/>Build $14M + marketing $15.6M = $29.6M<br/>Payback about 16 months<br/>Break-even at 68K users\"]\nE1 --> A[\"A: Assess<br/>The key number is net revenue per dollar<br/>At 0.28% profit is zero<br/>If 30% of volume is not new, payback is 2.2 years\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Enter, but in stages.<br/>Pilot in 2 or 3 cities with a partner.<br/>Scale only if net revenue is 0.7% or more and fraud is 0.1% or less\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "gates",
-          "title": "How we decide: four gates",
-          "note": "Each gate is a yes or no. If any answer is no, the plan changes before more money is spent.",
-          "code": "flowchart TD\nQ[\"Should we enter this new category?\"] --> G1{\"1 Is the market big enough?\"}\nG1 -->|\"No: small or shrinking\"| X1[\"Stop. Look at a different category\"]\nG1 -->|\"Yes: $740B spend, $222B reachable\"| G2{\"2 Can we win a share?\"}\nG2 -->|\"No: no edge, strong rivals\"| X2[\"Stop, or partner instead of building\"]\nG2 -->|\"Yes: rewards, trusted brand, existing customers\"| G3{\"3 Do the economics work?\"}\nG3 -->|\"No: net revenue per dollar too low\"| X3[\"Redesign pricing and rewards, then re-test\"]\nG3 -->|\"Yes: about $23M a year at full size\"| G4{\"4 Can we manage the risks?\"}\nG4 -->|\"No: fraud, regulation, cannibalization\"| X4[\"Fix the risk first, or limit the pilot\"]\nG4 -->|\"Yes\"| GO[\"Enter in stages: pilot, gates, then scale\"]\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef stop fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef go fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclass Q,G1,G2,G3,G4 q;\nclass X1,X2,X3,X4 stop;\nclass GO go;"
-        },
-        {
-          "id": "money",
-          "title": "The money: base case, break-even and what-ifs",
-          "note": "Green is good, orange is a weaker case, red is the danger case.",
-          "code": "flowchart TD\nB[\"Assumed: 260K users in year 3, each paying about $16.8K of rent a year<br/>Net revenue 0.8% of volume, losses 0.1%, running cost $8M a year\"] --> BASE[\"Base case<br/>Volume $4.4B x (0.8% - 0.1%) = $30.8M<br/>minus $8M running cost = +$22.8M a year\"]\n\nB --> INV[\"Up-front cost<br/>Build $15M + marketing 260K x $60 = $15.6M<br/>Total about $31M\"]\nBASE --> PB[\"Payback<br/>$31M / $22.8M a year = about 1.4 years<br/>about 16 months at full size\"]\nINV --> PB\n\nB --> BE[\"Break-even volume<br/>$8M / 0.7% = about $1.14B<br/>1.14B / 16.8K = about 68K users\"]\n\nB --> S1[\"Net revenue falls to 0.5%<br/>$4.4B x 0.4% = $17.6M, minus $8M = +$9.6M\"]\nB --> S2[\"Net revenue falls to 0.3%<br/>$4.4B x 0.2% = $8.8M, minus $8M = about +$0.8M\"]\nB --> S3[\"Share only 1% = $2.2B<br/>$2.2B x 0.7% = $15.4M, minus $8M = +$7.4M\"]\nB --> S4[\"Only 70% of volume is new (30% already on our cards)<br/>$3.08B x 0.7% = $21.6M, minus $8M = +$13.6M\"]\n\nPB --> R[\"Enter in stages<br/>The key number to prove in the pilot is net revenue per dollar\"]\nBE --> R\nS1 --> R\nS2 --> R\nS3 --> R\nS4 --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B,BASE,INV base;\nclass PB,BE good;\nclass S1,S3,S4 mid;\nclass S2 bad;\nclass R out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Market size<br/>44M renters x $1,400 x 12 months<br/>= <b>$740B a year</b>\"]\nA --> B[\"2 Reachable<br/>$740B x 30% paid online<br/>= <b>$222B</b>\"]\nB --> C[\"3 Our share, year 3<br/>$222B x 2%<br/>= <b>$4.4B volume</b><br/>$4.4B / $16.8K per user = <b>260K users</b>\"]\nC --> D1[\"4 Net revenue<br/>$4.4B x 0.8%<br/>= <b>$35.2M</b>\"]\nC --> D2[\"4 Losses<br/>$4.4B x 0.1%<br/>= <b>$4.4M</b>\"]\nD1 --> E[\"5 Profit a year<br/>$35.2M - $4.4M - $8M running<br/>= <b>$22.8M</b>\"]\nD2 --> E\nC --> F[\"6 Up-front cost<br/>Build $14M + 260K x $60 = $15.6M<br/>= <b>$29.6M</b>\"]\nE --> G[\"7 Payback<br/>$29.6M / $22.8M = 1.3 years<br/>= <b>about 16 months</b>\"]\nF --> G\nG --> H1[\"Check: break-even users<br/>$117.60 net per user x u = $8M<br/>u = <b>68K</b>\"]\nG --> H2[\"Check: net revenue for profit of zero<br/>$4.4B x (r - 0.1%) = $8M<br/>r = <b>0.28%</b>\"]\nG --> H3[\"What if 30% of volume is not new<br/>$4.4B x 70% x 0.7% - $8M = <b>$13.6M</b><br/>Payback <b>2.2 years</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,C n1;\nclass D1,D2 n2;\nclass E,F n3;\nclass G n4;\nclass H1,H2,H3 n1;"
         }
       ],
       "exampleTables": [
@@ -3038,195 +4756,291 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Ask what the category is, who the company is, and what success means",
-              "The answer changes a lot between rent, healthcare and B2B",
-              "Assume rent; success = profit after build, marketing and losses"
+              "Say the question back. Pick the category (rent). Say what success means. Ask for the market and money numbers",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Rent by card. Success = profit after build, marketing and losses, payback in 2 years. Budget about $30M"
             ],
             [
               "L Lay out",
-              "Say your 3 areas before calculating",
-              "Shows a plan and lets the interviewer steer",
-              "Market, right to win, economics and risk"
+              "Say your three questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "How big is the market? Can we win? Do the economics and risks work?"
             ],
             [
               "E Evaluate",
-              "Size the market top-down, then work out the money per year",
-              "A big market is not the same as a profitable one",
-              "$740B spend, $4.4B our volume, about $23M profit"
+              "Size the market step by step, then work out profit and cost, with units",
+              "The interview has several separate math problems, often with algebra",
+              "$740B -> $222B -> $4.4B -> $22.8M profit a year on $29.6M up front"
             ],
             [
               "A Assess",
-              "Turn numbers into payback, break-even and the biggest risk",
-              "Shows you know what could break the plan",
-              "16-month payback; profit depends on net revenue per dollar"
+              "Say what the numbers mean: payback, break-even, and what could break the case",
+              "Turns numbers into a business view",
+              "Payback is about 16 months. Net revenue per dollar is the key risk"
             ],
             [
               "R Recommend",
-              "Give a decision with stages and stop or go gates",
-              "Interviewers want a decision, not a list",
-              "Pilot first, scale only if the gates are met"
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Enter in stages with a pilot. Alternative: partner only, or wait"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How big is rent spending?",
+              "44M households x $1,400 x 12 months",
+              "$740B a year"
+            ],
+            [
+              "2",
+              "How much can be paid online?",
+              "$740B x 30%",
+              "$222B"
+            ],
+            [
+              "3",
+              "How much would we get in year 3?",
+              "$222B x 2% share. Users: $4.4B / $16.8K a year each",
+              "$4.4B, about 260K users"
+            ],
+            [
+              "4",
+              "What is the profit a year?",
+              "$4.4B x 0.8% = $35.2M. Minus losses $4.4M. Minus running cost $8M",
+              "$22.8M"
+            ],
+            [
+              "5",
+              "What is the up-front cost?",
+              "Build $14M + marketing 260K x $60 = $15.6M",
+              "$29.6M"
+            ],
+            [
+              "6",
+              "How long to pay back?",
+              "$29.6M / $22.8M = 1.3 years x 12 months",
+              "About 16 months"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Net revenue falls from 0.8% to 0.3%",
+              "Profit $0.8M a year",
+              "$4.4B x (0.3% - 0.1%) = $8.8M, minus $8M running. About zero, so the case fails."
+            ],
+            [
+              "30% of volume is already on our cards",
+              "Profit $13.6M a year",
+              "Only 70% is new: $3.08B x 0.7% = $21.6M, minus $8M. Payback 2.2 years, longer than the 2-year goal."
+            ],
+            [
+              "Fraud loss doubles to 0.2%",
+              "Profit $18.4M a year",
+              "$4.4B x (0.8% - 0.2%) = $26.4M, minus $8M. Payback 1.6 years. Still fine."
+            ],
+            [
+              "Our share is 1%, not 2%",
+              "Profit $7.4M a year",
+              "$2.2B x 0.7% = $15.4M, minus $8M. Up-front falls to $21.8M (130K users), payback 2.9 years. Weak."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "How many users do we need to break even on running cost?",
+              "Net per user = $16,800 x (0.8% - 0.1%) = $117.60. 117.60 x u = $8M",
+              "u = 8,000,000 / 117.60 = about 68K users"
+            ],
+            [
+              "At what net revenue rate is profit zero (volume $4.4B)?",
+              "4.4B x (r - 0.1%) = $8M",
+              "r - 0.1% = 0.1818%, so r = 0.28%"
+            ],
+            [
+              "What net revenue rate gives a 2-year payback?",
+              "Profit needed = $29.6M / 2 = $14.8M. 4.4B x (r - 0.1%) - $8M = $14.8M",
+              "r - 0.1% = 0.518%, so r = 0.62%"
+            ],
+            [
+              "What market share do we need to break even?",
+              "$222B x s x 0.7% = $8M",
+              "s = 8M / 1.554B = 0.5%"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Thin margin",
+              "Rewards and processing can eat most of the 0.8% net revenue",
+              "Test pricing and rewards in the pilot. Stop if net revenue stays under 0.3%"
+            ],
+            [
+              "Cannibalization",
+              "Some rent spend is already on our cards, so it is not new money",
+              "Measure new volume in the pilot, not total volume"
+            ],
+            [
+              "Fraud and disputes",
+              "Rent payments are large, so losses can be big",
+              "Strong ID checks and limits. Keep losses near 0.1% of volume"
+            ],
+            [
+              "Strong rivals",
+              "Payment apps and landlord portals already serve this need",
+              "Partner with property managers and give renters a clear reason to use us"
+            ],
+            [
+              "Rules",
+              "A regulatory review may delay launch",
+              "Involve risk and legal from the start"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
           ],
           "rows": [
             [
-              "Transaction category",
-              "A type of spending, such as groceries, travel or rent"
-            ],
-            [
               "Volume",
-              "Total dollars that flow through our product"
+              "Total dollars paid through us. Here $4.4B in year 3"
             ],
             [
-              "Net revenue (take rate)",
-              "What we keep per dollar of volume after rewards and processing costs"
+              "Net revenue",
+              "Fee income minus rewards and processing costs. Here 0.8% of volume"
             ],
             [
-              "Interchange",
-              "The fee a merchant pays on a card payment, shared with the card issuer"
+              "TAM (total market)",
+              "The full yearly spend in the market. Here $740B"
             ],
             [
               "Cannibalization",
-              "New product revenue that simply moves from our existing products, so it is not truly new"
+              "Volume that was already on our cards, so it is not new"
             ],
             [
-              "Right to win",
-              "The reason customers would pick us over rivals"
-            ],
-            [
-              "CAC",
-              "Customer acquisition cost: marketing cost to win one user"
-            ],
-            [
-              "Payback period",
-              "Time for profit to repay the up-front cost"
+              "Payback",
+              "How long it takes for the profit to repay the up-front cost"
             ],
             [
               "Break-even",
-              "The volume where profit is exactly zero"
+              "The point where profit is zero. Here it is 68K users"
             ],
             [
               "Pilot",
-              "A small, real test in limited places before a full launch"
+              "A small test in a few places before we scale"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Total spend: 44M households x $1,400 x 12 months = about $740B a year."
+              "Stopping at the market size",
+              "Market size is only step one. Also check right to win, margin and risks."
             ],
             [
-              "2",
-              "Reachable spend: $740B x 30% pay electronically = $222B."
+              "Using total spend, not what we can reach",
+              "Only 30% can be paid online, and we win a small share."
             ],
             [
-              "3",
-              "Our volume in year 3: $222B x 2% share = $4.4B."
+              "Forgetting that volume is not profit",
+              "Profit is 0.8% minus 0.1% of volume, minus running cost."
             ],
             [
-              "4",
-              "Users: $4.4B / $16.8K per user = about 260K."
+              "Ignoring cannibalization",
+              "Ask how much of the volume is already on our cards."
             ],
             [
-              "5",
-              "Revenue: $4.4B x 0.8% = $35.2M."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "6",
-              "Losses: $4.4B x 0.1% = $4.4M."
-            ],
-            [
-              "7",
-              "Contribution before running cost: $35.2M - $4.4M = $30.8M (same as $4.4B x 0.7%)."
-            ],
-            [
-              "8",
-              "Profit a year: $30.8M - $8M running cost = $22.8M."
-            ],
-            [
-              "9",
-              "Up-front cost: $15M build + 260K x $60 = $15.6M marketing = about $31M."
-            ],
-            [
-              "10",
-              "Payback: $31M / $22.8M = about 1.4 years, roughly 16 months once at full size."
-            ],
-            [
-              "11",
-              "Break-even volume: $8M / 0.7% = about $1.14B, which is $1.14B / $16.8K = about 68K users."
-            ],
-            [
-              "12",
-              "Net revenue at 0.5%: $4.4B x 0.4% = $17.6M, minus $8M = $9.6M. At 0.3%: $4.4B x 0.2% = $8.8M, minus $8M = about $0.8M, so about zero."
-            ],
-            [
-              "13",
-              "Share only 1%: $2.2B x 0.7% = $15.4M, minus $8M = $7.4M."
-            ],
-            [
-              "14",
-              "Cannibalization: if 30% of volume already sits on our cards, new volume is $3.08B. $3.08B x 0.7% = $21.6M, minus $8M = $13.6M."
+              "Ending without a decision",
+              "Give the answer first, then two reasons, risks and an alternative."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Market entry checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical risk",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "Is the market big and growing?",
-            "Total spend, growth, how it is paid today",
-            "Spend moves to other methods",
-            "Choose a growing niche first"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Should we start taking rent by card? What does success mean? What is the budget?"
           ],
           [
-            "Can we win?",
-            "Rivals, our brand, our existing customers, data advantage",
-            "Strong incumbents, no clear edge",
-            "Partner or find a clear differentiator"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Renter households, average rent, share paid online, rewards cost, fraud rate"
           ],
           [
-            "Does it make money?",
-            "Net revenue per dollar, losses, running cost",
-            "Rewards eat the margin",
-            "Redesign rewards and pricing"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume we win 2% of the online rent market in year 3'"
           ],
           [
-            "Is it new money?",
-            "How much volume is already on our cards",
-            "Cannibalization",
-            "Measure incremental volume in the pilot"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "$4.4B x (r - 0.1%) = $8M, so r = 0.28%"
           ],
           [
-            "Can we run it?",
-            "Compliance, fraud controls, partners, tech",
-            "Fraud and regulation",
-            "Start small with strong controls"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we enter rent payments in stages, starting with a pilot'"
           ],
           [
-            "Build, buy or partner?",
-            "Speed, cost, control",
-            "Slow or expensive build",
-            "Partner for the pilot"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Thin margin, cannibalization, fraud, rivals; pilot gates at 0.7% net revenue and 0.1% fraud"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Partner only and do not build, or wait if the pilot shows margin under 0.62%"
           ]
         ]
       }
@@ -3234,27 +5048,32 @@ DATA.cases = [
     "followups": [
       {
         "q": "What if the category is already crowded?",
-        "a": "Then the question is right to win. I would look for a clear edge such as better rewards for renters or ties with property managers, or choose to partner instead of building."
+        "a": "Then the question is right to win. I would look for a clear edge such as better rewards for renters or ties with property managers, or I would partner instead of building."
       },
       {
         "q": "How do you handle cannibalization?",
-        "a": "Measure how much volume is already on our cards. If 30% is, only 70% is new volume, so profit falls from about $23M to about $14M a year. I would measure this in the pilot."
+        "a": "Measure how much volume is already on our cards. If 30% is, only 70% is new, so profit falls from $22.8M to about $13.6M a year and payback is 2.2 years. I would measure this in the pilot."
       },
       {
         "q": "What would make you stop?",
-        "a": "Net revenue per dollar below about 0.3%, fraud well above 0.1%, or activation too low to reach break-even of about 68K users."
+        "a": "Net revenue per dollar below about 0.3%, fraud well above 0.1%, or too few users to reach break-even at about 68K."
       },
       {
         "q": "Build, buy or partner?",
         "a": "Partner for the pilot to learn quickly and cheaply, then decide on build or buy once the economics are proven."
+      },
+      {
+        "q": "What is the most important number to test in the pilot?",
+        "a": "Net revenue per dollar after rewards. We need about 0.62% for a two-year payback, and I would want 0.7% before scaling."
       }
     ],
     "pitfalls": [
-      "Stopping at market size. A big market is not a profitable market; always reach the economics.",
-      "Using 100% of the market. Narrow to reachable spend, then to a realistic share.",
-      "Forgetting cannibalization. Count only new volume.",
-      "No decision. End with enter, do not enter, or enter in stages, plus the checkpoints.",
-      "Hiding assumptions. Say each number is an assumption and ask for the real one."
+      "Stopping at the market size. Market size is only step one. Also check right to win, margin and risks.",
+      "Using total spend, not what we can reach. Only 30% can be paid online, and we win a small share.",
+      "Forgetting that volume is not profit. Profit is 0.8% minus 0.1% of volume, minus running cost.",
+      "Ignoring cannibalization. Ask how much of the volume is already on our cards.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Ending without a decision. Give the answer first, then two reasons, risks and an alternative."
     ]
   },
   {
@@ -3270,71 +5089,87 @@ DATA.cases = [
     "prompt": "We launched a new savings account product 6 months ago and adoption has been slower than projected. How would you diagnose what is going wrong?",
     "clarify": [
       {
-        "q": "What does adoption mean here?",
-        "a": "A customer opens the account and funds it. Sign-ups with no deposit do not count."
+        "q": "What does adoption mean here, and what is the goal?",
+        "a": "A customer opens the account and funds it. Sign-ups with no deposit do not count. We want to find the cause of the gap and decide to keep, fix or stop."
       },
       {
-        "q": "What was the plan?",
-        "a": "200,000 funded accounts at 6 months, from about 5 million eligible existing customers. Actual is about 120,000."
+        "q": "What was the plan, and what is the actual?",
+        "a": "The plan was 200K funded accounts at 6 months, from about 5M eligible existing customers. Actual is about 120K."
       },
       {
         "q": "Has anything changed since launch?",
-        "a": "Competitors raised their savings rates a little. We have not changed our rate, and marketing has been light."
+        "a": "Rivals raised their savings rates a little. We have not changed our rate, and marketing has been light."
       },
       {
         "q": "Do we have funnel data?",
-        "a": "Yes: awareness from surveys, plus counts of application starts, completions and funded accounts."
+        "a": "Yes. Awareness from surveys is 30% of eligible customers (plan 40%). 20% of aware customers start an application, as planned. 40% of starters finish and fund (plan 50%)."
       },
       {
-        "q": "What is an account worth?",
-        "a": "Assume about a 1.5% net interest margin on balances and about $40 of marketing per new account."
+        "q": "What are the balances?",
+        "a": "Average balance is about $6K. The plan was $8K. Assume all deposits are new money for now."
+      },
+      {
+        "q": "What is an account worth, and what does it cost?",
+        "a": "Assume a 1.5% net interest margin on balances, so about $90 a year at a $6K balance. Marketing costs about $40 per new account."
+      },
+      {
+        "q": "What is the timeline and what decision is needed?",
+        "a": "We need a diagnosis and a plan now, with a checkpoint at month 9. Keep going if on pace for 160K accounts."
       }
     ],
     "tables": [
       {
-        "title": "The funnel (illustrative numbers)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
-          "Stage",
-          "Plan",
-          "Actual",
-          "What it means"
+          "Item",
+          "Value",
+          "Note"
         ],
         "rows": [
           [
+            "Goal and timeline",
+            "Find the cause of low adoption, then keep, fix or stop",
+            "Product launched 6 months ago"
+          ],
+          [
             "Eligible customers",
-            "5.0M",
-            "5.0M",
-            "Existing customers who could open it"
+            "5.0M existing customers",
+            "Adoption = account opened and funded"
           ],
           [
             "Aware",
-            "40% = 2.0M",
-            "30% = 1.5M",
-            "Have seen or heard about the account"
+            "Plan 40% = 2.0M. Actual 30% = 1.5M",
+            "From surveys"
           ],
           [
             "Start an application",
-            "20% of aware = 400K",
-            "20% of aware = 300K",
-            "Interested enough to begin"
+            "20% of aware in both",
+            "Plan 400K. Actual 300K"
           ],
           [
             "Finish and fund",
-            "50% = 200K",
-            "40% = 120K",
-            "Account opened with money in it (this is 'adoption')"
+            "Plan 50%. Actual 40%",
+            "Plan 200K accounts. Actual 120K"
           ],
           [
             "Average balance",
-            "$8K",
-            "$6K",
-            "Deposits per account"
+            "Plan $8K. Actual $6K",
+            "Deposits $1.6B plan, $0.72B actual"
           ],
           [
-            "Total deposits",
-            "$1.6B",
-            "$0.72B",
-            "Accounts x balance"
+            "Margin",
+            "1.5% a year on balances",
+            "$6K x 1.5% = $90 a year per account"
+          ],
+          [
+            "Marketing cost",
+            "$40 per new account",
+            "Assumed"
+          ],
+          [
+            "What changed",
+            "Rivals raised rates a little. Our rate is the same. Marketing is light",
+            "Assume all deposits are new money for now"
           ]
         ]
       }
@@ -3343,38 +5178,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: we launched a savings account six months ago and have fewer funded accounts than planned. I will define adoption as a funded account. What was the plan, and has anything changed since launch, like rates or marketing?"
+          "So we launched a savings account six months ago and have fewer customers than planned. I will define adoption as a funded account, because sign-ups with no deposit do not count. Can I ask what the plan was, and whether anything changed since launch, like rates or marketing? Do we have funnel data, and what is an account worth? If not, I will assume a 1.5% margin and $40 of marketing per account."
         ],
         [
           "L: Lay out",
-          "I would look at three things. First, was the plan realistic? Second, where in the funnel do customers drop out: aware, start, finish, fund? Third, why, and what is the fix worth? Then I would decide whether to keep, fix or stop."
+          "I will ask three questions. Was the plan realistic? Where in the funnel do customers drop out: aware, start, finish, fund? And what is the fix worth? Then I will decide whether to keep, fix or stop."
         ],
         [
           "E: Evaluate",
-          "Assuming a plan of 200K accounts from 5M customers at 40% aware, 20% start and 50% finish, the actual is 30% aware and 40% finish, so 120K accounts, 60% of plan. Awareness and application drop-off each explain 40K accounts."
+          "The plan was 5M eligible customers, 40% aware, 20% start and 50% finish, which is 200K accounts. Actual is 30% aware, 20% start and 40% finish. That is 5M x 30% x 20% x 40%, so 120K accounts, or 60% of plan. If we fix awareness to 40%, we get 160K, so 40K more. If we then fix the finish rate to 50%, we get 200K, another 40K. Balances are also $6K, not $8K."
         ],
         [
           "A: Assess",
-          "At about $90 a year per account, each 40K accounts is about $3.6M a year. Average balance is also $6K versus $8K planned, another $3.6M. So the causes are awareness, a long application, and a weak reason to deposit more."
+          "At a 1.5% margin, an account with a $6K balance earns $90 a year. So each 40K accounts is worth $3.6M a year. The balance gap is 200K accounts x $2K x 1.5%, which is $6.0M. In total we earn $10.8M against a plan of $24M, a gap of $13.2M. So there are three causes: awareness, a long application and weak reasons to deposit more. The $40 marketing cost pays back in about 5 months."
         ],
         [
           "R: Recommend",
-          "I would fix the application flow first because it is cheapest, promote the account in the app to existing customers, and test a rate or bonus on a small group. At month 9, if we are on pace for 160K or more accounts, I would keep going. If not, I would rethink the offer or stop."
+          "I recommend we fix the product, not stop it. Two reasons. The application fix is cheap and quick, and each 40K accounts adds $3.6M a year. And the $40 cost per account pays back in about 5 months. So I would shorten the application, promote the account in the app to existing customers, and test a small rate bonus on a small group. At month 9, if we are on pace for 160K accounts, we continue. Risks are that the plan was too high and that deposits are not new money. If not on pace, I would reset the target or stop."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Problem: a savings account launched 6 months ago<br/>has fewer customers than planned\"]\nC --> C2[\"Define terms: adoption = funded account (money deposited)<br/>Plan = 200K accounts at 6 months\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Was the plan realistic?<br/>Or is the product really underperforming?\"]\nL --> L2[\"2 Where do customers drop out?<br/>Aware, interested, applied, funded\"]\nL --> L3[\"3 Why, and what is the fix worth?<br/>Then decide: keep, fix or stop\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Compare the real funnel with the plan, stage by stage\"]\nE1 --> E2[\"Plan: 5M eligible x 40% aware x 20% start x 50% finish<br/>= 200K accounts\"]\nE2 --> E3[\"Actual: 5M x 30% aware x 20% start x 40% finish<br/>= 120K accounts, 60% of plan\"]\nE3 --> E4[\"Gap of 80K: awareness explains 40K,<br/>application drop-off explains 40K\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"Causes: too few customers know about it,<br/>and 6 in 10 who start do not finish\"]\nA --> A2[\"Value: each account is worth about $90 a year,<br/>so each 40K accounts is about $3.6M a year\"]\nA --> A3[\"Also: balance per account is $6K vs $8K planned,<br/>another $3.6M a year gap\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Fix the funnel first, then decide at a checkpoint\"]\nR --> R1[\"Fix the application flow first: cheapest and fastest\"]\nR --> R2[\"Promote to existing customers in the app,<br/>and test a rate or bonus on a small group\"]\nR --> R3[\"Month 9 checkpoint: on pace for 160K+ accounts?<br/>Keep going. If not, rethink the offer or stop\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Funded accounts: 120K, plan was 200K (60%)<br/>Adoption = account opened and funded<br/>Goal: find the cause, then keep, fix or stop\"]\nC --> L[\"L: Lay out<br/>1 Was the plan realistic?<br/>2 Where do customers drop out?<br/>3 What is the fix worth?\"]\nL --> E[\"E: Evaluate<br/>Compare plan and actual, step by step\"]\nE --> E1[\"Funnel<br/>Aware: 40% plan, 30% actual<br/>Finish and fund: 50% plan, 40% actual<br/>Start rate is the same at 20%\"]\nE --> E2[\"Gap in accounts<br/>Awareness fix: +40K = 160K<br/>Finish fix: +40K = 200K<br/>Total gap 80K accounts\"]\nE --> E3[\"Gap in money<br/>Balance $6K, plan $8K<br/>Income $10.8M vs plan $24M<br/>Gap $13.2M a year\"]\nE1 --> A[\"A: Assess<br/>Three causes: awareness, long application, low balances<br/>Each 40K accounts is worth $3.6M a year<br/>Balances are worth $6.0M of the gap\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Fix first, do not stop.<br/>Shorten the application, promote in the app, test a bonus.<br/>Checkpoint at month 9: 160K accounts or rethink\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "diagnose",
-          "title": "How we found it: the diagnosis path",
-          "note": "Check the plan first, then walk the funnel. Red boxes are the stages that are off plan.",
-          "code": "flowchart TD\nQ[\"Savings account adoption is below plan. Why?\"] --> P{\"1 Was the plan realistic?\"}\nP -->|\"Check how it was built\"| P1[\"Compare with similar past launches and rivals<br/>If the plan was too high, reset it\"]\nP --> F{\"2 Where is the funnel leaking?\"}\nF --> S1[\"Aware<br/>30% vs 40% planned\"]\nF --> S2[\"Starts application<br/>20% of aware, as planned\"]\nF --> S3[\"Finishes application<br/>40% vs 50% planned\"]\nF --> S4[\"Funds the account<br/>$6K average vs $8K planned\"]\n\nS1 --> W1[\"Why: little promotion, hard to find in the app<br/>Fix: in-app banners, emails to existing customers\"]\nS3 --> W3[\"Why: long form, ID checks, no instant funding<br/>Fix: fewer steps, pre-filled details, instant transfer\"]\nS4 --> W4[\"Why: rate not competitive, no reason to move more money<br/>Fix: tiered rate or bonus, test first\"]\nS2 --> OK[\"On plan: the offer interests people who see it\"]\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef ok fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef fix fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclass Q,P,F,P1 q;\nclass S1,S3,S4 bad;\nclass S2,OK ok;\nclass W1,W3,W4 fix;"
-        },
-        {
-          "id": "worth",
-          "title": "What it is worth, and what would change the answer",
-          "note": "Green is a lever, orange is its cost, the last box is the total.",
-          "code": "flowchart TD\nB[\"Assumed: 1.5% net interest margin on balances<br/>Value per account = $6K x 1.5% = $90 a year\"] --> G[\"The gap<br/>Plan: 200K x $8K x 1.5% = $24M a year<br/>Actual: 120K x $6K x 1.5% = $10.8M a year<br/>Gap = $13.2M\"]\n\nB --> L1[\"Lever 1: awareness back to 40%<br/>2.0M x 20% x 40% = 160K accounts<br/>+40K x $90 = +$3.6M a year\"]\nB --> L2[\"Lever 2: application finish rate back to 50%<br/>2.0M x 20% x 50% = 200K accounts<br/>+40K x $90 = +$3.6M a year\"]\nB --> L3[\"Lever 3: balance back to $8K<br/>120K x $2K x 1.5% = +$3.6M a year\"]\n\nL1 --> C1[\"Cost: 40K accounts x $40 acquisition cost = $1.6M once<br/>Pays back in about 5 months\"]\nL2 --> C2[\"Cost: mostly design and tech work<br/>Cheapest lever, do it first\"]\nL3 --> C3[\"Cost of a rate rise of 0.25 points:<br/>120K x $6K x 0.25% = $1.8M a year<br/>Breaks even if it brings 20K more accounts ($1.8M / $90)\"]\n\nL1 --> T[\"All three together = $24M, a $13.2M gain<br/>More than the $10.8M sum, because the levers multiply\"]\nL2 --> T\nL3 --> T\nG --> T\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass G bad;\nclass L1,L2,L3 good;\nclass C1,C2,C3 mid;\nclass T out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Plan, 5M eligible customers<br/>5M x 40% aware = 2.0M<br/>2.0M x 20% start = 400K<br/>400K x 50% fund = <b>200K accounts</b>\"]\nB[\"2 Actual<br/>5M x 30% aware = 1.5M<br/>1.5M x 20% start = 300K<br/>300K x 40% fund = <b>120K accounts</b>\"]\nA --> C[\"3 Gap<br/>200K - 120K = <b>80K accounts</b><br/>120K is <b>60%</b> of plan\"]\nB --> C\nC --> D1[\"4 Fix awareness to 40%<br/>5M x 40% x 20% x 40% = <b>160K</b><br/>+40K accounts\"]\nD1 --> D2[\"5 Then fix finish rate to 50%<br/>2.0M x 20% x 50% = <b>200K</b><br/>+40K accounts\"]\nD2 --> E[\"6 Money a year at 1.5% margin<br/>Actual: 120K x $6K x 1.5% = <b>$10.8M</b><br/>Plan: 200K x $8K x 1.5% = <b>$24M</b>\"]\nE --> F[\"7 Where the $13.2M gap comes from<br/>Awareness 40K x $90 = <b>$3.6M</b><br/>Finish rate 40K x $90 = <b>$3.6M</b><br/>Balance 200K x $2K x 1.5% = <b>$6.0M</b>\"]\nF --> G1[\"Check: payback of $40 per account<br/>$90 a year = $7.50 a month<br/>$40 / $7.50 = <b>5.3 months</b>\"]\nF --> G2[\"Check: awareness needed for plan<br/>5M x a x 20% x 40% = 200K<br/>a = <b>50%</b>\"]\nF --> G3[\"What if only awareness and finish are fixed<br/>200K x $90 = <b>$18M</b><br/>Balance gap of $6M stays\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,C n1;\nclass D1,D2 n2;\nclass E n3;\nclass F n4;\nclass G1,G2,G3 n1;"
         }
       ],
       "exampleTables": [
@@ -3389,185 +5218,291 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define adoption and the plan; ask what has changed since launch",
-              "Adoption could mean signed up, funded or active",
-              "Adoption = funded account; plan was 200K at 6 months"
+              "Say the problem back. Define adoption. Ask for the plan, the funnel and what changed. Say what you will assume",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Adoption = funded account. Plan 200K, actual 120K. Rivals raised rates, we did not, marketing was light"
             ],
             [
               "L Lay out",
-              "Say your 3 questions before calculating",
-              "Shows a plan and lets the interviewer steer",
-              "Was the plan realistic? Where do customers drop out? Why, and what is the fix worth?"
+              "Say your questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Was the plan realistic? Where do customers drop out? What is the fix worth?"
             ],
             [
               "E Evaluate",
-              "Put actual next to plan for every funnel stage",
-              "The total hides which stage is failing",
-              "Awareness 30% vs 40%, finish rate 40% vs 50%; start rate on plan"
+              "Walk the funnel from eligible customers to funded accounts and compare plan with actual. Do the math out loud",
+              "Finding the step with the biggest gap tells you where to act",
+              "Awareness 30% vs 40%. Finish and fund 40% vs 50%. Balance $6K vs $8K"
             ],
             [
               "A Assess",
-              "Turn each gap into accounts and dollars",
-              "A cause without a dollar value does not drive action",
-              "Each gap is 40K accounts, about $3.6M a year"
+              "Say what each gap is worth in dollars and which fix is cheapest",
+              "Turns numbers into a business view",
+              "Each 40K accounts is $3.6M a year. The balance gap is $6.0M"
             ],
             [
               "R Recommend",
-              "Give the fix, the order, and a keep-or-stop checkpoint",
-              "Interviewers want a decision",
-              "Fix application first, promote, pilot a rate test; month 9 gate"
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Fix the product first. Checkpoint at month 9. Alternative: reset the target or stop"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How many accounts did we plan?",
+              "5M x 40% aware x 20% start x 50% fund",
+              "200K"
+            ],
+            [
+              "2",
+              "How many do we have?",
+              "5M x 30% aware x 20% start x 40% fund",
+              "120K, which is 60% of plan"
+            ],
+            [
+              "3",
+              "What does fixing awareness add?",
+              "5M x 40% x 20% x 40% = 160K, so 160K - 120K",
+              "+40K accounts"
+            ],
+            [
+              "4",
+              "What does fixing the finish rate add?",
+              "2.0M aware x 20% x 50% = 200K, so 200K - 160K",
+              "+40K accounts"
+            ],
+            [
+              "5",
+              "What are the accounts worth a year?",
+              "120K x $6K x 1.5% = $10.8M. Plan: 200K x $8K x 1.5% = $24M",
+              "Gap $13.2M"
+            ],
+            [
+              "6",
+              "Where does the gap come from?",
+              "40K x $90 + 40K x $90 + 200K x ($8K - $6K) x 1.5%",
+              "$3.6M + $3.6M + $6.0M"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Awareness rises to 40% (others stay)",
+              "160K accounts, $14.4M a year",
+              "160K x $90. Cheap in-app promotion could do this."
+            ],
+            [
+              "Finish rate rises to 50% (others stay)",
+              "150K accounts, $13.5M a year",
+              "1.5M x 20% x 50% = 150K, then x $90. A shorter application is the cheapest fix."
+            ],
+            [
+              "Average balance rises to $8K (others stay)",
+              "120K accounts, $14.4M a year",
+              "120K x $120. Needs a reason to deposit more, such as a bonus."
+            ],
+            [
+              "All three reach plan",
+              "200K accounts, $24M a year",
+              "200K x $120. This is the full plan."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What awareness do we need to reach the plan of 200K (other rates as now)?",
+              "5M x a x 20% x 40% = 200K",
+              "400,000 a = 200,000, so a = 50%"
+            ],
+            [
+              "What finish rate do we need to reach 200K at today's 30% awareness?",
+              "1.5M x 20% x f = 200K",
+              "300,000 f = 200,000, so f = 66.7%. Too high, so we need other fixes too"
+            ],
+            [
+              "What awareness gives the month 9 checkpoint of 160K (finish at 40%)?",
+              "5M x a x 20% x 40% = 160K",
+              "a = 160,000 / 400,000 = 40%"
+            ],
+            [
+              "What balance repays the $40 marketing cost in one year?",
+              "B x 1.5% = $40",
+              "B = 40 / 0.015 = $2,667"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "The plan was too high",
+              "The product may be fine and the target too optimistic",
+              "Compare with past launches and rivals. Reset the target if needed"
+            ],
+            [
+              "Not new money",
+              "Deposits may just move from our checking or other savings accounts",
+              "Measure only new money, or money that would have left"
+            ],
+            [
+              "Rate war",
+              "Rivals raised their rates and customers may move",
+              "Test a small bonus or tiered rate. Do not match every rival"
+            ],
+            [
+              "Fixes do not work",
+              "A shorter application may not lift the finish rate",
+              "Run quick tests with a holdout group and look at results in weeks"
+            ],
+            [
+              "Bonus hunters",
+              "Customers may take a bonus and leave",
+              "Require a minimum balance for 90 days"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
           ],
           "rows": [
             [
-              "Adoption",
-              "How many customers actually use the product; here, accounts opened and funded"
+              "Funded account",
+              "An account that is opened and has money in it. This is our adoption"
             ],
             [
               "Funnel",
-              "The steps customers pass through: aware, interested, applied, funded"
-            ],
-            [
-              "Conversion rate",
-              "The share of people who move from one step to the next"
-            ],
-            [
-              "Drop-off",
-              "People who leave the funnel at a step"
+              "Steps customers pass through: aware, start, finish, fund"
             ],
             [
               "Net interest margin",
-              "What the bank earns on balances after paying the customer interest"
+              "What we earn on balances minus what we pay. Here 1.5% a year"
             ],
             [
-              "Acquisition cost",
-              "Marketing cost to win one account"
-            ],
-            [
-              "Go / no-go checkpoint",
-              "A planned date with a clear test for whether to keep investing or stop"
+              "Balance",
+              "Money in the account. Plan $8K, actual $6K"
             ],
             [
               "Cannibalization",
-              "Money that simply moves from the bank's other accounts, so it is not truly new"
+              "Money that moves from our other accounts into this one, so it is not new"
+            ],
+            [
+              "Holdout group",
+              "A group that does not get the change, so we can see what the change really did"
+            ],
+            [
+              "Checkpoint",
+              "A date to decide keep, fix or stop. Here month 9"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Plan: 5M x 40% aware = 2.0M; x 20% start = 400K; x 50% finish = 200K accounts."
+              "Blaming the product at once",
+              "First check whether the plan was realistic."
             ],
             [
-              "2",
-              "Actual: 5M x 30% aware = 1.5M; x 20% start = 300K; x 40% finish = 120K accounts."
+              "Looking at one blended number",
+              "Walk the funnel and find the step with the biggest gap."
             ],
             [
-              "3",
-              "Adoption versus plan: 120K / 200K = 60%. The gap is 80K accounts."
+              "Counting accounts only",
+              "Also look at balances. A $2K gap in balance is worth $6.0M a year."
             ],
             [
-              "4",
-              "Fix awareness only: 2.0M x 20% x 40% = 160K, which adds 40K accounts."
+              "Counting all deposits as new money",
+              "Check how much came from our own other accounts."
             ],
             [
-              "5",
-              "Fix finish rate as well: 2.0M x 20% x 50% = 200K, which adds another 40K. Together they close the 80K gap."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "6",
-              "Value per account: $6K x 1.5% = $90 a year."
-            ],
-            [
-              "7",
-              "Each 40K accounts: 40K x $90 = $3.6M a year."
-            ],
-            [
-              "8",
-              "Balance gap: 120K x ($8K - $6K) = $240M more deposits; x 1.5% = $3.6M a year."
-            ],
-            [
-              "9",
-              "Plan value: 200K x $8K x 1.5% = $24M a year. Actual: 120K x $6K x 1.5% = $10.8M. Gap = $13.2M."
-            ],
-            [
-              "10",
-              "Awareness campaign: 40K accounts x $40 = $1.6M one-time; payback $1.6M / $3.6M a year = about 5 months."
-            ],
-            [
-              "11",
-              "Rate rise of 0.25 points: 120K x $6K x 0.25% = $1.8M a year. Break-even: $1.8M / $90 = 20K extra accounts."
-            ],
-            [
-              "12",
-              "All three levers together restore the $24M plan, a $13.2M gain, which is more than the $10.8M sum because accounts and balances multiply."
+              "Ending without a decision",
+              "Give the answer first, then two reasons, risks and an alternative."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Adoption diagnosis checklist",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical cause",
-          "Fix"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "Was the plan realistic?",
-            "Past launches, rival products, market size",
-            "Plan assumed best case",
-            "Reset the target to a realistic range"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Adoption is below plan. What does adoption mean, and what was the plan?"
           ],
           [
-            "Do customers know?",
-            "Awareness by channel and segment",
-            "Little promotion, hidden in the app",
-            "In-app banners, emails, branch mention"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Funnel counts, plan versus actual, balances, margin, marketing cost, rival moves"
           ],
           [
-            "Are they interested?",
-            "Click and start rates",
-            "Weak offer or unclear benefit",
-            "Clearer message, test the rate"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume all deposits are new money for now'"
           ],
           [
-            "Do they finish?",
-            "Drop-off by application step",
-            "Long form, ID checks, no instant funding",
-            "Fewer steps, pre-filled data, instant transfer"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "5M x a x 20% x 40% = 200K, so a = 50%"
           ],
           [
-            "Do they deposit enough?",
-            "Balance after 30 and 90 days",
-            "Rate not competitive, no reason to move money",
-            "Tiered rate or bonus, tested first"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we fix the product, not stop it, and check again at month 9'"
           ],
           [
-            "Is the money new?",
-            "Share of deposits moved from our other accounts",
-            "Cannibalization",
-            "Measure new money only"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Plan too high, not new money, rate war; test with a holdout group"
           ],
           [
-            "Did something change?",
-            "Rate moves, rival launches, outages",
-            "Competitors raised rates",
-            "Match selectively or differentiate"
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Reset the target to 150K, or stop if the month 9 pace is below 160K"
           ]
         ]
       }
@@ -3579,7 +5514,7 @@ DATA.cases = [
       },
       {
         "q": "How would you decide whether to keep or stop the product?",
-        "a": "Set a checkpoint, for example month 9: if funded accounts are on pace for 160K or more and balances are rising, continue. If not, rethink the offer or stop."
+        "a": "Set a checkpoint at month 9. If funded accounts are on pace for 160K or more and balances are rising, continue. If not, rethink the offer or stop."
       },
       {
         "q": "How do you know the deposits are new money?",
@@ -3588,14 +5523,19 @@ DATA.cases = [
       {
         "q": "What would you test first?",
         "a": "The application flow, because it is cheapest to change and the effect shows in weeks. Then a small rate or bonus test with a holdout group."
+      },
+      {
+        "q": "Should we match the rivals' higher rates?",
+        "a": "Not across the board. Test a small bonus or a tiered rate on a small group first. Each extra 0.1% of rate on $0.72B of balances costs about $0.72M a year, so we need new money to pay for it."
       }
     ],
     "pitfalls": [
-      "Guessing a cause. Follow the funnel and let the numbers show the stage.",
-      "Not questioning the plan. Sometimes the target was too high.",
-      "Counting sign-ups, not funded accounts. Adoption means money in the account.",
-      "Ignoring balances. Many small accounts can still miss the deposit goal.",
-      "No decision. End with keep, fix or stop and a dated checkpoint."
+      "Blaming the product at once. First check whether the plan was realistic.",
+      "Looking at one blended number. Walk the funnel and find the step with the biggest gap.",
+      "Counting accounts only. Also look at balances. A $2K gap in balance is worth $6.0M a year.",
+      "Counting all deposits as new money. Check how much came from our own other accounts.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Ending without a decision. Give the answer first, then two reasons, risks and an alternative."
     ]
   },
   {
@@ -3611,8 +5551,8 @@ DATA.cases = [
     "prompt": "Our small business lending team wants to launch a new line of credit product for businesses under $500K in revenue. How would you evaluate the opportunity?",
     "clarify": [
       {
-        "q": "What is the product?",
-        "a": "A revolving line of credit: a limit the business can borrow from, repay and borrow again. Assume a $25K typical limit."
+        "q": "What is the product, and what is the goal?",
+        "a": "A revolving line of credit: a limit the business can borrow from, repay and borrow again. Assume a $25K typical limit. We want a go or no-go decision."
       },
       {
         "q": "Who is the customer?",
@@ -3623,27 +5563,40 @@ DATA.cases = [
         "a": "Profit after credit losses, with payback inside two years."
       },
       {
-        "q": "What do we know about rivals and risk?",
-        "a": "Online lenders are fast but expensive. Our past small business loans lost about 4 to 6% of balances. Treat all figures as working assumptions."
+        "q": "How big is the market?",
+        "a": "About 25M small businesses. About 20% use credit. We would approve about 30% of those. Assume we win 2% of that group by year 3."
       },
       {
-        "q": "Any constraints?",
-        "a": "About $15M of up-front investment, and risk and legal must approve the credit policy."
+        "q": "How much do customers borrow and what do we earn?",
+        "a": "On average 40% of the limit is used, so $10K. We charge about 15% and our funding cost is 4%."
+      },
+      {
+        "q": "What do we know about risk and cost?",
+        "a": "Past small business loans lost about 4 to 6% of balances. Assume 5%. Servicing is $120 per customer a year and fixed cost is $5M a year."
+      },
+      {
+        "q": "What are the constraints?",
+        "a": "About $15M of up-front investment: $6M to build and about $300 to acquire each customer. Risk and legal must approve the credit policy."
       }
     ],
     "tables": [
       {
-        "title": "The numbers we will use (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
-          "Number",
+          "Item",
           "Value",
-          "How we got it"
+          "Note"
         ],
         "rows": [
           [
+            "Goal and timeline",
+            "Profit after credit losses. Payback inside 2 years",
+            "Revolving line, $25K typical limit"
+          ],
+          [
             "Small businesses under $500K revenue",
             "25M",
-            "Assumed, includes one-person businesses"
+            "Assumed. Includes one-person businesses"
           ],
           [
             "Use credit",
@@ -3653,7 +5606,7 @@ DATA.cases = [
           [
             "We would approve",
             "30% of 5M = 1.5M",
-            "Assumed from our risk rules"
+            "From our risk rules"
           ],
           [
             "Our share in year 3",
@@ -3661,29 +5614,24 @@ DATA.cases = [
             "1.5M x 2%"
           ],
           [
-            "Credit limit and usage",
-            "$25K limit, 40% used = $10K balance",
+            "Balance",
+            "$25K limit x 40% used = $10K",
             "Assumed"
           ],
           [
-            "Interest rate / funding cost",
-            "15% / 4%",
-            "Assumed. Spread = 11%"
+            "Interest rate and funding cost",
+            "15% and 4%",
+            "Spread 11% = $1,100 a year per customer"
           ],
           [
-            "Losses (unpaid balances)",
-            "5% of balances",
-            "Assumed"
+            "Losses",
+            "5% of balances = $500 a customer",
+            "Past loans lost 4 to 6%"
           ],
           [
-            "Servicing cost",
-            "$120 per customer a year",
-            "Assumed"
-          ],
-          [
-            "Fixed cost",
-            "$5M a year",
-            "Assumed team, tech and compliance"
+            "Servicing and fixed cost",
+            "$120 per customer a year. $5M a year fixed",
+            "Team, tech and compliance"
           ],
           [
             "Up-front cost",
@@ -3697,38 +5645,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: should our small business lending team launch a line of credit for businesses under $500K revenue? I will treat success as profit after credit losses with payback inside two years. Is that right, and is this for existing customers or new ones too?"
+          "So the small business lending team wants to launch a line of credit for businesses under $500K revenue. I will treat it as a revolving line with a typical $25K limit, starting with our existing small business customers. I will define success as profit after credit losses, with payback inside two years. Can I ask how many businesses there are, what rates and loss rates look like, and what it costs to build and run? If not, I will assume."
         ],
         [
           "L: Lay out",
-          "I would look at three things. First, the market: how many businesses need this and would qualify. Second, our right to win: why us, and can we judge who repays. Third, the economics and risk: does each customer make money after losses?"
+          "I will look at three things. First, the market: how many businesses need this and would qualify. Second, our right to win: why us, and can we judge who will repay. Third, the economics and risk: does each customer make money after losses?"
         ],
         [
           "E: Evaluate",
-          "Assuming 25M small businesses, 20% use credit and we would approve 30%, that is 1.5M. A 2% share is 30K customers. Each carries a $10K balance and earns about $1,100 after funding costs, minus $500 of losses and $120 of servicing, so $480. That is $14.4M, minus $5M fixed, about $9.4M a year."
+          "There are 25M small businesses. About 20% use credit, so 5M. We would approve 30%, so 1.5M. A 2% share is 30K customers. Each uses 40% of a $25K limit, so a $10K balance. We earn 15% and fund at 4%, so 11%, or $1,100. Losses are 5%, so $500. Servicing is $120. That leaves $480 per customer. 30K x $480 is $14.4M. Minus $5M fixed cost, profit is $9.4M a year."
         ],
         [
           "A: Assess",
-          "The $15M up-front cost pays back in about 19 months, and we break even at about 10K customers. The big risk is losses: at 8% the profit is about zero, and in a downturn it turns negative. So the number to prove is the loss rate."
+          "The up-front cost is $6M to build plus 30K x $300 to acquire, so $15M. That pays back in about 19 months. We break even at about 10K customers. The big risk is losses. At 8.1% profit is zero. For a two-year payback we need losses at 5.6% or lower. In a downturn at 10%, we would lose about $5.6M a year."
         ],
         [
           "R: Recommend",
-          "I would go in stages: a pilot with about 2,000 existing customers and small limits of $5K to $10K. At six months, I would check losses under 6%, usage of 35% or more, and acquisition cost of $300 or less. If we meet them, we raise limits and open to new customers. If not, we redesign or stop."
+          "I recommend we go, but in stages. Two reasons. The numbers work, with $9.4M a year and a 19-month payback. And we can start with existing customers, where we see cash flow in their account and so can judge who repays. I would run a pilot with about 2,000 customers and limits of $5K to $10K. At six months we check three things: losses of 5.5% or less, usage of 36% or more, and acquisition cost of $300 or less. If we pass, we raise limits and open to new customers. Risks are losses and a downturn, so I would cap total exposure. If the pilot loss rate is above 5.6%, I would partner with an online lender instead of lending ourselves."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Decision: should the small business lending team launch<br/>a line of credit for businesses under $500K revenue?\"]\nC --> C2[\"Define terms: line of credit = borrow up to a limit, repay, borrow again<br/>Success = profit after losses, with payback inside 2 years\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Market: how many businesses need and<br/>qualify for this, and could we reach them?\"]\nL --> L2[\"2 Right to win: why us, and can we judge<br/>who will repay?\"]\nL --> L3[\"3 Economics and risk: does each customer<br/>make money after losses?\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Size the market, then the profit per customer\"]\nE1 --> E2[\"Market: 25M businesses x 20% use credit = 5M<br/>x 30% we would approve = 1.5M. Our 2% share = 30K customers\"]\nE2 --> E3[\"Per customer: $10K balance earns $1,100 after funding cost<br/>minus $500 losses and $120 servicing = $480 a year\"]\nE3 --> E4[\"Total: 30K x $480 = $14.4M, minus $5M fixed cost<br/>= about $9.4M a year\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"Payback: $15M up-front cost pays back<br/>in about 19 months\"]\nA --> A2[\"Break-even: about 10K customers,<br/>about 35% of the target\"]\nA --> A3[\"Biggest risk: losses. At an 8% loss rate<br/>profit is about zero. In a downturn it turns negative\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Go, but in stages\"]\nR --> R1[\"Pilot with about 2,000 existing customers,<br/>small limits of $5K to $10K\"]\nR --> R2[\"Go or stop gates at 6 months: losses under 6%,<br/>usage 35% or more, acquisition cost $300 or less\"]\nR --> R3[\"Raise limits and open to new customers only<br/>after the gates are met\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Launch a small business credit line?<br/>Limit $25K, businesses under $500K revenue<br/>Success = profit after losses, payback in 2 years\"]\nC --> L[\"L: Lay out<br/>1 Is the market big enough?<br/>2 Can we win and judge risk?<br/>3 Does each customer make money?\"]\nL --> E[\"E: Evaluate<br/>Size the market, then one customer, then total\"]\nE --> E1[\"Market<br/>25M businesses x 20% use credit = 5M<br/>We approve 30% = 1.5M<br/>2% share = 30K customers\"]\nE --> E2[\"One customer a year<br/>Balance $10K, spread 11% = $1,100<br/>Losses 5% = $500, servicing $120<br/>Profit = $480\"]\nE --> E3[\"Total<br/>30K x $480 = $14.4M, minus $5M fixed<br/>Profit = $9.4M a year<br/>Up-front $15M, payback 19 months\"]\nE1 --> A[\"A: Assess<br/>Break-even at about 10K customers<br/>Losses are the key risk: at 8.1% profit is zero<br/>At 10% we lose $5.6M a year\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Go, but in stages.<br/>Pilot with 2,000 existing customers, limits $5K to $10K.<br/>Scale only if losses are 5.5% or less\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "gates",
-          "title": "How we decide: four gates",
-          "note": "Each gate is a yes or no. If any answer is no, the plan changes before more money is spent.",
-          "code": "flowchart TD\nQ[\"Should we launch a line of credit for businesses under $500K revenue?\"] --> G1{\"1 Is there real demand?\"}\nG1 -->|\"No: owners use cards or personal loans\"| X1[\"Stop, or learn why before building\"]\nG1 -->|\"Yes: 5M businesses use credit, 1.5M we would approve\"| G2{\"2 Can we win and judge risk?\"}\nG2 -->|\"No: no data edge, rivals are cheaper or faster\"| X2[\"Partner, or pick a niche where we have an edge\"]\nG2 -->|\"Yes: our deposit data shows cash flow\"| G3{\"3 Does each customer make money?\"}\nG3 -->|\"No: losses and servicing eat the spread\"| X3[\"Change limits, pricing or customer type, then re-test\"]\nG3 -->|\"Yes: about $480 per customer a year\"| G4{\"4 Can we handle the risks?\"}\nG4 -->|\"No: losses spike, rules not met\"| X4[\"Limit the pilot, add controls, review with risk and legal\"]\nG4 -->|\"Yes\"| GO[\"Pilot, then gates, then scale\"]\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef stop fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef go fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclass Q,G1,G2,G3,G4 q;\nclass X1,X2,X3,X4 stop;\nclass GO go;"
-        },
-        {
-          "id": "money",
-          "title": "The money: per customer, base case and what-ifs",
-          "note": "Green is the base case, orange is a weaker case, red is the danger case.",
-          "code": "flowchart TD\nB[\"Assumed: $25K limit, 40% used = $10K balance, 15% interest rate, 4% funding cost<br/>5% of balances lost, $120 servicing, $5M fixed cost, 30K customers\"] --> U[\"Per customer per year<br/>Interest $10K x 15% = $1,500, minus funding $400 = $1,100<br/>minus losses $500, minus servicing $120 = $480\"]\nU --> T[\"Base case<br/>30K x $480 = $14.4M, minus $5M fixed = +$9.4M a year\"]\n\nB --> INV[\"Up-front cost<br/>Build $6M + 30K x $300 acquisition = $9M<br/>Total $15M\"]\nT --> PB[\"Payback<br/>$15M / $9.4M = 1.6 years<br/>about 19 months\"]\nINV --> PB\n\nU --> BE[\"Break-even customers<br/>$5M / $480 = about 10.4K<br/>35% of the 30K target\"]\n\nT --> S1[\"Losses rise to 8%<br/>$1,100 - $800 - $120 = $180 each<br/>$5.4M - $5M = +$0.4M\"]\nT --> S2[\"Interest rate only 12%<br/>$800 - $500 - $120 = $180 each<br/>+$0.4M\"]\nT --> S3[\"Usage only 25% ($6.25K balance)<br/>$255 each = $7.65M - $5M = +$2.7M\"]\nT --> S4[\"Downturn: losses double to 10%<br/>-$20 each = -$0.6M - $5M = -$5.6M\"]\n\nPB --> R[\"Go, in stages<br/>The number to prove in the pilot is the loss rate\"]\nBE --> R\nS1 --> R\nS2 --> R\nS3 --> R\nS4 --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B,U,INV base;\nclass T,PB,BE good;\nclass S1,S2,S3 mid;\nclass S4 bad;\nclass R out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Market size<br/>25M businesses x 20% use credit = 5M<br/>5M x 30% we would approve = 1.5M<br/>1.5M x 2% share = <b>30K customers</b>\"]\nA --> B[\"2 One customer, per year<br/>Balance: $25K limit x 40% used = <b>$10K</b><br/>Spread: $10K x (15% - 4%) = <b>$1,100</b>\"]\nB --> C1[\"3 Losses<br/>$10K x 5% = <b>$500</b>\"]\nB --> C2[\"3 Servicing<br/>= <b>$120</b>\"]\nC1 --> D[\"4 Profit per customer<br/>$1,100 - $500 - $120<br/>= <b>$480</b>\"]\nC2 --> D\nD --> E[\"5 Total profit a year<br/>30K x $480 = $14.4M<br/>$14.4M - $5M fixed = <b>$9.4M</b>\"]\nE --> F[\"6 Up-front cost and payback<br/>Build $6M + 30K x $300 = <b>$15M</b><br/>$15M / $9.4M = 1.6 years = <b>19 months</b>\"]\nF --> G1[\"Check: break-even customers<br/>$480 x n = $5M<br/>n = <b>10.4K</b>\"]\nF --> G2[\"Check: loss rate for 2-year payback<br/>30K x (980 - L) - $5M = $7.5M<br/>L = $563, which is <b>5.6%</b>\"]\nF --> G3[\"What if the economy gets worse<br/>Losses 10% = $1,000<br/>30K x ($1,100 - $1,000 - $120) - $5M = <b>-$5.6M</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B n1;\nclass C1,C2 n2;\nclass D,E n3;\nclass F n4;\nclass G1,G2,G3 n1;"
         }
       ],
       "exampleTables": [
@@ -3743,38 +5685,180 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define the product, the customer and what success means",
-              "'Small' and 'line of credit' can mean different things",
-              "Under $500K revenue; success = profit after losses, payback under 2 years"
+              "Say the question back. Define the product and the customer. Say what success means. Ask for market, risk and money numbers",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Revolving line, $25K limit, businesses under $500K revenue. Success = profit after losses, payback in 2 years"
             ],
             [
               "L Lay out",
-              "Say your 3 areas before calculating",
-              "Shows a plan and lets the interviewer steer",
-              "Market, right to win, economics and risk"
+              "Say your three questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Is the market big? Can we win and judge risk? Does each customer make money?"
             ],
             [
               "E Evaluate",
-              "Size the market top-down, then work out profit per customer",
-              "A big market is not a profitable one",
+              "Size the market, then one customer, then the total, with units",
+              "The interview has several separate math problems, often with algebra",
               "30K customers x $480 = $14.4M, minus $5M fixed = $9.4M"
             ],
             [
               "A Assess",
-              "Find payback, break-even and the biggest risk",
-              "Shows you know what could break the plan",
-              "19-month payback; losses are the key risk"
+              "Say what the numbers mean: payback, break-even, and the risk that matters most",
+              "Turns numbers into a business view",
+              "Payback 19 months. Break-even 10K customers. Losses are the key risk"
             ],
             [
               "R Recommend",
-              "Give a decision with stages and gates",
-              "Interviewers want a decision",
-              "Pilot, gates at 6 months, then scale"
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Go in stages with a pilot. Alternative: wait or partner"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How many customers could we win?",
+              "25M x 20% use credit x 30% we approve x 2% share",
+              "30K customers"
+            ],
+            [
+              "2",
+              "What does one customer earn from interest?",
+              "Balance $25K x 40% = $10K. Spread 15% - 4% = 11%. $10K x 11%",
+              "$1,100 a year"
+            ],
+            [
+              "3",
+              "What is profit per customer?",
+              "$1,100 - losses $500 ($10K x 5%) - servicing $120",
+              "$480 a year"
+            ],
+            [
+              "4",
+              "What is total profit a year?",
+              "30K x $480 = $14.4M. Minus $5M fixed cost",
+              "$9.4M"
+            ],
+            [
+              "5",
+              "What is the up-front cost?",
+              "Build $6M + acquisition 30K x $300 = $9M",
+              "$15M"
+            ],
+            [
+              "6",
+              "How long to pay back?",
+              "$15M / $9.4M = 1.6 years x 12 months",
+              "About 19 months"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Losses rise from 5% to 8%",
+              "+$0.4M a year",
+              "Per customer $1,100 - $800 - $120 = $180. 30K x $180 = $5.4M, minus $5M. Almost no profit."
+            ],
+            [
+              "Losses double to 10% (downturn)",
+              "-$5.6M a year",
+              "Per customer -$20. 30K x -$20 = -$0.6M, minus $5M. We lose money, so cap total exposure."
+            ],
+            [
+              "Usage rises from 40% to 50%",
+              "$13.9M a year",
+              "Balance $12.5K. Per customer $630. 30K x $630 = $18.9M, minus $5M. Payback 1.1 years."
+            ],
+            [
+              "Only 15K customers (1% share)",
+              "$2.2M a year",
+              "15K x $480 = $7.2M, minus $5M. Up-front is $6M + 15K x $300 = $10.5M, payback 4.8 years. Weak."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "How many customers do we need to cover the $5M fixed cost?",
+              "$480 x n = $5M",
+              "n = 5,000,000 / 480 = about 10.4K customers"
+            ],
+            [
+              "At what loss rate is profit zero (30K customers)?",
+              "30,000 x (1,100 - L - 120) = $5M",
+              "980 - L = 166.7, so L = $813, which is 8.1% of a $10K balance"
+            ],
+            [
+              "What loss rate gives a 2-year payback?",
+              "Profit needed = $15M / 2 = $7.5M. 30,000 x (980 - L) - $5M = $7.5M",
+              "980 - L = 416.7, so L = $563, which is 5.6%"
+            ],
+            [
+              "What usage gives a 2-year payback (loss 5%)?",
+              "Per customer needed = $416.7. Balance B x (11% - 5%) - $120 = $416.7",
+              "0.06 B = 536.7, so B = $8,945, which is 36% of a $25K limit"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Credit losses",
+              "Small business files are thin, so losses are hard to predict",
+              "Start with existing customers whose cash flow we can see. Use small limits"
+            ],
+            [
+              "Downturn",
+              "Losses can double when the economy gets worse",
+              "Stress test at 10% losses. Cap total exposure"
+            ],
+            [
+              "Low usage",
+              "Customers may borrow less than the 40% we assume",
+              "Track usage in the pilot. We need about 36% for a two-year payback"
+            ],
+            [
+              "Online rivals",
+              "Online lenders are fast",
+              "Use speed and our deposit data. Do not compete only on price"
+            ],
+            [
+              "Rules and fairness",
+              "Credit rules and fair lending checks can delay launch",
+              "Involve risk and legal from the start"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
@@ -3785,153 +5869,107 @@ DATA.cases = [
               "A limit the business can borrow from, repay and borrow again"
             ],
             [
+              "Spread",
+              "Interest rate minus our funding cost. Here 15% - 4% = 11%"
+            ],
+            [
+              "Loss rate",
+              "Share of balances that is never repaid. Here 5%"
+            ],
+            [
               "Utilization",
-              "The share of the limit actually borrowed; here 40%"
+              "How much of the limit is used. Here 40% of $25K = $10K"
             ],
             [
-              "Spread / net interest income",
-              "Interest earned minus what it costs the bank to fund the loan"
+              "Fixed cost",
+              "Cost that does not change with customers, such as team and tech. Here $5M a year"
             ],
             [
-              "Loss rate (charge-off)",
-              "The share of balances the bank never gets back"
+              "Payback",
+              "How long it takes for profit to repay the up-front cost"
             ],
             [
-              "Underwriting",
-              "Deciding who to approve and for how much"
-            ],
-            [
-              "Cash-flow underwriting",
-              "Judging a business by its bank account inflows and outflows, useful when there is little credit history"
-            ],
-            [
-              "Thin file",
-              "A customer with little credit history"
-            ],
-            [
-              "Unit economics",
-              "Profit for one customer; multiply by customers to get the total"
-            ],
-            [
-              "Acquisition cost",
-              "Marketing and sales cost to win one customer"
-            ],
-            [
-              "Pilot",
-              "A small, real test before a full launch"
+              "Stress test",
+              "Checking the numbers under a bad case, such as losses doubling"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Market: 25M businesses x 20% use credit = 5M; x 30% we would approve = 1.5M."
+              "Forgetting credit losses",
+              "Always take losses off the interest income. Here they are $500 of $1,100."
             ],
             [
-              "2",
-              "Our customers in year 3: 1.5M x 2% = 30K."
+              "Using the limit as the balance",
+              "Customers use only part of the limit. Use $10K, not $25K."
             ],
             [
-              "3",
-              "Balance per customer: $25K limit x 40% used = $10K."
+              "Ignoring fixed cost",
+              "Subtract the $5M before you judge profit and payback."
             ],
             [
-              "4",
-              "Interest: $10K x 15% = $1,500. Funding cost: $10K x 4% = $400. Spread income = $1,100."
+              "Only showing the good case",
+              "Run a bad case. At 10% losses we lose $5.6M a year."
             ],
             [
-              "5",
-              "Losses: $10K x 5% = $500. Servicing = $120."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "6",
-              "Profit per customer: $1,100 - $500 - $120 = $480 a year."
-            ],
-            [
-              "7",
-              "Total: 30K x $480 = $14.4M; minus $5M fixed cost = $9.4M a year."
-            ],
-            [
-              "8",
-              "Up-front cost: $6M build + 30K x $300 = $9M acquisition = $15M."
-            ],
-            [
-              "9",
-              "Payback: $15M / $9.4M = 1.6 years, about 19 months."
-            ],
-            [
-              "10",
-              "Break-even customers: $5M / $480 = about 10.4K, which is 35% of the 30K target."
-            ],
-            [
-              "11",
-              "Losses at 8%: $10K x 8% = $800, so $1,100 - $800 - $120 = $180 each. 30K x $180 = $5.4M, minus $5M = $0.4M. About zero."
-            ],
-            [
-              "12",
-              "Interest rate only 12%: spread $800 - $500 - $120 = $180 each, same $0.4M."
-            ],
-            [
-              "13",
-              "Usage only 25% ($6.25K balance): spread $687, losses $312, servicing $120 = $255 each. 30K x $255 = $7.65M, minus $5M = $2.7M."
-            ],
-            [
-              "14",
-              "Downturn, losses double to 10%: $1,100 - $1,000 - $120 = -$20 each. 30K x -$20 = -$0.6M, minus $5M = -$5.6M."
+              "Ending without a decision",
+              "Give the answer first, then two reasons, risks and an alternative."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Go / no-go checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical risk",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "Is there demand?",
-            "How owners fund themselves today, survey and usage data",
-            "They use personal cards or loans",
-            "Interview owners, test an offer"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Should we launch a credit line for businesses under $500K? What does success mean?"
           ],
           [
-            "Can we win?",
-            "Our deposit data, speed, price versus fintechs",
-            "No edge against online lenders",
-            "Use cash-flow data, fast approval, link to the business account"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Number of businesses, who qualifies, rates, loss rate, servicing and fixed cost"
           ],
           [
-            "Can we judge risk?",
-            "Past loan performance in similar segments",
-            "Thin files hide risk",
-            "Cash-flow underwriting, small starting limits"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume a 40% usage and a 5% loss rate'"
           ],
           [
-            "Does it make money?",
-            "Spread, loss rate, servicing and fixed cost",
-            "Losses eat the spread",
-            "Tune limits, pricing and who we approve"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "30,000 x (980 - L) - $5M = $7.5M, so L = $563"
           ],
           [
-            "What if the economy worsens?",
-            "Loss rate under stress",
-            "Losses double",
-            "Stress test, cap total exposure"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we go, in stages, starting with a pilot'"
           ],
           [
-            "Rules and fairness?",
-            "Credit rules, fair lending, disclosures",
-            "Compliance issues delay launch",
-            "Involve risk and legal from the start"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Credit losses, downturn, low usage; pilot gates on losses, usage and cost"
+          ],
+          [
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Partner with an online lender first if the pilot loss rate is above 5.6%"
           ]
         ]
       }
@@ -3943,23 +5981,28 @@ DATA.cases = [
       },
       {
         "q": "What if losses come in at 8%?",
-        "a": "Profit falls to about zero. I would cut starting limits, tighten who we approve, or raise the rate before scaling."
+        "a": "Profit falls to about $0.4M a year, close to zero. I would cut starting limits, tighten who we approve, or raise the rate before scaling."
       },
       {
         "q": "How would you run a downturn test?",
-        "a": "Double the loss rate to 10%. Per-customer profit turns slightly negative and the total loses about $5.6M a year, so I would cap total exposure and keep limits small until losses are proven."
+        "a": "Double the loss rate to 10%. Per-customer profit turns slightly negative at -$20, and the total loses about $5.6M a year, so I would cap total exposure and keep limits small until losses are proven."
       },
       {
         "q": "Build, buy or partner?",
         "a": "Partner or use existing systems for the pilot to move fast, then decide on build once the loss rate and usage are proven."
+      },
+      {
+        "q": "What if acquisition costs $400, not $300?",
+        "a": "Up-front rises to $6M + 30K x $400 = $18M. Payback becomes $18M / $9.4M = 1.9 years, about 23 months. Still inside two years, but with less room for error."
       }
     ],
     "pitfalls": [
-      "Looking only at demand. For lending, losses decide profit.",
-      "Using the whole market. Narrow to those who use credit and whom we would approve.",
-      "Forgetting servicing and fixed costs. Revenue minus losses is not profit.",
-      "Ignoring a downturn. Show what happens when losses double.",
-      "No decision. End with go, no-go or staged go, plus the gates."
+      "Forgetting credit losses. Always take losses off the interest income. Here they are $500 of $1,100.",
+      "Using the limit as the balance. Customers use only part of the limit. Use $10K, not $25K.",
+      "Ignoring fixed cost. Subtract the $5M before you judge profit and payback.",
+      "Only showing the good case. Run a bad case. At 10% losses we lose $5.6M a year.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Ending without a decision. Give the answer first, then two reasons, risks and an alternative."
     ]
   },
   {
@@ -3975,79 +6018,87 @@ DATA.cases = [
     "prompt": "Marketing wants to launch a premium travel rewards card targeting Gen Z customers. How would you determine if there is a real market for it?",
     "clarify": [
       {
-        "q": "Who counts as Gen Z here?",
-        "a": "Adults aged 18 to 28 who could hold a card. Assume about 45M in the US."
+        "q": "Who counts as Gen Z here, and how many can get a card?",
+        "a": "Ages 18 to 28, about 45M in the US. About half (22.5M) can get a card: old enough, with income and a usable credit history."
       },
       {
         "q": "What is the card?",
-        "a": "An annual-fee card, assumed at $150, that earns extra rewards on travel and includes some travel perks."
+        "a": "An annual-fee card at $150, with extra rewards on travel and some perks."
       },
       {
-        "q": "What do we already know about demand?",
-        "a": "A marketing survey says about 20% of Gen Z are interested. Nobody has tested real sign-ups."
+        "q": "What do we know about demand?",
+        "a": "A marketing survey says 20% are interested. Assume only 40% of those would act, so 8% (1.8M people). Nobody has tested real sign-ups. We can win about 5% of them by year 3."
       },
       {
-        "q": "What data do we have on young customers?",
-        "a": "We can see card and debit spend by category for our existing customers aged 18 to 28, including travel."
+        "q": "What does one card earn and cost?",
+        "a": "Spend is $18K a year and we keep 2.5% as interchange. Rewards cost 1.2% of spend. Losses and servicing are about $184 a card."
+      },
+      {
+        "q": "What are the fixed and up-front costs?",
+        "a": "Fixed cost is $6M a year. Up-front is a $4M build plus a $200 sign-up bonus and marketing for each card."
       },
       {
         "q": "What is the budget and success bar?",
         "a": "About $22M up front, with payback inside two years. Treat all figures as working assumptions."
+      },
+      {
+        "q": "What data do we have on young customers?",
+        "a": "We can see card and debit spend by category for our existing customers aged 18 to 28, including travel."
       }
     ],
     "tables": [
       {
-        "title": "The numbers we will use (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
-          "Number",
+          "Item",
           "Value",
-          "How we got it"
+          "Note"
         ],
         "rows": [
           [
-            "Gen Z (ages 18 to 28)",
-            "45M",
-            "Assumed US figure"
+            "Gen Z and who can get a card",
+            "45M aged 18 to 28. 50% can get a card = 22.5M",
+            "Old enough, has income and credit history"
           ],
           [
-            "Can get a card",
-            "50% = 22.5M",
-            "Assumed: old enough, has income and a usable credit history"
-          ],
-          [
-            "Interested and willing to pay a fee",
-            "8% = 1.8M",
-            "Survey says 20% are interested, but only about 40% of them act: 20% x 40% = 8%"
+            "Who acts",
+            "Survey: 20% interested. 40% of them act = 8% = 1.8M",
+            "Nobody has tested real sign-ups"
           ],
           [
             "Our share in year 3",
-            "5% = 90K cards",
-            "1.8M x 5%"
+            "5% of 1.8M = 90K cards",
+            "Assumed"
           ],
           [
             "Spend per card",
             "$18K a year",
-            "Assumed"
+            "Interchange 2.5% = $450"
           ],
           [
             "Annual fee",
             "$150",
-            "Assumed"
+            "Revenue per card = $600"
           ],
           [
-            "Rewards cost",
-            "1.2% of spend = $216",
-            "Points, cash back and travel perks"
+            "Cost per card",
+            "Rewards 1.2% of spend = $216. Losses and servicing $184",
+            "Total $400. Profit $200 a card"
           ],
           [
             "Fixed cost",
             "$6M a year",
-            "Assumed team, tech and marketing"
+            "Team, tech and marketing"
           ],
           [
             "Up-front cost",
-            "$22M",
-            "Build $4M + 90K x $200 sign-up bonus and marketing = $18M"
+            "$4M build + $200 sign-up bonus per card = $22M at 90K cards",
+            "Budget is about $22M"
+          ],
+          [
+            "Success bar",
+            "Payback inside 2 years",
+            "All figures are working assumptions"
           ]
         ]
       }
@@ -4056,38 +6107,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: marketing wants a premium travel rewards card for Gen Z, and I need to judge whether a real market exists. I will treat a real market as enough people who want it, will pay the fee, and make the card profitable. Is that right?"
+          "So marketing wants a premium travel rewards card for Gen Z, ages 18 to 28, and I need to judge if there is a real market. I will treat that as enough people who want it, will pay the fee, and make the card profitable. I have $22M of budget and need payback inside two years. Can I ask: what is the fee, what does the survey say, and do we have data on our own young customers? If not, I will assume."
         ],
         [
           "L: Lay out",
-          "I would look at three things. First, size: how many Gen Z can and would take this card. Second, real behavior: do they actually travel, spend and pay fees, or only say they would. Third, our right to win and whether each card is profitable."
+          "I will answer three questions. First, how many people would really take the card. Second, is each card profitable. Third, do we pay back in time."
         ],
         [
           "E: Evaluate",
-          "Assuming 45M Gen Z and half can get a card, that is 22.5M. A survey might say 20% are interested, but only about 40% of those act, so 8%, or 1.8M. A 5% share is 90K cards. Each card earns about $630 and costs about $406, so $224. That is $20.2M, minus $6M fixed, about $14.2M a year."
+          "There are 45M Gen Z and half can get a card, so 22.5M. The survey says 20% are interested, but only 40% of them act, so 8%, or 1.8M. A 5% share is 90K cards. One card earns $150 fee plus $450 interchange, so $600. It costs $216 in rewards plus $184 other, so $400. That is $200 a card, $18M in total. Take off $6M of fixed cost and we make $12M a year."
         ],
         [
           "A: Assess",
-          "The $22M up-front cost pays back in about 19 months and we break even at about 27K cards. The risks are lower spend per card, resistance to the fee, and customers closing the card after the sign-up bonus. Surveys overstate demand, so I want real behavior."
+          "The up-front cost is $4M to build plus $18M of sign-up bonus, so $22M. Divided by $12M that is about 22 months, so we only just meet the 2-year bar. We break even at 30K cards and need about 80K cards for a 2-year payback. If spend falls to $14K, payback is 3 years. Surveys overstate demand, so this is the part I trust least."
         ],
         [
           "R: Recommend",
-          "I would check our own data on young customers' travel spend, run a waitlist with a few fee levels, then pilot with existing young customers. If applications reach 1.5% or more of those invited and spend reaches about $1,200 a month, I would scale. If not, I would redesign the card or stop."
+          "I recommend we do not launch in full yet. Pilot first. Two reasons: the case works on paper but only just meets the payback bar, and the demand number comes from a survey, not real behavior. Next steps: check our own young customers' travel spend, run a waitlist at two or three fee levels, then pilot with existing customers. Scale if sign-ups and spend of about $1,430 a month are met. Risks are lower spend, bonus hunters and credit losses. If you wanted a bolder answer, I would launch in full if our own data shows strong demand."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Question: is there a real market for a premium travel<br/>rewards card aimed at Gen Z (ages 18 to 28)?\"]\nC --> C2[\"Define terms: real market = enough people who want it,<br/>will pay the fee, and make the card profitable\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Size: how many Gen Z can and<br/>would take this card?\"]\nL --> L2[\"2 Behavior: do they really travel, spend and pay fees,<br/>or only say they would?\"]\nL --> L3[\"3 Right to win and economics: why us,<br/>and is each card profitable?\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Size the market, then the profit per card\"]\nE1 --> E2[\"Market: 45M Gen Z x 50% card-eligible = 22.5M<br/>x 8% interested and willing to pay = 1.8M\"]\nE2 --> E3[\"Our share 5% = 90K cards. Survey says 20% interested,<br/>but only 40% of them act, so 8%\"]\nE3 --> E4[\"Per card: $630 revenue minus $406 cost = $224 a year<br/>90K x $224 = $20.2M, minus $6M fixed = $14.2M\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"Payback: $22M up-front cost pays back in about 19 months<br/>Break-even: about 27K cards\"]\nA --> A2[\"Biggest risks: spend per card, the annual fee,<br/>and customers closing after the sign-up bonus\"]\nA --> A3[\"Evidence: surveys overstate demand,<br/>so test real behavior before committing\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Test the demand with real behavior, then launch in stages\"]\nR --> R1[\"Step 1: check our own data for Gen Z travel spend,<br/>run a waitlist and fee test\"]\nR --> R2[\"Step 2: pilot with existing young customers;<br/>pass if applications 1.5%+ and spend $1.2K a month\"]\nR --> R3[\"Step 3: scale marketing only after the pilot gates are met\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Premium travel card for Gen Z, ages 18 to 28<br/>Is there a real market? Budget $22M, payback in 2 years\"]\nC --> L[\"L: Lay out<br/>1 How many would really take it?<br/>2 Is each card profitable?<br/>3 Do we pay back in time?\"]\nL --> E[\"E: Evaluate<br/>Size the market, then one card, then the total\"]\nE --> E1[\"People<br/>45M x 50% can get a card = 22.5M<br/>x 8% who act = 1.8M<br/>x 5% share = 90K cards\"]\nE --> E2[\"One card<br/>Revenue $600, cost $400<br/>= $200 profit a card\"]\nE --> E3[\"Total<br/>90K x $200 = $18M<br/>- $6M fixed = $12M a year\"]\nE1 --> A[\"A: Assess<br/>Break-even is 30K cards<br/>Payback 22 months, needs 80K cards<br/>Surveys overstate demand\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Yes, likely a market, but pilot first<br/>Use our own young customers<br/>Scale only if sign-ups and spend hit the bar\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "evidence",
-          "title": "How we test it: the evidence plan",
-          "note": "Orange boxes say what evidence to collect and how strong it is. Real behavior beats stated opinion.",
-          "code": "flowchart TD\nQ[\"Is there a real market for a premium Gen Z travel card?\"] --> T1{\"1 Is it big enough?\"}\nT1 --> T1a[\"Evidence: public data on Gen Z size, income, credit scores<br/>Strength: medium<br/>Pass: at least 1M eligible and interested people\"]\nQ --> T2{\"2 Do they truly need it?\"}\nT2 --> T2a[\"Evidence: our own data on young customers' travel and spend<br/>Strength: strong, it is real behavior<br/>Pass: travel spend is high enough to earn rewards\"]\nQ --> T3{\"3 Will they pay the fee?\"}\nT3 --> T3a[\"Evidence: waitlist and price test with 2 or 3 fee levels<br/>Strength: strong, they act, not just answer<br/>Pass: sign-ups hold up at a $150 fee\"]\nQ --> T4{\"4 Can we win?\"}\nT4 --> T4a[\"Evidence: rival cards, our rewards, brand with young customers<br/>Strength: medium<br/>Pass: a clear edge, such as no foreign fees or easy points\"]\n\nT1a --> P[\"Pilot with a small group of existing customers<br/>Real applications and real spend are the strongest proof\"]\nT2a --> P\nT3a --> P\nT4a --> P\nP --> D{\"Gates met?\"}\nD -->|\"Yes\"| GO[\"Scale in stages\"]\nD -->|\"No\"| NG[\"Redesign the card or stop\"]\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef ev fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef pilot fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef go fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef stop fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclass Q,T1,T2,T3,T4,D q;\nclass T1a,T2a,T3a,T4a ev;\nclass P pilot;\nclass GO go;\nclass NG stop;"
-        },
-        {
-          "id": "money",
-          "title": "The money: per card, base case and what-ifs",
-          "note": "Green is the base case, orange is a weaker case, red is a danger case.",
-          "code": "flowchart TD\nB[\"Assumed per card per year: $18K spend, 2.0% interchange, $150 annual fee,<br/>$120 net interest, rewards 1.2% of spend, $60 benefits, $90 losses, $40 servicing\"] --> U[\"Per card<br/>Revenue: $360 + $150 + $120 = $630<br/>Cost: $216 rewards + $60 + $90 + $40 = $406<br/>Profit = $224 a year\"]\nU --> T[\"Base case<br/>90K cards x $224 = $20.2M, minus $6M fixed = +$14.2M a year\"]\n\nB --> INV[\"Up-front cost<br/>Build $4M + 90K x $200 sign-up bonus and marketing = $18M<br/>Total $22M\"]\nT --> PB[\"Payback<br/>$22M / $14.2M = 1.55 years<br/>about 19 months\"]\nINV --> PB\n\nU --> BE[\"Break-even cards<br/>$6M / $224 = about 27K<br/>30% of the 90K target\"]\n\nT --> S1[\"Spend only $10K a year<br/>Revenue $470, cost $310 = $160 each<br/>90K x $160 = $14.4M - $6M = +$8.4M\"]\nT --> S2[\"Fee waived to $0<br/>$224 - $150 = $74 each<br/>$6.7M - $6M = +$0.7M\"]\nT --> S3[\"Only 45K cards<br/>45K x $224 = $10.1M - $6M = +$4.1M\"]\nU --> L1[\"Card life 3 years: $224 x 3 = $672 vs $200 to win = 3.4x<br/>Closed after year 1: $224 vs $200 = 1.1x, too thin\"]\n\nPB --> R[\"Test real demand first, then scale<br/>Watch spend per card and how long customers stay\"]\nBE --> R\nS1 --> R\nS2 --> R\nS3 --> R\nL1 --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B,U,INV base;\nclass T,PB,BE good;\nclass S1,S3 mid;\nclass S2,L1 bad;\nclass R out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Who could take the card<br/>45M Gen Z x 50% can get a card<br/>= <b>22.5M people</b>\"]\nA --> B[\"2 Who would really sign up<br/>Survey says 20% interested<br/>Only 40% of them act: 20% x 40% = 8%<br/>22.5M x 8% = <b>1.8M people</b>\"]\nB --> C[\"3 Our share in year 3<br/>1.8M x 5% = <b>90K cards</b>\"]\nC --> D[\"4 Profit on one card<br/>Revenue: $150 fee + 2.5% x $18K = <b>$600</b><br/>Cost: rewards $216 + other $184 = <b>$400</b><br/>Profit = <b>$200 a card</b>\"]\nD --> E[\"5 Profit each year<br/>90K x $200 = $18M<br/>- $6M fixed cost = <b>$12M</b>\"]\nE --> F[\"6 Payback<br/>Up-front: $4M build + 90K x $200 bonus = $22M<br/>$22M / $12M = <b>1.8 years (22 months)</b>\"]\nD --> G1[\"Check: break-even<br/>$6M / $200 = <b>30K cards</b>\"]\nF --> G2[\"Check: needed for 2-year payback<br/>2 x (200n - 6M) = 4M + 200n<br/>n = <b>80K cards</b>\"]\nF --> G3[\"Check: what if spend is $14K<br/>Profit $148 a card = $7.3M a year<br/>Payback <b>3.0 years</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,C n1;\nclass D,E n2;\nclass F n3;\nclass G1,G2,G3 n4;\n"
         }
       ],
       "exampleTables": [
@@ -4102,205 +6147,291 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define Gen Z, the card and what 'real market' means",
-              "A real market needs demand, willingness to pay and profit, not just interest",
-              "Ages 18 to 28; fee card; real market = enough buyers that make the card profitable"
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Who is Gen Z, the fee and perks, what the survey says, our own data, budget and payback bar"
             ],
             [
               "L Lay out",
-              "Say your 3 areas before calculating",
-              "Shows a plan and lets the interviewer steer",
-              "Size, real behavior, right to win and economics"
+              "Say your questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "How many would really take it? Is each card profitable? Do we pay back in time?"
             ],
             [
               "E Evaluate",
-              "Size the market top-down, adjust for the say-do gap, then compute profit per card",
-              "Survey interest overstates real demand",
-              "1.8M reachable, 90K cards, $224 profit per card"
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "22.5M can get a card, 1.8M would act, 90K cards, $200 a card, $12M a year"
             ],
             [
               "A Assess",
-              "Find payback, break-even and the biggest risks",
-              "Shows you know what could break the plan",
-              "19-month payback; spend, fee and early closure are the risks"
+              "Say what the numbers mean: break-even, payback, what could go wrong",
+              "Turns numbers into a business view",
+              "Break-even 30K cards. Payback 22 months, which only just meets the 2-year bar"
             ],
             [
               "R Recommend",
-              "Give a testing plan with gates, not just a yes or no",
-              "Real proof is cheaper than a failed launch",
-              "Own-data check, waitlist, pilot, then scale"
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Pilot first. A defensible alternative: launch in full if our own data shows strong demand"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How many people could take the card?",
+              "45M x 50%",
+              "22.5M people"
+            ],
+            [
+              "2",
+              "How many would really sign up and pay a fee?",
+              "The survey says 20% are interested. Only 40% of them act. 20% x 40% = 8%. 22.5M x 8%",
+              "1.8M people"
+            ],
+            [
+              "3",
+              "How many cards do we win?",
+              "1.8M x 5% share in year 3",
+              "90K cards"
+            ],
+            [
+              "4",
+              "What does one card earn?",
+              "Revenue $150 + (2.5% x $18K) = $600. Cost (1.2% x $18K) + $184 = $400",
+              "$200 a card"
+            ],
+            [
+              "5",
+              "What is profit each year?",
+              "90K x $200 = $18M. Then take off $6M of fixed cost",
+              "$12M a year"
+            ],
+            [
+              "6",
+              "How long to pay back the up-front cost?",
+              "Up-front = $4M + (90K x $200) = $22M. $22M / $12M",
+              "1.8 years (22 months)"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Spend per card falls from $18K to $14K",
+              "Profit $7.3M a year, payback 3.0 years",
+              "Misses the 2-year bar. Spend is a key driver."
+            ],
+            [
+              "Fee is $100 instead of $150",
+              "Profit $7.5M a year, payback 2.9 years",
+              "Cheaper fee may win more cards, but each card earns $50 less."
+            ],
+            [
+              "Only 4% act instead of 8% (survey is more optimistic than real life)",
+              "45K cards, profit $3M a year, payback 4.3 years",
+              "Still profitable, but too slow. Demand is the biggest risk."
+            ],
+            [
+              "No annual fee at all",
+              "Profit per card is $50, so $4.5M - $6M = -$1.5M a year",
+              "The fee is what makes the card work."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "How many cards to break even?",
+              "$200 x n - $6M = 0",
+              "n = $6M / $200 = 30K cards (1.7% of the 1.8M people)"
+            ],
+            [
+              "How many cards to pay back in 2 years?",
+              "2 x (200n - 6M) = 4M + 200n",
+              "400n - 12M = 4M + 200n, so 200n = 16M and n = 80K cards"
+            ],
+            [
+              "At 90K cards, what yearly spend per card breaks even?",
+              "90K x (150 + 0.025x - 0.012x - 184) = 6M",
+              "0.013x - 34 = 66.67, so x = 100.67 / 0.013 = about $7.7K"
+            ],
+            [
+              "At 90K cards, what spend gives a 2-year payback?",
+              "90K x (0.013x - 34) - 6M = 11M",
+              "0.013x - 34 = 188.9, so x = 222.9 / 0.013 = about $17.1K ($1,430 a month)"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Surveys overstate demand",
+              "Saying 'I am interested' is free. Paying a fee is not",
+              "Test real sign-ups on a waitlist at a real fee"
+            ],
+            [
+              "Lower spend per card",
+              "Young customers may spend less than $18K a year",
+              "Check our own young customers' travel spend before building"
+            ],
+            [
+              "Sign-up bonus hunters",
+              "People may take the $200 bonus and close the card",
+              "Set spend rules for the bonus and watch closures in the pilot"
+            ],
+            [
+              "Credit risk",
+              "Young customers may have thin credit files",
+              "Start with existing customers we can see, with small limits"
+            ],
+            [
+              "Fee resistance",
+              "Gen Z may not pay $150",
+              "Test fee levels and a first-year waiver"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
           ],
           "rows": [
             [
-              "Gen Z",
-              "People born roughly 1997 to 2012; here, ages 18 to 28 who can hold a card"
-            ],
-            [
-              "Premium travel card",
-              "A card with an annual fee that earns extra rewards on travel and gives perks"
-            ],
-            [
               "Annual fee",
-              "A yearly charge to hold the card; here $150"
+              "A yearly charge for holding the card"
             ],
             [
               "Interchange",
-              "The fee a merchant pays on each card payment, shared with the card issuer"
+              "A fee the store pays the card network on each purchase. We keep part of it. Here 2.5% of spend"
             ],
             [
-              "Say-do gap",
-              "The difference between what people say in a survey and what they actually do"
+              "Rewards cost",
+              "What we pay out in points, cash back and perks. Here 1.2% of spend"
             ],
             [
-              "Sign-up bonus",
-              "Points or cash given for opening the card and spending a set amount"
+              "Fixed cost",
+              "Cost that does not change with the number of cards, such as the team and tech. Here $6M a year"
             ],
             [
-              "Unit economics",
-              "Profit for one card; multiply by cards to get the total"
+              "Break-even",
+              "The number of cards where profit is zero"
             ],
             [
-              "Card life",
-              "How many years a customer keeps the card"
+              "Payback",
+              "The time it takes for profit to repay the up-front cost"
             ],
             [
-              "Pilot",
-              "A small, real test before a full launch"
-            ],
-            [
-              "Waitlist test",
-              "Asking people to sign up for a card that does not exist yet, to measure real interest"
+              "Share",
+              "The part of the interested group that picks our card"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Gen Z who can get a card: 45M x 50% = 22.5M."
+              "Trusting the survey as demand",
+              "Only a fraction of interested people act. Use 20% x 40% = 8%, and test with real sign-ups."
             ],
             [
-              "2",
-              "Say-do gap: survey interest 20%, but only 40% of them act. 20% x 40% = 8%."
+              "Using revenue and ignoring costs",
+              "Show profit per card: revenue $600 minus cost $400 is $200."
             ],
             [
-              "3",
-              "Interested and willing to pay: 22.5M x 8% = 1.8M people."
+              "Skipping the up-front cost",
+              "Include build and sign-up bonus. That is $22M, not just the $4M build."
             ],
             [
-              "4",
-              "Our share in year 3: 1.8M x 5% = 90K cards."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "5",
-              "Revenue per card: interchange $18K x 2.0% = $360, plus fee $150, plus net interest $120 = $630."
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
             ],
             [
-              "6",
-              "Cost per card: rewards $18K x 1.2% = $216, benefits $60, losses $90, servicing $40 = $406."
-            ],
-            [
-              "7",
-              "Profit per card: $630 - $406 = $224 a year."
-            ],
-            [
-              "8",
-              "Total: 90K x $224 = $20.2M; minus $6M fixed = $14.2M a year."
-            ],
-            [
-              "9",
-              "Up-front cost: $4M build + 90K x $200 = $18M, total $22M."
-            ],
-            [
-              "10",
-              "Payback: $22M / $14.2M = 1.55 years, about 19 months."
-            ],
-            [
-              "11",
-              "Break-even: $6M / $224 = about 27K cards, which is 30% of the target."
-            ],
-            [
-              "12",
-              "Spend only $10K: revenue $200 + $150 + $120 = $470; cost $120 + $60 + $90 + $40 = $310; profit $160. 90K x $160 = $14.4M, minus $6M = $8.4M."
-            ],
-            [
-              "13",
-              "Fee waived: $224 - $150 = $74 each. 90K x $74 = $6.7M, minus $6M = $0.7M, about zero."
-            ],
-            [
-              "14",
-              "Only 45K cards: 45K x $224 = $10.1M, minus $6M = $4.1M."
-            ],
-            [
-              "15",
-              "Card life: 3 years x $224 = $672 against $200 to win = 3.4x. If the customer closes after 1 year, $224 against $200 = 1.1x, which is too thin."
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Market validation checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical risk",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "How big is it?",
-            "Population, income, credit scores",
-            "Many Gen Z have thin credit files",
-            "Narrow to those who qualify"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Is a real market one that wants it, pays the fee and is profitable? Who is Gen Z and what is the card?"
           ],
           [
-            "Do they need it?",
-            "Our own data on travel and card spend",
-            "Lower travel spend than assumed",
-            "Check real behavior before building"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Survey result, our own young-customer spend, fee, rewards, fixed and up-front cost, payback bar"
           ],
           [
-            "Will they pay the fee?",
-            "Waitlist and fee test at 2 or 3 prices",
-            "They prefer no-fee cards",
-            "Test a lower fee or a first-year waiver"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume we keep 2.5% of spend as interchange and win 5% of the people who act'"
           ],
           [
-            "Can we win?",
-            "Rival cards, our rewards, our brand with young people",
-            "Strong rivals, no clear edge",
-            "Pick a clear edge such as no foreign fees"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Break-even cards = $6M / $200 = 30K. Payback = $22M / $12M = 1.8 years"
           ],
           [
-            "Will they stay?",
-            "Closure rate after the sign-up bonus",
-            "Customers leave after the bonus",
-            "Design rewards that build over time"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'Yes there is a market, but I would pilot first, because payback is 22 months and demand is unproven'"
           ],
           [
-            "Is it profitable?",
-            "Spend, rewards cost, losses, servicing",
-            "Rewards cost eats the profit",
-            "Tune rewards and fee"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Lower spend, bonus hunters, credit risk, fee resistance. Next: pilot with existing young customers"
           ],
           [
-            "Credit risk?",
-            "Loss rate for young, new-to-credit customers",
-            "Higher losses than expected",
-            "Start with existing customers, small limits"
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Launch in full if our own data shows strong travel spend and the waitlist converts"
           ]
         ]
       }
@@ -4308,7 +6439,7 @@ DATA.cases = [
     "followups": [
       {
         "q": "Why not just trust the survey?",
-        "a": "Surveys overstate demand because saying yes is free. Here only about 40% of interested people act, so 20% interest becomes about 8%. Real behavior, such as waitlist sign-ups at a real fee, is stronger proof."
+        "a": "Saying yes is free. Only about 40% of interested people act, so 20% becomes 8%. If only 4% acted, payback would be 4.3 years, so real sign-ups at a real fee are stronger proof."
       },
       {
         "q": "What would you test first?",
@@ -4316,19 +6447,24 @@ DATA.cases = [
       },
       {
         "q": "What if Gen Z will not pay a $150 fee?",
-        "a": "Test a lower fee or a first-year waiver. With no fee at all the profit is about zero in this model, so the rewards and perks would need redesigning."
+        "a": "Test a lower fee or a first-year waiver. At $100 the profit is $7.5M a year, and with no fee the card loses $1.5M a year, so the rewards and perks would need redesigning."
       },
       {
         "q": "How would you handle credit risk for young customers?",
         "a": "Start with existing customers whose accounts we can see, use small limits, and watch losses in the pilot before opening to new-to-credit customers."
+      },
+      {
+        "q": "What would make you stop?",
+        "a": "If the pilot shows spend well below $1,430 a month or sign-ups far below plan. At 30K cards or fewer, the card does not cover its $6M fixed cost."
       }
     ],
     "pitfalls": [
-      "Trusting a survey. Stated interest overstates real demand; test behavior.",
-      "Using the whole age group. Narrow to those who can get a card and would pay the fee.",
-      "Stopping at market size. Show profit per card too.",
-      "Forgetting what happens after sign-up. Many customers close the card once the bonus is paid.",
-      "No test plan. End with a pilot, gates, and a decision."
+      "Trusting the survey as demand. Only a fraction of interested people act. Use 20% x 40% = 8%, and test with real sign-ups.",
+      "Using revenue and ignoring costs. Show profit per card: revenue $600 minus cost $400 is $200.",
+      "Skipping the up-front cost. Include build and sign-up bonus. That is $22M, not just the $4M build.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction."
     ]
   },
   {
@@ -4348,70 +6484,78 @@ DATA.cases = [
         "a": "Help customers manage their money so they stay with the bank and use the app and card more."
       },
       {
-        "q": "Who can see it?",
+        "q": "Who can see it, and is there a holdout?",
         "a": "All 4M active app customers, except a random 5% holdout group that cannot see it."
       },
       {
         "q": "Were targets set at launch?",
-        "a": "Yes: 25% of customers try it, and 50% of those are still using it after 4 weeks."
+        "a": "Yes: 25% of customers try it, 50% of those still use it after 4 weeks, and 50% of regular users set a budget."
       },
       {
-        "q": "What data do we have?",
-        "a": "App usage events, budgets set, attrition, spend, service calls, complaints and opt-outs, for offered and holdout groups."
+        "q": "What are the results so far?",
+        "a": "20% tried it (800K). 40% of those still use it after 4 weeks (320K). 60% of regular users set a budget."
+      },
+      {
+        "q": "What does the holdout show?",
+        "a": "Per customer offered the feature: leave rate 12.0% to 11.7%, spend up $30 a year, service calls down 2%."
       },
       {
         "q": "What are the unit values?",
-        "a": "A retained account is worth about $400, net interchange is 2% of spend, a service call costs $10, and the feature costs $2M a year to run. Treat these as working assumptions."
+        "a": "A retained account is worth $400. Net interchange is 2% of spend. A service call costs $10, and there are about 5M calls a year."
+      },
+      {
+        "q": "What does the feature cost?",
+        "a": "$2M a year to run and $4M to build. Treat all figures as working assumptions."
       }
     ],
     "tables": [
       {
-        "title": "The numbers we will use (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
-          "Number",
+          "Item",
           "Value",
-          "What it means"
+          "Note"
         ],
         "rows": [
           [
-            "Active app customers",
-            "4M",
-            "Everyone who could see the feature"
+            "Customers who can see it",
+            "4M active app customers",
+            "A random 5% holdout cannot see it"
           ],
           [
-            "Tried the feature",
-            "20% = 800K (target 25% = 1.0M)",
-            "Reach: opened it at least once this quarter"
+            "Reach",
+            "20% tried it = 800K",
+            "Target was 25% = 1.0M"
           ],
           [
-            "Still using it after 4 weeks",
-            "40% of those = 320K (target 50%)",
-            "Repeat use: 'regular users', 8% of all customers"
+            "Repeat use",
+            "40% still use after 4 weeks = 320K",
+            "Target was 50%. 8% of all customers"
           ],
           [
-            "Regular users who set a budget",
-            "60% (target 50%)",
-            "Customer outcome: they actually did the helpful thing"
-          ],
-          [
-            "Holdout group",
-            "5% of customers cannot see it",
-            "Lets us measure the true effect"
+            "Budgets set",
+            "60% of regular users",
+            "Target was 50%"
           ],
           [
             "Holdout result",
-            "Attrition 12.0% to 11.7%; spend +$30 a year; service calls -2%",
-            "Measured per customer offered the feature"
+            "Leave rate 12.0% to 11.7%. Spend +$30 a year. Service calls -2%",
+            "Per customer offered the feature"
           ],
           [
             "Unit values",
-            "Retained account $400; net interchange 2%; a call costs $10",
-            "Assumed"
+            "Retained account $400. Net interchange 2% of spend. Service call $10",
+            "Assumed. About 5M calls a year"
           ],
           [
             "Costs",
-            "$2M a year to run; $4M to build",
+            "$2M a year to run. $4M to build",
             "Assumed"
+          ],
+          [
+            "Adopters vs others (for contrast)",
+            "Triers leave at 8% vs 12%. Spend $90 a year more",
+            "Biased: keen customers choose the feature"
           ]
         ]
       }
@@ -4420,38 +6564,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: a budgeting feature launched last quarter, and leadership wants to know if it is working. First, what was it meant to achieve, and was any group held out from seeing it?"
+          "So a budgeting feature launched last quarter and leadership wants to know if it is working. I will define working as: people use it, it helps them, and it helps the bank more than it costs. Can I ask what the feature was meant to do, what the targets were, and whether any customers were held out from seeing it? If not, I will assume."
         ],
         [
           "L: Lay out",
-          "I would define working as a ladder. Do people try it, do they come back, does it help them, does it help the bank, and does it cause any harm. Then I would check the feature caused the change, using a holdout group."
+          "I will check three things. First, do people try it and come back. Second, did it cause real change, which I would measure with the holdout group. Third, is the value bigger than the cost."
         ],
         [
           "E: Evaluate",
-          "Assuming 4M customers, 20% tried it against a 25% target, and 40% of those still use it after four weeks against a 50% target, so 320K regular users. 60% of them set a budget. The holdout shows attrition down 0.3 points, spend up $30 a year, and fewer calls, worth about $8.2M a year."
+          "There are 4M customers. 20% tried it, which is 800K, against a 25% target. 40% of them still use it after four weeks, so 320K regular users, against a 50% target. In the holdout, leaving fell 0.3 points. That is 4M x 0.3% x $400, or $4.8M. More spend adds 4M x $30 x 2%, or $2.4M. Fewer calls add $1.0M. Total value is $8.2M a year."
         ],
         [
           "A: Assess",
-          "Value is $8.2M against a $2M running cost, so it is working, but below target on reach and repeat use. Comparing adopters with non-adopters would say $18.9M, nearly four times too high, because keen customers choose the feature. It is also only one quarter of data."
+          "The running cost is $2M, so net is $6.2M and the $4M build pays back in under eight months. We only need about a quarter of the effect to break even. So it is working, but below target on reach and repeat use. If I had compared adopters with non-adopters, I would have said $14.2M, which is too high because keen customers choose the feature. It is also one quarter of data."
         ],
         [
           "R: Recommend",
-          "I would keep it, fix repeat use with weekly summaries and budget alerts, which could add about $2M a year, and keep a 5% holdout. If value stays below the running cost after two more quarters, I would rethink it."
+          "I recommend we keep it and fix repeat use. Two reasons: it earns about $6.2M net a year, and repeat use is the weak spot, where weekly summaries and alerts could add about $2M a year. Keep a 5% holdout and recheck in two quarters. Risks are the effect fading and customers finding alerts annoying. If value falls under the $2M running cost, I would redesign or pause it."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Question: a budgeting and spend-tracking feature launched<br/>last quarter. Is it working, and how do we know?\"]\nC --> C2[\"Define terms: working = people use it, it helps them,<br/>and it helps the bank, with no harm\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Goal: what was the feature meant to achieve?\"]\nL --> L2[\"2 Ladder of metrics: reach, repeat use,<br/>customer outcome, bank impact, guardrails\"]\nL --> L3[\"3 Proof: did the feature cause the change,<br/>or did keen customers just pick it?\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Score each rung of the ladder against its target\"]\nE1 --> E2[\"Reach: 20% tried it (target 25%) = 800K of 4M<br/>Repeat: 40% still use it after 4 weeks (target 50%) = 320K\"]\nE2 --> E3[\"Outcome: 60% of regular users set a budget (target 50%)<br/>Guardrails: complaints flat, opt-outs 3%\"]\nE3 --> E4[\"Bank impact from a holdout test: retention $4.8M +<br/>spend $2.4M + fewer calls $1.0M = $8.2M a year\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"Verdict: working, but below target on reach and repeat use<br/>$8.2M a year against a $2M running cost\"]\nA --> A2[\"Do not trust adopter vs non-adopter gaps:<br/>they suggest $18.9M, nearly 4x the true $4.8M\"]\nA --> A3[\"Early read: one quarter only,<br/>so confirm at six months\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Keep it, fix repeat use, re-measure\"]\nR --> R1[\"Fix repeat use: weekly summary, budget alerts, nudges<br/>Lifting repeat use to 50% adds about $2M a year\"]\nR --> R2[\"Keep a 5% holdout group so the effect<br/>can be measured every quarter\"]\nR --> R3[\"Decision rule: if value stays below the $2M running cost<br/>after two more quarters, rethink or retire it\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Budgeting feature launched last quarter<br/>Is it working? What does working mean?\"]\nC --> L[\"L: Lay out<br/>1 Do people try it and come back?<br/>2 Did it cause real change? (holdout)<br/>3 Is the value more than the cost?\"]\nL --> E[\"E: Evaluate<br/>Check use, then cause, then money\"]\nE --> E1[\"Use<br/>20% tried it (target 25%)<br/>40% still use it (target 50%)<br/>= 320K regular users\"]\nE --> E2[\"Effect (holdout)<br/>Fewer leave: $4.8M<br/>More spend: $2.4M<br/>Fewer calls: $1.0M\"]\nE --> E3[\"Money<br/>Value $8.2M - cost $2M<br/>= $6.2M a year\"]\nE1 --> A[\"A: Assess<br/>Working, but below target on use<br/>Break-even needs only 24% of the value<br/>Adopter gap says $14.2M, too high\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Keep it and fix repeat use<br/>Weekly summaries and alerts, +$2M<br/>Keep the 5% holdout. Recheck in 2 quarters\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "scorecard",
-          "title": "The scorecard: what 'working' means",
-          "note": "Green meets the target, yellow is below target. The last step is proving cause.",
-          "code": "flowchart TD\nG[\"Goal of the feature<br/>Help customers manage money, so they stay and use the app more\"] --> M1[\"1 Reach: do people try it?<br/>Tried it: 20% vs 25% target\"]\nM1 --> M2[\"2 Repeat use: do they come back?<br/>Active after 4 weeks: 40% vs 50% target\"]\nM2 --> M3[\"3 Customer outcome: does it help them?<br/>Regular users who set a budget: 60% vs 50% target\"]\nM3 --> M4[\"4 Bank impact: does it help the bank?<br/>$8.2M a year vs $2M running cost\"]\nM4 --> M5[\"5 Guardrails: does it cause harm?<br/>Complaints flat, opt-outs 3%\"]\n\nM1 --> Y1[\"Yellow: 80% of target\"]\nM2 --> Y2[\"Yellow: 80% of target\"]\nM3 --> GR1[\"Green\"]\nM4 --> GR2[\"Green, if the holdout test confirms it\"]\nM5 --> GR3[\"Green\"]\n\nY1 --> V[\"Verdict: working, with room to improve<br/>Weak spot is getting people to come back\"]\nY2 --> V\nGR1 --> V\nGR2 --> V\nGR3 --> V\nV --> P{\"3 Proof: is the effect caused by the feature?\"}\nP --> P1[\"Holdout test: 5% of customers cannot see it<br/>Compare offered vs not offered\"]\nP --> P2[\"Not adopters vs non-adopters:<br/>keen customers choose it, so the gap is inflated\"]\n\nclassDef goal fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef m fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef y fill:#FFF8E1,stroke:#F9A825,stroke-width:2px,color:#000;\nclassDef g fill:#C8E6C9,stroke:#2E7D32,stroke-width:2px,color:#000;\nclassDef v fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclass G goal;\nclass M1,M2,M3,M4,M5 m;\nclass Y1,Y2 y;\nclass GR1,GR2,GR3 g;\nclass V,P v;\nclass P1 g;\nclass P2 bad;"
-        },
-        {
-          "id": "worth",
-          "title": "What it is worth, and what would change the answer",
-          "note": "Green is measured value, orange is a what-if, red is the misleading shortcut.",
-          "code": "flowchart TD\nB[\"Holdout test result, per customer offered the feature (4M customers)<br/>Annual attrition 12.0% to 11.7%, spend +$30 a year, service calls -2%<br/>Assumed: retained account worth $400, net interchange 2%, call costs $10\"] --> V1[\"Retention: 0.3 points x 4M = 12,000 accounts kept<br/>12,000 x $400 = $4.8M\"]\nB --> V2[\"Spend: $30 x 4M = $120M more spend<br/>x 2% = $2.4M\"]\nB --> V3[\"Calls: 4M x 1.2 calls = 4.8M, 2% fewer = 96K calls<br/>96K x $10 = $1.0M\"]\n\nV1 --> T[\"Total value = $8.2M a year<br/>Running cost $2M, so net +$6.2M<br/>Build cost $4M pays back in about 8 months\"]\nV2 --> T\nV3 --> T\n\nT --> W1[\"Per regular user: $8.2M / 320K = about $25 a year\"]\nT --> W2[\"Lift repeat use from 40% to 50%<br/>320K to 400K users (+25%) adds about $2.0M a year\"]\nT --> W3[\"If the true effect is half of what we measured<br/>$4.1M - $2M = still +$2.1M\"]\nT --> W4[\"Break-even: only 25% of the measured effect<br/>is needed to cover the $2M running cost\"]\n\nB --> N[\"Naive method: adopters 7% attrition vs others 12.9%<br/>800K x 5.9 points x $400 = $18.9M<br/>Nearly 4x the true $4.8M\"]\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass V1,V2,V3 good;\nclass T out;\nclass W1,W2,W3,W4 mid;\nclass N bad;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Do people use it?<br/>4M customers x 20% tried = <b>800K</b><br/>x 40% still use after 4 weeks = <b>320K regular users</b><br/>60% of them set a budget = 192K\"]\nA --> B[\"2 What did the holdout show?<br/>Leave rate 12.0% to 11.7% = 0.3 points<br/>Spend +$30 a year. Calls -2%\"]\nB --> C1[\"Fewer leave<br/>4M x 0.3% x $400 = <b>$4.8M</b>\"]\nB --> C2[\"More spend<br/>4M x $30 x 2% interchange = <b>$2.4M</b>\"]\nB --> C3[\"Fewer calls<br/>5M calls x 2% x $10 = <b>$1.0M</b>\"]\nC1 --> D[\"3 Value per year<br/>$4.8M + $2.4M + $1.0M = <b>$8.2M</b>\"]\nC2 --> D\nC3 --> D\nD --> E[\"4 Net of running cost<br/>$8.2M - $2.0M = <b>$6.2M a year</b><br/>$4M build / $6.2M = <b>7.7 months</b> to pay back\"]\nD --> F1[\"Check: break-even<br/>Value must beat $2M<br/>$2M / $8.2M = <b>24% of the effect</b>\"]\nD --> F2[\"Check: if repeat use rises to 50%<br/>Value scales to $10.25M<br/>Gain <b>+$2.05M</b>\"]\nE --> F3[\"Check: if the leave effect fades to zero<br/>Value $3.4M, net <b>$1.4M</b><br/>Still positive\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B n1;\nclass C1,C2,C3 n2;\nclass D,E n3;\nclass F1,F2,F3 n4;\n"
         }
       ],
       "exampleTables": [
@@ -4466,197 +6604,291 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Ask what the feature was meant to achieve, and who sees it",
-              "You cannot judge success without a goal",
-              "Goal: help customers manage money so they stay and use the app more"
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Goal of the feature, who can see it, targets, holdout group, unit values, costs"
             ],
             [
               "L Lay out",
-              "Say your ladder of metrics, then how you will prove cause",
+              "Say your questions before calculating",
               "Shows structure and lets the interviewer steer",
-              "Reach, repeat use, outcome, bank impact, guardrails, then holdout"
+              "Do people try it and come back? Did it cause the change? Is value above cost?"
             ],
             [
               "E Evaluate",
-              "Score each rung against its target",
-              "A single number hides the weak spot",
-              "Reach and repeat use at 80% of target; outcome and guardrails fine"
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "320K regular users. Holdout effects add up to $8.2M a year"
             ],
             [
               "A Assess",
-              "Turn effects into dollars and check cause",
-              "Leadership wants value, not just usage",
-              "$8.2M a year vs $2M running cost; naive method overstates 4x"
+              "Say what the numbers mean: break-even, what is below target, what could mislead",
+              "Turns numbers into a business view",
+              "Net $6.2M a year, below target on reach and repeat use, one quarter only"
             ],
             [
               "R Recommend",
-              "Give a decision, a fix and a re-check date",
-              "Interviewers want a decision",
-              "Keep it, fix repeat use, re-measure with the holdout"
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Keep it and fix repeat use. A defensible alternative: pause spending on it if value drops under cost"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How many regular users?",
+              "4M x 20% tried = 800K. 800K x 40% still use it",
+              "320K (8% of customers)"
+            ],
+            [
+              "2",
+              "Value of fewer customers leaving",
+              "Holdout: leave rate falls 12.0% to 11.7%, so 0.3 points. 4M x 0.3% x $400",
+              "$4.8M"
+            ],
+            [
+              "3",
+              "Value of more spend",
+              "4M x $30 more spend x 2% interchange",
+              "$2.4M"
+            ],
+            [
+              "4",
+              "Value of fewer service calls",
+              "5M calls x 2% fewer x $10 a call",
+              "$1.0M"
+            ],
+            [
+              "5",
+              "Total value a year, and net of running cost",
+              "$4.8M + $2.4M + $1.0M = $8.2M. Then $8.2M - $2.0M",
+              "$6.2M net"
+            ],
+            [
+              "6",
+              "How fast does the $4M build pay back?",
+              "$4M / $6.2M a year x 12 months",
+              "7.7 months"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Repeat use rises from 40% to 50% (the target)",
+              "Value $10.25M, +$2.05M a year",
+              "Weekly summaries and alerts are worth doing."
+            ],
+            [
+              "Repeat use falls to 30%",
+              "Value $6.15M, net $4.15M",
+              "Still above the $2M cost."
+            ],
+            [
+              "The effect on customers leaving fades to zero",
+              "Value $3.4M, net $1.4M",
+              "Still positive, but thin. Keep measuring."
+            ],
+            [
+              "The true effect is only half of the holdout result",
+              "Value $4.1M, net $2.1M",
+              "Only just above cost. Confirm with more data."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "How much of the effect must be real to cover the $2M running cost?",
+              "$8.2M x s = $2M",
+              "s = 2 / 8.2 = 24%"
+            ],
+            [
+              "How many regular users cover the running cost? (value per regular user is $8.2M / 320K = $25.63)",
+              "25.63 x u = $2M",
+              "u = 2,000,000 / 25.63 = about 78K, which is 2% of customers"
+            ],
+            [
+              "What repeat rate pays back the build and one year of cost in year 1?",
+              "$8.2M x (r / 40%) = $4M + $2M",
+              "r = 6 / 8.2 x 40% = 29%"
+            ],
+            [
+              "What reach gives 400K regular users at 40% repeat?",
+              "4M x p x 40% = 400K",
+              "p = 400K / 1.6M = 25% (the target)"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Comparing adopters with non-adopters",
+              "Keen customers choose the feature, so the gap looks too big",
+              "Use the holdout group. Adopter gap here would say $14.2M, not $8.2M"
+            ],
+            [
+              "Only one quarter of data",
+              "The effect may fade or grow",
+              "Keep the holdout and recheck at six months"
+            ],
+            [
+              "Low repeat use",
+              "60% of users set a budget, but only 40% stay",
+              "Weekly summaries, alerts and nudges"
+            ],
+            [
+              "Harm to customers",
+              "Budget alerts may annoy or stress some people",
+              "Watch complaints and opt-outs, and allow easy turn-off"
+            ],
+            [
+              "Wrong unit values",
+              "$400 per account and 2% interchange are assumptions",
+              "Show a range and ask Finance to confirm"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
           ],
           "rows": [
             [
-              "Adoption (reach)",
-              "The share of customers who try the feature"
+              "Holdout group",
+              "A random group that cannot see the feature. It shows what would have happened anyway"
+            ],
+            [
+              "Reach",
+              "The share of customers who tried the feature"
             ],
             [
               "Repeat use",
-              "The share of those who come back, for example after 4 weeks"
-            ],
-            [
-              "Regular user",
-              "Someone who keeps using the feature"
-            ],
-            [
-              "Customer outcome",
-              "The helpful thing the feature is meant to cause, such as setting a budget"
-            ],
-            [
-              "Guardrail metric",
-              "A number that must not get worse, such as complaints or opt-outs"
-            ],
-            [
-              "Holdout group",
-              "A random small group that is not shown the feature, used as a fair comparison"
-            ],
-            [
-              "Selection bias",
-              "Keen customers choose the feature, so comparing them with others exaggerates its effect"
+              "The share of triers who are still using it after 4 weeks"
             ],
             [
               "Attrition",
-              "The share of customers who leave in a year"
-            ],
-            [
-              "Value of a retained account",
-              "Profit the bank expects from a customer who stays; here $400"
+              "Customers leaving the bank. Here 12.0% a year without the feature"
             ],
             [
               "Net interchange",
-              "What the bank keeps from the fee on each card payment; here 2% of spend"
+              "The fee we earn on card spend. Here 2% of spend"
+            ],
+            [
+              "Selection bias",
+              "When the people who pick a feature are different from those who do not"
+            ],
+            [
+              "Payback",
+              "The time it takes for net value to repay the build cost"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Reach: 4M x 20% = 800K tried it. Target was 1.0M, so we are at 80% of target."
+              "Defining working as sign-ups only",
+              "Use a ladder: try it, come back, helps the customer, helps the bank, no harm."
             ],
             [
-              "2",
-              "Repeat use: 800K x 40% = 320K regular users, which is 8% of customers. Target 50% would give 400K, so we are at 80% of target."
+              "Comparing adopters with non-adopters",
+              "Use the holdout group, because keen customers choose the feature."
             ],
             [
-              "3",
-              "Customer outcome: 320K x 60% = 192K regular users set a budget."
+              "Ignoring the cost",
+              "Net the $2M running cost from the $8.2M value."
             ],
             [
-              "4",
-              "Retention: attrition fell 0.3 points. 4M x 0.3% = 12,000 accounts kept. 12,000 x $400 = $4.8M."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "5",
-              "Spend: +$30 per customer x 4M = $120M more spend. $120M x 2% = $2.4M."
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
             ],
             [
-              "6",
-              "Service calls: 4M x 1.2 calls = 4.8M calls. 2% fewer = 96K calls. 96K x $10 = about $1.0M."
-            ],
-            [
-              "7",
-              "Total value: $4.8M + $2.4M + $1.0M = about $8.2M a year."
-            ],
-            [
-              "8",
-              "Net of running cost: $8.2M - $2M = $6.2M a year. Build cost $4M / $6.2M = 0.65 years, about 8 months to pay back."
-            ],
-            [
-              "9",
-              "Per regular user: $8.2M / 320K = about $25 a year."
-            ],
-            [
-              "10",
-              "Naive method: adopters 7% attrition vs others 12.9%, a gap of 5.9 points. 800K x 5.9% = 47,200 accounts x $400 = $18.9M. That is nearly 4x the true $4.8M."
-            ],
-            [
-              "11",
-              "Fix repeat use to 50%: 400K / 320K = +25%. 25% x $8.2M = about $2.0M more a year."
-            ],
-            [
-              "12",
-              "Break-even: $2M / $8.2M = 25% of the measured effect covers the running cost."
-            ],
-            [
-              "13",
-              "If the true effect is half: $8.2M / 2 = $4.1M, minus $2M = +$2.1M, still positive."
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Feature assessment checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical problem",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "What was the goal?",
-            "Launch plan, targets",
-            "No clear target",
-            "Agree one or two target metrics first"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "What does working mean here? What was the feature meant to do?"
           ],
           [
-            "Do people try it?",
-            "Share of customers who open it",
-            "Feature is hard to find",
-            "Better placement, in-app prompts"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Targets, holdout group, usage events, attrition, spend, calls, unit values and running cost"
           ],
           [
-            "Do they come back?",
-            "Active after 1, 4 and 12 weeks",
-            "One-time curiosity",
-            "Alerts, weekly summaries, habit loops"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume the holdout effect applies to all 4M customers who see the feature'"
           ],
           [
-            "Does it help them?",
-            "Budgets set, goals met, overspending down",
-            "Use without benefit",
-            "Simplify, add useful nudges"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Value = 4M x 0.3% x $400 = $4.8M, plus $2.4M, plus $1.0M = $8.2M. Break-even = $2M / $8.2M = 24%"
           ],
           [
-            "Does it help the bank?",
-            "Holdout: retention, spend, calls",
-            "Gains are small or missing",
-            "Compare value with running cost"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'Yes it is working: $6.2M net a year. It is below target on use, so I would fix repeat use'"
           ],
           [
-            "Does it cause harm?",
-            "Complaints, opt-outs, support contacts",
-            "Annoying alerts",
-            "Let customers control alerts"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "One quarter only, adopter bias, low repeat use, harm to customers. Recheck in two quarters"
           ],
           [
-            "Is the evidence fair?",
-            "Holdout or A/B vs adopters vs non-adopters",
-            "Selection bias",
-            "Always use a random comparison group"
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Pause or redesign if value stays under the $2M running cost for two more quarters"
           ]
         ]
       }
@@ -4664,11 +6896,11 @@ DATA.cases = [
     "followups": [
       {
         "q": "Why not just compare adopters with non-adopters?",
-        "a": "Keen customers choose the feature, so the gap is inflated. Here it would suggest $18.9M, nearly four times the true $4.8M from the holdout."
+        "a": "Keen customers choose the feature, so the gap is inflated. Here it would say $14.2M a year, against $8.2M from the holdout, about 1.7 times too high."
       },
       {
         "q": "What if repeat use never improves?",
-        "a": "Then the value stays near $8M on these assumptions, still above the $2M running cost, but I would set a date to re-check and rethink if value falls below running cost."
+        "a": "Then value stays near $8.2M, net $6.2M, still above cost. Even at 30% repeat use the net is $4.15M. I would set a date to recheck."
       },
       {
         "q": "Which metric matters most?",
@@ -4676,15 +6908,20 @@ DATA.cases = [
       },
       {
         "q": "One quarter is short. What would you do?",
-        "a": "Treat it as an early read, keep the holdout, and confirm at six months, using early signs such as repeat use to predict retention."
+        "a": "Treat it as an early read, keep the holdout, and confirm at six months. If the leave effect faded to zero, net would still be $1.4M."
+      },
+      {
+        "q": "What data would you ask for next?",
+        "a": "Holdout results by customer group, repeat use by week, complaints and opt-outs, and how many budgets lead to later action such as saving."
       }
     ],
     "pitfalls": [
-      "Jumping to metrics. Define what working means and the goal first.",
-      "Looking only at downloads or sign-ups. Usage that fades is not success.",
-      "Comparing adopters with non-adopters. Keen users choose the feature; use a holdout.",
-      "Ignoring guardrails. A feature that raises complaints can cost more than it earns.",
-      "No decision. End with keep, fix or stop, and a date to re-measure."
+      "Defining working as sign-ups only. Use a ladder: try it, come back, helps the customer, helps the bank, no harm.",
+      "Comparing adopters with non-adopters. Use the holdout group, because keen customers choose the feature.",
+      "Ignoring the cost. Net the $2M running cost from the $8.2M value.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction."
     ]
   },
   {
@@ -4705,15 +6942,23 @@ DATA.cases = [
       },
       {
         "q": "Was there a comparison group?",
-        "a": "Yes, a random 10% of cardholders did not get alerts. Their complaint rate is 0.40%; with alerts it is 0.52%."
+        "a": "Yes, a random 10% of the 5M cardholders did not get alerts. Their complaint rate is 0.40% a quarter (20,000 in total). With alerts it is 0.52% (26,000)."
       },
       {
         "q": "What are the complaints about?",
-        "a": "Fraud-related complaints fell, but complaints about wrongly blocked purchases and about too many alerts rose."
+        "a": "Fraud complaints fell from 8,000 to 5,000. Wrongly blocked purchases rose from 4,000 to 7,000. Too many alerts is new at 6,000. Everything else stays at 8,000."
       },
       {
-        "q": "What are the costs and values?",
-        "a": "A complaint costs about $15 to handle plus extra churn. A retained account is worth about $400. The feature costs $2M a year to run."
+        "q": "What do fraud losses look like?",
+        "a": "$40M a year without alerts and $34M with alerts, measured against the holdout."
+      },
+      {
+        "q": "What does a complaint cost?",
+        "a": "$15 to handle plus about 7 points of extra churn. A retained account is worth $400, so about $43 a complaint."
+      },
+      {
+        "q": "What does the feature cost to run?",
+        "a": "$2M a year."
       },
       {
         "q": "Is there any regulatory or customer-harm concern?",
@@ -4722,50 +6967,9 @@ DATA.cases = [
     ],
     "tables": [
       {
-        "title": "Complaints per quarter, before and after",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
-          "Complaints per quarter",
-          "Before",
-          "After",
-          "Change"
-        ],
-        "rows": [
-          [
-            "About fraud losses (unauthorized charges)",
-            "8,000",
-            "5,000",
-            "-3,000 (good)"
-          ],
-          [
-            "About wrongly blocked purchases",
-            "4,000",
-            "7,000",
-            "+3,000 (bad)"
-          ],
-          [
-            "About too many or confusing alerts",
-            "0",
-            "6,000",
-            "+6,000 (bad, new)"
-          ],
-          [
-            "Everything else",
-            "8,000",
-            "8,000",
-            "0"
-          ],
-          [
-            "Total",
-            "20,000 (0.40% of 5M cardholders)",
-            "26,000 (0.52%)",
-            "+6,000 (+30%)"
-          ]
-        ]
-      },
-      {
-        "title": "Other numbers we will use (assumptions)",
-        "headers": [
-          "Other number",
+          "Item",
           "Value",
           "Note"
         ],
@@ -4776,24 +6980,39 @@ DATA.cases = [
             "Assumed"
           ],
           [
-            "Holdout group",
-            "10% get no alerts",
-            "Complaint rate 0.40% without alerts vs 0.52% with alerts, so the feature caused the rise"
+            "Holdout",
+            "10% get no alerts. Complaint rate 0.40% vs 0.52% with alerts",
+            "So the feature caused the rise"
+          ],
+          [
+            "Complaints per quarter, total",
+            "20,000 without alerts. 26,000 with alerts",
+            "+6,000 (+30%)"
+          ],
+          [
+            "By type: fraud / blocked purchase / too many alerts / other",
+            "8,000 to 5,000. 4,000 to 7,000. 0 to 6,000. 8,000 to 8,000",
+            "-3,000, +3,000, +6,000, 0"
           ],
           [
             "Fraud losses",
-            "$40M a year to $34M",
-            "A $6M saving, measured against the holdout"
+            "$40M a year without alerts. $34M with alerts",
+            "$6M saving"
           ],
           [
             "Cost of one complaint",
             "$43",
-            "$15 to handle + 7 points extra churn x $400 account value = $28"
+            "$15 to handle + 7 points of extra churn x $400"
           ],
           [
             "Cost to run the feature",
             "$2M a year",
             "Assumed"
+          ],
+          [
+            "Customer harm",
+            "Some older customers find alerts confusing",
+            "Complaints are watched by regulators"
           ]
         ]
       }
@@ -4802,38 +7021,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: we launched a fraud alert feature and complaints went up. I need to decide keep, fix or kill. First, was there a holdout group, and what are the complaints about?"
+          "So we rolled out a fraud alert feature and complaints went up. I need to decide whether to keep, fix or kill it. Can I ask what the alert does, whether some customers did not get it, what the complaints are about, and what each complaint and the feature cost? If not, I will assume."
         ],
         [
           "L: Lay out",
-          "I would answer three questions. Did the feature cause the rise? Which complaints rose and which fell? And what is the feature worth against what the complaints cost? Then I would choose keep, fix or kill."
+          "I will answer three questions. Did the feature cause the rise? Which complaints rose and which fell? And is the feature worth more than it costs?"
         ],
         [
           "E: Evaluate",
-          "Assuming 5M cardholders, complaints went from 20K to 26K a quarter. Fraud complaints fell 3K, but blocked purchases rose 3K and alert complaints rose 6K. Fraud losses fell from $40M to $34M, a $6M saving. A complaint costs about $43, so 24K extra a year is about $1.0M."
+          "With 5M cardholders, the holdout without alerts has 0.40%, or 20,000 complaints a quarter. With alerts it is 0.52%, or 26,000, up 30%. So the feature caused the rise. Fraud complaints fell 3,000, blocked purchases rose 3,000 and alert complaints rose 6,000. A complaint costs $15 plus 7 points of churn on a $400 account, so $43. 24,000 extra a year is about $1.03M. Fraud losses fell from $40M to $34M, a $6M saving."
         ],
         [
           "A: Assess",
-          "Net of a $2M running cost, the feature is worth about $3.0M a year. Killing it would lose that. The problems, too many alerts and wrongly blocked purchases, can be fixed. It would become a kill if the fraud saving fell to about $3M or complaint costs rose about four times."
+          "Net of the $2M running cost, that is $6M minus $1.03M minus $2M, about $3.0M a year. Killing it would lose that. The kill point is a fraud saving of $3.03M, or each complaint costing $167. The problems are too many alerts and blocked purchases, and both can be fixed."
         ],
         [
           "R: Recommend",
-          "I would keep it and fix it: send alerts only for risky transactions, add a one-tap 'This was me', and re-check in 90 days against a holdout. I expect net value to rise to about $4.0M a year."
+          "I recommend we keep it and fix it. Two reasons: it adds about $3.0M a year, and the complaint causes are fixable. Alert only on risky payments, add a one-tap 'This was me', and recheck in 90 days against the holdout. If the fix works, net rises to about $4.0M. Risks are confused older customers and regulator attention. If you wanted a more cautious answer, I would pause alerts for older customers while we fix it."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Problem: a new fraud alert feature launched,<br/>but customer complaints went up, not down\"]\nC --> C2[\"Decision: keep, fix or kill it?<br/>Define terms: complaint, fraud loss, false alarm\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Cause: did the feature cause the rise,<br/>or something else?\"]\nL --> L2[\"2 Mix: which complaints rose, which fell?\"]\nL --> L3[\"3 Value: what does the feature save, and what do<br/>the complaints cost? Then keep, fix or kill\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Split complaints by type and price the trade-off\"]\nE1 --> E2[\"Complaints: 20K to 26K a quarter (+30%)<br/>Fraud complaints -3K, blocked purchases +3K, alert complaints +6K\"]\nE2 --> E3[\"Fraud losses: $40M to $34M a year = $6M saved<br/>Each extra complaint costs about $43, so +24K a year = $1.0M\"]\nE3 --> E4[\"Net: $6M saved - $2M running cost - $1.0M complaints<br/>= +$3.0M a year\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"The feature pays for itself: killing it would lose about $3.0M a year\"]\nA --> A2[\"The pain is fixable: too many alerts and wrongly blocked purchases\"]\nA --> A3[\"It becomes a kill only if the saving drops below about $3M<br/>or the complaint cost rises about 4x\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Keep it and fix it\"]\nR --> R1[\"Send alerts only for risky transactions, to halve alert complaints\"]\nR --> R2[\"Fix wrongly blocked purchases with a one-tap 'This was me'\"]\nR --> R3[\"Re-check in 90 days with a holdout. Net should reach about +$4.0M\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Fraud alert feature launched, complaints went up<br/>Keep, fix or kill?\"]\nC --> L[\"L: Lay out<br/>1 Did the feature cause the rise?<br/>2 Which complaints rose, which fell?<br/>3 Is it worth more than it costs?\"]\nL --> E[\"E: Evaluate<br/>Use the holdout, split the complaints, then price them\"]\nE --> E1[\"Cause<br/>Holdout: 0.40% without alerts<br/>0.52% with alerts<br/>20K to 26K a quarter (+30%)\"]\nE --> E2[\"Complaints<br/>Fraud: -3K. Blocked purchases: +3K<br/>Too many alerts: +6K (new)\"]\nE --> E3[\"Money<br/>Fraud saved $6M<br/>Extra complaints cost $1.03M<br/>Run cost $2M\"]\nE1 --> A[\"A: Assess<br/>Net value is about $3.0M a year<br/>Kill only if the saving drops to $3.03M<br/>Both problems can be fixed\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Keep it and fix it<br/>Alert only on risky payments, one-tap This was me<br/>Recheck in 90 days. Net target $4.0M\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "decide",
-          "title": "How we decide: keep, fix or kill",
-          "note": "Green is a good change, red is a bad change, orange is the evidence or the money.",
-          "code": "flowchart TD\nQ[\"Complaints went up after the fraud alert launch. Keep, fix or kill?\"] --> S1{\"1 Did the feature cause it?\"}\nS1 --> S1a[\"Compare with a holdout group (10% get no alerts)<br/>Complaint rate: 0.40% without vs 0.52% with alerts<br/>Yes, the feature caused the rise\"]\nS1a --> S2{\"2 What are the complaints about?\"}\nS2 --> G[\"Good: fraud complaints 8K to 5K<br/>-3K a quarter\"]\nS2 --> B1[\"Bad: blocked legitimate purchases 4K to 7K<br/>+3K a quarter\"]\nS2 --> B2[\"Bad: too many alerts, new<br/>+6K a quarter\"]\nG --> S3{\"3 What is it worth?\"}\nB1 --> S3\nB2 --> S3\nS3 --> W[\"Saves $6M fraud losses a year<br/>Costs $2M to run and $1.0M in complaints<br/>Net +$3.0M\"]\nW --> S4{\"4 Keep, fix or kill?\"}\nS4 -->|\"Net positive, complaints fixable\"| K[\"FIX: keep and cut the pain\"]\nS4 -->|\"Net positive, nothing to fix\"| K2[\"KEEP: monitor\"]\nS4 -->|\"Net negative, or harms customers\"| X[\"KILL: switch off, replace with a better design\"]\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass Q,S1,S2,S3,S4 q;\nclass S1a,W mid;\nclass G,K2 good;\nclass B1,B2,X bad;\nclass K out;"
-        },
-        {
-          "id": "money",
-          "title": "The money: keep, kill and fix compared",
-          "note": "Green is the benefit, red is a cost or a loss, orange is a comparison.",
-          "code": "flowchart TD\nB[\"Assumed: 5M cardholders, a complaint costs $15 to handle plus churn<br/>7 points extra x $400 account value = $28, so $43 in total<br/>Running cost $2M a year\"] --> V[\"Value: fraud losses fall from $40M to $34M = +$6M a year\"]\nB --> CC[\"Complaint cost: +6K a quarter x 4 = 24K a year<br/>24K x $43 = -$1.0M\"]\nB --> RC[\"Running cost: -$2M a year\"]\n\nV --> N[\"Keep as is<br/>$6M - $2M - $1.0M = +$3.0M a year\"]\nCC --> N\nRC --> N\n\nN --> K[\"Kill it<br/>Lose $6M saving, save $2M and $1.0M<br/>= -$3.0M a year\"]\nN --> F[\"Fix it: alert complaints 6K to 3K, blocked purchases 7K to 4K<br/>Complaints back to 20K a quarter, cost $1.0M to $0<br/>$6M - $2M = +$4.0M a year\"]\n\nN --> BE1[\"Break-even on complaints<br/>$4.0M / $43 = about 93K extra complaints a year<br/>3.9x today's 24K\"]\nN --> BE2[\"If the fraud saving halves to $3M<br/>$3M - $2M - $1.0M = $0, so fixing is a must<br/>After the fix: +$1.0M\"]\n\nF --> R[\"Recommend: fix, do not kill<br/>Re-check in 90 days against a holdout\"]\nK --> R\nBE1 --> R\nBE2 --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B base;\nclass V,F good;\nclass CC,RC,K bad;\nclass N,BE1,BE2 mid;\nclass R out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Did the feature cause the rise?<br/>No alerts (holdout): 20,000 a quarter = <b>0.40%</b><br/>With alerts: 26,000 = <b>0.52%</b><br/>Rise = <b>+6,000 (+30%)</b>\"]\nA --> B[\"2 What moved? (per quarter)<br/>Fraud complaints: 8,000 to 5,000 = <b>-3,000</b><br/>Blocked purchases: 4,000 to 7,000 = <b>+3,000</b><br/>Too many alerts: 0 to 6,000 = <b>+6,000</b>\"]\nB --> C1[\"Cost of one complaint<br/>$15 to handle + 7 points x $400 = $28<br/>= <b>$43</b>\"]\nC1 --> C2[\"Extra complaints a year<br/>6,000 x 4 = 24,000<br/>24,000 x $43 = <b>$1.03M</b>\"]\nA --> D[\"3 Fraud saved<br/>$40M - $34M = <b>$6M a year</b>\"]\nC2 --> E[\"4 Net value a year<br/>$6M - $1.03M - $2M run cost<br/>= <b>about $3.0M</b>\"]\nD --> E\nE --> F[\"5 After the fix (target)<br/>Alert complaints 6,000 to 2,000<br/>Blocked 7,000 to 5,000<br/>Extra complaints = 0, net = <b>$4.0M</b>\"]\nE --> G1[\"Check: kill point<br/>Saving must fall to $1.03M + $2M<br/>= <b>$3.03M</b>\"]\nE --> G2[\"Check: complaint cost to kill<br/>$4M / 24,000 = <b>$167</b> each<br/>3.9 times today's $43\"]\nE --> G3[\"Check: if fraud saving halves<br/>$3M - $1.03M - $2M<br/>= <b>about $0</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B n1;\nclass C1,C2,D n2;\nclass E,F n3;\nclass G1,G2,G3 n4;\n"
         }
       ],
       "exampleTables": [
@@ -4848,189 +7061,291 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define complaint, fraud loss and the decision",
-              "Different complaint types mean different things",
-              "Complaints up 30%; decision is keep, fix or kill"
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "What the feature does, holdout group, what the complaints are about, costs, customer harm"
             ],
             [
               "L Lay out",
-              "Say your 3 questions before calculating",
-              "Shows a plan and lets the interviewer steer",
-              "Cause? Mix? Value, then decide"
+              "Say your questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Did it cause the rise? Which complaints? Is it worth the cost?"
             ],
             [
               "E Evaluate",
-              "Split complaints by type and price each side",
-              "The total hides good and bad changes",
-              "Fraud complaints down 3K; blocked purchases and alerts up 9K"
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "Complaints +30%. Fraud saving $6M. Complaint cost $1.03M"
             ],
             [
               "A Assess",
-              "Net the benefit against costs and test the decision",
-              "Shows when keep turns into kill",
-              "+$3.0M a year; kill loses $3.0M; fix reaches +$4.0M"
+              "Say what the numbers mean: net value, kill point, what can be fixed",
+              "Turns numbers into a business view",
+              "Net about $3.0M a year. Kill point is a $3.03M saving"
             ],
             [
               "R Recommend",
-              "Give a decision, the fixes and a re-check date",
-              "Interviewers want a decision",
-              "Keep and fix; re-check in 90 days"
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Keep and fix. A defensible alternative: pause for older customers while you fix it"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How much did complaints rise?",
+              "Without alerts 20,000 a quarter. With alerts 26,000. 6,000 / 20,000",
+              "+30% (0.40% to 0.52%)"
+            ],
+            [
+              "2",
+              "How much does one complaint cost?",
+              "$15 to handle + (7% x $400 lost account value = $28)",
+              "$43"
+            ],
+            [
+              "3",
+              "What do the extra complaints cost a year?",
+              "6,000 x 4 quarters = 24,000. 24,000 x $43",
+              "$1.03M"
+            ],
+            [
+              "4",
+              "How much fraud does the feature stop?",
+              "$40M - $34M, measured against the holdout",
+              "$6M a year"
+            ],
+            [
+              "5",
+              "What is the net value?",
+              "$6M - $1.03M - $2M run cost",
+              "About $3.0M a year"
+            ],
+            [
+              "6",
+              "What if the fix works?",
+              "Extra complaints go to 0, so $6M - $0 - $2M",
+              "$4.0M a year"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Result",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Fix works only half way (23,000 complaints a quarter)",
+              "Net $3.48M a year",
+              "Still better than today."
+            ],
+            [
+              "Fraud saving halves to $3M",
+              "Net about $0 (-$0.03M)",
+              "This is close to the kill line."
+            ],
+            [
+              "Extra complaints double to 48,000 a year",
+              "Net $1.94M a year",
+              "Still positive, but the fix becomes urgent."
+            ],
+            [
+              "Each complaint loses 14 points of churn, not 7",
+              "Complaint cost $71, net $2.3M",
+              "Churn per complaint matters. Check it."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "How much must the fraud saving fall before net is zero?",
+              "S - $1.03M - $2M = 0",
+              "S = $3.03M, about half of today's $6M"
+            ],
+            [
+              "How much would each complaint have to cost for net to be zero?",
+              "$6M - 24,000 x c - $2M = 0",
+              "c = $4M / 24,000 = $167 (3.9 times $43)"
+            ],
+            [
+              "How many extra complaints a year before net is zero?",
+              "$6M - n x $43 - $2M = 0",
+              "n = $4M / $43 = about 93,000 (3.9 times today's 24,000)"
+            ],
+            [
+              "Where does the $43 come from? What churn gives a $43 complaint?",
+              "$15 + p x $400 = $43",
+              "p = 28 / 400 = 7%"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Too many alerts",
+              "Customers get tired and ignore real fraud warnings",
+              "Alert only on risky payments, and group alerts"
+            ],
+            [
+              "Real purchases blocked",
+              "Customers get stuck at the till or checkout",
+              "Add one-tap 'This was me' so a real purchase goes through"
+            ],
+            [
+              "Older customers confused",
+              "Some do not understand the messages",
+              "Plain words, a phone option and a human line"
+            ],
+            [
+              "Regulator and leadership attention",
+              "Complaint volume is watched closely",
+              "Report complaints by type and show the fix plan"
+            ],
+            [
+              "Fraud saving may shrink",
+              "Fraudsters change tactics",
+              "Track the saving against the holdout each quarter"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
           ],
           "rows": [
             [
-              "Fraud alert",
-              "A message to the customer about a suspicious payment, asking them to confirm or deny it"
+              "Holdout group",
+              "A random 10% of cardholders who get no alerts. It shows what would happen without the feature"
+            ],
+            [
+              "Complaint rate",
+              "Complaints divided by cardholders. Here 0.40% to 0.52% a quarter"
             ],
             [
               "False positive",
-              "A real purchase wrongly flagged as fraud"
-            ],
-            [
-              "Alert fatigue",
-              "Customers get so many alerts that they ignore or resent them"
-            ],
-            [
-              "Holdout group",
-              "A random group that does not get the feature, used as a fair comparison"
-            ],
-            [
-              "Complaint mix",
-              "The breakdown of complaints by topic"
+              "A real purchase flagged as suspicious"
             ],
             [
               "Fraud loss",
-              "Money the bank loses to fraud"
+              "Money lost to unauthorized charges. Here $40M a year before alerts"
             ],
             [
               "Churn",
               "Customers leaving the bank"
             ],
             [
-              "Guardrail",
-              "A number that must not get worse, such as complaints"
+              "Net value",
+              "Money saved minus the cost of complaints minus the cost to run the feature"
             ],
             [
-              "Break-even",
-              "The point where the feature's value equals its cost"
-            ],
-            [
-              "Keep, fix or kill",
-              "The three decisions: leave it, improve it, or switch it off"
+              "Kill point",
+              "The level where net value reaches zero"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Complaint rate: before 20K / 5M = 0.40%. After 26K / 5M = 0.52%. That is +6K a quarter, +30%."
+              "Killing it because complaints went up",
+              "Price the complaints and compare with the $6M fraud saving."
             ],
             [
-              "2",
-              "Mix: fraud complaints -3K, blocked purchases +3K, alert complaints +6K, other 0. Net +6K."
+              "Counting all complaints as one group",
+              "Split them: fraud complaints fell, other types rose."
             ],
             [
-              "3",
-              "Fraud losses: $40M to $34M = $6M a year saved, 15%."
+              "Using before and after only",
+              "Use the holdout group, because seasons and other changes can move complaints."
             ],
             [
-              "4",
-              "Cost of a complaint: $15 handling + (7% extra churn x $400) = $15 + $28 = $43."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "5",
-              "Extra complaints a year: +6K a quarter x 4 = 24K. 24K x $43 = about $1.0M a year."
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
             ],
             [
-              "6",
-              "Running cost: $2M a year."
-            ],
-            [
-              "7",
-              "Keep as is: $6M - $2M - $1.0M = +$3.0M a year."
-            ],
-            [
-              "8",
-              "Kill it: lose the $6M saving, save the $2M running cost and the $1.0M complaint cost. Net = -$3.0M a year."
-            ],
-            [
-              "9",
-              "Fix it: alert complaints 6K to 3K, blocked purchases 7K to 4K. Complaints return to 26K - 3K - 3K = 20K. Complaint cost goes to $0, so net = $6M - $2M = +$4.0M a year."
-            ],
-            [
-              "10",
-              "Break-even on complaints: $4.0M / $43 = about 93K extra complaints a year, which is 3.9x today's 24K."
-            ],
-            [
-              "11",
-              "If the fraud saving halves to $3M: $3M - $2M - $1.0M = $0, so fixing is a must. After the fix: $3M - $2M = +$1.0M."
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Keep, fix or kill checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical cause",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "Did the feature cause it?",
-            "Holdout complaint rate, timing",
-            "Seasonality or another change",
-            "Use a random comparison group"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Keep, fix or kill? What does the alert do and who gets it?"
           ],
           [
-            "What are the complaints about?",
-            "Complaint mix before and after",
-            "Alerts too frequent or confusing",
-            "Cut alerts, simplify the message"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Holdout rates, complaint types, fraud losses, cost per complaint, running cost, customer harm"
           ],
           [
-            "Are real purchases blocked?",
-            "False positive rate, declined purchase complaints",
-            "Rules too strict",
-            "Tune rules, add 'This was me'"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume the holdout effect is the same across all customers'"
           ],
           [
-            "What does it save?",
-            "Fraud losses vs holdout, time to catch fraud",
-            "Savings are small or unproven",
-            "Measure it before deciding"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Extra complaints cost 24,000 x $43 = $1.03M. Net = $6M - $1.03M - $2M = about $3.0M"
           ],
           [
-            "What do complaints cost?",
-            "Handling cost and extra churn",
-            "Complainers leave more often",
-            "Price it per complaint"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'Keep it and fix it, because it still adds about $3.0M a year'"
           ],
           [
-            "Are any customers harmed?",
-            "Vulnerable customers, accessibility, regulators",
-            "Alerts confuse some groups",
-            "Fix first, or pause for that group"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Too many alerts, blocked purchases, confused older customers, regulator attention. Recheck in 90 days"
           ],
           [
-            "Can it be fixed quickly?",
-            "Effort and time to improve",
-            "Needs big redesign",
-            "If not fixable and net negative, kill it"
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Kill it if the fraud saving falls to about $3M and the fix does not work"
           ]
         ]
       }
@@ -5038,11 +7353,11 @@ DATA.cases = [
     "followups": [
       {
         "q": "Why not kill it, since complaints went up?",
-        "a": "Because it saves about $6M a year in fraud losses against about $1.0M of extra complaint cost and a $2M running cost. Killing it would lose about $3.0M a year."
+        "a": "It saves about $6M a year in fraud losses against $1.03M of extra complaint cost and a $2M running cost. Killing it would lose about $3.0M a year."
       },
       {
         "q": "What would make you kill it?",
-        "a": "A net value below zero that cannot be fixed, for example the fraud saving halving and complaints not improving, or clear harm to a group of customers."
+        "a": "A net value below zero that cannot be fixed, for example the fraud saving falling to about $3M, or each complaint costing about $167. Also clear harm to a group of customers."
       },
       {
         "q": "How would you cut the alert complaints?",
@@ -5050,15 +7365,20 @@ DATA.cases = [
       },
       {
         "q": "How do you know the feature caused the complaints?",
-        "a": "The 10% holdout: complaint rate 0.40% without alerts versus 0.52% with. Before and after alone could be seasonality."
+        "a": "The 10% holdout: 0.40% without alerts versus 0.52% with. Before and after alone could be seasonality."
+      },
+      {
+        "q": "What data would you ask for next?",
+        "a": "Complaints by customer age group, how many alerts each customer gets, how often 'This was me' is tapped, and fraud caught per alert."
       }
     ],
     "pitfalls": [
-      "Killing the feature because complaints rose. Look at what it saves first.",
-      "Using one total. Split complaints by type to see good and bad changes.",
-      "Skipping the holdout. Without one you cannot tell cause from coincidence.",
-      "Ignoring cost per complaint. Price complaints in dollars so they can be compared with the saving.",
-      "No decision rule. Say when you would switch from keep to fix to kill."
+      "Killing it because complaints went up. Price the complaints and compare with the $6M fraud saving.",
+      "Counting all complaints as one group. Split them: fraud complaints fell, other types rose.",
+      "Using before and after only. Use the holdout group, because seasons and other changes can move complaints.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction."
     ]
   },
   {
@@ -5083,7 +7403,11 @@ DATA.cases = [
       },
       {
         "q": "How was the plan built?",
-        "a": "10,000 signups, 50% funded, a $28K average loan, a 3.0% margin and a $300 fee."
+        "a": "10,000 signups, 50% funded, a $28K average loan, a 3.0% margin and a $300 fee. That is $1,140 a loan and $5.7M in total."
+      },
+      {
+        "q": "What is the actual?",
+        "a": "10,000 signups, 40% funded (4,000 loans), a $22K average loan, a 2.5% margin and a $150 average fee. That is $700 a loan and $2.8M."
       },
       {
         "q": "Could this be timing?",
@@ -5091,60 +7415,61 @@ DATA.cases = [
       },
       {
         "q": "What changed in sales and pricing?",
-        "a": "Promotional rates and fee waivers were used to win signups. Treat all figures as working assumptions."
+        "a": "Promotional rates and fee waivers were used to win signups. Half of the fees were waived."
+      },
+      {
+        "q": "What data can we see in the funnel?",
+        "a": "Counts at each step from quote to funded loan, loan size, rate and fee for each loan. Treat all figures as working assumptions."
       }
     ],
     "tables": [
       {
-        "title": "Plan vs actual (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
-          "Piece of revenue",
-          "Plan",
-          "Actual",
-          "What it means"
+          "Item",
+          "Value",
+          "Note"
         ],
         "rows": [
           [
             "Signups",
-            "10,000",
-            "10,000",
-            "Customers who applied for a rate quote (target met)"
+            "10,000 in the plan and 10,000 actual",
+            "A signup is a rate quote request"
           ],
           [
             "Share funded",
-            "50% = 5,000 loans",
-            "40% = 4,000 loans",
-            "Signups that became a funded loan"
+            "Plan 50% = 5,000 loans. Actual 40% = 4,000 loans",
+            ""
           ],
           [
             "Average loan",
-            "$28K",
-            "$22K",
+            "Plan $28K. Actual $22K",
             "Balance refinanced"
           ],
           [
-            "Margin (net interest earned per year)",
-            "3.0%",
-            "2.5%",
-            "Interest rate minus the bank's cost of funds"
+            "Margin (net interest a year)",
+            "Plan 3.0%. Actual 2.5%",
+            "Interest rate minus cost of funds"
           ],
           [
-            "Fee collected per loan",
-            "$300",
-            "$150",
-            "Origination fee; half were waived"
+            "Origination fee",
+            "Plan $300. Actual $150",
+            "Half of fees were waived"
           ],
           [
-            "First-year revenue per loan",
-            "$1,140",
-            "$700",
-            "Loan x margin + fee: $28K x 3.0% + $300 vs $22K x 2.5% + $150"
+            "Revenue per loan",
+            "Plan $1,140. Actual $700",
+            "Loan x margin + fee"
           ],
           [
             "Total first-year revenue",
-            "$5.7M",
-            "$2.8M",
+            "Plan $5.7M. Actual $2.8M",
             "Gap $2.9M, 51% below plan"
+          ],
+          [
+            "Timing",
+            "Loans fund about 12 days after signup, as planned",
+            "So timing does not explain the gap"
           ]
         ]
       }
@@ -5153,38 +7478,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: the auto-refinance product hit its signup target but revenue is below plan. I will treat revenue as first-year interest margin plus fees. How was the plan built, and could timing or counting explain it?"
+          "So the auto-refinance product hit its signup target but revenue is below plan. I will treat revenue as first-year interest margin plus fees. Can I ask what a signup is, how the plan was built, and whether timing could explain it? If not, I will assume."
         ],
         [
           "L: Lay out",
-          "I would check three things. First, whether it is timing or measurement. Second, which part of revenue is short: signups, share funded, loan size, margin or fees. Third, why, and what to do about it."
+          "I will check three things. First, is it timing or counting. Second, which part of revenue is short: loans funded, loan size, margin or fees. Third, why, and what to fix."
         ],
         [
           "E: Evaluate",
-          "Assuming plan was 10,000 signups, 50% funded at $28K, a 3.0% margin and a $300 fee, that is 5,000 loans at $1,140, or $5.7M. Actual is 40% funded, $22K, 2.5% and a $150 fee, so 4,000 loans at $700, or $2.8M. The gap is $2.9M."
+          "The plan was 10,000 signups, 50% funded, so 5,000 loans. Each loan earns $28K times 3.0%, which is $840, plus a $300 fee, so $1,140. That is $5.7M. The actual is 40% funded, so 4,000 loans, at $22K times 2.5% plus $150, so $700 each. That is $2.8M. The gap is $2.9M, 51% below plan."
         ],
         [
           "A: Assess",
-          "The gap splits into $1.14M from fewer loans funded, $0.72M from smaller loans, $0.44M from lower margin and $0.60M from fee waivers. So signups was the wrong target: it measured interest, not funded loans. Conversion is the biggest piece at about 39%."
+          "Loans fund in 12 days as planned, so it is not timing. The gap splits four ways: $1.14M from fewer loans funded, $0.72M from smaller loans, $0.44M from lower margin, and $0.60M from fee waivers. That adds to $2.9M. So the funnel is the biggest piece at 39%. Signups was the wrong goal, because it rewarded discounts and waivers."
         ],
         [
           "R: Recommend",
-          "I would fix the funnel after signup first, such as documents, verification and speed. Then set rules for fee waivers and promo rates, and aim marketing at larger balances. I would change the goal to funded loans and revenue per signup. A price rise is worth it only if it loses fewer than about 14% of loans."
+          "I recommend we fix the funnel after signup first. Two reasons: it is the biggest piece, and it does not hurt pricing. Then set rules for fee waivers and promo rates, and aim marketing at larger balances. Change the goal to funded loans and revenue per signup. Risks are a slow fix and early payoff. If the funnel is hard to fix, a price rise back to 3.0% is worth it only if we lose fewer than 13.6% of loans."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Problem: the auto-refinance product hit its signup target<br/>(10,000) but revenue is below plan\"]\nC --> C2[\"Define terms: signup = applied for a rate quote<br/>Revenue = funded loans x size x margin + fees\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Is it timing or measurement?<br/>Late funding or a counting difference\"]\nL --> L2[\"2 Which part of revenue is short?<br/>Volume, loan size, price or fees\"]\nL --> L3[\"3 Why, and what to do?<br/>Fix the biggest gap, change the target\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Break revenue into its parts and compare with plan\"]\nE1 --> E2[\"Plan: 10,000 signups x 50% funded = 5,000 loans<br/>$1,140 each = $5.7M\"]\nE2 --> E3[\"Actual: 10,000 x 40% funded = 4,000 loans<br/>$22K balance, 2.5% margin, $150 fee = $700 each = $2.8M\"]\nE3 --> E4[\"Gap $2.9M: fewer loans funded -$1.14M, smaller loans -$0.72M,<br/>lower margin -$0.44M, fee waivers -$0.60M\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"Signups was the wrong target:<br/>it measured interest, not funded loans or revenue\"]\nA --> A2[\"Biggest gap is conversion (39% of the gap),<br/>then fee waivers and smaller loans\"]\nA --> A3[\"Price changes only help if they lose fewer than<br/>about 14% of funded loans\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Fix conversion first, then pricing discipline\"]\nR --> R1[\"Fix the funnel after signup: documents, verification, speed\"]\nR --> R2[\"Set rules for fee waivers and promo rates;<br/>target larger balances\"]\nR --> R3[\"Change the goal to funded loans and revenue per signup\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Auto-refinance hit 10,000 signups<br/>but revenue is below plan. Why?\"]\nC --> L[\"L: Lay out<br/>1 Is it timing or counting?<br/>2 Which piece of revenue is short?<br/>3 Why, and what do we fix?\"]\nL --> E[\"E: Evaluate<br/>Rebuild the plan, rebuild the actual, find the gap\"]\nE --> E1[\"Plan<br/>10,000 x 50% funded = 5,000 loans<br/>x $1,140 each = $5.7M\"]\nE --> E2[\"Actual<br/>10,000 x 40% funded = 4,000 loans<br/>x $700 each = $2.8M\"]\nE --> E3[\"Gap = $2.9M (51%)<br/>Fewer loans $1.14M, smaller loans $0.72M<br/>Lower margin $0.44M, fee waivers $0.60M\"]\nE1 --> A[\"A: Assess<br/>Signups was the wrong goal<br/>Funnel is the biggest piece: 39% of the gap<br/>Not timing: loans fund in 12 days\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Fix the funnel after signup first<br/>Set rules for waivers and promo rates<br/>Change the goal to funded loans\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "formula",
-          "title": "How we found it: the revenue formula",
-          "note": "Rule out timing first, then check each piece of the formula. Red boxes are below plan.",
-          "code": "flowchart TD\nQ[\"Signups on target, revenue below plan. Why?\"] --> T{\"1 Timing or measurement?\"}\nT --> T1[\"Loans funded on time, revenue counted the same way<br/>Ruled out\"]\nT1 --> R0[\"Revenue = signups x funded rate x loan size x margin, plus fees\"]\nR0 --> F1[\"Signups<br/>10,000 vs 10,000<br/>On plan\"]\nR0 --> F2[\"Funded rate<br/>40% vs 50%<br/>Gap -$1.14M\"]\nR0 --> F3[\"Loan size<br/>$22K vs $28K<br/>Gap -$0.72M\"]\nR0 --> F4[\"Margin<br/>2.5% vs 3.0%<br/>Gap -$0.44M\"]\nR0 --> F5[\"Fee collected<br/>$150 vs $300<br/>Gap -$0.60M\"]\n\nF2 --> W2[\"Why: slow documents and verification, more declines,<br/>rate shoppers who never intended to switch\"]\nF3 --> W3[\"Why: promotions attracted people with small balances\"]\nF4 --> W4[\"Why: promo rates used to win signups\"]\nF5 --> W5[\"Why: fees waived to close the deal\"]\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef ok fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef why fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclass Q,T,T1,R0 q;\nclass F1 ok;\nclass F2,F3,F4,F5 bad;\nclass W2,W3,W4,W5 why;"
-        },
-        {
-          "id": "gap",
-          "title": "What it is worth, and what would change the answer",
-          "note": "Each step changes one piece from plan to actual, so the steps add up to the gap.",
-          "code": "flowchart TD\nP[\"Plan revenue<br/>5,000 loans x ($28K x 3.0% + $300) = 5,000 x $1,140 = $5.7M\"] --> S1[\"Step 1: funded rate 50% to 40%<br/>4,000 x $1,140 = $4.56M<br/>Gap -$1.14M\"]\nS1 --> S2[\"Step 2: loan size $28K to $22K<br/>4,000 x ($22K x 3.0% + $300) = 4,000 x $960 = $3.84M<br/>Gap -$0.72M\"]\nS2 --> S3[\"Step 3: margin 3.0% to 2.5%<br/>4,000 x ($22K x 2.5% + $300) = 4,000 x $850 = $3.40M<br/>Gap -$0.44M\"]\nS3 --> S4[\"Step 4: fee $300 to $150<br/>4,000 x ($550 + $150) = 4,000 x $700 = $2.80M<br/>Gap -$0.60M\"]\nS4 --> A[\"Actual revenue $2.8M<br/>Total gap $2.9M, 51% below plan\"]\n\nA --> X1[\"Fix conversion to 50%<br/>5,000 x $700 = $3.5M, +$0.7M\"]\nA --> X2[\"Price back to 3.0% margin<br/>$810 per loan. Worth it if fewer than 14% of loans are lost<br/>($2.8M / $810 = 3,457 loans, 86% of 4,000)\"]\nA --> X3[\"Fees back to $300<br/>4,000 x $850 = $3.4M, +$0.6M\"]\n\nX1 --> R[\"Fix conversion first, then set fee and price rules<br/>Fixes overlap, so total is less than the sum\"]\nX2 --> R\nX3 --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass P base;\nclass S1,S2,S3,S4,A bad;\nclass X1,X2,X3 good;\nclass R out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 The plan, one loan<br/>$28K x 3.0% margin = $840<br/>+ $300 fee = <b>$1,140</b><br/>5,000 loans x $1,140 = <b>$5.7M</b>\"]\nA --> B[\"2 The actual, one loan<br/>$22K x 2.5% margin = $550<br/>+ $150 fee = <b>$700</b><br/>4,000 loans x $700 = <b>$2.8M</b>\"]\nB --> C[\"3 The gap<br/>$5.7M - $2.8M = <b>$2.9M (51% below plan)</b>\"]\nC --> D1[\"Fewer loans funded<br/>(5,000 - 4,000) x $1,140<br/>= <b>$1.14M (39%)</b>\"]\nC --> D2[\"Smaller loans<br/>4,000 x ($28K - $22K) x 3.0%<br/>= <b>$0.72M (25%)</b>\"]\nC --> D3[\"Lower margin<br/>4,000 x $22K x (3.0% - 2.5%)<br/>= <b>$0.44M (15%)</b>\"]\nC --> D4[\"Fee waivers<br/>4,000 x ($300 - $150)<br/>= <b>$0.60M (21%)</b>\"]\nD1 --> E[\"4 Check: sum of the four<br/>1.14 + 0.72 + 0.44 + 0.60 = <b>$2.90M</b>\"]\nD2 --> E\nD3 --> E\nD4 --> E\nE --> F1[\"Check: price rise break-even<br/>Margin back to 3.0% = $810 a loan<br/>OK if we lose fewer than <b>13.6%</b> of loans\"]\nE --> F2[\"Check: needed funded share<br/>$5.7M / (10,000 x $700)<br/>= <b>81%</b>, so fix more than the funnel\"]\nE --> F3[\"Check: if funnel only gets to 50%<br/>5,000 x $700 = $3.5M<br/>Gap closes by <b>$0.7M</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A,B,C n1;\nclass D1,D2,D3,D4 n2;\nclass E n3;\nclass F1,F2,F3 n4;\n"
         }
       ],
       "exampleTables": [
@@ -5199,193 +7518,291 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define signup and revenue, and ask how plan was built",
-              "'Signup' and 'revenue' can mean different things",
-              "Signup = rate quote request; revenue = first-year interest margin plus fees"
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "What a signup is, how revenue is measured, how the plan was built, timing, what changed"
             ],
             [
               "L Lay out",
-              "Say your 3 questions before calculating",
-              "Shows a plan and lets the interviewer steer",
-              "Timing or counting? Which part is short? Why, and what to do?"
+              "Say your questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Timing or counting? Which piece is short? Why, and what to fix?"
             ],
             [
               "E Evaluate",
-              "Break revenue into pieces and compare each with plan",
-              "The total hides which piece is short",
-              "Signups on plan; funded rate, loan size, margin and fees all below"
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "Plan $5.7M, actual $2.8M, gap $2.9M split four ways"
             ],
             [
               "A Assess",
-              "Convert each gap to dollars and rank",
-              "Tells you where to act first",
-              "Funded rate -$1.14M, fees -$0.60M, loan size -$0.72M, margin -$0.44M"
+              "Say what the numbers mean: biggest piece, root cause, break-even",
+              "Turns numbers into a business view",
+              "Funnel is 39% of the gap. Signups was the wrong goal"
             ],
             [
               "R Recommend",
-              "Fix the biggest gap first and change the goal",
-              "Interviewers want a decision",
-              "Fix conversion; set fee and price rules; target funded loans"
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Fix the funnel first. A defensible alternative: raise the price first if the funnel is hard to fix"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "What was the plan?",
+              "$28K x 3.0% + $300 = $1,140 a loan. 10,000 x 50% = 5,000 loans. 5,000 x $1,140",
+              "$5.7M"
+            ],
+            [
+              "2",
+              "What is the actual?",
+              "$22K x 2.5% + $150 = $700 a loan. 10,000 x 40% = 4,000 loans. 4,000 x $700",
+              "$2.8M"
+            ],
+            [
+              "3",
+              "How big is the gap?",
+              "$5.7M - $2.8M. Divide by $5.7M",
+              "$2.9M, 51% below plan"
+            ],
+            [
+              "4",
+              "How much comes from fewer loans funded?",
+              "(5,000 - 4,000) x $1,140",
+              "$1.14M (39%)"
+            ],
+            [
+              "5",
+              "How much from smaller loans, lower margin and fee waivers?",
+              "4,000 x $6K x 3.0% = $0.72M. 4,000 x $22K x 0.5% = $0.44M. 4,000 x $150 = $0.60M",
+              "$1.76M together"
+            ],
+            [
+              "6",
+              "Do the pieces add up?",
+              "1.14 + 0.72 + 0.44 + 0.60",
+              "$2.90M"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Revenue",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Share funded goes back to 50%",
+              "5,000 x $700 = $3.5M (+$0.7M)",
+              "Helps, but does not close the gap alone."
+            ],
+            [
+              "No more fee waivers (fee back to $300)",
+              "4,000 x $850 = $3.4M (+$0.6M)",
+              "Easy, but may cost signups."
+            ],
+            [
+              "Average loan goes back to $28K",
+              "4,000 x ($700 + $150) = $3.4M (+$0.6M)",
+              "Aim marketing at bigger balances."
+            ],
+            [
+              "Price rises to 3.0% and we lose 20% of loans",
+              "3,200 x $810 = $2.59M (-$0.21M)",
+              "Worse than today. A big loss of loans wipes out the gain."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What share must fund to hit plan revenue if everything else stays at actual?",
+              "10,000 x c x $700 = $5.7M",
+              "c = 5.7M / 7M = 81%"
+            ],
+            [
+              "If we raise the margin back to 3.0%, what share of loans can we lose before revenue is worse than today?",
+              "4,000 x (1 - x) x $810 = 4,000 x $700",
+              "1 - x = 700 / 810 = 0.864, so x = 13.6%"
+            ],
+            [
+              "How many signups would we need to hit plan at today's $280 of revenue per signup?",
+              "n x $280 = $5.7M",
+              "n = 5.7M / 280 = about 20,400 signups"
+            ],
+            [
+              "What margin alone would close the gap? (4,000 loans of $22K, $150 fee)",
+              "4,000 x (22,000 x m + 150) = $5.7M",
+              "22,000 m = 1,275, so m = 5.8%"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Funnel fix takes longer than planned",
+              "Document and verification problems are slow to fix",
+              "Start with the top two drop-off steps and track weekly"
+            ],
+            [
+              "Price rise loses too many customers",
+              "Customers can shop around for refinance rates",
+              "Test on a small group. Stop if loss is above 13.6%"
+            ],
+            [
+              "Early payoff",
+              "Customers may refinance away, so first-year revenue overstates value",
+              "Look at lifetime value and prepayment"
+            ],
+            [
+              "Wrong incentive",
+              "If the team is paid for signups, it will use discounts",
+              "Change the goal to funded loans and revenue per signup"
+            ],
+            [
+              "Credit risk on larger loans",
+              "Chasing bigger balances may bring more risk",
+              "Keep credit rules the same and watch losses"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
           ],
           "rows": [
             [
-              "Refinance",
-              "Replace an existing loan with a new one, usually at a lower rate"
-            ],
-            [
               "Signup",
-              "A customer who applied for a quote; not yet a loan"
+              "A customer who applied for a rate quote. Not yet a funded loan"
             ],
             [
               "Funded loan",
-              "A loan that closed and paid out"
+              "A loan where the money has been paid out"
             ],
             [
-              "Conversion rate",
-              "The share who move to the next step; here signup to funded"
+              "Funnel",
+              "The steps from signup to funded loan"
             ],
             [
-              "Margin (net interest margin)",
-              "Interest earned minus the bank's cost of funds, as a share of the balance"
+              "Net interest margin",
+              "Interest we earn minus our cost of funds, as a percent of the loan. 3.0% plan, 2.5% actual"
             ],
             [
               "Origination fee",
-              "A one-time fee charged when the loan is made"
+              "A one-time fee when the loan is made. $300 plan, $150 actual"
             ],
             [
-              "Fee waiver",
-              "Dropping the fee to win the customer"
+              "Waiver",
+              "Choosing not to charge a fee"
             ],
             [
-              "Promo rate",
-              "A discounted rate used to attract customers"
-            ],
-            [
-              "Gap analysis",
-              "Splitting the difference between plan and actual into its causes"
-            ],
-            [
-              "Rate shopper",
-              "Someone who requests quotes to compare, with no plan to switch"
+              "Conversion",
+              "The share of signups that become funded loans. 50% plan, 40% actual"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Plan: 10,000 x 50% = 5,000 loans. Revenue per loan = $28K x 3.0% + $300 = $840 + $300 = $1,140. Total = 5,000 x $1,140 = $5.7M."
+              "Saying the gap is just timing",
+              "Check it first. Here loans fund in 12 days, as planned."
             ],
             [
-              "2",
-              "Actual: 10,000 x 40% = 4,000 loans. Revenue per loan = $22K x 2.5% + $150 = $550 + $150 = $700. Total = 4,000 x $700 = $2.8M."
+              "Looking at revenue as one number",
+              "Break it into loans, size, margin and fee."
             ],
             [
-              "3",
-              "Gap: $5.7M - $2.8M = $2.9M, which is 51% below plan."
+              "Blaming the market",
+              "Look at what we did: promos, waivers and a funnel that leaks."
             ],
             [
-              "4",
-              "Step 1, funded rate 50% to 40%: 4,000 x $1,140 = $4.56M. Gap = $1.14M."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "5",
-              "Step 2, loan size $28K to $22K: $22K x 3.0% + $300 = $960. 4,000 x $960 = $3.84M. Gap = $0.72M."
+              "Hiding the math",
+              "Say each step out loud, with units, and check the pieces add up to $2.9M."
             ],
             [
-              "6",
-              "Step 3, margin 3.0% to 2.5%: $22K x 2.5% + $300 = $850. 4,000 x $850 = $3.40M. Gap = $0.44M."
-            ],
-            [
-              "7",
-              "Step 4, fee $300 to $150: $550 + $150 = $700. 4,000 x $700 = $2.80M. Gap = $0.60M."
-            ],
-            [
-              "8",
-              "Check: $1.14M + $0.72M + $0.44M + $0.60M = $2.90M. Conversion is $1.14M / $2.9M = 39% of the gap."
-            ],
-            [
-              "9",
-              "Fix conversion to 50% alone: 5,000 x $700 = $3.5M, which is +$0.7M."
-            ],
-            [
-              "10",
-              "Fees back to $300 alone: 4,000 x ($550 + $300) = $3.4M, which is +$0.6M."
-            ],
-            [
-              "11",
-              "Price back to 3.0% alone: $22K x 3.0% + $150 = $810 per loan. Break-even loans = $2.8M / $810 = 3,457, which is 86% of 4,000. So a price rise helps only if it loses fewer than about 14% of funded loans."
-            ],
-            [
-              "12",
-              "The fixes overlap (for example, more loans multiplies the fee gain), so the total gain is not the sum of the parts."
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Revenue gap checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical cause",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "Is it timing?",
-            "Days from signup to funding, loans funded late in the period",
-            "Revenue starts when the loan funds",
-            "Compare revenue per month of life, not per period"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Signups are on target but revenue is not. What is a signup and how is revenue counted?"
           ],
           [
-            "Is it measured the same way?",
-            "Plan definition vs actual definition",
-            "Different treatment of fees or promo periods",
-            "Align definitions with finance"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "How the plan was built, funded share, loan size, margin, fee, timing, what changed"
           ],
           [
-            "Do signups become loans?",
-            "Funnel from signup to funded",
-            "Slow documents, declines, rate shoppers",
-            "Fix the funnel, qualify earlier"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume the plan and actual use the same first-year revenue definition'"
           ],
           [
-            "Are loans the right size?",
-            "Average balance, by channel",
-            "Promotions attract small balances",
-            "Target higher-balance customers"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Plan 5,000 x $1,140 = $5.7M. Actual 4,000 x $700 = $2.8M. Fewer loans: 1,000 x $1,140 = $1.14M"
           ],
           [
-            "Is price right?",
-            "Margin, promo rates, competitor rates",
-            "Discounts to win signups",
-            "Set price floors, test small changes"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'The biggest piece is the funnel, so I would fix that first'"
           ],
           [
-            "Are fees being waived?",
-            "Share of fees waived, who approved",
-            "Waivers used to close deals",
-            "Rules and approval limits for waivers"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Funnel fix may be slow, price rise may lose loans, early payoff. Test small"
           ],
           [
-            "Will loans last?",
-            "Early payoff and prepayment rates",
-            "Customers refinance again quickly",
-            "Look at lifetime value, not just year one"
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Raise the price first if the funnel is hard to fix and we lose less than 13.6% of loans"
           ]
         ]
       }
@@ -5393,27 +7810,32 @@ DATA.cases = [
     "followups": [
       {
         "q": "Which gap would you fix first?",
-        "a": "Conversion from signup to funded loan, the biggest piece at about $1.14M, or 39% of the gap. It is also the least likely to hurt pricing."
+        "a": "Conversion from signup to funded loan, the biggest piece at $1.14M, or 39% of the gap. It is also the least likely to hurt pricing."
       },
       {
         "q": "Would you raise the price back to plan?",
-        "a": "Only after testing. At a 3.0% margin each loan earns $810, so the change is worth it if it loses fewer than about 14% of funded loans."
+        "a": "Only after testing. At a 3.0% margin each loan earns $810, so the change is worth it if it loses fewer than about 13.6% of funded loans."
       },
       {
         "q": "Why was the signup target a poor goal?",
-        "a": "It rewarded interest, not funded loans, so the team used discounts and fee waivers to win signups. A better goal is funded loans or revenue per signup."
+        "a": "It rewarded interest, not funded loans, so the team used discounts and fee waivers to win signups. A better goal is funded loans or revenue per signup. Plan was $570 a signup and actual is $280."
       },
       {
         "q": "What if revenue per loan is fine but early payoff is high?",
         "a": "Then first-year revenue overstates value. Look at lifetime value and prepayment, and consider a prepayment fee or a stronger relationship offer."
+      },
+      {
+        "q": "Can we close the gap by fixing the funnel alone?",
+        "a": "No. Even at 50% funded, revenue is $3.5M, so $2.2M still missing. We would need 81% funded to hit plan, so we also need fee rules, bigger balances and price discipline."
       }
     ],
     "pitfalls": [
-      "Celebrating signups. Signups are not revenue; follow the funnel to funded loans.",
-      "Looking at one total. Break revenue into pieces to find which is short.",
-      "Skipping timing. Rule out late funding or counting differences first.",
-      "Fixing price first. A price rise can lose more loans than it earns; test the break-even.",
-      "Not changing the target. A goal on signups encourages the wrong behavior."
+      "Saying the gap is just timing. Check it first. Here loans fund in 12 days, as planned.",
+      "Looking at revenue as one number. Break it into loans, size, margin and fee.",
+      "Blaming the market. Look at what we did: promos, waivers and a funnel that leaks.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the pieces add up to $2.9M.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction."
     ]
   },
   {
@@ -5429,20 +7851,28 @@ DATA.cases = [
     "prompt": "We can only invest in one of two new products this year, a small business credit card or a high-yield savings account. How would you decide which to prioritize?",
     "clarify": [
       {
-        "q": "What is the goal?",
+        "q": "What is the goal, and over what time?",
         "a": "Maximize profit over three years, while keeping risk acceptable and fitting the bank's strategy."
       },
       {
-        "q": "What does each product need?",
+        "q": "What does each product need this year?",
         "a": "About $15M for the card and $10M for savings. Only one can be funded this year."
       },
       {
-        "q": "What do we know about demand and risk?",
-        "a": "The card is new for us and has a 50% chance of reaching plan. Savings is simpler, with an 80% chance of reaching plan."
+        "q": "What profit does each earn if the plan works?",
+        "a": "Card: $2M, $14M, $26M over years 1 to 3, so $42M. Savings: $5M, $11M, $15M, so $31M. The card ramps slowly. Savings starts earning sooner."
+      },
+      {
+        "q": "How likely is each to hit plan?",
+        "a": "The card is new for us, with a 50% chance of reaching plan. Savings is simpler, with an 80% chance."
+      },
+      {
+        "q": "What happens if the plan is missed?",
+        "a": "The card earns about 25% of plan, which is $10.5M. Savings earns about 60% of plan, which is $18.6M."
       },
       {
         "q": "What are the main risks?",
-        "a": "For the card: credit losses and regulation. For savings: the spread shrinking if rates fall, and customers chasing higher rates."
+        "a": "For the card: credit losses and regulation. For savings: the spread (about 0.6%) shrinking if rates fall, and customers chasing higher rates."
       },
       {
         "q": "Can the other product be done later?",
@@ -5451,55 +7881,52 @@ DATA.cases = [
     ],
     "tables": [
       {
-        "title": "The numbers we will use (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
           "Item",
-          "Small business card",
-          "High-yield savings",
+          "Value",
           "Note"
         ],
         "rows": [
           [
+            "Goal",
+            "Maximize profit over three years, with acceptable risk",
+            "Also fits the bank's strategy"
+          ],
+          [
             "Investment this year",
-            "$15M",
-            "$10M",
-            "Build plus launch marketing"
+            "Card $15M. Savings $10M",
+            "Build plus launch. Only one can be funded"
           ],
           [
-            "Profit year 1 / 2 / 3 (before investment)",
-            "$2M / $14M / $26M",
-            "$5M / $11M / $15M",
-            "Card ramps slowly; savings starts earning sooner"
+            "Profit by year (plan)",
+            "Card $2M / $14M / $26M. Savings $5M / $11M / $15M",
+            "Card ramps slowly"
           ],
           [
-            "3-year profit if plan is met",
-            "$42M",
-            "$31M",
-            "Sum of the three years"
-          ],
-          [
-            "Net profit if plan is met",
-            "$27M (1.8x)",
-            "$21M (2.1x)",
-            "Profit minus investment"
+            "3-year profit (plan)",
+            "Card $42M. Savings $31M",
+            "Net: card $27M, savings $21M"
           ],
           [
             "Chance of hitting plan",
-            "50%",
-            "80%",
-            "Card depends on credit losses and sales; savings on the rate"
+            "Card 50%. Savings 80%",
+            "Card is new to us"
           ],
           [
             "Profit if plan is missed",
-            "25% of plan = $10.5M",
-            "60% of plan = $18.6M",
+            "Card 25% of plan = $10.5M. Savings 60% of plan = $18.6M",
             "Assumed"
           ],
           [
-            "Main risk",
-            "Credit losses, regulation",
-            "Falling spread, customers chase higher rates",
-            "Assumed"
+            "Main risks",
+            "Card: credit losses, regulation. Savings: falling spread, customers chasing rates",
+            "Spread is about 0.6% today"
+          ],
+          [
+            "Timing",
+            "The other product can be done next year",
+            "If the numbers justify it"
           ]
         ]
       }
@@ -5508,38 +7935,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: we can fund only one of a small business credit card or a high-yield savings account this year. I will define best as risk-adjusted profit per dollar over three years, plus speed and strategic fit. Is that right, and what is the budget for each?"
+          "So we can fund only one of two products this year, a small business credit card or a high-yield savings account. I will define best as the most profit over three years after risk. Can I ask what each one needs, what it earns each year, and how likely each is to hit plan? If you do not have it, I will assume."
         ],
         [
           "L: Lay out",
-          "I would pick criteria first. Then compare the value of each, how soon it earns and how sure we are. Then look at risk and fit, and what would change the answer."
+          "I will ask two questions. Which earns more if the plan works? And which is more likely to work? Then I will combine them and see what would change the answer."
         ],
         [
           "E: Evaluate",
-          "Assuming the card needs $15M and earns $42M over three years, and savings needs $10M and earns $31M, the card looks better on raw profit, $27M net against $21M. But the card has a 50% chance of reaching plan and savings 80%. Adjusted for that, the card nets about $11M and savings about $18.5M."
+          "The card needs $15M and earns 2, 14 and 26, so $42M over three years. That is $27M net. Savings needs $10M and earns 5, 11 and 15, so $31M, or $21M net. On plan, the card looks better. But the card has a 50% chance of plan and pays $10.5M if it misses. That gives $26.25M, or $11.25M net. Savings has an 80% chance and pays $18.6M if it misses. That gives $28.5M, or $18.5M net."
         ],
         [
           "A: Assess",
-          "Savings also pays back sooner, 17 months against 23, and scores 3.7 against 3.3 on a weighted scorecard. The card would win only if its chance of hitting plan were about 73% or more. The main risk for savings is the spread falling, but at 0.6% it is still profitable."
+          "So after risk, savings is ahead by about $7M. It also pays back faster, 17 months against 23. The card would only win if its chance of plan were 73% or higher. The main risk for savings is the spread falling. The main risk for the card is credit losses."
         ],
         [
           "R: Recommend",
-          "I would prioritize savings, with a rate floor so the spread stays at 0.6% or more. Meanwhile I would prepare the card with a small partner pilot and tighter underwriting, and revisit next year with real data on demand and losses."
+          "I recommend we fund savings this year. Two reasons: it earns more after risk, $18.5M against $11.3M, and it pays back sooner. Risks are a falling spread, so I would set a rate floor, and customers chasing higher rates. Next step, run a small card pilot to learn about demand and losses. If you want the card, I would back it only if the pilot shows a 73% or better chance of reaching plan."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Decision: we can invest in only one of two products this year,<br/>a small business credit card or a high-yield savings account\"]\nC --> C2[\"Define terms: best = most risk-adjusted profit per dollar,<br/>reaching profit fast, and fitting the bank's strategy\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Criteria: what matters,<br/>and how much?\"]\nL --> L2[\"2 Value: what does each product earn,<br/>how soon, and how sure are we?\"]\nL --> L3[\"3 Risk and fit: what could go wrong,<br/>and what would change the answer?\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Compare both on the same terms\"]\nE1 --> E2[\"Card: invest $15M, 3-year profit $42M, net $27M<br/>Savings: invest $10M, 3-year profit $31M, net $21M\"]\nE2 --> E3[\"Adjust for risk: card has a 50% chance of hitting plan,<br/>savings 80%. Card net $11.3M (0.75x), savings net $18.5M (1.85x)\"]\nE3 --> E4[\"Scorecard (value, speed, risk, fit, ease):<br/>card 3.3 out of 5, savings 3.7 out of 5\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"The card has the bigger prize but is slower and riskier,<br/>so it loses once risk is counted\"]\nA --> A2[\"Savings pays back in 17 months, the card in 23\"]\nA --> A3[\"The card wins only if its chance of hitting plan is 73% or more\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Prioritize the savings account\"]\nR --> R1[\"Launch savings this year, with a rate floor:<br/>keep the spread at 0.6% or more\"]\nR --> R2[\"Use the year to prepare the card: test demand with<br/>a small partner pilot, tighten underwriting\"]\nR --> R3[\"Revisit next year with real data on card demand and losses\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Fund only one: card ($15M) or savings ($10M)<br/>Goal: best 3-year profit after risk\"]\nC --> L[\"L: Lay out<br/>1 Which earns more if the plan works?<br/>2 Which is more likely to work?\"]\nL --> E[\"E: Evaluate<br/>Compare the plan case, then the risk case\"]\nE --> E1[\"Plan case<br/>Card $42M - $15M = $27M<br/>Savings $31M - $10M = $21M\"]\nE --> E2[\"Risk case<br/>Card: 50% chance of plan, miss pays $10.5M<br/>Savings: 80% chance, miss pays $18.6M\"]\nE --> E3[\"Risk-adjusted<br/>Card $26.3M - $15M = $11.3M<br/>Savings $28.5M - $10M = $18.5M\"]\nE1 --> A[\"A: Assess<br/>Savings wins by about $7M<br/>Card needs a 73% chance of plan to win\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Fund savings this year<br/>Pilot the card, then look again next year\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "scorecard",
-          "title": "How we compare: the weighted scorecard",
-          "note": "Each criterion is scored 1 to 5, multiplied by its weight, then added. Then check the score against the money.",
-          "code": "flowchart TD\nQ[\"Which one product do we fund this year?\"] --> K[\"Step 1: choose criteria and weights<br/>Value 30%, Speed to profit 15%, Risk 25%, Strategic fit 20%, Ease 10%\"]\nK --> V[\"Value (30%)<br/>Card 5: $42M profit<br/>Savings 3: $31M profit\"]\nK --> SP[\"Speed (15%)<br/>Card 2: payback 23 months<br/>Savings 4: payback 17 months\"]\nK --> RK[\"Risk (25%)<br/>Card 2: credit losses, 50% chance of plan<br/>Savings 4: rate risk, 80% chance of plan\"]\nK --> FT[\"Fit (20%)<br/>Card 4: small business relationships, spend data<br/>Savings 4: cheap funding for lending\"]\nK --> EA[\"Ease (10%)<br/>Card 2: underwriting, rewards, servicing to build<br/>Savings 4: simpler product\"]\n\nV --> SC[\"Weighted score<br/>Card: 1.5 + 0.3 + 0.5 + 0.8 + 0.2 = 3.3<br/>Savings: 0.9 + 0.6 + 1.0 + 0.8 + 0.4 = 3.7\"]\nSP --> SC\nRK --> SC\nFT --> SC\nEA --> SC\n\nSC --> CK{\"Step 2: does the money agree?\"}\nCK --> M[\"Risk-adjusted net profit<br/>Card $11.3M vs Savings $18.5M\"]\nM --> D[\"Prioritize savings<br/>Both the scorecard and the money agree\"]\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef crit fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef sc fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass Q,K,CK q;\nclass V,SP,RK,FT,EA crit;\nclass SC,M sc;\nclass D out;"
-        },
-        {
-          "id": "money",
-          "title": "The money: risk-adjusted profit and what would change the answer",
-          "note": "Green is the stronger option, orange is a comparison, red is a danger case.",
-          "code": "flowchart TD\nB[\"Assumed 3-year profit before investment ($M, years 1, 2, 3)<br/>Card: 2 + 14 + 26 = $42M, invest $15M<br/>Savings: 5 + 11 + 15 = $31M, invest $10M\"] --> N1[\"Net profit if all goes to plan<br/>Card: $42M - $15M = $27M, 1.8x<br/>Savings: $31M - $10M = $21M, 2.1x\"]\n\nN1 --> P1[\"Card, 50% chance of plan, else 25% of plan<br/>0.5 x $42M + 0.5 x $10.5M = $26.25M<br/>Net = $26.25M - $15M = $11.3M, 0.75x\"]\nN1 --> P2[\"Savings, 80% chance of plan, else 60% of plan<br/>0.8 x $31M + 0.2 x $18.6M = $28.5M<br/>Net = $28.5M - $10M = $18.5M, 1.85x\"]\n\nN1 --> PB[\"Payback<br/>Card: -$15M + $2M + $14M, about 23 months<br/>Savings: -$10M + $5M + $11M, about 17 months\"]\n\nP1 --> BE[\"What would change the answer?<br/>Card net = 31.5 x p - 4.5. Set equal to $18.5M<br/>p = 23 / 31.5 = 73% chance of plan\"]\nP2 --> BE\n\nP2 --> S1[\"Savings spread falls from 1.0% to 0.6%<br/>profit x 0.6 = $18.6M, net = $8.6M, still positive\"]\nP1 --> S2[\"Card losses double (contribution $400 to $150)<br/>profit = $42M x 150 / 400 = $15.75M, net = $0.75M\"]\n\nBE --> R[\"Prioritize savings, with a rate floor<br/>Prepare the card for next year\"]\nS1 --> R\nS2 --> R\nPB --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B,N1 base;\nclass P2,PB good;\nclass P1,BE mid;\nclass S1 mid;\nclass S2 bad;\nclass R out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Plan case, 3 years<br/>Card 2 + 14 + 26 = <b>$42M</b><br/>Savings 5 + 11 + 15 = <b>$31M</b>\"]\nA --> B[\"2 Take off the investment<br/>Card 42 - 15 = <b>$27M</b><br/>Savings 31 - 10 = <b>$21M</b>\"]\nB --> C[\"3 If the plan is missed<br/>Card 25% x 42 = <b>$10.5M</b><br/>Savings 60% x 31 = <b>$18.6M</b>\"]\nC --> D1[\"4 Card, expected profit<br/>50% x 42 + 50% x 10.5<br/>= <b>$26.25M</b>\"]\nC --> D2[\"4 Savings, expected profit<br/>80% x 31 + 20% x 18.6<br/>= <b>$28.52M</b>\"]\nD1 --> E1[\"5 Card net<br/>26.25 - 15<br/>= <b>$11.25M</b>\"]\nD2 --> E2[\"5 Savings net<br/>28.52 - 10<br/>= <b>$18.52M</b>\"]\nE1 --> F[\"6 Compare<br/>18.52 - 11.25<br/>= <b>$7.3M more for savings</b><br/>Payback: savings 17 months, card 23\"]\nE2 --> F\nF --> G1[\"Check 1: card break-even<br/>10.5 + 31.5 x p - 15 = 18.52<br/>p = <b>73% chance of plan</b>\"]\nF --> G2[\"Check 2: if the card chance is 80%<br/>0.8 x 42 + 0.2 x 10.5 - 15<br/>= <b>$20.7M, card wins</b>\"]\nF --> G3[\"Check 3: if savings only gets 60% of plan<br/>18.6 - 10 = <b>$8.6M</b><br/>Card wins at $11.25M\"]\nclass A,B,C n1;\nclass D1,D2,E1,E2 n2;\nclass F n4;\nclass G1,G2,G3 n3;\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;"
         }
       ],
       "exampleTables": [
@@ -5554,189 +7975,291 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define what 'best' means and the time horizon",
-              "The answer depends on the goal (profit, speed or strategy)",
-              "Best = risk-adjusted profit per dollar, over 3 years, with fit"
+              "Restate the choice. Ask what 'best' means, what each costs, and how likely each is to work",
+              "You drive the case and show a business owner mindset",
+              "One product only. Goal is 3-year profit with acceptable risk. Card $15M, savings $10M"
             ],
             [
               "L Lay out",
-              "Say your criteria before comparing",
-              "Shows a plan and lets the interviewer steer",
-              "Criteria, value, risk and fit"
+              "Say your two questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Which earns more if the plan works? Which is more likely to work?"
             ],
             [
               "E Evaluate",
-              "Put both products on the same numbers, then adjust for risk",
-              "Raw profit ignores how likely it is",
-              "Card $11.3M risk-adjusted vs savings $18.5M"
+              "Do the math out loud: plan case, then the risk case",
+              "Product choices are usually about money and risk together",
+              "Card nets $27M and savings $21M on plan. After risk, card $11.3M and savings $18.5M"
             ],
             [
               "A Assess",
-              "Check speed, a weighted score, and what would flip the answer",
-              "Shows your answer is robust",
-              "Savings 3.7 vs card 3.3; card wins only at a 73% chance of plan"
+              "Say what the numbers mean and what would change the answer",
+              "Turns numbers into a business view",
+              "Savings wins by about $7M. The card would win only if its chance of plan is 73% or more"
             ],
             [
               "R Recommend",
-              "Pick one, set conditions, and say what you do about the other",
-              "Interviewers want a decision with a plan",
-              "Savings with a rate floor; prepare the card for next year"
+              "Decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; you must commit and explain",
+              "Fund savings. Pilot the card. Revisit next year"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "3-year profit if the plan works",
+              "Card 2 + 14 + 26. Savings 5 + 11 + 15",
+              "Card $42M, savings $31M"
+            ],
+            [
+              "2",
+              "Net after the investment",
+              "Card 42 - 15. Savings 31 - 10",
+              "Card $27M, savings $21M"
+            ],
+            [
+              "3",
+              "Profit if the plan is missed",
+              "Card 25% x 42. Savings 60% x 31",
+              "Card $10.5M, savings $18.6M"
+            ],
+            [
+              "4",
+              "Expected 3-year profit",
+              "Card 50% x 42 + 50% x 10.5. Savings 80% x 31 + 20% x 18.6",
+              "Card $26.25M, savings $28.52M"
+            ],
+            [
+              "5",
+              "Expected net profit",
+              "Card 26.25 - 15. Savings 28.52 - 10",
+              "Card $11.25M, savings $18.52M"
+            ],
+            [
+              "6",
+              "Which one wins?",
+              "18.52 - 11.25",
+              "Savings by $7.3M"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Net profit",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Card chance of plan rises from 50% to 80%",
+              "Card $20.7M vs savings $18.5M",
+              "The card now wins. This is why a pilot to prove demand is worth doing."
+            ],
+            [
+              "Savings chance of plan falls from 80% to 60%",
+              "Savings $16.0M vs card $11.3M",
+              "Savings still wins. It is not very sensitive to its own chance."
+            ],
+            [
+              "Savings gets only 60% of plan for sure (spread shrinks)",
+              "Savings $8.6M vs card $11.3M",
+              "The card wins. This is the main thing that could change my answer."
+            ],
+            [
+              "Card needs only $8M, not $15M",
+              "Card $18.3M vs savings $18.5M",
+              "Close to a tie. Cost control on the card matters."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What chance of plan must the card have to beat savings?",
+              "p x 42 + (1 - p) x 10.5 - 15 = 18.52",
+              "10.5 + 31.5p = 33.52, so p = 23.02 / 31.5 = 73%"
+            ],
+            [
+              "Savings is only worth it if its chance of plan is above what?",
+              "q x 31 + (1 - q) x 18.6 - 10 = 11.25",
+              "18.6 + 12.4q = 21.25, so q = 2.65 / 12.4 = 21%"
+            ],
+            [
+              "If the card has a 50% chance, how much must it pay when it misses?",
+              "0.5 x 42 + 0.5 x m - 15 = 18.52",
+              "0.5m = 12.52, so m = $25.0M (60% of plan, not 25%)"
+            ],
+            [
+              "How little must the card cost to tie savings?",
+              "26.25 - I = 18.52",
+              "I = 26.25 - 18.52 = $7.7M"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Credit losses on the card",
+              "Small businesses may fail to repay, and losses can be higher than planned",
+              "Tighten the approval rules and start with a small pilot"
+            ],
+            [
+              "Regulation",
+              "New products face extra rules and checks",
+              "Involve compliance from the start"
+            ],
+            [
+              "Falling spread on savings",
+              "If rates fall, we earn less on each deposit",
+              "Set a rate floor so the spread stays at 0.6% or more"
+            ],
+            [
+              "Customers chase higher rates",
+              "Savers may move to a bank that pays more",
+              "Track balances monthly and keep the rate competitive"
+            ],
+            [
+              "Estimates are guesses",
+              "All the figures are working assumptions",
+              "Show a range, test the biggest risks, and update with real data"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
           ],
           "rows": [
             [
-              "Prioritization",
-              "Choosing what to do first when you cannot do everything"
-            ],
-            [
-              "Trade-off",
-              "Giving up one good thing to get another"
-            ],
-            [
-              "Weighted scorecard",
-              "Scoring each option on several criteria, with the more important criteria counting more"
-            ],
-            [
-              "Risk-adjusted value",
-              "Expected profit after allowing for the chance of missing the plan"
+              "Net profit",
+              "Profit after taking off what we invested"
             ],
             [
               "Expected value",
-              "Each outcome times its probability, added up"
+              "Each result times its chance, added together"
             ],
             [
-              "Payback period",
-              "Time for profit to repay the investment"
+              "Risk-adjusted",
+              "Counted after allowing for the chance things go worse than plan"
             ],
             [
               "Spread",
-              "What the bank earns on deposits after paying the customer interest, versus its other funding costs"
+              "What we earn on deposits minus what we pay to savers"
             ],
             [
-              "Interchange",
-              "The fee a merchant pays on a card payment, shared with the card issuer"
+              "Payback",
+              "How long until the profit repays the investment"
             ],
             [
-              "Credit loss",
-              "Money the bank never gets back from borrowers"
+              "Break-even",
+              "The point where two choices are equal"
             ],
             [
               "Pilot",
-              "A small, real test before a full launch"
+              "A small test before a full launch"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Card 3-year profit: $2M + $14M + $26M = $42M. Net of $15M investment = $27M, or 1.8x."
+              "Picking the biggest number",
+              "The card wins on plan profit ($27M vs $21M). Always compare after risk, too."
             ],
             [
-              "2",
-              "Savings 3-year profit: $5M + $11M + $15M = $31M. Net of $10M = $21M, or 2.1x."
+              "Ignoring the chance of success",
+              "Use probabilities and a miss case, then show the expected value."
             ],
             [
-              "3",
-              "Card expected profit: 50% x $42M + 50% x $10.5M = $21M + $5.25M = $26.25M. Net = $11.25M, about $11.3M, or 0.75x."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "4",
-              "Savings expected profit: 80% x $31M + 20% x $18.6M = $24.8M + $3.72M = $28.5M. Net = $18.5M, or 1.85x."
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
             ],
             [
-              "5",
-              "Payback, card: -$15M + $2M = -$13M after year 1; $13M / $14M = 0.93 of year 2, so about 23 months."
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
             ],
             [
-              "6",
-              "Payback, savings: -$10M + $5M = -$5M after year 1; $5M / $11M = 0.45 of year 2, so about 17 months."
-            ],
-            [
-              "7",
-              "Scorecard, card: 5 x 30% + 2 x 15% + 2 x 25% + 4 x 20% + 2 x 10% = 1.5 + 0.3 + 0.5 + 0.8 + 0.2 = 3.3."
-            ],
-            [
-              "8",
-              "Scorecard, savings: 3 x 30% + 4 x 15% + 4 x 25% + 4 x 20% + 4 x 10% = 0.9 + 0.6 + 1.0 + 0.8 + 0.4 = 3.7."
-            ],
-            [
-              "9",
-              "What would flip it: card net = p x $42M + (1 - p) x $10.5M - $15M = 31.5p - 4.5. Set equal to $18.5M: p = 23 / 31.5 = 73%."
-            ],
-            [
-              "10",
-              "Savings spread falls from 1.0% to 0.6%: profit x 0.6 = $18.6M. Net = $8.6M, still positive."
-            ],
-            [
-              "11",
-              "Card credit losses double so contribution per card falls from $400 to $150: profit = $42M x 150 / 400 = $15.75M. Net = $0.75M, about break-even."
+              "No alternative or next step",
+              "Say what would flip your answer and what you would test first."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Prioritization checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical problem",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "What is the goal?",
-            "Profit, growth, deposits, customers",
-            "Leaders disagree on the goal",
-            "Agree the goal first"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "What does 'best' mean? Profit over how long? What does each need?"
           ],
           [
-            "What is each worth?",
-            "Profit over 3 years, net of investment",
-            "Comparing revenue instead of profit",
-            "Use net profit per dollar invested"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Investment, profit by year, chance of plan, profit if missed"
           ],
           [
-            "How sure are we?",
-            "Evidence of demand, past launches, pilot data",
-            "Optimistic plans",
-            "Weight by probability of success"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume the miss case is 25% of plan for the card'"
           ],
           [
-            "How fast does it pay back?",
-            "Cash flow by year, payback",
-            "Slow ramp ties up money",
-            "Prefer faster payback if value is close"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Card chance needed: 10.5 + 31.5p - 15 = 18.52, so p = 73%"
           ],
           [
-            "What are the risks?",
-            "Credit losses, rate changes, regulation, competition",
-            "One risk can erase the profit",
-            "Stress test the main risk"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we fund savings: it nets $18.5M after risk, against $11.3M'"
           ],
           [
-            "Does it fit our strategy?",
-            "Customers, data, funding needs",
-            "Product does not help the core business",
-            "Score fit explicitly"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Credit losses, falling spread; run a card pilot and revisit next year"
           ],
           [
-            "Can we do the other later?",
-            "Cost of waiting, option value",
-            "Missing a window",
-            "Plan a small step now, a full launch later"
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Choose the card if pilot data shows a 73% or better chance of plan"
           ]
         ]
       }
@@ -5760,11 +8283,12 @@ DATA.cases = [
       }
     ],
     "pitfalls": [
-      "Choosing the biggest number. Adjust for risk and speed before comparing.",
-      "Comparing profit, not return. The two products need different amounts of money.",
-      "Skipping criteria. Say what matters and how much before scoring.",
-      "No sensitivity. Say what would flip the answer, such as the 73% chance of plan.",
-      "Forgetting the other option. Say how you would prepare it for next year."
+      "Picking the biggest number. The card wins on plan profit ($27M vs $21M). Always compare after risk, too.",
+      "Ignoring the chance of success. Use probabilities and a miss case, then show the expected value.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction.",
+      "No alternative or next step. Say what would flip your answer and what you would test first."
     ]
   },
   {
@@ -5780,29 +8304,37 @@ DATA.cases = [
     "prompt": "A new product is hitting its growth targets but cannibalizing an existing product's customer base. How do you think about whether that is a problem?",
     "clarify": [
       {
+        "q": "What is the goal, and over what time?",
+        "a": "Grow annual profit from our card business. The growth target counts total new accounts of the new product, not net of switchers."
+      },
+      {
         "q": "What are the two products?",
-        "a": "A new no-fee cash-back card and an older annual-fee rewards card. Assume the old card earns $300 profit per customer a year and the new one $150."
+        "a": "A new no-fee cash-back card and an older annual-fee rewards card with about 1.0M customers. The old card earns $300 profit per customer a year. The new one earns $150."
+      },
+      {
+        "q": "How many new accounts, and how much profit is reported?",
+        "a": "300K new accounts, which was the target. At $150 each, that is $45M of reported profit."
       },
       {
         "q": "How much is cannibalized?",
-        "a": "About 40% of the new card's 300K accounts belong to customers who closed or downgraded the old card within 90 days."
+        "a": "About 40% of the new accounts, 120K, belong to customers who closed or downgraded the old card within 90 days."
       },
       {
         "q": "Would those customers have left anyway?",
-        "a": "We estimate about 25% of switchers were about to leave for a rival."
-      },
-      {
-        "q": "How are the growth targets defined?",
-        "a": "Total new accounts of the new product, not net of switchers."
+        "a": "We estimate about 25% of switchers, 30K, were about to leave for a rival."
       },
       {
         "q": "Which customers are switching?",
-        "a": "We have not yet split switchers by value. Treat all figures as working assumptions."
+        "a": "We have not yet split switchers by value. Assume an average mix."
+      },
+      {
+        "q": "Is there a constraint on how you answer?",
+        "a": "Treat all figures as working assumptions and show the math. I care about your reasoning and your recommendation."
       }
     ],
     "tables": [
       {
-        "title": "The numbers we will use (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
           "Item",
           "Value",
@@ -5810,24 +8342,29 @@ DATA.cases = [
         ],
         "rows": [
           [
-            "Existing product (annual-fee rewards card)",
-            "1.0M customers, $300 profit each a year",
+            "Goal",
+            "Annual profit from the card business",
+            "Growth target counts total new accounts"
+          ],
+          [
+            "Old card (annual-fee rewards)",
+            "1.0M customers. $300 profit each a year",
             "Assumed"
           ],
           [
-            "New product (no-fee cash-back card)",
-            "300K new accounts, $150 profit each a year",
-            "The target was 300K accounts"
+            "New card (no-fee cash-back)",
+            "300K new accounts. $150 profit each a year",
+            "300K was the target"
           ],
           [
-            "Reported profit from the new product",
+            "Reported profit",
             "300K x $150 = $45M",
-            "What the growth target counts"
+            "What the target counts"
           ],
           [
-            "Switchers (cannibalized)",
+            "Switchers",
             "40% = 120K",
-            "New accounts held by customers who closed or downgraded the old card within 90 days"
+            "Closed or downgraded the old card within 90 days"
           ],
           [
             "Truly new customers",
@@ -5835,9 +8372,14 @@ DATA.cases = [
             "Would not have joined otherwise"
           ],
           [
-            "Switchers who would have left for a rival anyway",
+            "Switchers leaving anyway",
             "25% = 30K",
-            "Assumed from past attrition and competitor offers"
+            "Were about to leave for a rival"
+          ],
+          [
+            "Switchers by value",
+            "Not known yet",
+            "Assume an average mix"
           ]
         ]
       }
@@ -5846,38 +8388,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: the new product is hitting its growth targets, but some of its customers came from our existing product. I will treat cannibalization as new accounts held by customers who left our old product. Is the goal profit growth, and do we know how many are switchers?"
+          "So the new no-fee card is hitting its growth target, but some of its customers came from our older rewards card. I will treat cannibalization as new accounts held by customers who closed or downgraded the old card. Can I ask how many accounts, what each product earns, and how many switchers were about to leave anyway? If you do not have it, I will assume."
         ],
         [
           "L: Lay out",
-          "I would answer three questions. How much of the growth is cannibalized? What is it worth after counting what we lose and what we keep? And what does it mean strategically, such as whether those customers would have left anyway?"
+          "I will answer three questions. How much of the growth is really new? What is it worth after what we lose and what we keep? And does it matter strategically?"
         ],
         [
           "E: Evaluate",
-          "Assuming 300K new accounts at $150 profit, the reported growth is $45M. If 40% are switchers from a $300 product, then 180K are truly new, worth $27M. Of the 120K switchers, a quarter would have left anyway, which saves $4.5M, and the rest cost us $150 each, or $13.5M. Net, $18M."
+          "We have 300K new accounts at $150 profit, so $45M reported. 40% are switchers, that is 120K. So 180K are truly new, worth $27M. Of the 120K switchers, a quarter, 30K, were leaving anyway, so we keep $150 each, plus $4.5M. The other 90K each swap a $300 customer for a $150 one, so we lose $150 each, minus $13.5M. Net is $18M."
         ],
         [
           "A: Assess",
-          "So it is not a problem by itself: it is a net gain, but only 40% of the reported number. At these margins it turns negative only if more than about two thirds of new accounts are switchers. I would also check which customers switched, since losing top-tier customers matters more."
+          "So the net gain is $18M, only 40% of the $45M reported. It is a gain, not a loss. It only turns negative if more than two thirds of the new accounts are switchers. What matters most is which customers switched. Losing top-tier customers is far worse."
         ],
         [
           "R: Recommend",
-          "I would accept some cannibalization and manage it: change the target to net incremental profit, protect high-value customers with targeting rules and an upgrade path, and set a trigger to act if switchers pass 50% or top-tier customers start moving."
+          "I would accept some cannibalization and manage it. Two reasons: it is still a net gain of $18M, and it keeps customers who would otherwise leave for a rival. I would change the target to net incremental profit, protect high-value customers with targeting rules and an upgrade path, and act if switchers pass 50%. An alternative is to stop promoting the new card to existing customers entirely, which trades growth for less cannibalization."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Situation: a new product is hitting its growth targets,<br/>but many of its customers come from an existing product\"]\nC --> C2[\"Question: is that cannibalization a problem?<br/>Define terms: cannibalization rate, incremental profit\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 How much? What share of new customers<br/>are switchers from our own product?\"]\nL --> L2[\"2 What is it worth? Net profit after counting<br/>what we lose and what we keep\"]\nL --> L3[\"3 Strategy: would we lose them to a rival anyway?<br/>Then decide whether to act\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Split the new customers by where they came from\"]\nE1 --> E2[\"300K new accounts at $150 profit each = $45M reported<br/>60% truly new (180K), 40% switchers (120K)\"]\nE2 --> E3[\"New customers +$27.0M. Switchers who would have left: 30K x $150 = +$4.5M<br/>Switchers who would have stayed: 90K x $150 lost = -$13.5M\"]\nE3 --> E4[\"Net incremental profit = $18.0M, only 40% of the $45M reported\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"Still a net gain, so not a problem by itself,<br/>but the growth target overstates the real result\"]\nA --> A2[\"It becomes a problem if more than about 67% of<br/>new accounts are switchers (50% if no one would have left)\"]\nA --> A3[\"The existing base falls 12% (1.0M to 880K),<br/>so watch the high-value customers\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Accept some cannibalization, manage it, change the target\"]\nR --> R1[\"Change the target to net incremental profit,<br/>not gross new accounts\"]\nR --> R2[\"Protect high-value customers: targeting rules,<br/>an upgrade path, clear differences between products\"]\nR --> R3[\"Set a trigger: act if switchers pass 50%<br/>or top-tier customers start moving\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>New no-fee card hit 300K accounts<br/>Is taking from our $300 rewards card a problem?\"]\nC --> L[\"L: Lay out<br/>1 How much growth is really new?<br/>2 What do we lose and keep?<br/>3 Is it a problem for strategy?\"]\nL --> E[\"E: Evaluate<br/>Split the 300K accounts, then count profit\"]\nE --> E1[\"New vs switchers<br/>40% switch = 120K<br/>60% new = 180K\"]\nE --> E2[\"Value<br/>New: 180K x $150 = $27M<br/>Saved leavers: 30K x $150 = +$4.5M\"]\nE --> E3[\"Cost<br/>Lost switchers: 90K x ($300 - $150)<br/>= -$13.5M\"]\nE1 --> A[\"A: Assess<br/>Net $18M, only 40% of the $45M reported<br/>Bad only if over 2/3 are switchers\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Accept some cannibalization and manage it<br/>Track net profit, protect top customers\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "source",
-          "title": "Where the new customers come from",
-          "note": "Green adds profit, red reduces it. The last box is the real result.",
-          "code": "flowchart TD\nN[\"300K new accounts, $150 profit each<br/>Reported profit = $45M\"] --> T[\"Where did they come from?<br/>Track whether each new customer closed or downgraded<br/>our existing product within 90 days\"]\nT --> I[\"60% truly new: 180K<br/>Would not have joined us otherwise<br/>180K x $150 = +$27.0M\"]\nT --> S[\"40% switchers: 120K<br/>They already paid us $300 a year\"]\nS --> S1[\"25% would have left for a rival: 30K<br/>We keep them at $150 instead of $0<br/>30K x $150 = +$4.5M\"]\nS --> S2[\"75% would have stayed: 90K<br/>We now earn $150 instead of $300<br/>90K x $150 = -$13.5M\"]\nI --> NET[\"Net incremental profit<br/>$27.0M + $4.5M - $13.5M = +$18.0M<br/>40% of the reported $45M\"]\nS1 --> NET\nS2 --> NET\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass N,T q;\nclass I,S1 good;\nclass S,S2 bad;\nclass NET out;"
-        },
-        {
-          "id": "break-even",
-          "title": "When does it become a problem?",
-          "note": "Each box shows the result at a different cannibalization rate (c). The decision rule is at the bottom.",
-          "code": "flowchart TD\nB[\"Net profit per new account = $150 x (1 - 1.5 x c)<br/>c = cannibalization rate, assuming 25% of switchers would have left<br/>Total = per account x 300K\"] --> R1[\"c = 20%<br/>$150 x 0.70 = $105<br/>+$31.5M\"]\nB --> R2[\"c = 40% (today)<br/>$150 x 0.40 = $60<br/>+$18.0M\"]\nB --> R3[\"c = 60%<br/>$150 x 0.10 = $15<br/>+$4.5M\"]\nB --> R4[\"c = 67%<br/>$150 x 0 = $0<br/>Break-even\"]\nB --> R5[\"c = 80%<br/>$150 x -0.2 = -$30<br/>-$9.0M\"]\n\nB --> Z[\"If no switcher would have left rival-ward<br/>Net per account = $150 - $300 x c<br/>At 40%: $30 x 300K = +$9.0M. Break-even c = 50%\"]\n\nR2 --> D{\"Is it a problem?\"}\nR3 --> D\nR4 --> D\nR5 --> D\nZ --> D\nD -->|\"c below about 50% and net positive\"| OK[\"Not a problem: monitor it, update the target\"]\nD -->|\"c between 50% and 67%\"| W[\"Manage it: protect high-value customers, change pricing or targeting\"]\nD -->|\"c above 67%, or top customers leave\"| X[\"A problem: slow the new product or redesign it\"]\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef q fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass B base;\nclass R1,R2,OK good;\nclass R3,R4,Z,W mid;\nclass R5,X bad;\nclass D q;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 What is reported<br/>300K accounts x $150<br/>= <b>$45M</b>\"]\nA --> B[\"2 Split the accounts<br/>40% x 300K = <b>120K switchers</b><br/>60% x 300K = <b>180K truly new</b>\"]\nB --> C1[\"3 Truly new<br/>180K x $150<br/>= <b>+$27M</b>\"]\nB --> C2[\"3 Switchers who would leave anyway<br/>25% x 120K = 30K<br/>30K x $150 = <b>+$4.5M</b>\"]\nB --> C3[\"3 Switchers who would have stayed<br/>75% x 120K = 90K<br/>90K x ($300 - $150) = <b>-$13.5M</b>\"]\nC1 --> D[\"4 Net gain<br/>27 + 4.5 - 13.5<br/>= <b>$18M</b>\"]\nC2 --> D\nC3 --> D\nD --> E[\"5 Per new account<br/>$18M / 300K = <b>$60</b><br/>$18M / $45M = <b>40% of reported</b>\"]\nE --> F1[\"Check 1: break-even switcher share s<br/>150 x (1 - 1.5 x s) = 0<br/><b>s = 2/3 = 67%</b>\"]\nE --> F2[\"Check 2: accounts needed for $45M net<br/>$45M / $60<br/><b>750K accounts</b>\"]\nE --> F3[\"Check 3: if 60% switch<br/>150 x (1 - 0.9) x 300K<br/><b>$4.5M</b>\"]\nclass A,B n1;\nclass C1,C2,C3 n2;\nclass D,E n4;\nclass F1,F2,F3 n3;\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;"
         }
       ],
       "exampleTables": [
@@ -5892,38 +8428,180 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define cannibalization and the goal of the new product",
-              "Some overlap is expected; the question is how much and at what cost",
-              "Goal: profit growth; cannibalization = new accounts from our own customers"
+              "Restate the problem. Ask what the two products are, how many customers switched, and what the goal is",
+              "You drive the case and show a business owner mindset",
+              "New $150 card, old $300 card, 300K new accounts, 40% are switchers"
             ],
             [
               "L Lay out",
-              "Say your 3 questions before calculating",
-              "Shows a plan and lets the interviewer steer",
-              "How much? What is it worth net? What is the strategy view?"
+              "Say your questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "How much is new? What do we lose and keep? What does it mean for strategy?"
             ],
             [
               "E Evaluate",
-              "Split new customers by source and value each group",
-              "Gross growth hides the real result",
-              "New +$27.0M, saved +$4.5M, lost -$13.5M"
+              "Split the accounts, then count the profit gained and lost",
+              "Cannibalization is a counting problem: compare with what would have happened anyway",
+              "$27M from new customers, +$4.5M saved, -$13.5M lost"
             ],
             [
               "A Assess",
-              "Find the net, the break-even and the risk to top customers",
-              "Shows when it turns into a problem",
-              "Net $18.0M; break-even at 67% cannibalization"
+              "Say what the net number means and when it turns bad",
+              "Turns numbers into a business view",
+              "Net $18M, which is 40% of the $45M reported. Bad only if over 67% are switchers"
             ],
             [
               "R Recommend",
-              "Give a decision and the change to targets",
-              "Interviewers want a decision",
-              "Accept, manage, and measure net incremental profit"
+              "Decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; you must commit and explain",
+              "Accept and manage it. Change the target to net profit. Protect top customers"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "Profit the new card reports",
+              "300K accounts x $150",
+              "$45M"
+            ],
+            [
+              "2",
+              "How many are switchers or new?",
+              "40% x 300K and 60% x 300K",
+              "120K switchers, 180K new"
+            ],
+            [
+              "3",
+              "Profit from truly new customers",
+              "180K x $150",
+              "+$27M"
+            ],
+            [
+              "4",
+              "Switchers who were leaving anyway",
+              "25% x 120K = 30K. We keep $150 each",
+              "+$4.5M"
+            ],
+            [
+              "5",
+              "Switchers who would have stayed",
+              "75% x 120K = 90K. Each swaps $300 for $150, so loses $150",
+              "-$13.5M"
+            ],
+            [
+              "6",
+              "Net gain and share of reported",
+              "27 + 4.5 - 13.5. Then 18 / 45",
+              "$18M, which is 40%"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Net profit",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "60% of accounts are switchers (not 40%)",
+              "$4.5M",
+              "150 x (1 - 0.9) x 300K. A small rise in switchers wipes out most of the gain."
+            ],
+            [
+              "Only 20% are switchers",
+              "$31.5M",
+              "150 x (1 - 0.3) x 300K. Close to the reported $45M, but still lower."
+            ],
+            [
+              "None of the switchers would have left anyway",
+              "$9.0M",
+              "Half of the $18M. Check this assumption with data."
+            ],
+            [
+              "Switchers are top customers worth $450, not $300",
+              "$4.5M",
+              "The value of the old card matters as much as the share of switchers."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "What share of accounts can be switchers before the net gain is zero?",
+              "Per account: 150 x (1 - s) + 150 x s x (0.25 - 0.75) = 0",
+              "150 - 225s = 0, so s = 150 / 225 = 67%"
+            ],
+            [
+              "How high must the old card profit P be for the net gain to reach zero (40% switchers)?",
+              "0.6 x 150 + 0.4 x (0.25 x 150 + 0.75 x (150 - P)) = 0",
+              "150 - 0.3P = 0, so P = $500"
+            ],
+            [
+              "How many new accounts give $45M net, at $60 each?",
+              "60 x n = 45,000,000",
+              "n = 750,000 accounts"
+            ],
+            [
+              "What share of accounts can be switchers if we want at least $90 net per account?",
+              "150 x (1 - 1.5s) = 90",
+              "1 - 1.5s = 0.6, so s = 0.4 / 1.5 = 27%"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Top customers switch",
+              "The best customers move to the cheaper card",
+              "Do not promote the new card to them. Add an upgrade path"
+            ],
+            [
+              "Wrong target",
+              "Counting gross accounts rewards growth that is only a swap",
+              "Measure net incremental profit, and watch the switcher share"
+            ],
+            [
+              "Estimates are weak",
+              "We do not yet know the value of switchers or who would have left anyway",
+              "Segment switchers by value and use a holdout group"
+            ],
+            [
+              "Rival picks off our customers",
+              "If we do not offer a cheaper option, someone else will",
+              "Cannibalizing ourselves is better than being cannibalized by a rival"
+            ],
+            [
+              "Old card loses its appeal",
+              "If the new card looks better, fewer pay the annual fee",
+              "Make the premium benefits clearly better"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
@@ -5931,154 +8609,110 @@ DATA.cases = [
           "rows": [
             [
               "Cannibalization",
-              "A new product taking customers or sales from the company's own existing product"
+              "New product sales that take customers from our own existing product"
             ],
             [
-              "Cannibalization rate",
-              "The share of the new product's customers who came from our own product"
-            ],
-            [
-              "Incremental",
-              "Truly new profit that would not exist without the new product"
+              "Incremental profit",
+              "Profit we would not have had without the new product"
             ],
             [
               "Switcher",
-              "An existing customer who moves to the new product"
+              "A customer who closed or downgraded the old card within 90 days of getting the new one"
             ],
             [
-              "Net profit",
-              "What is left after adding gains and subtracting losses"
+              "Counterfactual",
+              "What would have happened if we had not launched"
             ],
             [
-              "Gross vs net growth",
-              "Gross counts all new accounts; net counts only what we gain after the losses"
+              "Attrition",
+              "Customers leaving us"
             ],
             [
-              "Break-even",
-              "The point where the net gain is exactly zero"
+              "Holdout group",
+              "A group left out of the test so we can compare"
             ],
             [
-              "Holdout or matched comparison",
-              "A comparison group that shows what would have happened without the new product"
-            ],
-            [
-              "Offensive vs defensive launch",
-              "Launching to win new customers, or to stop customers leaving for rivals"
-            ],
-            [
-              "Trigger",
-              "A pre-agreed warning level that causes action"
+              "Guardrail",
+              "A limit that triggers action when crossed, such as 50% switchers"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Reported: 300K x $150 = $45M. The growth target looks achieved."
+              "Calling all growth good",
+              "Reported growth is $45M but the net gain is $18M. Count what we lose."
             ],
             [
-              "2",
-              "Source: 40% x 300K = 120K switchers; 60% x 300K = 180K truly new."
+              "Calling cannibalization always bad",
+              "Some switchers were leaving anyway. Cannibalizing ourselves beats losing them to a rival."
             ],
             [
-              "3",
-              "Truly new: 180K x $150 = +$27.0M."
+              "Forgetting the value difference",
+              "The old card earns $300 and the new one $150. A switcher costs us $150."
             ],
             [
-              "4",
-              "Switchers who would have left (25%): 30K x $150 = +$4.5M, because we keep them at $150 instead of $0."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "5",
-              "Switchers who would have stayed (75%): 90K x ($300 - $150) = 90K x $150 = -$13.5M."
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
             ],
             [
-              "6",
-              "Net: $27.0M + $4.5M - $13.5M = +$18.0M, which is 40% of the reported $45M."
-            ],
-            [
-              "7",
-              "Existing base: 1.0M - 120K = 880K, a 12% fall. Check which customers moved."
-            ],
-            [
-              "8",
-              "Net per account for any cannibalization rate c: new share (1 - c) x $150, plus switcher share c x (25% x $150 - 75% x $150 = -$75). So $150 - $225c = $150 x (1 - 1.5c)."
-            ],
-            [
-              "9",
-              "Break-even: 1 - 1.5c = 0, so c = 67%."
-            ],
-            [
-              "10",
-              "At c = 20%: $150 x 0.70 = $105, x 300K = +$31.5M. At 60%: $15 x 300K = +$4.5M. At 80%: -$30 x 300K = -$9.0M."
-            ],
-            [
-              "11",
-              "If no switcher would have left: per account = $150 - $300c. At 40%: $30 x 300K = +$9.0M. Break-even c = 50%."
-            ],
-            [
-              "12",
-              "Check: at c = 40%, $150 - $225 x 0.4 = $60; $60 x 300K = $18.0M, matching step 6."
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Cannibalization checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical problem",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "How much is cannibalized?",
-            "Share of new accounts held by existing customers",
-            "Counting only gross new accounts",
-            "Track switchers and new customers separately"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "What are the two products? What is the goal? How is growth counted?"
           ],
           [
-            "Who is switching?",
-            "Value of switchers: top tier or low tier",
-            "Best customers move to the cheaper product",
-            "Segment switchers by profit"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Profit per customer, share of switchers, share who were leaving anyway"
           ],
           [
-            "Would they have left anyway?",
-            "Past attrition, rival offers, product aging",
-            "Over- or under-estimating the loss",
-            "Use a holdout or matched group"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume switchers are an average mix of customers'"
           ],
           [
-            "What is each customer worth?",
-            "Profit per account for both products",
-            "Comparing revenue, not profit",
-            "Use profit per customer"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Net = 27 + 4.5 - 13.5 = $18M. Break-even: 150 - 225s = 0, so s = 67%"
           ],
           [
-            "Is the old product declining anyway?",
-            "Trend in the old product without the new one",
-            "Blaming the new product for an existing decline",
-            "Compare with the trend before launch"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'It is a problem only partly: we net $18M, 40% of the $45M reported'"
           ],
           [
-            "Is the target right?",
-            "What the goal counts",
-            "Gross accounts rewarded",
-            "Switch to net incremental profit"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Top customers switching; split switchers by value; set a 50% guardrail"
           ],
           [
-            "Can we reduce the overlap?",
-            "Targeting, pricing, benefits that differ",
-            "Products too similar",
-            "Make products clearly different, add upgrade paths"
+            "Offer an alternative",
+            "Several answers can be defended",
+            "If top customers are the switchers, stop promoting the new card to them"
           ]
         ]
       }
@@ -6102,11 +8736,12 @@ DATA.cases = [
       }
     ],
     "pitfalls": [
-      "Saying cannibalization is always bad. Compare the loss with the gain and with what rivals would take.",
-      "Counting gross growth. Report net incremental profit.",
-      "Ignoring who switched. Losing top customers hurts more than losing low-value ones.",
-      "Forgetting the \"would have left anyway\" group. Some switchers are a save, not a loss.",
-      "No decision rule. Say the level at which you would act."
+      "Calling all growth good. Reported growth is $45M but the net gain is $18M. Count what we lose.",
+      "Calling cannibalization always bad. Some switchers were leaving anyway. Cannibalizing ourselves beats losing them to a rival.",
+      "Forgetting the value difference. The old card earns $300 and the new one $150. A switcher costs us $150.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction."
     ]
   },
   {
@@ -6122,29 +8757,37 @@ DATA.cases = [
     "prompt": "We want to launch an instant pre-approval feature that reduces underwriting friction. How would you balance speed-to-approval against credit risk?",
     "clarify": [
       {
-        "q": "What does the feature do?",
-        "a": "Applicants get an instant credit offer based on a soft credit check and limited data. A full review follows later if they accept."
+        "q": "What does the feature do, and what is the goal?",
+        "a": "Applicants get an instant credit offer from a soft credit check and limited data. A full review follows if they accept. The goal is profit after credit losses."
       },
       {
-        "q": "What is the current process and its cost?",
-        "a": "A decision takes about two days. Only 55% of approved applicants accept, because many give up while waiting."
+        "q": "What is the current process, and how many accept?",
+        "a": "A decision takes about two days. We approve about 100K applicants a year, and only 55% accept (55K) because many give up while waiting. Assume 70% would accept if it were instant."
       },
       {
-        "q": "What do we know about risk?",
-        "a": "Our loss rate is about 4.0% of balances. Faster decisions use fewer checks, which could raise losses."
+        "q": "What are the unit economics?",
+        "a": "Average balance $5K. Revenue 12% a year, which is $600. Servicing $60 a year."
       },
       {
-        "q": "What are the unit values?",
-        "a": "Average balance $5K, revenue 12% a year, servicing $60 a year. Treat these as working assumptions."
+        "q": "What is the loss rate?",
+        "a": "4.0% of balances today, which is $200 a year. If instant for everyone with fewer checks, assume 5.5%, which is $275."
+      },
+      {
+        "q": "Can we treat applicants differently?",
+        "a": "Yes. Assume 70% are low risk with a 3.5% loss rate and 80% acceptance if instant. The other 30% are higher risk with a 5.5% loss rate. With an extra check and a $3K limit, 50% accept."
       },
       {
         "q": "Are there rules to follow?",
         "a": "Yes: fair lending, clear decline reasons and identity checks. Compliance must review the design."
+      },
+      {
+        "q": "Any other constraints?",
+        "a": "Treat all figures as working assumptions. We can pilot on part of the traffic first."
       }
     ],
     "tables": [
       {
-        "title": "The numbers we will use (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
           "Item",
           "Value",
@@ -6159,7 +8802,7 @@ DATA.cases = [
           [
             "Accept the offer today",
             "55% = 55K accounts",
-            "The rest drop out while waiting"
+            "Decision takes about 2 days; the rest give up"
           ],
           [
             "Accept if instant",
@@ -6167,29 +8810,29 @@ DATA.cases = [
             "Assumed"
           ],
           [
-            "Average balance / revenue",
-            "$5K / 12% = $600 a year",
-            "Assumed"
-          ],
-          [
-            "Servicing cost",
-            "$60 a year",
+            "Balance, revenue, servicing",
+            "$5K balance. 12% revenue = $600. Servicing $60 a year",
             "Assumed"
           ],
           [
             "Loss rate today",
             "4.0% = $200 a year",
-            "Profit today = $600 - $60 - $200 = $340"
+            "Profit per account today $340"
           ],
           [
             "Loss rate if instant for everyone",
-            "5.5% = $275",
+            "5.5% = $275 a year",
             "Weaker checks and adverse selection"
           ],
           [
-            "Tiered design",
-            "70% low risk, 3.5% loss, 80% accept; 30% higher risk, 5.5% loss, 50% accept, $3K balance",
-            "Assumed"
+            "Tier 1: low risk (70%)",
+            "80% accept. Loss 3.5%",
+            "Instant offer"
+          ],
+          [
+            "Tier 2: higher risk (30%)",
+            "50% accept. Loss 5.5%. Balance $3K",
+            "Extra check and smaller limit"
           ]
         ]
       }
@@ -6198,38 +8841,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: we want an instant pre-approval feature and need to balance speed against credit risk. I will define success as profit after credit losses. Is that right, and what is today's acceptance rate and loss rate?"
+          "So we want to launch instant pre-approval and need to balance speed against credit risk. I will define success as profit after credit losses. Can I ask what a decision takes today, how many accept, what the loss rate is, and what the unit economics are? If you do not have it, I will assume."
         ],
         [
           "L: Lay out",
-          "I would look at three things. First, the benefit: how many more applicants accept if the decision is instant. Second, the risk: how much losses and fraud rise with fewer checks. Third, whether a design can keep the speed and limit the risk."
+          "I will look at three things. The benefit: how many more applicants accept if it is instant. The risk: how much losses rise with fewer checks. And whether a design can keep the speed and limit the risk."
         ],
         [
           "E: Evaluate",
-          "Assuming 100K approved applicants and 55% accept today at $340 profit each, that is $18.7M. Instant for everyone lifts acceptance to 70%, but losses rise from 4.0% to 5.5%, so profit is $18.55M, no gain. A tiered design, instant for low-risk applicants and an extra check with a smaller limit for the rest, earns about $22.5M."
+          "Each account earns $600 a year, costs $60 to service, and loses $200 at today's 4.0%. That is $340. With 100K approved and 55% accepting, 55K accounts give $18.7M. If instant is for everyone, 70K accept but losses rise to 5.5%, so profit per account is $265 and the total is $18.55M. That is no gain. A tiered design gives instant offers to the low-risk 70%. 56K accept at $365 each, $20.4M. The higher-risk 30% get an extra check and a $3K limit. 15K accept at $135 each, $2.0M. Total $22.5M."
         ],
         [
           "A: Assess",
-          "So speed alone only breaks even: instant for everyone matches today only if losses stay under about 5.5%. The main risks are adverse selection, fraud, fair lending and losses that appear months later."
+          "So tiered adds about $3.8M, up 20%. Instant for everyone breaks even at a 5.46% loss rate. The main risks are adverse selection, fraud, fair lending, and losses that show up months later."
         ],
         [
           "R: Recommend",
-          "I would launch the tiered design in a pilot on 10% of applications with a control group, judged on 90-day delinquency, with a kill switch if early delinquency or fraud passes the limit. I would also test approvals and limits for fairness across groups."
+          "I recommend the tiered design, launched as a pilot on 10% of applications with a control group. Two reasons: it earns about $3.8M more, and it keeps strict checks where risk is higher. Risks are adverse selection and fairness, so I would test approvals and limits across groups and set a kill switch if early delinquency or fraud passes a limit. An alternative is instant for everyone, but only if the pilot shows losses stay under 5.46%."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Decision: launch an instant pre-approval feature that<br/>cuts the wait for a credit decision. Balance speed against credit risk\"]\nC --> C2[\"Define terms: pre-approval = a quick offer using limited checks<br/>Success = profit after credit losses, not just more approvals\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Benefit: how many more applicants<br/>would accept if the decision is instant?\"]\nL --> L2[\"2 Risk: how much do losses and fraud rise<br/>when we use fewer checks?\"]\nL --> L3[\"3 Design and guardrails: can we keep the speed<br/>and limit the risk?\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Compare today, instant for everyone, and tiered instant\"]\nE1 --> E2[\"Today: 100K approved applicants, 55% accept = 55K accounts<br/>$340 profit each = $18.7M\"]\nE2 --> E3[\"Instant for everyone: 70% accept = 70K accounts, but losses rise<br/>from 4.0% to 5.5%. Profit $265 each = $18.55M, no gain\"]\nE3 --> E4[\"Tiered instant: low risk 70% get instant approval, riskier 30% get a<br/>1-day check and a smaller limit. Profit $22.5M, +$3.8M\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"Speed raises volume, but weaker checks raise losses,<br/>so instant for everyone only breaks even\"]\nA --> A2[\"Instant for everyone matches today only if losses stay<br/>below about 5.5%\"]\nA --> A3[\"Risks to watch: adverse selection, fraud, fair lending,<br/>and losses that show up months later\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Launch tiered instant pre-approval in a controlled pilot\"]\nR --> R1[\"Instant for low-risk applicants, small limits and one extra check for the rest\"]\nR --> R2[\"Pilot on 10% of applications with a control group,<br/>judged on 90-day delinquency\"]\nR --> R3[\"Set a kill switch: pause if early delinquency or fraud passes the limit\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Launch instant pre-approval<br/>Goal: profit after credit losses\"]\nC --> L[\"L: Lay out<br/>1 Benefit: more people accept<br/>2 Risk: losses go up<br/>3 Can a design keep both?\"]\nL --> E[\"E: Evaluate<br/>Compare three options, per year\"]\nE --> E1[\"Today<br/>55K accounts x $340<br/>= $18.7M\"]\nE --> E2[\"Instant for everyone<br/>70K accounts x $265<br/>= $18.55M, no gain\"]\nE --> E3[\"Tiered<br/>Low risk 56K x $365 = $20.4M<br/>Higher risk 15K x $135 = $2.0M<br/>= $22.5M\"]\nE1 --> A[\"A: Assess<br/>Tiered adds about $3.8M, up 20%<br/>Instant for all breaks even at 5.5% losses\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Launch the tiered design as a 10% pilot<br/>Use a control group and a kill switch\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "tiers",
-          "title": "How the tiered design works",
-          "note": "Applicants are checked in seconds and sent to a tier. Monitoring and a stop rule protect the launch.",
-          "code": "flowchart TD\nA[\"Applicant asks for a decision\"] --> K[\"Instant checks, a few seconds<br/>Identity and fraud check, soft credit check, income signal,<br/>existing relationship data\"]\nK --> T{\"Risk tier\"}\nT --> T1[\"Tier 1: low risk, 70% of approved applicants<br/>Instant approval, full offer<br/>Expected loss 3.5%, 80% accept\"]\nT --> T2[\"Tier 2: higher risk, 30%<br/>Instant conditional offer: smaller limit,<br/>one extra check within a day<br/>Expected loss 5.5%, 50% accept\"]\nT --> T3[\"Tier 3: very high risk or fraud signals<br/>Decline, or send to manual review\"]\n\nT1 --> M[\"After approval: monitor\"]\nT2 --> M\nM --> M1[\"Early warning: missed first payment, 90-day delinquency,<br/>fraud rate, by tier\"]\nM --> M2[\"Fair lending checks: approval and limits across groups<br/>Clear reasons for any decline\"]\nM1 --> KS{\"Over the limit?\"}\nM2 --> KS\nKS -->|\"Yes\"| PA[\"Pause or tighten the tier, review the model\"]\nKS -->|\"No\"| SC[\"Widen the pilot step by step\"]\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass A,K,T,M,KS q;\nclass T1,SC good;\nclass T2,M1,M2 mid;\nclass T3,PA bad;"
-        },
-        {
-          "id": "money",
-          "title": "The money: today, instant for everyone, and tiered",
-          "note": "Green is the recommended design, orange is a comparison, red is a danger case.",
-          "code": "flowchart TD\nB[\"Assumed: 100K approved applicants. Average balance $5K, revenue 12% = $600,<br/>servicing $60, loss = rate x $5K<br/>Profit per account = $600 - $60 - loss\"] --> TD[\"Today: 55% accept = 55K accounts<br/>Loss 4.0% = $200, profit $340 each<br/>55K x $340 = $18.7M\"]\nB --> IA[\"Option A, instant for everyone: 70% accept = 70K accounts<br/>Loss 5.5% = $275, profit $265 each<br/>70K x $265 = $18.55M, change -$0.15M\"]\nB --> IB[\"Option B, tiered instant<br/>Tier 1: 70K x 80% = 56K accounts, loss 3.5%, profit $365 = $20.4M<br/>Tier 2: 30K x 50% = 15K accounts, $3K balance, profit $135 = $2.0M\"]\nIB --> TB[\"Tiered total = $22.5M, change +$3.8M vs today\"]\n\nIA --> BE[\"Break-even for Option A<br/>$18.7M / 70K = $267 profit per account<br/>loss = ($540 - $267) / $5K = about 5.5%\"]\nTB --> S1[\"If Tier 1 loss is 5.0% instead of 3.5%<br/>profit $290 x 56K = $16.2M + $2.0M = $18.3M, below today\"]\nTB --> S2[\"Pilot first: 10% of applications, control group<br/>Judge on 90-day delinquency, because full losses take about a year\"]\n\nBE --> R[\"Launch tiered, not instant for everyone<br/>Keep the Tier 1 loss rate near 3.5%\"]\nS1 --> R\nS2 --> R\nTD --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B,TD base;\nclass IB,TB good;\nclass IA,BE,S2 mid;\nclass S1 bad;\nclass R out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Profit per account today<br/>Revenue 12% x $5,000 = $600<br/>$600 - $60 service - $200 loss<br/>= <b>$340</b>\"]\nA --> B[\"2 Today's total<br/>100K x 55% = 55K accounts<br/>55K x $340 = <b>$18.7M</b>\"]\nB --> C1[\"3 Instant for everyone<br/>Loss 5.5% = $275<br/>$600 - $60 - $275 = <b>$265</b>\"]\nC1 --> C2[\"70K accounts x $265<br/>= <b>$18.55M</b><br/>No gain\"]\nB --> D1[\"4 Tiered: low risk (70%)<br/>70K x 80% = 56K accounts<br/>Loss 3.5% so profit <b>$365</b><br/>56K x $365 = <b>$20.4M</b>\"]\nB --> D2[\"4 Tiered: higher risk (30%)<br/>30K x 50% = 15K accounts<br/>Balance $3K: 360 - 60 - 165 = <b>$135</b><br/>15K x $135 = <b>$2.0M</b>\"]\nD1 --> E[\"5 Tiered total<br/>20.4 + 2.0 = <b>$22.5M</b><br/>$22.5M - $18.7M<br/>= <b>+$3.8M, up 20%</b>\"]\nD2 --> E\nC2 --> E\nE --> F1[\"Check 1: instant-for-all break-even loss<br/>70K x (540 - L) = 18.7M<br/><b>L = $273, or 5.46%</b>\"]\nE --> F2[\"Check 2: higher-risk tier makes no money at<br/>360 - 60 - L = 0<br/><b>L = $300, or 10%</b>\"]\nE --> F3[\"Check 3: low-risk loss can rise to 4.84%<br/>before tiered falls back to $18.7M\"]\nclass A,B n1;\nclass C1,C2,D1,D2 n2;\nclass E n4;\nclass F1,F2,F3 n3;\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;"
         }
       ],
       "exampleTables": [
@@ -6244,38 +8881,180 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define pre-approval and what 'good' means",
-              "Success is profit after losses, not just more approvals",
-              "Success = profit after credit losses; pre-approval = quick offer with limited checks"
+              "Restate the goal. Ask about today's process, acceptance, losses and rules",
+              "You drive the case and show a business owner mindset",
+              "Success is profit after credit losses. Today 55% accept and loss is 4.0%"
             ],
             [
               "L Lay out",
-              "Say your 3 questions before calculating",
-              "Shows a plan and lets the interviewer steer",
-              "Benefit of speed? Rise in risk? Design and guardrails?"
+              "Say your questions before calculating",
+              "Shows structure and lets the interviewer steer",
+              "Benefit: more accept. Risk: more losses. Can a design keep both?"
             ],
             [
               "E Evaluate",
-              "Compare today, instant for everyone and tiered instant",
-              "One option rarely wins on both speed and risk",
-              "Today $18.7M, instant for all $18.55M, tiered $22.5M"
+              "Work out profit per account, then total for each option",
+              "Speed and risk must be put in one number",
+              "Today $18.7M. Instant for all $18.55M. Tiered $22.5M"
             ],
             [
               "A Assess",
-              "Find the break-even loss rate and the risks",
-              "Shows how much risk the plan can take",
-              "Instant for everyone breaks even at about 5.5% losses"
+              "Say what the numbers mean and where it breaks even",
+              "Turns numbers into a business view",
+              "Speed alone does not pay. Tiered adds about $3.8M. Fairness and fraud are the risks"
             ],
             [
               "R Recommend",
-              "Give a design, a pilot and a stop rule",
-              "Interviewers want a decision and controls",
-              "Tiered, 10% pilot with control group, kill switch"
+              "Decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; you must commit and explain",
+              "Pilot the tiered design on 10% with a control group"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "Profit per account today",
+              "12% x $5,000 = $600. Then $600 - $60 - 4.0% x $5,000 ($200)",
+              "$340"
+            ],
+            [
+              "2",
+              "Total profit today",
+              "100K x 55% = 55K accounts. 55K x $340",
+              "$18.7M"
+            ],
+            [
+              "3",
+              "Instant for everyone",
+              "Loss 5.5% x $5,000 = $275. Profit $600 - $60 - $275 = $265. 70K x $265",
+              "$18.55M"
+            ],
+            [
+              "4",
+              "Tiered, low-risk group",
+              "70K x 80% = 56K accounts. Profit $600 - $60 - $175 = $365. 56K x $365",
+              "$20.4M"
+            ],
+            [
+              "5",
+              "Tiered, higher-risk group",
+              "30K x 50% = 15K accounts. $360 - $60 - $165 = $135. 15K x $135",
+              "$2.0M"
+            ],
+            [
+              "6",
+              "Tiered total and gain",
+              "20.4 + 2.0 = 22.5. Then 22.5 - 18.7",
+              "$22.5M, up $3.8M (20%)"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Yearly profit",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Instant-for-all losses stay at 4.5%, not 5.5%",
+              "$22.05M",
+              "70K x ($600 - $60 - $225). Speed alone would pay. Test the real loss rate."
+            ],
+            [
+              "Instant-for-all acceptance is only 60%, losses 5.5%",
+              "$15.9M",
+              "60K x $265. Worse than today. Acceptance gain is not enough."
+            ],
+            [
+              "Low-risk tier losses are 4.5%, not 3.5%",
+              "$19.7M",
+              "56K x $315 + $2.0M. Still above $18.7M, but the gain shrinks to about $1M."
+            ],
+            [
+              "Only 30% of the higher-risk group accepts",
+              "$21.7M",
+              "$20.4M + 9K x $135. The higher-risk tier is a small part of the gain."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "At what loss rate does instant-for-all only match today?",
+              "70,000 x (600 - 60 - L) = 18,700,000",
+              "540 - L = 267, so L = $273, which is 5.46% of $5,000"
+            ],
+            [
+              "What acceptance does instant-for-all need to match today at 5.5% losses?",
+              "a x 100,000 x 265 = 18,700,000",
+              "a = 18.7 / 26.5 = 70.6%"
+            ],
+            [
+              "At what loss rate does the higher-risk tier stop making money?",
+              "360 - 60 - L = 0",
+              "L = $300, which is 10% of the $3K balance"
+            ],
+            [
+              "How high can low-risk losses go before tiered matches today?",
+              "56,000 x (540 - x) + 2,025,000 = 18,700,000",
+              "540 - x = 297.8, so x = $242, which is 4.84% of $5,000"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Adverse selection",
+              "Riskier people may rush to take a fast, easy offer",
+              "Compare to a control group and track mix by tier"
+            ],
+            [
+              "Fraud",
+              "Fewer checks make fraud easier",
+              "Keep identity checks and track fraud rate by tier"
+            ],
+            [
+              "Fair lending",
+              "Fast rules may treat some groups unfairly",
+              "Test approval rates, limits and decline reasons across groups"
+            ],
+            [
+              "Losses show up late",
+              "Bad loans may not show for months",
+              "Watch first-payment misses and 90-day delinquency early"
+            ],
+            [
+              "Rules and reasons",
+              "We must give clear decline reasons",
+              "Involve compliance in the design; keep human review for borderline cases"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
@@ -6283,142 +9062,110 @@ DATA.cases = [
           "rows": [
             [
               "Pre-approval",
-              "A quick offer based on limited checks, before a full review"
+              "An early offer based on limited data, before the full review"
             ],
             [
-              "Underwriting",
-              "Deciding who to approve and for how much"
-            ],
-            [
-              "Credit risk",
-              "The chance a borrower does not repay"
-            ],
-            [
-              "Loss rate",
-              "The share of balances the bank never gets back"
+              "Soft credit check",
+              "A credit look that does not hurt the applicant's score"
             ],
             [
               "Adverse selection",
-              "Riskier applicants are more likely to take a fast, easy offer"
+              "The mix of applicants gets worse when the offer is fast and easy"
             ],
             [
-              "Friction",
-              "Steps or waiting that make customers give up"
+              "Loss rate",
+              "Share of balances we do not get back"
             ],
             [
-              "Tiering",
-              "Treating applicants differently by risk level"
+              "Delinquency",
+              "Missing payments. 90-day means 90 days late"
             ],
             [
-              "Early delinquency",
-              "Missed payments in the first months, an early warning of losses"
-            ],
-            [
-              "Holdout or control group",
-              "A group that gets the old process, used as a fair comparison"
+              "Control group",
+              "A group handled the old way, for comparison"
             ],
             [
               "Kill switch",
-              "A pre-agreed trigger to pause the feature"
+              "A rule to stop the feature fast if risk goes too high"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Today: 100K x 55% = 55K accounts. Profit per account = $600 - $60 - ($5K x 4.0% = $200) = $340. Total = 55K x $340 = $18.7M."
+              "Counting only the extra acceptances",
+              "Instant for all lifts accounts from 55K to 70K but the profit is flat. Count losses, too."
             ],
             [
-              "2",
-              "Instant for everyone: 100K x 70% = 70K accounts. Loss = $5K x 5.5% = $275, so profit = $600 - $60 - $275 = $265. Total = 70K x $265 = $18.55M, a change of -$0.15M."
+              "Treating all applicants the same",
+              "Split by risk. Low-risk gets instant, the rest get an extra check and a smaller limit."
             ],
             [
-              "3",
-              "Break-even for instant for everyone: $18.7M / 70K = $267 per account. Loss = ($540 - $267) / $5K = about 5.5%."
+              "Forgetting fairness and rules",
+              "Say you will test across groups and involve compliance."
             ],
             [
-              "4",
-              "Tier 1: 70% of 100K = 70K applicants x 80% accept = 56K accounts. Loss = $5K x 3.5% = $175, profit = $600 - $60 - $175 = $365. Total = 56K x $365 = $20.4M."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "5",
-              "Tier 2: 30K applicants x 50% accept = 15K accounts. Balance $3K, so revenue $360, loss 5.5% = $165, servicing $60, profit = $135. Total = 15K x $135 = $2.0M."
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
             ],
             [
-              "6",
-              "Tiered total: $20.4M + $2.0M = $22.5M, which is +$3.8M against today."
-            ],
-            [
-              "7",
-              "Accounts: 56K + 15K = 71K, similar to instant for everyone but with lower losses."
-            ],
-            [
-              "8",
-              "Stress test: if the Tier 1 loss is 5.0%, profit per account = $600 - $60 - $250 = $290; 56K x $290 = $16.2M; plus $2.0M = $18.3M, below today."
-            ],
-            [
-              "9",
-              "Pilot: 10% of applications get the new process and 10% stay on the old one. Judge on 90-day delinquency, because full losses take about a year."
+              "Launching to everyone at once",
+              "Pilot on a small share with a control group and a kill switch."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Speed vs risk checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical problem",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "How much does speed help?",
-            "Drop-off by wait time, acceptance by speed",
-            "Applicants give up while waiting",
-            "Measure acceptance now and after a test"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "What does the feature do? What is success? What rules apply?"
           ],
           [
-            "How much does risk rise?",
-            "Loss rate by tier and by check used",
-            "Losses rise when checks are removed",
-            "Keep strong checks for riskier tiers"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Acceptance today, loss rate, balance, revenue, servicing cost"
           ],
           [
-            "Who takes the fast offer?",
-            "Risk mix of fast vs slow applicants",
-            "Adverse selection",
-            "Compare the mix in a pilot"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume instant raises acceptance to 70%'"
           ],
           [
-            "Is fraud controlled?",
-            "Identity checks, fraud rate in the pilot",
-            "Fraudsters target easy approvals",
-            "Add layered identity checks"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Profit per account = $600 - $60 - $275 = $265. 70K x $265 = $18.55M"
           ],
           [
-            "Is it fair?",
-            "Approval rates, limits and reasons by group",
-            "Models treat groups unequally",
-            "Test outcomes by group, explain decisions"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend a tiered design: it earns $22.5M against $18.7M today'"
           ],
           [
-            "How will we know early?",
-            "90-day delinquency, first-payment miss",
-            "Losses take a year to show",
-            "Use leading indicators"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Adverse selection, fraud, fair lending; run a 10% pilot with a kill switch"
           ],
           [
-            "What if it goes wrong?",
-            "Stop rules, owners, speed to switch off",
-            "No pre-agreed trigger",
-            "Set a kill switch before launch"
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Instant for everyone only if losses stay under 5.46%"
           ]
         ]
       }
@@ -6442,11 +9189,12 @@ DATA.cases = [
       }
     ],
     "pitfalls": [
-      "Optimizing for approvals. Approvals that become losses reduce profit.",
-      "Treating all applicants the same. Use tiers so low-risk applicants get speed and others get extra checks.",
-      "Waiting a year for results. Use early indicators like 90-day delinquency.",
-      "Ignoring fairness and rules. Test for fair outcomes and give clear reasons for declines.",
-      "No stop rule. Say what number would make you pause the launch."
+      "Counting only the extra acceptances. Instant for all lifts accounts from 55K to 70K but the profit is flat. Count losses, too.",
+      "Treating all applicants the same. Split by risk. Low-risk gets instant, the rest get an extra check and a smaller limit.",
+      "Forgetting fairness and rules. Say you will test across groups and involve compliance.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Launching to everyone at once. Pilot on a small share with a control group and a kill switch."
     ]
   },
   {
@@ -6462,29 +9210,37 @@ DATA.cases = [
     "prompt": "A new product targets a historically underbanked segment. How would you assess both the business opportunity and the risk and compliance considerations?",
     "clarify": [
       {
-        "q": "Who is the segment?",
-        "a": "Adults with a bank account but little access to credit, who rely on costly services such as check cashing and payday loans. Assume about 15M in the US."
+        "q": "Who is the segment and what is the product?",
+        "a": "15M adults in the US with little access to normal banking or credit. The product is a low-fee account with a small credit line, offered through a mobile app and community partners."
       },
       {
-        "q": "What is the product?",
-        "a": "A low-fee checking account with a small-dollar credit-builder line, offered through a mobile app and community partners."
+        "q": "What is the goal and time horizon?",
+        "a": "Profit, with payback inside 24 months, and responsible treatment of customers."
       },
       {
-        "q": "What is the business goal?",
-        "a": "Profit with payback inside two years, plus responsible lending and a path to bigger products."
+        "q": "How many people would want it, and how many would we win?",
+        "a": "About 10% of the segment is interested. Assume we win 1 in 30 of them."
       },
       {
-        "q": "What constraints do we have?",
-        "a": "Compliance and legal must review the design. Models must be tested for fair outcomes, and the product must not depend on penalty fees."
+        "q": "What does one customer earn and cost per year?",
+        "a": "Earns $250 (card fees $60, deposits $50, small loans $140). Costs $150 (servicing $40, loan losses $80, compliance and support $30)."
       },
       {
-        "q": "What are the unit values?",
-        "a": "Revenue about $250 a year per customer, costs about $160, fixed cost about $2.5M a year. Treat all figures as working assumptions."
+        "q": "Do customers move to bigger products?",
+        "a": "About 1 in 4 move up within two years. A bigger product earns about $300 a year."
+      },
+      {
+        "q": "What are the fixed and up-front costs?",
+        "a": "$2.5M a year fixed. Up-front: $6M to build, plus $80 to win each customer."
+      },
+      {
+        "q": "Any rules or limits?",
+        "a": "Fair lending, clear disclosures, identity checks, and legal and compliance review. The product must not depend on penalty fees."
       }
     ],
     "tables": [
       {
-        "title": "The numbers we will use (assumptions)",
+        "title": "What the interviewer shares if you ask (assumptions)",
         "headers": [
           "Item",
           "Value",
@@ -6497,44 +9253,34 @@ DATA.cases = [
             "Assumed"
           ],
           [
-            "Reachable (bank account and smartphone)",
-            "60% = 9M",
-            "Assumed"
+            "Interested",
+            "10% = 1.5M",
+            "Survey"
           ],
           [
-            "Interested in the product",
-            "15% = 1.35M",
+            "We win",
+            "1 in 30 = 50,000 customers",
             "Assumed"
-          ],
-          [
-            "Our share in year 3",
-            "4% = 54K customers",
-            "1.35M x 4%"
           ],
           [
             "Revenue per customer a year",
             "$250",
-            "Interchange $60 + deposit value $50 + small credit $140"
+            "Card fees $60 + deposits $50 + small loans $140"
           ],
           [
             "Cost per customer a year",
-            "$160",
-            "Servicing $40 + credit losses $90 + compliance and support $30"
+            "$150",
+            "Servicing $40 + loan losses $80 + compliance $30"
           ],
           [
-            "Profit per customer a year",
-            "$90",
-            "Before graduation"
-          ],
-          [
-            "Graduation to bigger products",
-            "25% move up, worth $300 a year each",
-            "Adds $75 per customer on average"
+            "Moving up",
+            "25% move to a product worth $300 a year",
+            "Adds $75 per customer"
           ],
           [
             "Fixed cost / up-front",
-            "$2.5M a year / $10.3M",
-            "Build $6M + 54K x $80 acquisition = $4.3M"
+            "$2.5M a year / $10M",
+            "Build $6M + 50,000 x $80 = $4M"
           ]
         ]
       }
@@ -6543,38 +9289,32 @@ DATA.cases = [
       "speak": [
         [
           "C: Clarify",
-          "Let me confirm: we want to launch a product for an underbanked segment and I need to judge the business opportunity and the risk and compliance issues. Who is the segment and what is the product, for example a low-fee account with small credit?"
+          "We want to launch a product for underbanked customers, and I need to judge the opportunity and the risks. Before I start: who is the segment and what is the product? And how many people would want it, what does one customer earn and cost, and what are the fixed costs? If you do not have them, I will assume."
         ],
         [
           "L: Lay out",
-          "I would use two lenses. The opportunity: how big the segment is, what customers need, whether we can win, and the economics. And risk and compliance: credit risk, fair lending, fees and conduct, identity checks and reputation."
+          "I will ask two questions: is it a good business, and can we do it safely and fairly?"
         ],
         [
           "E: Evaluate",
-          "Assuming 15M adults, 60% reachable and 15% interested, that is 1.35M. A 4% share is 54K customers. Each earns about $90 a year directly, and 25% graduate to bigger products worth $300, which adds $75. That is about $8.9M, minus $2.5M fixed, so $6.4M a year, with a payback of about 19 months."
+          "Assume 15M adults and 10% are interested, so 1.5M. If we win 1 in 30, that is 50,000 customers. Each earns us about $100 a year. One in four move to bigger products, which adds about $75 each. That is about $8.75M, minus $2.5M of fixed cost, so $6.25M a year."
         ],
         [
           "A: Assess",
-          "The case depends on graduation. Without it profit is $2.4M and payback is 4.4 years. Break-even is about 15K customers. The main risks are higher credit losses, unfair outcomes from models, profiting from fees, and weak identity checks."
+          "It pays back in about 19 months. Break-even is about 14,000 customers. The case depends on customers moving up: without it, payback is 4 years. The risks are credit losses, unfair models, relying on fees, and weak identity checks."
         ],
         [
           "R: Recommend",
-          "I would go, with a fee-light design, cash-flow underwriting and a clear path to graduate. I would involve compliance and legal from day one, test models for fair outcomes, and pilot in two markets with community partners before scaling on gates such as loss rate, complaints and graduation."
+          "I would go, with a pilot. Two reasons: it pays back inside two years, and moving up only needs to reach 1 in 6 customers. I would design it so it does not rely on penalty fees, involve compliance from day one, and pilot in two markets before scaling. If you wanted a more cautious answer, I would pilot a smaller group until moving up is proven."
         ]
       ],
-      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>What are we being asked?\"]\nC --> C1[\"Decision: a new product for a historically underbanked segment.<br/>Judge the business opportunity and the risk and compliance issues\"]\nC --> C2[\"Define terms: underbanked = has little or no access to mainstream<br/>banking or credit. Success = profit, plus fair and lawful treatment\"]\n\nC1 --> L\nC2 --> L\nL[\"L: Lay out<br/>What do we need to find out?\"]\nL --> L1[\"1 Opportunity: how big is the segment,<br/>what do they need, can we win?\"]\nL --> L2[\"2 Economics: does each customer make money,<br/>including a path to better products?\"]\nL --> L3[\"3 Risk and compliance: credit, fair lending,<br/>fees and conduct, identity checks, reputation\"]\n\nL1 --> E1\nL2 --> E1\nL3 --> E1\nE1[\"E: Evaluate<br/>Size the segment, then the profit per customer\"]\nE1 --> E2[\"Segment: 15M adults x 60% reachable = 9M<br/>x 15% interested = 1.35M. Our 4% share = 54K customers\"]\nE2 --> E3[\"Per customer: $250 revenue minus $160 cost = $90 a year<br/>Plus 25% graduate to bigger products worth $300 a year = $75\"]\nE3 --> E4[\"54K x $165 = $8.9M, minus $2.5M fixed = $6.4M a year<br/>Up-front $10.3M pays back in about 19 months\"]\n\nE4 --> A[\"A: Assess<br/>What do the numbers mean?\"]\nA --> A1[\"The case depends on graduation: without it the profit is<br/>$2.4M and payback is about 4.4 years\"]\nA --> A2[\"Break-even is about 15K customers, 28% of the target\"]\nA --> A3[\"Biggest risks: higher credit losses, unfair outcomes in models,<br/>profiting from fees, and weak identity checks\"]\n\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend<br/>Go, but design for fairness and run a pilot\"]\nR --> R1[\"Fee-light design: no profit from overdraft or late-fee mistakes,<br/>cash-flow underwriting, a clear path to graduate\"]\nR --> R2[\"Involve compliance and legal from day one: fair lending tests,<br/>clear disclosures, identity and anti-money-laundering checks\"]\nR --> R3[\"Pilot in 2 markets with community partners, then scale on gates\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C,C1,C2 c1;\nclass L,L1,L2,L3 c2;\nclass E1,E2,E3,E4 c3;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c5;",
+      "exampleChart": "flowchart TD\nC[\"C: Clarify<br/>Launch a product for underbanked customers?\"]\nC --> L[\"L: Lay out<br/>1 Is it a good business?<br/>2 Can we do it safely and fairly?\"]\nL --> E[\"E: Evaluate<br/>Count customers, then profit per customer\"]\nE --> E1[\"Customers<br/>15M adults x 10% interested<br/>= 1.5M. We win 1 in 30 = 50K\"]\nE --> E2[\"Profit per customer<br/>Earn $250, spend $150<br/>= $100 a year\"]\nE --> E3[\"Moving up<br/>1 in 4 move to a bigger product<br/>= $75 more per customer\"]\nE1 --> A[\"A: Assess<br/>Total = $6.25M a year<br/>Pays back in about 19 months\"]\nE2 --> A\nE3 --> A\nA --> R[\"R: Recommend<br/>Go, with a pilot and safeguards\"]\n\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L c2;\nclass E,E1,E2,E3 c3;\nclass A c4;\nclass R c5;",
       "exampleCharts": [
         {
-          "id": "lenses",
-          "title": "How we assess it: two lenses",
-          "note": "Green boxes are the business opportunity, red boxes are risk and compliance, each with a mitigation.",
-          "code": "flowchart TD\nQ[\"New product for an underbanked segment\"] --> O[\"Lens 1: Business opportunity\"]\nQ --> RK[\"Lens 2: Risk and compliance\"]\n\nO --> O1[\"Size: 15M adults, 1.35M interested, 54K ours\"]\nO --> O2[\"Need: low fees, fast access to money, small credit<br/>that builds a history\"]\nO --> O3[\"Right to win: trust, mobile app, partners,<br/>data from existing accounts\"]\nO --> O4[\"Economics: $165 a year per customer including graduation\"]\n\nRK --> R1[\"Credit risk: thin files, higher losses<br/>Mitigate: small limits, cash-flow data, step-up limits\"]\nRK --> R2[\"Fair lending: models must not treat groups unfairly<br/>Mitigate: test outcomes by group, explain decisions\"]\nRK --> R3[\"Fees and conduct: do not profit from customer mistakes<br/>Mitigate: no surprise fees, plain-language terms\"]\nRK --> R4[\"Identity and anti-money-laundering: thin documents<br/>Mitigate: layered checks that do not block honest customers\"]\nRK --> R5[\"Reputation and data privacy: label and use of alternative data<br/>Mitigate: clear consent, limit data use, regular review\"]\n\nO1 --> D{\"Decision\"}\nO2 --> D\nO3 --> D\nO4 --> D\nR1 --> D\nR2 --> D\nR3 --> D\nR4 --> D\nR5 --> D\nD --> G[\"Go, with a pilot and gates:<br/>loss rate, complaints, fair-lending results, graduation rate\"]\n\nclassDef q fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef opp fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef risk fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass Q,D q;\nclass O,O1,O2,O3,O4 opp;\nclass RK,R1,R2,R3,R4,R5 risk;\nclass G out;"
-        },
-        {
-          "id": "money",
-          "title": "The money: base case, graduation and what-ifs",
-          "note": "Green is the base case, orange is a weaker case, red is the danger case.",
-          "code": "flowchart TD\nB[\"Assumed per customer per year: revenue $250 (interchange $60, deposit value $50, small credit $140)<br/>Cost $160 (servicing $40, losses $90, compliance and support $30)<br/>Profit = $90. Fixed cost $2.5M. Acquisition $80 each\"] --> D1[\"Direct profit<br/>54K x $90 = $4.86M a year\"]\nB --> G1[\"Graduation: 25% move to bigger products worth $300 a year<br/>13.5K x $300 = $4.05M, or $75 per customer\"]\nD1 --> T[\"Total = $4.86M + $4.05M - $2.5M fixed = $6.4M a year\"]\nG1 --> T\n\nB --> INV[\"Up-front cost<br/>Build and launch $6M + 54K x $80 = $4.3M<br/>Total $10.3M\"]\nT --> PB[\"Payback<br/>$10.3M / $6.4M = 1.6 years, about 19 months\"]\nINV --> PB\n\nT --> BE[\"Break-even customers<br/>$2.5M / $165 = about 15K<br/>28% of the 54K target\"]\n\nT --> S1[\"No graduation<br/>$4.86M - $2.5M = $2.4M a year<br/>Payback $10.3M / $2.4M = about 4.4 years\"]\nT --> S2[\"Credit losses double to $180<br/>Direct profit $0, graduation $4.05M - $2.5M = +$1.55M\"]\nT --> S3[\"Only 27K customers<br/>27K x $165 = $4.5M - $2.5M = +$1.96M\"]\n\nPB --> R[\"Go, with a path to graduation<br/>The key number to prove in the pilot is graduation, then losses\"]\nBE --> R\nS1 --> R\nS2 --> R\nS3 --> R\n\nclassDef base fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef good fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef mid fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef bad fill:#FCE4EC,stroke:#D81B60,stroke-width:2px,color:#000;\nclassDef out fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass B,INV base;\nclass D1,G1,T,PB,BE good;\nclass S2,S3 mid;\nclass S1 bad;\nclass R out;"
+          "id": "numbers",
+          "title": "The numbers in one chart",
+          "note": "Read top to bottom. Each box is one step of the math; the bold number is the result.",
+          "code": "flowchart TD\nA[\"1 Customers<br/>15M adults x 10% interested = 1.5M<br/>Win 1 in 30 = <b>50,000 customers</b>\"]\nA --> B[\"2 Profit per customer a year\"]\nB --> B1[\"Earn $250<br/>card fees $60<br/>deposits $50<br/>small loans $140\"]\nB --> B2[\"Spend $150<br/>servicing $40<br/>loan losses $80<br/>compliance $30\"]\nB1 --> B3[\"$250 - $150 = <b>$100</b>\"]\nB2 --> B3\nB3 --> D[\"3 Add moving up<br/>25% x $300 = +$75<br/>= <b>$175 per customer</b>\"]\nD --> E[\"4 Total a year<br/>50,000 x $175 = $8.75M<br/>minus fixed $2.5M = <b>$6.25M</b>\"]\nE --> F[\"5 Payback<br/>Up-front $10M / $6.25M<br/>= <b>about 19 months</b>\"]\nF --> G1[\"Break-even<br/>$2.5M / $175<br/>= <b>14,286 customers</b>\"]\nF --> G2[\"Moving up needed<br/>for 24-month payback<br/>= <b>1 in 6</b>\"]\nF --> G3[\"If nobody moves up<br/>$2.5M a year<br/>= <b>4-year payback</b>\"]\n\nclassDef n1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef n2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef n3 fill:#FFEBEE,stroke:#E53935,stroke-width:2px,color:#000;\nclassDef n4 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef n5 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclass A n1;\nclass B,B1,B3 n2;\nclass B2 n3;\nclass D,E n4;\nclass F n5;\nclass G1,G2,G3 n1;"
         }
       ],
       "exampleTables": [
@@ -6589,38 +9329,164 @@ DATA.cases = [
           "rows": [
             [
               "C Clarify",
-              "Define underbanked, the product and the goal",
-              "The segment and product shape both the risk and the profit",
-              "Little access to mainstream banking; low-fee account and small credit; success = profit plus fair treatment"
+              "Ask the questions below and get the data you need. Say what you will assume if you do not get it",
+              "In Capital One cases you drive the conversation and ask for data, with a business owner mindset",
+              "Segment size, interest, win rate, revenue and cost per customer, graduation, fixed and up-front cost, rules"
             ],
             [
               "L Lay out",
-              "Say your two lenses and three areas",
+              "Say your two questions before calculating",
               "Shows structure and lets the interviewer steer",
-              "Opportunity, economics, risk and compliance"
+              "Is it a good business? Can we do it safely and fairly?"
             ],
             [
               "E Evaluate",
-              "Size the segment, then work out profit per customer",
-              "A large segment is not a profitable one",
-              "54K customers, $165 a year each, $6.4M a year after fixed cost"
+              "Do the math out loud in short steps, with units",
+              "The interview has several separate math problems, often with algebra",
+              "50,000 customers, $175 each, $6.25M a year after fixed cost"
             ],
             [
               "A Assess",
-              "Find payback, break-even and what the case depends on",
-              "Shows which assumption matters most",
-              "Graduation drives the case; break-even about 15K customers"
+              "Say what the numbers mean: payback, break-even, key driver",
+              "Turns numbers into a business view",
+              "Pays back in about 19 months; moving up is the key driver"
             ],
             [
               "R Recommend",
-              "Give a decision with design rules and a pilot",
-              "Interviewers want a decision and safeguards",
-              "Go, fee-light, compliance from day one, pilot in 2 markets"
+              "Give the decision first, then two reasons, then risks and next steps",
+              "Several answers can be defended; what matters is that you commit and explain",
+              "Go with a pilot. A defensible alternative: pilot a smaller group until moving up is proven"
             ]
           ]
         },
         {
-          "title": "Plain-English glossary",
+          "title": "The numbers, one simple example",
+          "headers": [
+            "Step",
+            "What we are working out",
+            "The math",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "How many customers could we win?",
+              "15M adults x 10% interested = 1.5M. We win 1 in 30 of them: 1.5M / 30",
+              "50,000 customers"
+            ],
+            [
+              "2",
+              "How much does one customer make us in a year?",
+              "Earn $250 (card fees $60 + deposits $50 + small loans $140). Spend $150 (servicing $40 + loan losses $80 + compliance $30). $250 - $150",
+              "$100 a year"
+            ],
+            [
+              "3",
+              "What if some customers move up to bigger products?",
+              "1 in 4 customers move up. A bigger product earns us $300 a year. 25% x $300",
+              "$75 more per customer"
+            ],
+            [
+              "4",
+              "What is the total profit each year?",
+              "$100 + $75 = $175 per customer. 50,000 x $175 = $8.75M. Subtract $2.5M of fixed costs",
+              "$6.25M a year"
+            ],
+            [
+              "5",
+              "When does it pay for itself?",
+              "Up-front cost: build $6M + win customers 50,000 x $80 = $4M, so $10M. $10M / $6.25M = 1.6 years",
+              "About 19 months"
+            ]
+          ]
+        },
+        {
+          "title": "Try changing one number",
+          "headers": [
+            "If this changes...",
+            "Profit a year",
+            "What it tells you"
+          ],
+          "rows": [
+            [
+              "Nobody moves up (no bonus)",
+              "$2.5M ($5M - $2.5M fixed)",
+              "Payback becomes 4 years. Moving up is the key driver."
+            ],
+            [
+              "Loan losses double (from $80 to $160)",
+              "$2.25M",
+              "Still positive, because moving up carries it."
+            ],
+            [
+              "Only half the customers (25,000)",
+              "$1.9M",
+              "Still positive. We break even at about 14,000 customers."
+            ]
+          ]
+        },
+        {
+          "title": "Algebra and break-even you may be asked",
+          "headers": [
+            "Question you may be asked",
+            "Set up the equation",
+            "Solve"
+          ],
+          "rows": [
+            [
+              "How many customers do we need to break even?",
+              "Profit = N x $175 - $2.5M = 0",
+              "N = $2.5M / $175 = 14,286, which is 29% of the 50,000 target"
+            ],
+            [
+              "What share must move up to pay back within 24 months?",
+              "Need $10M / 2 = $5M a year. 50,000 x ($100 + $300g) - $2.5M = $5M",
+              "$100 + $300g = $150, so g = 1/6 = 16.7%"
+            ],
+            [
+              "How high can loan losses go before profit is zero, if nobody moves up?",
+              "$250 - $40 - $30 - loss = $2.5M / 50,000 = $50",
+              "Loss = $130, up from $80 (+63%)"
+            ]
+          ]
+        },
+        {
+          "title": "What could go wrong, and what to do",
+          "headers": [
+            "Risk",
+            "In plain words",
+            "What to do"
+          ],
+          "rows": [
+            [
+              "Credit risk",
+              "Customers with little credit history are harder to judge, so more loans may not be repaid",
+              "Start with small limits and raise them as customers pay on time"
+            ],
+            [
+              "Fairness",
+              "A scoring model can treat some groups worse without meaning to",
+              "Check results for each group and be able to explain every decision"
+            ],
+            [
+              "Fees",
+              "Making money from penalty fees hurts customers and our reputation",
+              "Design the product so it does not depend on penalty fees"
+            ],
+            [
+              "Identity checks",
+              "Customers may have few documents, but we must still stop fraud and money laundering",
+              "Use several light checks that do not block honest customers"
+            ],
+            [
+              "Rules and privacy",
+              "Banking rules apply, and customers must agree to how their data is used",
+              "Involve legal and compliance from day one"
+            ]
+          ]
+        },
+        {
+          "title": "Terms in plain words",
           "headers": [
             "Term",
             "Meaning"
@@ -6628,174 +9494,143 @@ DATA.cases = [
           "rows": [
             [
               "Underbanked",
-              "People who have limited access to mainstream banking or credit, or use costly alternatives"
+              "People with little access to normal banking or credit"
+            ],
+            [
+              "Moving up (graduation)",
+              "A customer starts with a small product and later takes a bigger one"
             ],
             [
               "Thin file",
               "A person with little credit history"
             ],
             [
-              "Cash-flow underwriting",
-              "Judging a customer by money in and out of their account, useful with no credit history"
-            ],
-            [
-              "Graduation",
-              "A customer moving up to bigger, more profitable products"
-            ],
-            [
               "Fair lending",
-              "Rules that require similar customers to be treated fairly, regardless of protected traits"
+              "Treating similar customers fairly, whatever their background"
             ],
             [
-              "Disparate impact",
-              "A rule that looks neutral but harms one group more than another"
+              "Fixed cost",
+              "A cost we pay whether we have 1 customer or 50,000"
             ],
             [
-              "Fee-light",
-              "Designed so the bank does not depend on penalty fees for profit"
-            ],
-            [
-              "KYC / anti-money-laundering",
-              "Checks to confirm who the customer is and prevent illegal use of accounts"
-            ],
-            [
-              "Alternative data",
-              "Information other than credit scores, such as rent or utility payments"
+              "Contribution",
+              "What each customer adds towards fixed costs after their own costs"
             ],
             [
               "Pilot",
-              "A small, real test before a full launch"
+              "A small real test before a full launch"
             ]
           ]
         },
         {
-          "title": "The math, one step at a time",
+          "title": "Common beginner mistakes",
           "headers": [
-            "Step",
-            "Calculation"
+            "Mistake",
+            "What to do instead"
           ],
           "rows": [
             [
-              "1",
-              "Reachable: 15M x 60% = 9M. Interested: 9M x 15% = 1.35M. Our share: 1.35M x 4% = 54K customers."
+              "Seeing only risk",
+              "Many customers are reliable and under-served; the opportunity is real."
             ],
             [
-              "2",
-              "Profit per customer: revenue $250 - cost $160 = $90 a year."
+              "Making profit from penalty fees",
+              "It creates harm and reputation risk; design a fee-light product."
             ],
             [
-              "3",
-              "Direct profit: 54K x $90 = $4.86M a year."
+              "Waiting for the interviewer to give you data",
+              "Ask for it. You drive the case."
             ],
             [
-              "4",
-              "Graduation: 25% x 54K = 13.5K customers x $300 = $4.05M a year, or $75 per customer."
+              "Hiding the math",
+              "Say each step out loud, with units, and check the result makes sense."
             ],
             [
-              "5",
-              "Total: $4.86M + $4.05M = $8.9M, minus $2.5M fixed = $6.4M a year."
+              "Forgetting to say assumptions",
+              "Say 'I will assume...' and invite correction."
             ],
             [
-              "6",
-              "Up-front cost: $6M + 54K x $80 = $4.3M, total $10.3M. Payback = $10.3M / $6.4M = 1.6 years, about 19 months."
-            ],
-            [
-              "7",
-              "Break-even customers: $2.5M / ($90 + $75 = $165) = about 15K, which is 28% of the target."
-            ],
-            [
-              "8",
-              "No graduation: $4.86M - $2.5M = $2.4M a year. Payback = $10.3M / $2.4M = about 4.4 years."
-            ],
-            [
-              "9",
-              "Credit losses double to $180: direct profit = $250 - ($40 + $180 + $30) = $0. Graduation $4.05M - $2.5M fixed = +$1.55M a year."
-            ],
-            [
-              "10",
-              "Only 27K customers: 27K x $165 = $4.5M, minus $2.5M = +$1.96M a year."
+              "Leaving compliance to the end",
+              "Raise it at the start."
             ]
           ]
         }
       ],
       "table": {
-        "title": "Opportunity and risk checklist: questions to ask",
+        "title": "Capital One style checklist",
         "headers": [
-          "Question",
-          "What to look at",
-          "Typical problem",
-          "Response"
+          "Do this",
+          "Why",
+          "Example here"
         ],
         "rows": [
           [
-            "How big is the segment?",
-            "Population, accounts, current services used",
-            "Overstating who is reachable",
-            "Narrow to those who can use the product"
+            "Restate the problem and ask clarifying questions",
+            "You lead the case and show a business owner mindset",
+            "Who is the segment? What is the product? What is the goal?"
           ],
           [
-            "What do they need?",
-            "Costs they pay today, reasons for avoiding banks",
-            "Product does not fit real needs",
-            "Interview customers, test with partners"
+            "Ask for the data you need",
+            "Interviewers give data when you ask",
+            "Interest rate, win rate, revenue and cost per customer, fixed and up-front cost"
           ],
           [
-            "Can we win?",
-            "Trust, partners, app, data",
-            "Low trust in banks",
-            "Community partners, simple and fair terms"
+            "State assumptions",
+            "Missing data is normal; reasonable assumptions are expected",
+            "'I will assume 1 in 30 interested people join us'"
           ],
           [
-            "Does it make money?",
-            "Profit per customer, graduation, fixed cost",
-            "Fees are the profit source",
-            "Design a fee-light model with a graduation path"
+            "Do the math out loud",
+            "Math and algebra are tested directly",
+            "Break-even customers = $2.5M / $175"
           ],
           [
-            "Is credit risk managed?",
-            "Loss rates, limits, data used",
-            "Thin files hide risk",
-            "Small limits, cash-flow data, step-up"
+            "Give the answer first",
+            "Clear communication of complex ideas",
+            "'I recommend we go, with a pilot, because it pays back in 19 months and moving up is realistic'"
           ],
           [
-            "Is it fair and lawful?",
-            "Fair lending tests, disclosures, complaints",
-            "Disparate impact, unclear terms",
-            "Test by group, plain language, legal review"
+            "Name risks and next steps",
+            "Shows business judgment",
+            "Credit losses, fairness, fees; pilot in two markets"
           ],
           [
-            "Who is protected?",
-            "Vulnerable customers, consent, data use",
-            "Harm to people with little cushion",
-            "Safeguards, clear consent, ongoing review"
+            "Offer an alternative",
+            "Several answers can be defended",
+            "Pilot a smaller group until moving up is proven"
           ]
         ]
       }
     },
     "followups": [
       {
-        "q": "How do you make the product profitable without penalty fees?",
-        "a": "Use interchange, deposit value and small-dollar credit with fair pricing, and rely on graduation to bigger products for most of the long-term profit."
+        "q": "What data would you ask for next?",
+        "a": "Loan loss rates for similar small-dollar customers, how many customers actually move up and how fast, acquisition cost by channel, and complaint data for similar products."
+      },
+      {
+        "q": "How do you make it profitable without penalty fees?",
+        "a": "Use card fees, deposits and fair-priced small credit, and rely on moving up to bigger products for most of the long-term profit."
       },
       {
         "q": "How would you underwrite customers with thin files?",
-        "a": "Use cash-flow data from their account, small starting limits and step-up limits as they pay on time, and test the model for fair outcomes."
+        "a": "Use cash-flow data from their account, small starting limits, step-up limits, and test the model for fair outcomes."
       },
       {
         "q": "What would make you stop or redesign?",
-        "a": "Loss rates well above plan, complaints about fees or terms, unfair model results across groups, or graduation far below the level the case needs."
+        "a": "Loss rates well above plan, complaints about fees or terms, unfair results across groups, or customers moving up far below the 1 in 6 the case needs."
       },
       {
-        "q": "Who should be involved in the launch?",
-        "a": "Compliance, legal, risk, product and community partners from the start, not only at the end."
+        "q": "What is a defensible alternative recommendation?",
+        "a": "Pilot a smaller group first, and scale only once moving up and loss rates are proven. It trades speed for lower risk."
       }
     ],
     "pitfalls": [
-      "Treating underbanked as a pure risk. Many customers are reliable and under-served; the opportunity is real.",
-      "Making money from fees. A model that depends on penalty fees creates conduct and reputation risk.",
-      "Skipping fairness tests. Check outcomes across groups and explain decisions.",
-      "Ignoring graduation. The case often depends on moving customers to better products.",
-      "Leaving compliance to the end. Involve legal and compliance from the start."
+      "Seeing only risk. Many customers are reliable and under-served; the opportunity is real.",
+      "Making profit from penalty fees. It creates harm and reputation risk; design a fee-light product.",
+      "Waiting for the interviewer to give you data. Ask for it. You drive the case.",
+      "Hiding the math. Say each step out loud, with units, and check the result makes sense.",
+      "Forgetting to say assumptions. Say 'I will assume...' and invite correction.",
+      "Leaving compliance to the end. Raise it at the start."
     ]
   }
 ];

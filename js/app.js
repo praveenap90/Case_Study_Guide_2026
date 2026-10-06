@@ -116,6 +116,7 @@
         '<a class="card" href="#/casestudies/template"><h3>Templates</h3><p class="small muted">The method</p><p>The CLEAR answer structure, a worksheet that saves in your browser, an answer script, a phrase bank and a final checklist.</p></a>' +
         '<a class="card" href="#/casestudies/frameworks"><h3>Frameworks (' + nf + ')</h3><p class="small muted">The toolkit</p><p>Profitability, market sizing, market entry, growth, pricing, M&amp;A, cost reduction, retention, metric diagnosis, unit economics and product deep-dive. Each has a worked example with charts.</p></a>' +
         '<a class="card" href="#/casestudies/cases"><h3>Cases (' + nc + ')</h3><p class="small muted">The practice</p><p>Full prompts with a timer, clarifying questions, a data room and a model answer to compare with yours.</p></a>' +
+        '<a class="card" href="#/casestudies/drills"><h3>Practice drills (' + (D.drills || []).length + ')</h3><p class="small muted">The maths</p><p>Break-even, algebra, payback, funnel and unit-economics problems with hints and worked answers, like the maths inside a real case.</p></a>' +
         '<a class="card" href="#/estimation"><h3>Guesstimates (' + ne + ')</h3><p class="small muted">The numbers</p><p>The SCOPE template, handy numbers and worked estimation drills such as car tires, smartphones and manholes.</p></a>' +
       "</div>" +
       "<h2>The method in 30 seconds: CLEAR</h2>" +
@@ -270,13 +271,57 @@
 
   /* ---------- CASE STUDIES (Templates, Frameworks, Cases) ---------- */
   function casestudies(p, q) {
-    var subs = [["template", "Templates"], ["frameworks", "Frameworks"], ["cases", "Cases"]];
+    var subs = [["template", "Templates"], ["frameworks", "Frameworks"], ["cases", "Cases"], ["drills", "Practice drills"]];
     var sub = subs.some(function (x) { return x[0] === p[1]; }) ? p[1] : "template";
     var sp = [sub].concat(p.slice(2));
-    ({ template: template, frameworks: frameworks, cases: cases })[sub](sp, q);
+    ({ template: template, frameworks: frameworks, cases: cases, drills: drills })[sub](sp, q);
     app.insertAdjacentHTML("afterbegin", '<div class="filters" role="tablist" aria-label="Case study sections">' + subs.map(function (t) {
       return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/casestudies/' + t[0] + '\'">' + t[1] + "</button>";
     }).join("") + "</div>");
+  }
+
+  /* ---------- PRACTICE DRILLS ---------- */
+  function drills(p, q) {
+    var types = D.drillTypes || [];
+    var cur = q.type || "all";
+    var done = store.get("drillsDone", {});
+    var list = D.drills.filter(function (d) { return cur === "all" || d.type === cur; });
+    var nDone = Object.keys(done).length;
+    var chips = '<div class="filters" role="group" aria-label="Drill type"><button type="button" data-t="all" class="' + (cur === "all" ? "on" : "") + '">All (' + D.drills.length + ")</button>" +
+      types.map(function (t) {
+        var n = D.drills.filter(function (d) { return d.type === t.id; }).length;
+        return '<button type="button" data-t="' + t.id + '" class="' + (cur === t.id ? "on" : "") + '">' + h(t.name) + " (" + n + ")</button>";
+      }).join("") + "</div>";
+    app.innerHTML = "<h1>Practice drills</h1>" +
+      '<p class="lead">Short maths problems like the ones that appear inside a case: break-even, solving for an unknown, payback, funnels and unit economics. You have done ' + nDone + " of " + D.drills.length + ".</p>" +
+      '<div class="callout"><b>How to use a drill:</b> 1. Read the problem and write the formula. 2. Solve it on paper with a simple calculator and say the steps out loud. 3. Open the hint only if you are stuck. 4. Open the worked answer and compare. 5. Mark it done.</div>' +
+      chips +
+      list.map(function (d, i) {
+        var t = find(types, d.type);
+        return '<div class="card drill" id="' + d.id + '"><h3>' + (i + 1) + ". " + h(d.title) + (done[d.id] ? ' <span class="done" title="Done">&#10003;</span>' : "") + "</h3>" +
+          '<div><span class="chip">' + h(t ? t.name : d.type) + '</span><span class="chip warn">' + h(d.level) + "</span></div>" +
+          "<p>" + h(d.problem) + "</p>" +
+          '<div class="qa"><button type="button">Show a hint</button><div class="ans">' + h(d.hint) + "</div></div>" +
+          '<div class="qa"><button type="button">Show the worked answer</button><div class="ans"><ol>' + d.steps.map(function (s) { return "<li>" + h(s) + "</li>"; }).join("") + "</ol><p><b>Answer:</b> " + h(d.answer) + "</p><p class=\"muted small\"><b>Interview tip:</b> " + h(d.tip) + "</p></div></div>" +
+          '<div class="row"><button type="button" class="ghost mark" data-id="' + d.id + '">' + (done[d.id] ? "Mark as not done" : "Mark as done") + "</button></div></div>";
+      }).join("");
+    $$(".filters button[data-t]").forEach(function (b) {
+      b.addEventListener("click", function () { var t = b.getAttribute("data-t"); location.hash = t === "all" ? "#/casestudies/drills" : "#/casestudies/drills?type=" + t; });
+    });
+    $$(".drill .qa button").forEach(function (b) { b.addEventListener("click", function () { b.parentNode.classList.toggle("open"); }); });
+    $$(".mark").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var d = store.get("drillsDone", {}), id = b.getAttribute("data-id");
+        if (d[id]) delete d[id]; else d[id] = 1;
+        store.set("drillsDone", d);
+        b.textContent = d[id] ? "Mark as not done" : "Mark as done";
+        var head = $("h3", b.closest(".drill")), mark = $(".done", head);
+        if (d[id] && !mark) head.insertAdjacentHTML("beforeend", ' <span class="done" title="Done">&#10003;</span>');
+        if (!d[id] && mark) mark.remove();
+        var lead = $(".lead");
+        if (lead) lead.textContent = lead.textContent.replace(/You have done \d+ of/, "You have done " + Object.keys(d).length + " of");
+      });
+    });
   }
 
   /* ---------- TEMPLATE ---------- */
@@ -649,13 +694,14 @@
 
   /* ---------- PROGRESS ---------- */
   function progress() {
-    var done = store.get("casesDone", {}), tried = store.get("estTried", {});
+    var done = store.get("casesDone", {}), tried = store.get("estTried", {}), dd = store.get("drillsDone", {});
     function bar(a, b) { return '<div class="bar" role="progressbar" aria-valuenow="' + a + '" aria-valuemin="0" aria-valuemax="' + b + '"><i style="width:' + Math.round(a / b * 100) + '%"></i></div>'; }
     var nc = Object.keys(done).length, ne = Object.keys(tried).length;
     app.innerHTML = "<h1>Progress</h1>" +
       '<div class="grid">' +
       '<div class="card"><div class="stat">' + nc + "/" + D.cases.length + '</div><div class="muted small">cases completed</div>' + bar(nc, D.cases.length) + "</div>" +
       '<div class="card"><div class="stat">' + ne + "/" + D.estimation.length + '</div><div class="muted small">guesstimate examples attempted</div>' + bar(ne, D.estimation.length) + "</div>" +
+      '<div class="card"><div class="stat">' + Object.keys(dd).length + "/" + (D.drills || []).length + '</div><div class="muted small">practice drills done</div>' + bar(Object.keys(dd).length, (D.drills || []).length || 1) + "</div>" +
       '</div>' +
       "<h2>Cases</h2>" + D.cases.map(function (c) {
         var r = store.get("rating:" + c.id, 0);
