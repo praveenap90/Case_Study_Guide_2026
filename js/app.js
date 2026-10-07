@@ -541,39 +541,34 @@
       X.sample.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("");
     return usHtml;
   }
-  function guessTennis() {
-    var T = D.guess.tennis;
-    chartSrc["g-tn"] = T.chart; chartSrc["g-tnp"] = T.pushChart; chartSrc["g-tnpie"] = T.pieChart;
-    return chartBlock("g-tn", "Worked example: " + T.title, "Segment, calculate cans per segment, sum, then check.") +
-      "<h3>Approach (framework)</h3><ol class=\"steps\">" + li(T.framework) + "</ol>" +
-      '<div class="callout"><b>Key insight:</b> ' + h(T.insight) + "</div>" +
-      chartBlock("g-tnpie", "Where the volume comes from", "Share of cans by player type.") +
-      "<h3>Sample answer</h3><p>Let me segment this by player type.</p><h3>Assumptions</h3><ul>" + li(T.assumptions) + "</ul>" +
-      "<h3>Calculations by segment</h3>" + T.calcs.map(function (c) { return "<p><b>" + h(c[0]) + "</b></p><ul>" + li(c[1]) + "</ul>"; }).join("") +
-      "<h3>Sense check</h3><ul>" + li(T.sense) + "</ul>" +
-      '<div class="callout"><b>Answer:</b> ' + h(T.answer) + "</div>" +
-      chartBlock("g-tnp", "Handling pushback", "Adjust one assumption at a time.") + table(T.pushMath) +
-      "<h2>" + h(T.alt.title) + '</h2><div class="callout warn">' + h(T.alt.note) + "</div>" + table(T.alt.table) +
-      "<h3>Sample answer (spoken)</h3>" + T.alt.sample.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("");
-  }
   function guessSimple(key) {
     var T = D.guess[key];
     chartSrc["g-" + key] = T.chart; chartSrc["g-" + key + "-p"] = T.pushChart;
     return chartBlock("g-" + key, "Worked example: " + T.title, T.lead || "Stock and flow: tires in use divided by lifespan, plus tires on new vehicles.") +
-      table(T.table) +
+      table(T.table) + (T.extraTables || []).map(table).join("") +
       "<h3>Sample answer (spoken)</h3>" + T.sample.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("") +
       chartBlock("g-" + key + "-p", "Handling pushback", "Adjust one assumption at a time.") + table(T.pushMath);
   }
-  function guessManhole() {
-    var G = D.guess;
-    chartSrc["g-mh"] = G.manhole.chart;
-    var M = G.manhole;
-    var mhHtml = chartBlock("g-mh", "Worked example: " + M.title, "Worked example with segmentation, a sanity check and three pushbacks.") +
-      M.secs.map(function (c) { return "<h3>" + h(c.h) + "</h3>" + (c.table ? table(c.table) : "") + (c.ul ? "<ul>" + li(c.ul) + "</ul>" : ""); }).join("") +
-      '<div class="callout"><b>Interview summary:</b> &ldquo;' + h(M.summary) + "&rdquo;</div>" +
-      "<h3>Key tips</h3><ul>" + li(M.tips) + "</ul><h3>" + h(M.pushTitle) + "</h3>" +
-      M.push.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> &ldquo;" + h(x[1]) + "&rdquo;</div>"; }).join("") + table(M.pushMath);
-    return mhHtml;
+  function say6(a) { return a.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join(""); }
+  function guess330() {
+    var X = D.guess.us330;
+    chartSrc["g-330"] = X.chart; chartSrc["g-brk"] = X.chartB; chartSrc["g-det"] = X.chartD;
+    return "<h2>Numbers breakdown: US population 330M</h2>" +
+      chartBlock("g-330", "Where the numbers come from", "Start every US question from 330M and split it. The splits and rates are assumptions you can change.") +
+      table(X.split) + table(X.derived) + table(X.how) +
+      "<h2>Generic template: break down any number</h2>" +
+      chartBlock("g-brk", "Six steps for any number", "Base, groups, rate per group, add, convert the units, sanity check.") + table(X.gen) +
+      "<h2>Detailed example: break down any number</h2>" +
+      '<p class="muted small">Question: How many pizzas do Americans eat in a year, and what are they worth? All shares, rates and the $15 price are assumptions.</p>' +
+      chartBlock("g-det", "Pizzas eaten in the US a year", "Follow the six steps from the template above.") +
+      table(X.dg) + table(X.ds) + table(X.dt) + "<h3>What you would say out loud</h3>" + say6(X.dsay) + table(X.dtips);
+  }
+  function guessScale() {
+    var X = D.guess.us330;
+    chartSrc["g-scale"] = X.chartS;
+    return "<h2>Generic template: scale up or down</h2>" +
+      chartBlock("g-scale", "When the interviewer changes a number", "Find the type of input, then scale with one ratio instead of rebuilding.") +
+      table(X.ratio) + table(X.base) + table(X.time) + table(X.say);
   }
   function guessTemplate(tabs, sub) {
     var G = D.guess, U = G.universal, S = G.seg, C = G.scaling;
@@ -605,7 +600,7 @@
         table(C.ten) + "<h3>Why this works</h3><ol class=\"steps\">" + li(C.why) + "</ol>" +
         '<div class="callout"><b>Say:</b> &ldquo;' + h(C.say) + "&rdquo;</div>" +
         table(C.template) + table(C.convert) + table(C.pop) + table(C.seg) +
-        "<h2>Quick adjustment examples</h2>" + table(S.adjust);
+        "<h2>Quick adjustment examples</h2>" + table(S.adjust) + guessScale();
     } else if (sub === "template") {
       chartSrc["g-uni"] = U.chart;
       var ws = store.get("gws", {});
@@ -624,6 +619,7 @@
         "<h3>Sample answer: " + h(U.miniTitle.replace(/^Mini walkthrough: /, "")) + "</h3><ul>" + li(U.mini) + "</ul>" +
         '<div class="callout"><b>One line to remember:</b> ' + h(U.oneLine) + "</div>" +
         '<p class="small muted">Works for: ' + U.usedFor.map(h).join(", ") + ".</p>" +
+        guess330() +
         "<h2>Mistakes to avoid</h2>" + table(G.mistakes) +
         "<h2>Phrases for the interviewer</h2><ul>" + li(S.phrases.map(function (x) { return "“" + x + "”"; })) + "</ul>" +
         "<h2>Key tips for beginners</h2><ol class=\"steps\">" + li(S.tips) + "</ol>" +
@@ -676,7 +672,7 @@
           '<div class="sol" style="display:none"><p><b>Approach:</b> ' + h(e.approach) + "</p>" +
           '<div class="tablewrap"><table><thead><tr><th>Step</th><th>Calculation</th><th>Value</th></tr></thead><tbody>' +
           e.steps.map(function (s) { return "<tr><td>" + h(s[0]) + "</td><td>" + h(s[1]) + "</td><td>" + h(s[2]) + "</td></tr>"; }).join("") +
-          '</tbody></table></div><div class="callout"><b>Answer:</b> ' + h(e.answer) + "</div><p><b>Sanity check:</b> " + h(e.sanity) + "</p>" + (e.id === "coffee" ? guessUS() : e.id === "manholes" ? guessManhole() : e.id === "tennis" ? guessTennis() : (D.guess[e.id] && D.guess[e.id].pushChart) ? guessSimple(e.id) : "") + "</div></div></details>";
+          '</tbody></table></div><div class="callout"><b>Answer:</b> ' + h(e.answer) + "</div><p><b>Sanity check:</b> " + h(e.sanity) + "</p>" + (((D.guess[e.id] && D.guess[e.id].pushChart) ? guessSimple(e.id) : "") + (e.id === "coffee" ? guessUS() : "")) + "</div></div></details>";
       }).join("");
     $$("details[data-id]").forEach(function (d) {
       var id = d.getAttribute("data-id");
