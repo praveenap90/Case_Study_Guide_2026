@@ -26,6 +26,14 @@ Preview locally: `python3 -m http.server 8000` then open http://localhost:8000.
 Edit `js/data-cases.js` and copy an existing object. Required fields: `id`, `title`, `track` (array of `banking`, `consulting`, `tech`), `framework` (an id from `data-frameworks.js`), `difficulty`, `minutes`, `prompt`, `clarify`, `tables`, `structure`, `analysis`, `recommendation`, `followups`, `pitfalls`.
 
 ## Latest additions
+- Frameworks: Growth, Market sizing and Pricing examples restyled like the others (all 11 framework examples now match). Market sizing now uses 330M people.
+- All 20 other cases: CLEAR chart has Clarify and Lay out split into side-by-side boxes, and the numbers chart is regrouped (same style as Grocery). Fixes: Pump Maker steel test is $8.0M (profit $30.2M), Park needed share 61.5%, Instant Pre-Approval parts $20.44M + $2.03M, break-even loss 5.46%.
+- Grocery chain "numbers in one chart" regrouped with side-by-side boxes; needed-orders check fixed (2.6 a month).
+- Grocery chain (launch delivery?) case chart: Clarify and Lay out are split into side-by-side boxes like Evaluate.
+- Case template page: "Case interview flow" redrawn in the CLEAR colors with side-by-side groups.
+- Case template page: "Case flow with a worked example" redrawn with short boxes and side-by-side groups, and each fix has its own dollar value.
+- Guesstimate Templates, Introduction: "Pick the approach" chart redone with an Evaluate box, three red question boxes (Q1 to Q3) and worked examples for Top-down, Stock and flow and Bottom-up.
+- Case template page: new "Worked example: CLEAR on a real case" (card applications fell 15%) with chart, tables, pushback and a spoken answer, right after CLEAR at a glance.
 - All 25 guesstimate examples now use the coffee/tires/smartphones format: base, three groups, Evaluate box, contribution tables, step-by-step math, pushback chart and math, and a 6-part spoken answer.
 - Guesstimate Templates, Template tab: new "Numbers breakdown: US population 330M", a generic "break down any number" template and a detailed pizza example. The Scaling techniques tab has a "scale up or down" template. Handy round numbers now use 330M.
 - Car tires chart now has an Evaluate box with replacement tires and new-vehicle tires side by side and "Tires sold a year" below them.
