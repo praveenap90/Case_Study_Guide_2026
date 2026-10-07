@@ -334,3 +334,260 @@ class A2,B3,B4,C2,C3,C4,D2,E3 example;`,
     "Did I name one risk and one next step?"
   ]
 };
+
+DATA.template.caseWalk = {
+ "chart": "flowchart TD\nC[\"C: Clarify<br/>Card applications fell 15%: 1,000K to 850K a month<br/>Goal: find the cause and win them back\"]\nC --> L1[\"L: Customers<br/>Fewer people want a card?\"]\nC --> L2[\"L: Channels<br/>Fewer apply through one channel?\"]\nC --> L3[\"L: Product and rivals<br/>Offer or competitor changed?\"]\nL1 --> E\nL2 --> E\nL3 --> E\nE[\"E: Evaluate with data<br/>Split the 150K drop by channel\"]\nE --> E1[\"Online<br/>600K to 480K<br/>-120K (-20%)\"]\nE --> E2[\"Branch<br/>250K to 240K<br/>-10K (-4%)\"]\nE --> E3[\"Partner<br/>150K to 130K<br/>-20K (-13%)\"]\nE1 --> D[\"Driver: online is 80% of the drop<br/>Visits flat at 12M, conversion fell 5% to 4%<br/>Cause: the new form is longer\"]\nE2 --> D\nE3 --> D\nD --> A[\"A: Assess impact<br/>Put the drop in dollars\"]\nA --> A1[\"Lost applications<br/>120K x 12<br/>= <b>1.44M a year</b>\"]\nA --> A2[\"Lost accounts<br/>1.44M x 40% approved<br/>= <b>576K</b>\"]\nA --> A3[\"Lost value<br/>576K x $250 a year<br/>= <b>$144M a year</b>\"]\nA1 --> R\nA2 --> R\nA3 --> R\nR[\"R: Recommend\"]\nR --> R1[\"Answer<br/>Shorten the online form<br/>and test it first\"]\nR --> R2[\"Reasons<br/>80% of the drop, clear cause,<br/>$144M a year at stake\"]\nR --> R3[\"Risks and next steps<br/>Fraud may rise.<br/>A/B test for 2 weeks\"]\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c3 fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#000;\nclassDef c4 fill:#EDE7F6,stroke:#5E35B1,stroke-width:2px,color:#000;\nclassDef c5 fill:#FFFDE7,stroke:#F9A825,stroke-width:2px,color:#000;\nclassDef c6 fill:#F1F8E9,stroke:#7CB342,stroke-width:2px,color:#000;\nclass C c1;\nclass L1,L2,L3 c2;\nclass E c3;\nclass E1,E2,E3,D c5;\nclass A,A1,A2,A3 c4;\nclass R,R1,R2,R3 c6;",
+ "push": "flowchart LR\nB[\"Base answer<br/>about $144M a year\"] --> P{\"Interviewer pushback\"}\nP --> Q1[\"Only 30% approved<br/>1.44M x 30% x $250<br/>= <b>$108M</b>\"]\nP --> Q2[\"Value is $200, not $250<br/>576K x $200<br/>= <b>$115.2M</b>\"]\nP --> Q3[\"Only half is won back<br/>$144M x 50%<br/>= <b>$72M</b>\"]\nP --> Q4[\"The drop is seasonal<br/>Compare to the same months last year\"]\nP --> Q5[\"No time to test<br/>Roll back the form for online only\"]\nQ1 --> U[\"Updated range<br/>about $72M to $144M a year\"]\nQ2 --> U\nQ3 --> U\nQ4 --> U\nQ5 --> U\nU --> S[\"Say: the answer is most sensitive to<br/>the approval rate and value per account\"]\nclassDef c1 fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#000;\nclassDef c2 fill:#E8F5E9,stroke:#43A047,stroke-width:2px,color:#000;\nclassDef c7 fill:#FFEBEE,stroke:#E53935,stroke-width:2px,color:#000;\nclass B c1;\nclass Q1,Q2,Q3,Q4,Q5 c7;\nclass U c2;\nclass S c1;",
+ "steps": {
+  "title": "The five steps (CLEAR) with the example",
+  "headers": [
+   "Step",
+   "What you do",
+   "In the example",
+   "Say out loud"
+  ],
+  "rows": [
+   [
+    "C: Clarify",
+    "Restate the goal. Ask for the metric, time frame and scope.",
+    "Applications fell from 1,000K to 850K a month (-15%). Goal: find the cause and win them back.",
+    "So applications are down 15% over the last quarter. Can I ask two questions?"
+   ],
+   [
+    "L: Lay out",
+    "Three buckets that do not overlap and cover everything.",
+    "Customers, Channels, Product and rivals",
+    "I'll look at three areas: customers, channels, and our product against rivals."
+   ],
+   [
+    "E: Evaluate",
+    "Ask for data. Split by segment. Find the driver.",
+    "Split by channel: online is -120K of the -150K",
+    "Let me split the drop by channel."
+   ],
+   [
+    "A: Assess",
+    "Turn the driver into dollars: units x change per unit.",
+    "120K x 12 x 40% x $250 = $144M a year",
+    "That is roughly $144M a year."
+   ],
+   [
+    "R: Recommend",
+    "Answer first, then 2 or 3 reasons, risks and next steps.",
+    "Shorten the form and A/B test it",
+    "I recommend we shorten the online form, because..."
+   ]
+  ]
+ },
+ "split": {
+  "title": "Evaluate: split the drop by channel",
+  "headers": [
+   "Channel",
+   "Before (K a month)",
+   "After (K a month)",
+   "Change (K)",
+   "Change (%)",
+   "Share of the drop"
+  ],
+  "rows": [
+   [
+    "Online",
+    "600",
+    "480",
+    "-120",
+    "-20%",
+    "80%"
+   ],
+   [
+    "Branch",
+    "250",
+    "240",
+    "-10",
+    "-4%",
+    "7%"
+   ],
+   [
+    "Partner",
+    "150",
+    "130",
+    "-20",
+    "-13%",
+    "13%"
+   ],
+   [
+    "Total",
+    "1,000",
+    "850",
+    "-150",
+    "-15%",
+    "100%"
+   ]
+  ]
+ },
+ "drv": {
+  "title": "Drill into the driver: online = visits x conversion",
+  "headers": [
+   "Measure",
+   "Before",
+   "After",
+   "What it tells you"
+  ],
+  "rows": [
+   [
+    "Site visits a month",
+    "12M",
+    "12M",
+    "Traffic is flat, so marketing is not the cause"
+   ],
+   [
+    "Conversion (visits that apply)",
+    "5%",
+    "4%",
+    "The drop is here"
+   ],
+   [
+    "Online applications",
+    "12M x 5% = 600K",
+    "12M x 4% = 480K",
+    "Matches the channel table"
+   ],
+   [
+    "What changed",
+    "",
+    "New longer form launched",
+    "Likely cause, to confirm with the product team"
+   ]
+  ]
+ },
+ "math": {
+  "title": "Assess: the math step by step",
+  "headers": [
+   "Step",
+   "What we work out",
+   "The math",
+   "Result"
+  ],
+  "rows": [
+   [
+    "1",
+    "Lost applications a month",
+    "600K - 480K",
+    "120K"
+   ],
+   [
+    "2",
+    "Lost applications a year",
+    "120K x 12",
+    "1.44M"
+   ],
+   [
+    "3",
+    "Lost accounts",
+    "1.44M x 40% approved",
+    "576K"
+   ],
+   [
+    "4",
+    "Lost value a year",
+    "576K x $250",
+    "$144M"
+   ],
+   [
+    "5",
+    "Check against the whole drop",
+    "Online is 120K of 150K",
+    "80% of the problem"
+   ]
+  ]
+ },
+ "pushMath": {
+  "title": "Pushback math (base about $144M a year)",
+  "headers": [
+   "Pushback",
+   "Calculation",
+   "Result"
+  ],
+  "rows": [
+   [
+    "Only 30% are approved",
+    "1.44M x 30% x $250",
+    "$108M"
+   ],
+   [
+    "Value is $200, not $250",
+    "576K x $200",
+    "$115.2M"
+   ],
+   [
+    "Only half is won back",
+    "$144M x 50%",
+    "$72M"
+   ],
+   [
+    "The drop is seasonal",
+    "Compare to the same months last year",
+    "Check before you act"
+   ],
+   [
+    "No time to test",
+    "Roll back the form for online only",
+    "Faster, lower risk"
+   ]
+  ]
+ },
+ "mistakes": {
+  "title": "Common mistakes",
+  "headers": [
+   "Mistake",
+   "Fix"
+  ],
+  "rows": [
+   [
+    "Jumping to a fix before splitting the data",
+    "Evaluate first: split by channel, product or customer"
+   ],
+   [
+    "Buckets that overlap",
+    "Check each idea fits in only one bucket"
+   ],
+   [
+    "Stopping at a percentage",
+    "Turn it into dollars: units x change per unit"
+   ],
+   [
+    "Burying the answer at the end",
+    "Say the recommendation first, then the reasons"
+   ],
+   [
+    "Forgetting risks and next steps",
+    "Always give one risk and one next step"
+   ]
+  ]
+ },
+ "say": [
+  [
+   "Clarify",
+   "So applications are down 15%, from 1,000K to 850K a month, and our goal is to find the cause and win them back. Is it fair to focus on credit cards in the US over the last quarter?"
+  ],
+  [
+   "Lay out",
+   "I'll look at three areas: customers, channels, and our product against rivals."
+  ],
+  [
+   "Evaluate",
+   "Can I see applications by channel? Online fell 120K, branch 10K and partner 20K, so online is 80% of the drop. Visits are flat at 12M, but conversion fell from 5% to 4%."
+  ],
+  [
+   "Assess",
+   "That is 120K a month, or 1.44M a year. At 40% approved and $250 a year per account, that is about $144M a year."
+  ],
+  [
+   "Recommend",
+   "I recommend we shorten the online form and A/B test it for two weeks. The reasons are that online is 80% of the drop, there is a clear cause, and about $144M a year is at stake. The risk is fraud, so we monitor it."
+  ],
+  [
+   "Range and pushback",
+   "I'd say $72M to $144M a year. If only 30% are approved it is $108M, and if we win back half it is $72M. It is most sensitive to the approval rate and value per account."
+  ]
+ ]
+};

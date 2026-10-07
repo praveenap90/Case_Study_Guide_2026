@@ -324,6 +324,17 @@
     });
   }
 
+  function caseWalk() {
+    var X = D.template.caseWalk;
+    chartSrc["cw"] = X.chart; chartSrc["cwp"] = X.push;
+    return "<h3>Worked example: CLEAR on a real case</h3>" +
+      '<p class="muted small">Card applications fell 15%. Find the cause and recommend. All numbers are assumptions.</p>' +
+      chartBlock("cw", "CLEAR with numbers", "Blue Clarify, green buckets, orange Evaluate with yellow sub-boxes, purple Assess, green Recommend.") +
+      table(X.steps) + table(X.split) + table(X.drv) + table(X.math) +
+      chartBlock("cwp", "Handling pushback", "Adjust one assumption at a time.") + table(X.pushMath) +
+      "<h3>What you would say out loud</h3>" + X.say.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("") +
+      table(X.mistakes);
+  }
   /* ---------- TEMPLATE ---------- */
   function template() {
     var T = D.template;
@@ -336,7 +347,7 @@
       '<p class="lead">' + h(T.lead) + "</p>" +
       '<div class="row"><button id="print" class="ghost">Print this page</button></div>' +
       chartBlock("clear", "1. Remember CLEAR", "Five steps in a fixed order. Say them out loud before every case.") +
-      table(T.clearTable) +
+      table(T.clearTable) + caseWalk() +
       chartBlock("pick", "2. Pick the structure", "Match the type of question to the structure, then open the Frameworks page for the full tree.") +
       chartBlock("metrics", "3. Pick the number", "Match the decision to the metric.") +
       table(T.metricsAssumptions) +
