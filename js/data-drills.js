@@ -791,3 +791,361 @@ DATA.drills = [
     "tip": "Say the equation out loud, then solve it in short steps. Case: Case Studies > Cases > Underbanked Segment: Opportunity and Risk."
   }
 ];
+
+// Program manager drills
+DATA.drillTypes.splice(DATA.drillTypes.length - 1, 0, { id: "pm", name: "Program manager" });
+DATA.drills = DATA.drills.concat([
+ {
+  "id": "pm-cp-basic",
+  "type": "pm",
+  "level": "Easy",
+  "title": "Critical path: find the launch date",
+  "problem": "A project has four tasks. A takes 3 weeks. B takes 4 weeks and starts after A. C takes 2 weeks and also starts after A. D takes 3 weeks and starts after both B and C finish. What is the shortest time to finish, and which task has slack?",
+  "hint": "Add up each chain from start to end. The longest chain sets the date.",
+  "steps": [
+   "Chain 1: A + B + D = 3 + 4 + 3 = 10 weeks.",
+   "Chain 2: A + C + D = 3 + 2 + 3 = 8 weeks.",
+   "The longest chain is 10 weeks, so the critical path is A, B, D.",
+   "C can slip by 10 - 8 = 2 weeks before it moves the date."
+  ],
+  "answer": "10 weeks. A, B and D are critical. C has 2 weeks of slack.",
+  "tip": "Say the critical path out loud first, then name where the slack is."
+ },
+ {
+  "id": "pm-cp-slip",
+  "type": "pm",
+  "level": "Medium",
+  "title": "Critical path: what if a task slips?",
+  "problem": "Same project as before (A 3, B 4, C 2, D 3 weeks, D waits for B and C). Task C slips by 3 weeks. How much does the launch move?",
+  "hint": "A slip only matters if it uses up the slack first.",
+  "steps": [
+   "C now takes 2 + 3 = 5 weeks.",
+   "Chain A + C + D = 3 + 5 + 3 = 11 weeks.",
+   "Chain A + B + D is still 10 weeks.",
+   "The new longest chain is 11 weeks, so the launch moves by 1 week.",
+   "Check: slack was 2 weeks, the slip is 3, and 3 - 2 = 1."
+  ],
+  "answer": "The launch moves 1 week, from 10 to 11 weeks.",
+  "tip": "Slip minus slack tells you the delay. If the slip is smaller than the slack, the date does not move."
+ },
+ {
+  "id": "pm-cp-crash",
+  "type": "pm",
+  "level": "Hard",
+  "title": "Critical path: is it worth speeding up?",
+  "problem": "Same project. You can cut task B from 4 weeks to 3 weeks for $20K. One week of delay costs the business $15K. Should you pay?",
+  "hint": "After you shorten B, check which chain is now the longest.",
+  "steps": [
+   "After the change, A + B + D = 3 + 3 + 3 = 9 weeks.",
+   "A + C + D is 8 weeks, so the project now takes 9 weeks. You save 1 week.",
+   "Value of 1 week = $15K.",
+   "Cost = $20K. $15K - $20K = -$5K."
+  ],
+  "answer": "No. You save one week worth $15K for $20K, a loss of $5K.",
+  "tip": "Always check the other chain. Here a second chain at 8 weeks stops you from saving more than one week anyway."
+ },
+ {
+  "id": "pm-cod-basic",
+  "type": "pm",
+  "level": "Easy",
+  "title": "Cost of delay: one week",
+  "problem": "A feature brings $3.9M a year. How much does one week of delay cost, and a 4-week delay?",
+  "hint": "Yearly value divided by 52 weeks.",
+  "steps": [
+   "One week = $3.9M / 52 = $75K.",
+   "Four weeks = 4 x $75K = $300K."
+  ],
+  "answer": "$75K a week. A 4-week delay costs $300K.",
+  "tip": "Round to $75K and say it once. You will reuse it in every option you compare."
+ },
+ {
+  "id": "pm-cod-option",
+  "type": "pm",
+  "level": "Medium",
+  "title": "Cost of delay: is the fix worth it?",
+  "problem": "The feature is worth $75K a week. A fix costs $120K and saves 2 weeks. Do you do it?",
+  "hint": "Compare the value of the time saved with the cost.",
+  "steps": [
+   "Value of 2 weeks = 2 x $75K = $150K.",
+   "Cost = $120K.",
+   "Net = $150K - $120K = +$30K."
+  ],
+  "answer": "Yes. You gain a net $30K.",
+  "tip": "Say it as: I would pay up to $150K to save these 2 weeks, and this costs $120K."
+ },
+ {
+  "id": "pm-cod-scope",
+  "type": "pm",
+  "level": "Hard",
+  "title": "Cost of delay: delay or cut scope?",
+  "problem": "You can either delay the launch by 3 weeks, or cut a feature that is 15% of the $3.9M yearly value. Which loses less in the first year?",
+  "hint": "Price both choices over one year.",
+  "steps": [
+   "Delay: 3 x $75K = $225K (one time).",
+   "Cut scope: 15% x $3.9M = $585K a year.",
+   "$225K is less than $585K."
+  ],
+  "answer": "Delay. It costs $225K, while the cut loses $585K a year.",
+  "tip": "If the cut is temporary (the feature ships in phase 2), the answer can change. Ask."
+ },
+ {
+  "id": "pm-cap-hours",
+  "type": "pm",
+  "level": "Easy",
+  "title": "Capacity: how many weeks?",
+  "problem": "A team of 8 engineers works 40 hours a week, but only 70% of that time is on the project. The project needs 1,120 hours. How many weeks does it take?",
+  "hint": "First find the team's project hours per week.",
+  "steps": [
+   "Hours per week = 8 x 40 x 70% = 224.",
+   "Weeks = 1,120 / 224 = 5."
+  ],
+  "answer": "5 weeks.",
+  "tip": "Never plan at 100% of hours. Meetings, reviews and sick days take 20 to 40%."
+ },
+ {
+  "id": "pm-cap-agents",
+  "type": "pm",
+  "level": "Medium",
+  "title": "Capacity: how many agents?",
+  "problem": "A support team gets 600 calls a day. Each call takes 10 minutes. An agent works 8 hours a day but can only be busy 80% of the time. How many agents do you need?",
+  "hint": "Find the calls one agent can take in a day.",
+  "steps": [
+   "Minutes per day = 8 x 60 = 480.",
+   "Calls at 100% = 480 / 10 = 48.",
+   "Calls at 80% busy = 48 x 80% = 38.4.",
+   "Agents = 600 / 38.4 = 15.6, so 16."
+  ],
+  "answer": "16 agents.",
+  "tip": "Round people up, not down. Say why you use 80%: busy at 100% means long waits."
+ },
+ {
+  "id": "pm-cap-peak",
+  "type": "pm",
+  "level": "Hard",
+  "title": "Capacity: peak demand",
+  "problem": "A warehouse handles 1M orders a day and runs at 70% of its maximum. A sale brings 3M orders a day. How many times its normal maximum is that, and what do you do?",
+  "hint": "First find the maximum from the 70%.",
+  "steps": [
+   "Maximum = 1M / 70% = 1.43M a day.",
+   "Peak vs maximum = 3M / 1.43M = 2.1 times.",
+   "So even running flat out, it is 2.1 times too small."
+  ],
+  "answer": "3M is 2.1 times the maximum of 1.43M a day. You need extra capacity: more sites, more shifts, or push some demand to other days.",
+  "tip": "Always find the real maximum first. Running at 70% means there is only a little room."
+ },
+ {
+  "id": "pm-risk-ev",
+  "type": "pm",
+  "level": "Easy",
+  "title": "Risk in dollars: is mitigation worth it?",
+  "problem": "A risk has a 20% chance of costing $500K. A fix costs $60K and cuts the chance to 5%. Do you do it?",
+  "hint": "Expected loss = chance x impact.",
+  "steps": [
+   "Before: 20% x $500K = $100K.",
+   "After: 5% x $500K = $25K.",
+   "Saving = $100K - $25K = $75K.",
+   "Net = $75K - $60K = +$15K."
+  ],
+  "answer": "Yes. Net gain is $15K.",
+  "tip": "Say: the expected loss drops from $100K to $25K for a $60K fix."
+ },
+ {
+  "id": "pm-risk-two",
+  "type": "pm",
+  "level": "Medium",
+  "title": "Risk in dollars: which risk first?",
+  "problem": "Risk A has a 30% chance of a 2-week delay. Risk B has a 10% chance of a 6-week delay. A week of delay costs $50K. Which do you tackle first?",
+  "hint": "Compare the expected delay, then the worst case.",
+  "steps": [
+   "A: 30% x 2 = 0.6 weeks, so $30K.",
+   "B: 10% x 6 = 0.6 weeks, so $30K.",
+   "They are equal on average.",
+   "The worst case differs: A is $100K, B is $300K."
+  ],
+  "answer": "Both are $30K on average. Tackle B first because its worst case ($300K) is three times bigger.",
+  "tip": "When expected values tie, look at the worst case and at which fix is cheaper."
+ },
+ {
+  "id": "pm-risk-reserve",
+  "type": "pm",
+  "level": "Hard",
+  "title": "Risk in dollars: how big a reserve?",
+  "problem": "Budget is $3M. Three risks: R1 10% x $400K, R2 25% x $200K, R3 5% x $1.2M. What is the total expected cost, and what share of the budget is it?",
+  "hint": "Add the three expected costs.",
+  "steps": [
+   "R1 = 10% x $400K = $40K.",
+   "R2 = 25% x $200K = $50K.",
+   "R3 = 5% x $1.2M = $60K.",
+   "Total = $150K.",
+   "Share = $150K / $3M = 5%."
+  ],
+  "answer": "$150K, which is 5% of the budget. A 5% reserve is a fair start.",
+  "tip": "Also mention R3: it is rare but big, so it needs a plan, not only a reserve."
+ },
+ {
+  "id": "pm-sch-basic",
+  "type": "pm",
+  "level": "Easy",
+  "title": "Schedule math: how long?",
+  "problem": "A team moves 5 tables a week. There are 40 tables, and 2 weeks of setup come first. When does it finish?",
+  "hint": "Divide the work by the weekly pace, then add the setup.",
+  "steps": [
+   "Moving time = 40 / 5 = 8 weeks.",
+   "Add setup: 2 + 8 = 10 weeks."
+  ],
+  "answer": "Week 10.",
+  "tip": "Check the pace against the past. Is 5 a week a real average or a best week?"
+ },
+ {
+  "id": "pm-sch-add",
+  "type": "pm",
+  "level": "Medium",
+  "title": "Schedule math: add people?",
+  "problem": "A team of 4 moves 5 tables each a week, so 20 a week. 100 tables remain, which is 5 weeks. You add 2 people. They are only half as fast for their first 2 weeks. How long now?",
+  "hint": "Count the first 2 weeks and the rest separately.",
+  "steps": [
+   "Weeks 1 and 2: 4 x 5 + 2 x 2.5 = 25 a week, so 50 tables.",
+   "Remaining: 100 - 50 = 50 tables.",
+   "After that: 6 x 5 = 30 a week, so 50 / 30 = 1.67 weeks.",
+   "Total = 2 + 1.67 = 3.67 weeks. Saved: 5 - 3.67 = 1.33 weeks."
+  ],
+  "answer": "About 3.7 weeks, saving about 1.3 weeks. It is less than the 1.7 weeks you would hope for because new people start slowly.",
+  "tip": "Adding people is never instant. Include ramp-up time and the time the team spends teaching them."
+ },
+ {
+  "id": "pm-sch-late",
+  "type": "pm",
+  "level": "Hard",
+  "title": "Schedule math: forecast the finish",
+  "problem": "A 12-week project is at week 8. The plan said 67% would be done by now, but only 55% is done. If the pace stays the same, when does it finish?",
+  "hint": "Find the progress per week so far, then the weeks for the rest.",
+  "steps": [
+   "Pace = 55% / 8 weeks = 6.9% a week.",
+   "Remaining = 100% - 55% = 45%.",
+   "Weeks left = 45 / 6.9 = 6.5.",
+   "Finish = week 8 + 6.5 = week 14.5, which is 2.5 weeks late."
+  ],
+  "answer": "About week 14.5, so 2.5 weeks late.",
+  "tip": "Say the forecast at current pace, then what has to change to hit week 12."
+ },
+ {
+  "id": "pm-pri-ratio",
+  "type": "pm",
+  "level": "Easy",
+  "title": "Prioritization: value per week",
+  "problem": "Project A brings $2.0M a year and needs 40 engineer-weeks. Project B brings $1.2M a year and needs 20 engineer-weeks. Which has more value per engineer-week?",
+  "hint": "Divide value by effort.",
+  "steps": [
+   "A = $2.0M / 40 = $50K per engineer-week.",
+   "B = $1.2M / 20 = $60K per engineer-week."
+  ],
+  "answer": "B, at $60K per engineer-week against $50K for A.",
+  "tip": "The bigger project is not always the better one. Value per effort shows it."
+ },
+ {
+  "id": "pm-pri-knap",
+  "type": "pm",
+  "level": "Medium",
+  "title": "Prioritization: fit the capacity",
+  "problem": "You have 100 engineer-weeks. A: 60 weeks, $3.6M a year. B: 30 weeks, $2.1M. C: 40 weeks, $2.4M. Which projects do you fund?",
+  "hint": "Find the pairs that fit in 100 weeks, then compare their total value.",
+  "steps": [
+   "Value per week: A $60K, B $70K, C $60K.",
+   "B + A = 90 weeks, $5.7M.",
+   "B + C = 70 weeks, $4.5M.",
+   "A + C = 100 weeks, $6.0M.",
+   "All three need 130 weeks, which is too many."
+  ],
+  "answer": "Fund A and C. They fill the 100 weeks and bring $6.0M, more than B + A at $5.7M.",
+  "tip": "Ranking by value per week is a start, but check the total. Leftover capacity has no value."
+ },
+ {
+  "id": "pm-pri-rice",
+  "type": "pm",
+  "level": "Hard",
+  "title": "Prioritization: score it",
+  "problem": "Project X: reaches 50,000 customers, impact 2, confidence 80%, effort 8 weeks. Project Y: reaches 20,000, impact 3, confidence 100%, effort 4 weeks. Score = reach x impact x confidence / effort. Which first?",
+  "hint": "Multiply the top, then divide by effort.",
+  "steps": [
+   "X = 50,000 x 2 x 0.8 / 8 = 10,000.",
+   "Y = 20,000 x 3 x 1.0 / 4 = 15,000."
+  ],
+  "answer": "Y first, 15,000 against 10,000.",
+  "tip": "A score is a tool, not the answer. Say what could change the order, such as a deadline."
+ },
+ {
+  "id": "pm-roll-cost",
+  "type": "pm",
+  "level": "Easy",
+  "title": "Rollout: cost of an incident",
+  "problem": "You move 2M customers to a new system. If it fails, each affected customer costs about $5 to fix. What does a failure cost if it hits 1%, 10% or 100% of customers?",
+  "hint": "Customers affected times $5.",
+  "steps": [
+   "1% = 20,000 customers x $5 = $100K.",
+   "10% = 200,000 x $5 = $1.0M.",
+   "100% = 2,000,000 x $5 = $10M."
+  ],
+  "answer": "$100K, $1.0M or $10M.",
+  "tip": "This is the reason to roll out in stages: you cap the damage while you learn."
+ },
+ {
+  "id": "pm-roll-trigger",
+  "type": "pm",
+  "level": "Medium",
+  "title": "Rollout: roll back or continue?",
+  "problem": "The old system has a 0.2% error rate. You agree to roll back if errors pass 0.5%. In the 1% pilot, 62 of 10,000 payments fail. What do you do?",
+  "hint": "Turn the failures into a percentage.",
+  "steps": [
+   "Error rate = 62 / 10,000 = 0.62%.",
+   "The limit is 0.5%.",
+   "0.62% is above the limit."
+  ],
+  "answer": "Roll back, then find the cause before trying again. 0.62% is above the 0.5% limit and more than 3 times the old 0.2%.",
+  "tip": "Set the trigger before the pilot, not after you see the numbers."
+ },
+ {
+  "id": "pm-roll-plan",
+  "type": "pm",
+  "level": "Hard",
+  "title": "Rollout: staged or all at once?",
+  "problem": "Staged rollout takes 4 weeks and costs $20K a week to run both systems. All at once takes 1 week with no extra cost, but has a 20% chance of a $10M failure. Which is better in expected cost?",
+  "hint": "Price both options in dollars.",
+  "steps": [
+   "Staged = 4 x $20K = $80K (assume the stages cap failure cost).",
+   "All at once = 20% x $10M = $2M.",
+   "$80K is far below $2M."
+  ],
+  "answer": "Staged. It costs $80K against an expected $2M.",
+  "tip": "Mention what you give up: three more weeks. Say that is worth it for the lower risk."
+ },
+ {
+  "id": "pm-bud-cpi",
+  "type": "pm",
+  "level": "Easy",
+  "title": "Budget tracking: forecast the cost",
+  "problem": "A project has a $1.2M budget. It is 40% done and has spent $600K. At this rate, what will it cost in total?",
+  "hint": "Compare the value of work done with the money spent.",
+  "steps": [
+   "Value of work done = 40% x $1.2M = $480K.",
+   "Cost efficiency = $480K / $600K = 0.8.",
+   "Forecast cost = $1.2M / 0.8 = $1.5M.",
+   "Overrun = $1.5M - $1.2M = $300K."
+  ],
+  "answer": "About $1.5M, which is $300K over budget.",
+  "tip": "Report the forecast, not only the money spent so far."
+ },
+ {
+  "id": "pm-bud-spi",
+  "type": "pm",
+  "level": "Medium",
+  "title": "Schedule tracking: forecast the date",
+  "problem": "A 10-week project should be 50% done by now but is 40% done. At this pace, how long does the whole project take?",
+  "hint": "Compare work done with work planned.",
+  "steps": [
+   "Schedule efficiency = 40% / 50% = 0.8.",
+   "Forecast duration = 10 weeks / 0.8 = 12.5 weeks."
+  ],
+  "answer": "About 12.5 weeks, 2.5 weeks late.",
+  "tip": "A number below 1 means you are behind. Say it plainly, with what you will do about it."
+ }
+]);
