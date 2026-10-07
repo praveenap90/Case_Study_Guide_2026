@@ -88,7 +88,7 @@
       return;
     }
     if (top === "math" || top === "glossary") { location.replace("#/"); return; }
-    var views = { home: home, casestudies: casestudies, estimation: estimation, progress: progress };
+    var views = { home: home, casestudies: casestudies, estimation: estimation, pm: pm, progress: progress };
     (views[top] || home)(p, r.q);
     window.scrollTo(0, 0);
     app.focus({ preventScroll: true });
@@ -117,6 +117,7 @@
         '<a class="card" href="#/casestudies/frameworks"><h3>Frameworks (' + nf + ')</h3><p class="small muted">The toolkit</p><p>Profitability, market sizing, market entry, growth, pricing, M&amp;A, cost reduction, retention, metric diagnosis, unit economics and product deep-dive. Each has a worked example with charts.</p></a>' +
         '<a class="card" href="#/casestudies/cases"><h3>Cases (' + nc + ')</h3><p class="small muted">The practice</p><p>Full prompts with a timer, clarifying questions, a data room and a model answer to compare with yours.</p></a>' +
         '<a class="card" href="#/casestudies/drills"><h3>Practice drills (' + (D.drills || []).length + ')</h3><p class="small muted">The maths</p><p>Break-even, algebra, payback, funnel and unit-economics problems with hints and worked answers, like the maths inside a real case.</p></a>' +
+        '<a class="card" href="#/pm"><h3>Program manager (' + ((D.pm && D.pm.cases) || []).length + ' cases)</h3><p class="small muted">Delivery</p><p>CLEAR for program managers, worked cases on launches, late projects, blocked teams, priorities and go or no-go, plus STAR stories and templates.</p></a>' +
         '<a class="card" href="#/estimation"><h3>Guesstimates (' + ne + ')</h3><p class="small muted">The numbers</p><p>The SCOPE template, handy numbers and worked estimation drills such as car tires, smartphones and manholes.</p></a>' +
       "</div>" +
       "<h2>The method in 30 seconds: CLEAR</h2>" +
@@ -278,6 +279,50 @@
     app.insertAdjacentHTML("afterbegin", '<div class="filters" role="tablist" aria-label="Case study sections">' + subs.map(function (t) {
       return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/casestudies/' + t[0] + '\'">' + t[1] + "</button>";
     }).join("") + "</div>");
+  }
+
+  /* ---------- PROGRAM MANAGER ---------- */
+  function pm(p, q) {
+    var P = D.pm;
+    var subs = [["framework", "Framework"], ["cases", "Cases"], ["behavioral", "Behavioral"], ["templates", "Templates"]];
+    var sub = subs.some(function (x) { return x[0] === p[1]; }) ? p[1] : "framework";
+    var body = "";
+    if (sub === "framework") {
+      chartSrc["pm-fw"] = P.framework;
+      body = '<p class="lead">' + h(P.lead) + "</p>" +
+        chartBlock("pm-fw", "CLEAR for program managers", "Same five letters, with delivery meaning. Say them out loud before you answer.") +
+        table(P.types) + (P.thinking || []).map(table).join("") + '<p><a class="btn" href="#/pm/cases">Practice with the cases</a></p>';
+    } else if (sub === "cases") {
+      var c = P.cases.filter(function (x) { return x.id === p[2]; })[0];
+      if (!c) {
+        var groups = [];
+        P.cases.forEach(function (x) { if (groups.indexOf(x.group) < 0) groups.push(x.group); });
+        body = "<h2>Program manager cases (" + P.cases.length + ")</h2>" + groups.map(function (g) {
+          return "<h3>" + h(g) + '</h3><div class="grid">' + P.cases.filter(function (x) { return x.group === g; }).map(function (x) {
+            return '<a class="card" href="#/pm/cases/' + x.id + '"><h3>' + h(x.title) + "</h3><p>" + h(x.prompt) + "</p></a>";
+          }).join("") + "</div>";
+        }).join("");
+      } else {
+        chartSrc["pm-" + c.id] = c.chart;
+        body = '<p><a href="#/pm/cases">&larr; All cases</a></p><h2>' + h(c.title) + "</h2>" +
+          '<div class="callout"><b>Interviewer:</b> ' + h(c.prompt) + "</div>" +
+          "<h3>Clarifying questions to ask</h3><ul>" + li(c.clarify) + "</ul>" +
+          chartBlock("pm-" + c.id, "The answer in one chart", "Clarify, lay out the plan, evaluate, assess the options, recommend.") +
+          table(c.steps) + table(c.pushback) +
+          "<h3>What you would say out loud</h3>" + c.say.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("") +
+          "<h3>Common mistakes</h3><ul>" + li(c.pitfalls) + "</ul>";
+      }
+    } else if (sub === "behavioral") {
+      body = "<h2>Behavioral questions: STAR</h2>" + table(P.star) + table(P.bank) +
+        '<p class="small muted">Prepare 4 to 5 real stories from your own work and fit them to these themes. Always end with a number.</p>';
+    } else {
+      body = "<h2>Answer template</h2>" + table(P.template.script) + table(P.template.checklist) + table(P.template.tips) + "<h2>Templates and checklists</h2>" + table(P.rag) + table(P.raid) + table(P.checklists) +
+        "<h3>Phrases to use</h3><ul>" + li(P.phrases) + "</ul>";
+    }
+    app.innerHTML = "<h1>Program manager</h1>" + '<div class="filters" role="tablist" aria-label="Program manager sections">' + subs.map(function (t) {
+      return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/pm/' + t[0] + '\'">' + t[1] + "</button>";
+    }).join("") + "</div>" + body;
+    renderCharts();
   }
 
   /* ---------- PRACTICE DRILLS ---------- */
