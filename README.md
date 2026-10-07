@@ -26,6 +26,7 @@ Preview locally: `python3 -m http.server 8000` then open http://localhost:8000.
 Edit `js/data-cases.js` and copy an existing object. Required fields: `id`, `title`, `track` (array of `banking`, `consulting`, `tech`), `framework` (an id from `data-frameworks.js`), `difficulty`, `minutes`, `prompt`, `clarify`, `tables`, `structure`, `analysis`, `recommendation`, `followups`, `pitfalls`.
 
 ## Latest additions
+- New Program Manager tab (js/data-pm.js): CLEAR for program managers, 14 worked cases in three groups (core, customer and delivery, banking and data), answer script and final checklist, STAR story bank, status and risk templates, checklists.
 - Frameworks: Growth, Market sizing and Pricing examples restyled like the others (all 11 framework examples now match). Market sizing now uses 330M people.
 - All 20 other cases: CLEAR chart has Clarify and Lay out split into side-by-side boxes, and the numbers chart is regrouped (same style as Grocery). Fixes: Pump Maker steel test is $8.0M (profit $30.2M), Park needed share 61.5%, Instant Pre-Approval parts $20.44M + $2.03M, break-even loss 5.46%.
 - Grocery chain "numbers in one chart" regrouped with side-by-side boxes; needed-orders check fixed (2.6 a month).
