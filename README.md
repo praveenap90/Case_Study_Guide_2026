@@ -27,7 +27,8 @@ Edit `js/data-cases.js` and copy an existing object. Required fields: `id`, `tit
 
 ## Latest additions
 - Practice drills: new "Program manager" type with 23 drills (critical path, cost of delay, capacity, risk in dollars, schedule math, prioritization, rollout, budget tracking).
-- New Program Manager tab (js/data-pm.js): CLEAR for program managers, 14 worked cases in three groups (core, customer and delivery, banking and data), answer script and final checklist, STAR story bank, status and risk templates, checklists.
+- Product Manager and Program Manager are now sub-tabs under Case studies, named "Product roles scenarios" and "Program Lead roles" (old links still redirect). Product roles (js/data-prodm.js): CLEAR for product managers, answer script and final checklist, worked example (improve the savings sign-up) with pushback math, metric tree and one-page brief templates.
+- Program Lead roles (js/data-pm.js): CLEAR for program managers, 14 worked cases in three groups (core, customer and delivery, banking and data), answer script and final checklist, STAR story bank, status and risk templates, checklists.
 - Frameworks: Growth, Market sizing and Pricing examples restyled like the others (all 11 framework examples now match). Market sizing now uses 330M people.
 - All 20 other cases: CLEAR chart has Clarify and Lay out split into side-by-side boxes, and the numbers chart is regrouped (same style as Grocery). Fixes: Pump Maker steel test is $8.0M (profit $30.2M), Park needed share 61.5%, Instant Pre-Approval parts $20.44M + $2.03M, break-even loss 5.46%.
 - Grocery chain "numbers in one chart" regrouped with side-by-side boxes; needed-orders check fixed (2.6 a month).
