@@ -87,8 +87,9 @@
       location.replace("#/casestudies/" + [legacy[top]].concat(p.slice(1)).join("/") + qs);
       return;
     }
+    if (top === "pm" || top === "prodm") { location.replace("#/casestudies/" + (top === "pm" ? "lead" : "product") + (p.length > 1 ? "/" + p.slice(1).join("/") : "")); return; }
     if (top === "math" || top === "glossary") { location.replace("#/"); return; }
-    var views = { home: home, casestudies: casestudies, estimation: estimation, pm: pm, progress: progress };
+    var views = { home: home, casestudies: casestudies, estimation: estimation, pm: pm, prodm: prodm, progress: progress };
     (views[top] || home)(p, r.q);
     window.scrollTo(0, 0);
     app.focus({ preventScroll: true });
@@ -117,7 +118,8 @@
         '<a class="card" href="#/casestudies/frameworks"><h3>Frameworks (' + nf + ')</h3><p class="small muted">The toolkit</p><p>Profitability, market sizing, market entry, growth, pricing, M&amp;A, cost reduction, retention, metric diagnosis, unit economics and product deep-dive. Each has a worked example with charts.</p></a>' +
         '<a class="card" href="#/casestudies/cases"><h3>Cases (' + nc + ')</h3><p class="small muted">The practice</p><p>Full prompts with a timer, clarifying questions, a data room and a model answer to compare with yours.</p></a>' +
         '<a class="card" href="#/casestudies/drills"><h3>Practice drills (' + (D.drills || []).length + ')</h3><p class="small muted">The maths</p><p>Break-even, algebra, payback, funnel and unit-economics problems with hints and worked answers, like the maths inside a real case.</p></a>' +
-        '<a class="card" href="#/pm"><h3>Program manager (' + ((D.pm && D.pm.cases) || []).length + ' cases)</h3><p class="small muted">Delivery</p><p>CLEAR for program managers, worked cases on launches, late projects, blocked teams, priorities and go or no-go, plus STAR stories and templates.</p></a>' +
+        '<a class="card" href="#/casestudies/lead"><h3>Program Lead roles (' + ((D.pm && D.pm.cases) || []).length + ' cases)</h3><p class="small muted">Delivery</p><p>CLEAR for program managers, worked cases on launches, late projects, blocked teams, priorities and go or no-go, plus STAR stories and templates.</p></a>' +
+        '<a class="card" href="#/casestudies/product"><h3>Product roles scenarios</h3><p class="small muted">Product</p><p>CLEAR for product managers, an answer script and checklist, a worked example (improve a sign-up funnel), plus metric tree and one-page brief templates.</p></a>' +
         '<a class="card" href="#/estimation"><h3>Guesstimates (' + ne + ')</h3><p class="small muted">The numbers</p><p>The SCOPE template, handy numbers and worked estimation drills such as car tires, smartphones and manholes.</p></a>' +
       "</div>" +
       "<h2>The method in 30 seconds: CLEAR</h2>" +
@@ -272,10 +274,10 @@
 
   /* ---------- CASE STUDIES (Templates, Frameworks, Cases) ---------- */
   function casestudies(p, q) {
-    var subs = [["template", "Templates"], ["frameworks", "Frameworks"], ["cases", "Cases"], ["drills", "Practice drills"]];
+    var subs = [["template", "Templates"], ["frameworks", "Frameworks"], ["cases", "Cases"], ["drills", "Practice drills"], ["product", "Product roles scenarios"], ["lead", "Program Lead roles"]];
     var sub = subs.some(function (x) { return x[0] === p[1]; }) ? p[1] : "template";
     var sp = [sub].concat(p.slice(2));
-    ({ template: template, frameworks: frameworks, cases: cases, drills: drills })[sub](sp, q);
+    ({ template: template, frameworks: frameworks, cases: cases, drills: drills, product: prodm, lead: pm })[sub](sp, q);
     app.insertAdjacentHTML("afterbegin", '<div class="filters" role="tablist" aria-label="Case study sections">' + subs.map(function (t) {
       return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/casestudies/' + t[0] + '\'">' + t[1] + "</button>";
     }).join("") + "</div>");
@@ -291,20 +293,20 @@
       chartSrc["pm-fw"] = P.framework;
       body = '<p class="lead">' + h(P.lead) + "</p>" +
         chartBlock("pm-fw", "CLEAR for program managers", "Same five letters, with delivery meaning. Say them out loud before you answer.") +
-        table(P.types) + (P.thinking || []).map(table).join("") + '<p><a class="btn" href="#/pm/cases">Practice with the cases</a></p>';
+        table(P.types) + (P.thinking || []).map(table).join("") + '<p><a class="btn" href="#/casestudies/lead/cases">Practice with the cases</a></p>';
     } else if (sub === "cases") {
       var c = P.cases.filter(function (x) { return x.id === p[2]; })[0];
       if (!c) {
         var groups = [];
         P.cases.forEach(function (x) { if (groups.indexOf(x.group) < 0) groups.push(x.group); });
-        body = "<h2>Program manager cases (" + P.cases.length + ")</h2>" + groups.map(function (g) {
+        body = "<h2>Program Lead cases (" + P.cases.length + ")</h2>" + groups.map(function (g) {
           return "<h3>" + h(g) + '</h3><div class="grid">' + P.cases.filter(function (x) { return x.group === g; }).map(function (x) {
-            return '<a class="card" href="#/pm/cases/' + x.id + '"><h3>' + h(x.title) + "</h3><p>" + h(x.prompt) + "</p></a>";
+            return '<a class="card" href="#/casestudies/lead/cases/' + x.id + '"><h3>' + h(x.title) + "</h3><p>" + h(x.prompt) + "</p></a>";
           }).join("") + "</div>";
         }).join("");
       } else {
         chartSrc["pm-" + c.id] = c.chart;
-        body = '<p><a href="#/pm/cases">&larr; All cases</a></p><h2>' + h(c.title) + "</h2>" +
+        body = '<p><a href="#/casestudies/lead/cases">&larr; All cases</a></p><h2>' + h(c.title) + "</h2>" +
           '<div class="callout"><b>Interviewer:</b> ' + h(c.prompt) + "</div>" +
           "<h3>Clarifying questions to ask</h3><ul>" + li(c.clarify) + "</ul>" +
           chartBlock("pm-" + c.id, "The answer in one chart", "Clarify, lay out the plan, evaluate, assess the options, recommend.") +
@@ -319,8 +321,35 @@
       body = "<h2>Answer template</h2>" + table(P.template.script) + table(P.template.checklist) + table(P.template.tips) + "<h2>Templates and checklists</h2>" + table(P.rag) + table(P.raid) + table(P.checklists) +
         "<h3>Phrases to use</h3><ul>" + li(P.phrases) + "</ul>";
     }
-    app.innerHTML = "<h1>Program manager</h1>" + '<div class="filters" role="tablist" aria-label="Program manager sections">' + subs.map(function (t) {
-      return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/pm/' + t[0] + '\'">' + t[1] + "</button>";
+    app.innerHTML = "<h2 class=\"sub-h\">Program Lead roles</h2>" + '<div class="filters" role="tablist" aria-label="Program Lead sections">' + subs.map(function (t) {
+      return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/casestudies/lead/' + t[0] + '\'">' + t[1] + "</button>";
+    }).join("") + "</div>" + body;
+    renderCharts();
+  }
+
+  /* ---------- PRODUCT MANAGER ---------- */
+  function prodm(p, q) {
+    var P = D.prodm;
+    var subs = [["framework", "Framework"], ["example", "Worked example"], ["templates", "Templates"]];
+    var sub = subs.some(function (x) { return x[0] === p[1]; }) ? p[1] : "framework";
+    var body = "";
+    if (sub === "framework") {
+      chartSrc["pd-fw"] = P.framework;
+      body = '<p class="lead">' + h(P.lead) + "</p>" +
+        chartBlock("pd-fw", "CLEAR for product managers", "Same five letters, with product meaning. Say them out loud before you answer.") +
+        table(P.types) + '<p><a class="btn" href="#/casestudies/product/example">See a worked example</a></p>';
+    } else if (sub === "example") {
+      var X = P.example;
+      chartSrc["pd-ex"] = X.chart;
+      body = "<h2>" + h(X.title) + "</h2>" + '<div class="callout"><b>Interviewer:</b> ' + h(X.prompt) + "</div>" +
+        chartBlock("pd-ex", "The answer in one chart", "All numbers are made-up round assumptions.") +
+        table(X.math) + table(X.push) +
+        "<h3>What you would say out loud</h3>" + X.say.map(function (x) { return '<div class="callout"><b>' + h(x[0]) + ":</b> " + h(x[1]) + "</div>"; }).join("");
+    } else {
+      body = "<h2>Answer template</h2>" + table(P.script) + table(P.checklist) + "<h2>Templates</h2>" + table(P.metrics) + table(P.brief);
+    }
+    app.innerHTML = "<h2 class=\"sub-h\">Product roles scenarios</h2>" + '<div class="filters" role="tablist" aria-label="Product roles sections">' + subs.map(function (t) {
+      return '<button type="button" role="tab" class="' + (sub === t[0] ? "on" : "") + '" aria-selected="' + (sub === t[0]) + '" onclick="location.hash=\'#/casestudies/product/' + t[0] + '\'">' + t[1] + "</button>";
     }).join("") + "</div>" + body;
     renderCharts();
   }
